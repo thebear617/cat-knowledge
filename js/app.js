@@ -247,8 +247,20 @@ function renderCatGrid(cats) {
   `;
 }
 
-function renderApp() {
+function renderApp(preserve) {
   const cats = getFilteredCats();
+
+  if (preserve) {
+    const summary = app.querySelector('.summary-grid');
+    if (summary) summary.outerHTML = renderSummary();
+    const grid = app.querySelector('.cat-grid') || app.querySelector('.empty-state');
+    if (grid) grid.outerHTML = renderCatGrid(cats);
+    const count = app.querySelector('.result-bar strong');
+    if (count) count.textContent = cats.length;
+    bindCatCards();
+    return;
+  }
+
   app.innerHTML = `
     ${renderSummary()}
     ${renderControls(cats.length)}
@@ -270,16 +282,13 @@ function bindControls() {
   searchInput.addEventListener('compositionend', event => {
     isComposing = false;
     state.query = event.target.value;
-    renderApp();
-    const restored = document.getElementById('searchInput');
-    restored.focus();
-    restored.setSelectionRange(restored.value.length, restored.value.length);
+    renderApp(true);
   });
 
   searchInput.addEventListener('input', event => {
-    if (isComposing) return;
+    if (isComposing || event.isComposing) return;
     state.query = event.target.value;
-    renderApp();
+    renderApp(true);
   });
 
   document.querySelectorAll('[data-filter]').forEach(control => {
@@ -299,6 +308,10 @@ function bindControls() {
     renderApp();
   });
 
+  bindCatCards();
+}
+
+function bindCatCards() {
   document.querySelectorAll('.cat-card').forEach(card => {
     card.addEventListener('click', () => openDrawer(card.dataset.catName));
     card.addEventListener('keydown', event => {
