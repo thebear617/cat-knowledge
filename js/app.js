@@ -15,6 +15,8 @@ const state = {
 };
 
 const app = document.getElementById('app');
+const controlsContainer = document.getElementById('controls-container');
+const resultsContainer = document.getElementById('results-container');
 const drawer = document.getElementById('catDrawer');
 const drawerBackdrop = document.getElementById('drawerBackdrop');
 
@@ -179,6 +181,71 @@ function renderControls(filteredCount) {
   `;
 }
 
+function renderResults() {
+  const cats = getFilteredCats();
+  resultsContainer.innerHTML = `
+    ${renderSummary()}
+    ${renderCatGrid(cats)}
+  `;
+  bindCatCards();
+
+  const countEl = document.querySelector('#controls-container .result-bar strong');
+  if (countEl) countEl.textContent = cats.length;
+}
+
+function initApp() {
+  const cats = getFilteredCats();
+  controlsContainer.innerHTML = renderControls(cats.length);
+  bindControls();
+  renderResults();
+}
+
+function bindControls() {
+  const searchInput = document.getElementById('searchInput');
+
+  searchInput.addEventListener('input', event => {
+    state.query = event.target.value;
+    renderResults();
+  });
+
+  document.querySelectorAll('[data-filter]').forEach(control => {
+    control.addEventListener('change', event => {
+      state[event.target.dataset.filter] = event.target.value;
+      renderResults();
+    });
+  });
+
+  document.getElementById('resetFilters').addEventListener('click', () => {
+    state.query = '';
+    state.status = '全部';
+    state.vaccine = '全部';
+    state.sterilized = '全部';
+    state.friendliness = '全部';
+    state.sort = 'priority';
+
+    document.getElementById('searchInput').value = '';
+    document.getElementById('status').value = '全部';
+    document.getElementById('vaccine').value = '全部';
+    document.getElementById('sterilized').value = '全部';
+    document.getElementById('friendliness').value = '全部';
+    document.getElementById('sort').value = 'priority';
+
+    renderResults();
+  });
+}
+
+function bindCatCards() {
+  document.querySelectorAll('.cat-card').forEach(card => {
+    card.addEventListener('click', () => openDrawer(card.dataset.catName));
+    card.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openDrawer(card.dataset.catName);
+      }
+    });
+  });
+}
+
 function renderStatusTag(cat) {
   return `<span class="status-pill status-${cat.status}">${escapeHtml(cat.status)}</span>`;
 }
@@ -194,7 +261,6 @@ function renderMeta(label, value) {
 
 const CDN_BASE = 'https://cdn.jsdelivr.net/gh/thebear617/cat-knowledge@main';
 const IMG_VER = Date.now();
-const escaped = s => escapeHtml(s);
 
 function cdnUrl(path) {
   if (!path) return path;
@@ -245,82 +311,6 @@ function renderCatGrid(cats) {
       ${cats.map(renderCatCard).join('')}
     </section>
   `;
-}
-
-function renderApp(preserve) {
-  const cats = getFilteredCats();
-
-  if (preserve) {
-    const summary = app.querySelector('.summary-grid');
-    if (summary) summary.outerHTML = renderSummary();
-    const grid = app.querySelector('.cat-grid') || app.querySelector('.empty-state');
-    if (grid) grid.outerHTML = renderCatGrid(cats);
-    const count = app.querySelector('.result-bar strong');
-    if (count) count.textContent = cats.length;
-    bindCatCards();
-    return;
-  }
-
-  app.innerHTML = `
-    ${renderSummary()}
-    ${renderControls(cats.length)}
-    ${renderCatGrid(cats)}
-  `;
-
-  bindControls();
-}
-
-let isComposing = false;
-
-function bindControls() {
-  const searchInput = document.getElementById('searchInput');
-
-  searchInput.addEventListener('compositionstart', () => {
-    isComposing = true;
-  });
-
-  searchInput.addEventListener('compositionend', event => {
-    isComposing = false;
-    state.query = event.target.value;
-    renderApp(true);
-  });
-
-  searchInput.addEventListener('input', event => {
-    if (isComposing || event.isComposing) return;
-    state.query = event.target.value;
-    renderApp(true);
-  });
-
-  document.querySelectorAll('[data-filter]').forEach(control => {
-    control.addEventListener('change', event => {
-      state[event.target.dataset.filter] = event.target.value;
-      renderApp();
-    });
-  });
-
-  document.getElementById('resetFilters').addEventListener('click', () => {
-    state.query = '';
-    state.status = '全部';
-    state.vaccine = '全部';
-    state.sterilized = '全部';
-    state.friendliness = '全部';
-    state.sort = 'priority';
-    renderApp();
-  });
-
-  bindCatCards();
-}
-
-function bindCatCards() {
-  document.querySelectorAll('.cat-card').forEach(card => {
-    card.addEventListener('click', () => openDrawer(card.dataset.catName));
-    card.addEventListener('keydown', event => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        openDrawer(card.dataset.catName);
-      }
-    });
-  });
 }
 
 function renderDetailRow(label, value) {
@@ -448,4 +438,4 @@ document.addEventListener('keydown', event => {
   if (event.key === 'Escape' && !drawer.hidden) closeDrawer();
 });
 
-document.addEventListener('DOMContentLoaded', renderApp);
+document.addEventListener('DOMContentLoaded', initApp);
