@@ -346,7 +346,7 @@ function renderDrawer(cat) {
         <div class="photo-grid">
           ${imgs.map(src => `
             <div class="photo-item">
-              <img src="${escapeHtml(src)}?v=${IMG_VER}" alt="${escapeHtml(cat.name)}" loading="lazy" onclick="openPhotoViewer(this)">
+              <img src="${escapeHtml(src.replace(/([^/]+)$/, 'thumb/$1'))}?v=${IMG_VER}" data-full="${escapeHtml(src)}?v=${IMG_VER}" alt="${escapeHtml(cat.name)}" loading="lazy" onclick="openPhotoViewer(this)">
             </div>
           `).join('')}
         </div>
@@ -392,9 +392,10 @@ function closeDrawer() {
 }
 
 function openPhotoViewer(img) {
+  const fullSrc = img.dataset.full || img.src;
   const overlay = document.createElement('div');
   overlay.className = 'photo-viewer';
-  overlay.innerHTML = `<img src="${img.src}" alt="${img.alt}">`;
+  overlay.innerHTML = `<img src="${fullSrc}" alt="${img.alt}">`;
   overlay.addEventListener('click', () => overlay.remove());
   document.addEventListener('keydown', function handler(e) {
     if (e.key === 'Escape') {
