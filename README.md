@@ -88,7 +88,9 @@ source        来源表
    git push origin main
    ```
 
-Vercel 连接的是 `thebear617/cat-knowledge`，推送到 `main` 后会自动重新部署。
+网站已通过 GitHub Pages 部署，推送到 `main` 后 GitHub 会自动重新构建部署。
+
+在线地址：https://thebear617.github.io/cat-knowledge/
 
 ## 维护规则
 
