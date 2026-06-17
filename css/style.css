@@ -258,6 +258,11 @@ select {
   margin: -1rem -1rem 1rem;
   border-radius: var(--radius) var(--radius) 0 0;
   background: var(--line);
+  display: block;
+}
+
+.cat-card.img-missing .cat-thumb {
+  display: none;
 }
 
 .drawer-image {

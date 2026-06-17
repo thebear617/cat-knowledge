@@ -191,12 +191,15 @@ function renderMeta(label, value) {
   `;
 }
 
+const IMG_VER = Date.now();
+const escaped = s => escapeHtml(s);
+
 function renderCatCard(cat) {
   const vaccineBucket = getVaccineBucket(cat);
   const sterilizedBucket = getSterilizedBucket(cat);
   return `
     <article class="cat-card" data-cat-name="${escapeHtml(cat.name)}" tabindex="0">
-      ${cat.image ? `<img class="cat-thumb" src="${escapeHtml(cat.image)}" alt="${escapeHtml(cat.name)}" loading="lazy">` : ''}
+      ${cat.image ? `<img class="cat-thumb" src="${escapeHtml(cat.image)}?v=${IMG_VER}" alt="${escapeHtml(cat.name)}" loading="lazy" onerror="this.parentElement.classList.add('img-missing')">` : ''}
       <div class="cat-card-header">
         <div>
           <h2>${escapeHtml(cat.name)}</h2>
@@ -308,7 +311,7 @@ function openDrawer(name) {
       </div>
       <button class="icon-button" id="closeDrawer" type="button" aria-label="关闭详情">×</button>
     </div>
-    ${cat.image ? `<img class="drawer-image" src="${escapeHtml(cat.image)}" alt="${escapeHtml(cat.name)}">` : ''}
+    ${cat.image ? `<img class="drawer-image" src="${escapeHtml(cat.image)}?v=${IMG_VER}" alt="${escapeHtml(cat.name)}">` : ''}
     <div class="drawer-tags">
       ${renderStatusTag(cat)}
       <span class="tag vaccine-${getVaccineBucket(cat)}">${escapeHtml(getVaccineBucket(cat))}</span>
