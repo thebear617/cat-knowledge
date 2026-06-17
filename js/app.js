@@ -10,7 +10,8 @@ const state = {
   sterilized: '全部',
   friendliness: '全部',
   sort: 'priority',
-  selectedName: null
+  selectedName: null,
+  drawerTab: 'profile'
 };
 
 const app = document.getElementById('app');
@@ -301,8 +302,58 @@ function openDrawer(name) {
   if (!cat) return;
 
   state.selectedName = name;
+  state.drawerTab = 'profile';
+  renderDrawer(cat);
+}
+
+function renderDrawer(cat) {
   drawer.hidden = false;
   drawerBackdrop.hidden = false;
+
+  const tab = state.drawerTab;
+  let contentHtml = '';
+
+  if (tab === 'profile') {
+    contentHtml = `
+      ${cat.image ? `<img class="drawer-image" src="${escapeHtml(cat.image)}?v=${IMG_VER}" alt="${escapeHtml(cat.name)}">` : ''}
+      <div class="drawer-tags">
+        ${renderStatusTag(cat)}
+        <span class="tag vaccine-${getVaccineBucket(cat)}">${escapeHtml(getVaccineBucket(cat))}</span>
+        <span class="tag">${escapeHtml(getSterilizedBucket(cat))}</span>
+        <span class="tag">${escapeHtml(getFriendlinessBucket(cat))}</span>
+      </div>
+      <dl class="detail-list">
+        ${renderDetailRow('抓捕/亲人状态', cat.friendliness)}
+        ${renderDetailRow('疫苗状态', cat.vaccine)}
+        ${renderDetailRow('下一针窗口', cat.nextWindow)}
+        ${renderDetailRow('绝育状态', cat.sterilized)}
+        ${renderDetailRow('领养人', cat.adopter)}
+        ${renderDetailRow('去向', cat.destination)}
+        ${renderDetailRow('备注', cat.notes)}
+      </dl>
+    `;
+  } else if (tab === 'photos') {
+    const imgs = cat.images || [];
+    if (imgs.length === 0) {
+      contentHtml = `
+        <div class="photo-empty">
+          <p>暂无照片</p>
+          <p class="photo-empty-hint">将照片放入 <code>images/${escapeHtml(cat.name)}/</code> 文件夹，并在 cats.js 中添加路径即可</p>
+        </div>
+      `;
+    } else {
+      contentHtml = `
+        <div class="photo-grid">
+          ${imgs.map(src => `
+            <div class="photo-item">
+              <img src="${escapeHtml(src)}?v=${IMG_VER}" alt="${escapeHtml(cat.name)}" loading="lazy" onclick="openPhotoViewer(this)">
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+  }
+
   drawer.innerHTML = `
     <div class="drawer-header">
       <div>
@@ -311,27 +362,25 @@ function openDrawer(name) {
       </div>
       <button class="icon-button" id="closeDrawer" type="button" aria-label="关闭详情">×</button>
     </div>
-    ${cat.image ? `<img class="drawer-image" src="${escapeHtml(cat.image)}?v=${IMG_VER}" alt="${escapeHtml(cat.name)}">` : ''}
-    <div class="drawer-tags">
-      ${renderStatusTag(cat)}
-      <span class="tag vaccine-${getVaccineBucket(cat)}">${escapeHtml(getVaccineBucket(cat))}</span>
-      <span class="tag">${escapeHtml(getSterilizedBucket(cat))}</span>
-      <span class="tag">${escapeHtml(getFriendlinessBucket(cat))}</span>
+    <div class="drawer-tabs">
+      <button class="drawer-tab${tab === 'profile' ? ' active' : ''}" data-tab="profile">档案</button>
+      <button class="drawer-tab${tab === 'photos' ? ' active' : ''}" data-tab="photos">照片${(cat.images || []).length ? ` (${cat.images.length})` : ''}</button>
     </div>
-    <dl class="detail-list">
-      ${renderDetailRow('抓捕/亲人状态', cat.friendliness)}
-      ${renderDetailRow('疫苗状态', cat.vaccine)}
-      ${renderDetailRow('下一针窗口', cat.nextWindow)}
-      ${renderDetailRow('绝育状态', cat.sterilized)}
-      ${renderDetailRow('领养人', cat.adopter)}
-      ${renderDetailRow('去向', cat.destination)}
-      ${renderDetailRow('备注', cat.notes)}
-    </dl>
+    <div class="drawer-content">
+      ${contentHtml}
+    </div>
   `;
 
   document.body.classList.add('drawer-open');
   document.getElementById('closeDrawer').focus();
   document.getElementById('closeDrawer').addEventListener('click', closeDrawer);
+
+  drawer.querySelectorAll('.drawer-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.drawerTab = btn.dataset.tab;
+      renderDrawer(cat);
+    });
+  });
 }
 
 function closeDrawer() {
@@ -341,6 +390,22 @@ function closeDrawer() {
   drawer.innerHTML = '';
   document.body.classList.remove('drawer-open');
 }
+
+function openPhotoViewer(img) {
+  const overlay = document.createElement('div');
+  overlay.className = 'photo-viewer';
+  overlay.innerHTML = `<img src="${img.src}" alt="${img.alt}">`;
+  overlay.addEventListener('click', () => overlay.remove());
+  document.addEventListener('keydown', function handler(e) {
+    if (e.key === 'Escape') {
+      overlay.remove();
+      document.removeEventListener('keydown', handler);
+    }
+  });
+  document.body.appendChild(overlay);
+}
+
+window.openPhotoViewer = openPhotoViewer;
 
 drawerBackdrop.addEventListener('click', closeDrawer);
 document.addEventListener('keydown', event => {
