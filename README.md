@@ -1,6 +1,8 @@
 # 猫协档案展示网站
 
-这是一个纯静态网页项目，用来展示猫猫常识和猫协档案信息。当前部署仓库是：
+这是一个纯静态网页项目，只负责展示猫协档案：校园猫状态、疫苗进度、绝育信息、领养去向和备注。
+
+当前部署仓库：
 
 ```text
 https://github.com/thebear617/cat-knowledge
@@ -21,25 +23,12 @@ https://github.com/thebear617/cat-knowledge
 │   └── style.css
 └── js/
     ├── app.js
-    ├── data.js
     └── cats.js
 ```
 
 ## 数据从哪里来
 
-### 猫猫常识内容
-
-网页里的猫种百科、喂养指南、健康常识、行为解读、日常护理等固定科普内容来自：
-
-```text
-js/data.js
-```
-
-这个文件定义 `catKnowledge`，由 `js/app.js` 渲染成顶部常识 tab 和常识卡片。
-
-### 猫协档案内容
-
-网页里的“猫协档案”tab 来自：
+网页读取的数据文件是：
 
 ```text
 js/cats.js
@@ -60,17 +49,17 @@ notes         备注
 source        来源表
 ```
 
-`js/app.js` 会读取这些记录，并渲染统计概览、状态筛选和猫咪档案卡片。
+`js/app.js` 负责读取 `catProfiles`，渲染统计总览、搜索、筛选、猫咪卡片和详情抽屉。
 
-### 事实源头
+## 事实源头
 
-`js/cats.js` 不是最终事实源头。猫协档案的事实源头仍然在 Obsidian vault：
+`js/cats.js` 只是前端展示用的结构化副本，不是最终事实源头。猫协档案的事实源头仍然在 Obsidian vault：
 
 ```text
 /Users/mokaiche/Documents/notes/01-Projects/猫协/猫只档案与疫苗绝育.md
 ```
 
-维护猫只状态、疫苗、绝育、领养和离世信息时，优先更新这份 Obsidian 档案。网站里的 `js/cats.js` 只是为了前端展示而整理出来的结构化副本。
+维护猫只状态、疫苗、绝育、领养和离世信息时，优先更新这份 Obsidian 档案。
 
 ## 当前更新流程
 
@@ -94,8 +83,8 @@ source        来源表
 
    ```bash
    git status
-   git add js/cats.js
-   git commit -m "Update cat archive data"
+   git add .
+   git commit -m "Update cat archive"
    git push origin main
    ```
 

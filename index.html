@@ -3,28 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>猫猫常识</title>
+  <title>猫协档案</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div>
+        <p class="eyebrow">XDU Cat Association</p>
+        <h1>猫协档案</h1>
+        <p class="subtitle">校园流浪猫状态、疫苗、绝育与领养去向的公开展示页</p>
+      </div>
+      <div class="header-panel">
+        <span class="panel-label">数据源</span>
+        <span class="panel-value">Obsidian 猫协档案</span>
+      </div>
+    </div>
+  </header>
 
-<header class="site-header">
-  <h1>🐱 猫猫常识</h1>
-  <p class="subtitle">从喂养到护理，一份给铲屎官的实用手册</p>
-</header>
+  <main id="app" class="app-shell"></main>
 
-<nav class="nav-tabs" id="navTabs"></nav>
+  <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
+  <aside class="cat-drawer" id="catDrawer" aria-live="polite" aria-label="猫咪详情" hidden></aside>
 
-<main>
-  <div id="sectionContainer"></div>
-</main>
+  <footer class="site-footer">
+    数据仅用于猫协内部协作与公开展示；医疗判断以兽医意见为准。
+  </footer>
 
-<footer class="site-footer">
-  仅作科普参考，不能替代专业兽医咨询
-</footer>
-
-<script src="js/data.js"></script>
-<script src="js/cats.js"></script>
-<script src="js/app.js"></script>
+  <script src="js/cats.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
