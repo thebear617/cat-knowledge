@@ -15,8 +15,6 @@ const state = {
 };
 
 const app = document.getElementById('app');
-const controlsContainer = document.getElementById('controls-container');
-const resultsContainer = document.getElementById('results-container');
 const drawer = document.getElementById('catDrawer');
 const drawerBackdrop = document.getElementById('drawerBackdrop');
 
@@ -181,37 +179,31 @@ function renderControls(filteredCount) {
   `;
 }
 
-function renderResults() {
+function renderApp() {
   const cats = getFilteredCats();
-  resultsContainer.innerHTML = `
+  app.innerHTML = `
     ${renderSummary()}
+    ${renderControls(cats.length)}
     ${renderCatGrid(cats)}
   `;
-  bindCatCards();
-
-  const countEl = document.querySelector('#controls-container .result-bar strong');
-  if (countEl) countEl.textContent = cats.length;
-}
-
-function initApp() {
-  const cats = getFilteredCats();
-  controlsContainer.innerHTML = renderControls(cats.length);
   bindControls();
-  renderResults();
 }
+
+let searchTimer = null;
 
 function bindControls() {
   const searchInput = document.getElementById('searchInput');
 
   searchInput.addEventListener('input', event => {
     state.query = event.target.value;
-    renderResults();
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => renderApp(), 200);
   });
 
   document.querySelectorAll('[data-filter]').forEach(control => {
     control.addEventListener('change', event => {
       state[event.target.dataset.filter] = event.target.value;
-      renderResults();
+      renderApp();
     });
   });
 
@@ -222,16 +214,10 @@ function bindControls() {
     state.sterilized = '全部';
     state.friendliness = '全部';
     state.sort = 'priority';
-
-    document.getElementById('searchInput').value = '';
-    document.getElementById('status').value = '全部';
-    document.getElementById('vaccine').value = '全部';
-    document.getElementById('sterilized').value = '全部';
-    document.getElementById('friendliness').value = '全部';
-    document.getElementById('sort').value = 'priority';
-
-    renderResults();
+    renderApp();
   });
+
+  bindCatCards();
 }
 
 function bindCatCards() {
@@ -438,4 +424,4 @@ document.addEventListener('keydown', event => {
   if (event.key === 'Escape' && !drawer.hidden) closeDrawer();
 });
 
-document.addEventListener('DOMContentLoaded', initApp);
+document.addEventListener('DOMContentLoaded', renderApp);
