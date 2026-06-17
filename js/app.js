@@ -263,7 +263,9 @@ function bindControls() {
   searchInput.addEventListener('input', event => {
     state.query = event.target.value;
     renderApp();
-    document.getElementById('searchInput').focus();
+    const restored = document.getElementById('searchInput');
+    restored.focus();
+    restored.setSelectionRange(restored.value.length, restored.value.length);
   });
 
   document.querySelectorAll('[data-filter]').forEach(control => {
