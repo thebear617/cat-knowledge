@@ -387,7 +387,7 @@ const catProfiles = [
     destination: '待补充',
     notes: '预计领养，具体日期待补充',
     source: '已领养猫咪名单',
-    images: []
+    images: ['images/大头/datou1.jpg', 'images/大头/datou2.jpg', 'images/大头/datou3.jpg']
   },
   {
     name: '漂亮橘',
