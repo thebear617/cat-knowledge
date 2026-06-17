@@ -192,15 +192,21 @@ function renderMeta(label, value) {
   `;
 }
 
+const CDN_BASE = 'https://cdn.jsdelivr.net/gh/thebear617/cat-knowledge@main';
 const IMG_VER = Date.now();
 const escaped = s => escapeHtml(s);
+
+function cdnUrl(path) {
+  if (!path) return path;
+  return path.startsWith('http') ? path : CDN_BASE + '/' + path;
+}
 
 function renderCatCard(cat) {
   const vaccineBucket = getVaccineBucket(cat);
   const sterilizedBucket = getSterilizedBucket(cat);
   return `
     <article class="cat-card" data-cat-name="${escapeHtml(cat.name)}" tabindex="0">
-      ${cat.image ? `<img class="cat-thumb" src="${escapeHtml(cat.image)}?v=${IMG_VER}" alt="${escapeHtml(cat.name)}" loading="lazy" onerror="this.parentElement.classList.add('img-missing')">` : ''}
+      ${cat.image ? `<img class="cat-thumb" src="${cdnUrl(cat.image)}?v=${IMG_VER}" alt="${escapeHtml(cat.name)}" loading="lazy" onerror="this.parentElement.classList.add('img-missing')">` : ''}
       <div class="cat-card-header">
         <div>
           <h2>${escapeHtml(cat.name)}</h2>
@@ -315,7 +321,7 @@ function renderDrawer(cat) {
 
   if (tab === 'profile') {
     contentHtml = `
-      ${cat.image ? `<img class="drawer-image" src="${escapeHtml(cat.image)}?v=${IMG_VER}" alt="${escapeHtml(cat.name)}">` : ''}
+      ${cat.image ? `<img class="drawer-image" src="${cdnUrl(cat.image)}?v=${IMG_VER}" alt="${escapeHtml(cat.name)}">` : ''}
       <div class="drawer-tags">
         ${renderStatusTag(cat)}
         <span class="tag vaccine-${getVaccineBucket(cat)}">${escapeHtml(getVaccineBucket(cat))}</span>
@@ -346,7 +352,7 @@ function renderDrawer(cat) {
         <div class="photo-grid">
           ${imgs.map(src => `
             <div class="photo-item">
-              <img src="${escapeHtml(src.replace(/([^/]+)$/, 'thumb/$1'))}?v=${IMG_VER}" data-full="${escapeHtml(src)}?v=${IMG_VER}" alt="${escapeHtml(cat.name)}" loading="lazy" onclick="openPhotoViewer(this)">
+              <img src="${cdnUrl(src.replace(/([^/]+)$/, 'thumb/$1'))}?v=${IMG_VER}" data-full="${cdnUrl(src)}?v=${IMG_VER}" alt="${escapeHtml(cat.name)}" loading="lazy" onclick="openPhotoViewer(this)">
             </div>
           `).join('')}
         </div>
