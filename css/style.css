@@ -9,6 +9,12 @@
   --orange-light: #fef3c7;
   --orange-dark: #b45309;
   --brown: #78350f;
+  --green: #059669;
+  --green-light: #d1fae5;
+  --blue: #2563eb;
+  --blue-light: #dbeafe;
+  --red: #dc2626;
+  --red-light: #fee2e2;
   --cream: #fffaf5;
   --gray-50: #f9fafb;
   --gray-100: #f3f4f6;
@@ -197,6 +203,177 @@ main {
   font-weight: 600;
 }
 
+/* Cat Archive */
+.archive-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: .75rem;
+  margin-bottom: 1rem;
+}
+
+.stat-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: .9rem 1rem;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--gray-100);
+}
+
+.stat-value {
+  display: block;
+  font-size: 1.5rem;
+  line-height: 1.1;
+  font-weight: 800;
+  color: var(--gray-900);
+}
+
+.stat-label {
+  display: block;
+  margin-top: .15rem;
+  color: var(--gray-500);
+  font-size: .8rem;
+  font-weight: 600;
+}
+
+.filter-row {
+  display: flex;
+  gap: .5rem;
+  overflow-x: auto;
+  margin: .25rem 0 1rem;
+  padding-bottom: .2rem;
+  scrollbar-width: none;
+}
+
+.filter-row::-webkit-scrollbar { display: none; }
+
+.filter-chip {
+  flex-shrink: 0;
+  border: 1px solid var(--gray-200);
+  background: var(--white);
+  color: var(--gray-700);
+  border-radius: 999px;
+  padding: .45rem .85rem;
+  font-size: .82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.filter-chip:hover {
+  border-color: var(--orange);
+  color: var(--orange-dark);
+}
+
+.filter-chip.active {
+  background: var(--gray-900);
+  border-color: var(--gray-900);
+  color: var(--white);
+}
+
+.cat-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.cat-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 1.15rem;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--gray-100);
+  transition: box-shadow .2s, transform .2s;
+}
+
+.cat-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.cat-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: .85rem;
+}
+
+.cat-card h3 {
+  font-size: 1.08rem;
+  line-height: 1.35;
+}
+
+.cat-card-top p {
+  color: var(--gray-500);
+  font-size: .78rem;
+  margin-top: .1rem;
+}
+
+.status-pill {
+  flex-shrink: 0;
+  border-radius: 999px;
+  padding: .18rem .6rem;
+  background: var(--blue-light);
+  color: var(--blue);
+  font-size: .72rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.status-在校 {
+  background: var(--green-light);
+  color: var(--green);
+}
+
+.status-预计领养 {
+  background: var(--orange-light);
+  color: var(--orange-dark);
+}
+
+.status-已领养 {
+  background: var(--blue-light);
+  color: var(--blue);
+}
+
+.status-已离世,
+.status-失踪 {
+  background: var(--red-light);
+  color: var(--red);
+}
+
+.cat-fields {
+  display: grid;
+  gap: .55rem;
+}
+
+.cat-fields div {
+  display: grid;
+  grid-template-columns: 4.4rem 1fr;
+  gap: .65rem;
+  align-items: start;
+}
+
+.cat-fields dt {
+  color: var(--gray-500);
+  font-size: .76rem;
+  font-weight: 700;
+}
+
+.cat-fields dd {
+  color: var(--gray-700);
+  font-size: .84rem;
+  line-height: 1.55;
+}
+
+.cat-note {
+  margin-top: .85rem;
+  padding-top: .8rem;
+  border-top: 1px solid var(--gray-100);
+  color: var(--gray-700);
+  font-size: .85rem;
+  line-height: 1.6;
+}
+
 /* Footer */
 .site-footer {
   text-align: center;
@@ -210,6 +387,14 @@ main {
 /* Desktop */
 @media (min-width: 640px) {
   .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .archive-stats {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .cat-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
