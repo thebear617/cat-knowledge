@@ -253,10 +253,11 @@ select {
 
 .cat-thumb {
   width: calc(100% + 2rem);
-  height: 180px;
+  height: 160px;
   object-fit: cover;
   margin: -1rem -1rem 1rem;
   border-radius: var(--radius) var(--radius) 0 0;
+  background: var(--line);
 }
 
 .drawer-image {
