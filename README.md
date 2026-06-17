@@ -19,6 +19,7 @@ https://github.com/thebear617/cat-knowledge
 ```text
 .
 ├── index.html
+├── add-photo.sh         # 照片一键处理脚本
 ├── css/
 │   └── style.css
 ├── js/
@@ -105,6 +106,20 @@ images        照片路径数组（相对路径，如 ['images/大头/datou1.jpg
 每只猫咪的详情抽屉中有"档案"和"照片"两个 Tab，照片 Tab 展示该猫的照片画廊。
 
 ### 添加照片步骤
+
+#### 推荐：使用脚本一键处理
+
+```bash
+./add-photo.sh <猫名> <照片路径> [更多照片...]
+
+# 示例
+./add-photo.sh 二柑 ~/Downloads/photo.jpg
+./add-photo.sh 大头 ~/Desktop/datou4.jpg ~/Desktop/datou5.jpg
+```
+
+脚本会自动完成：缩放原图（≤1200px）→ 生成缩略图 → 更新 `cats.js` 中的 `images` 数组。完成后只需 commit + push。
+
+#### 手动方式
 
 1. 将照片放入 `images/{猫名}/` 目录，例如 `images/大头/datou1.jpg`
 2. 如照片分辨率超过 1200px，先用 `sips` 缩放：
