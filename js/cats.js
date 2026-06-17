@@ -179,7 +179,7 @@ const catProfiles = [
     destination: '学校',
     notes: '—',
     source: '在校猫咪名单',
-    images: []
+    images: ['images/二柑/二柑1.jpg']
   },
   {
     name: '渣男',
