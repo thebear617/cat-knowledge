@@ -258,14 +258,28 @@ function renderApp() {
   bindControls();
 }
 
+let isComposing = false;
+
 function bindControls() {
   const searchInput = document.getElementById('searchInput');
-  searchInput.addEventListener('input', event => {
+
+  searchInput.addEventListener('compositionstart', () => {
+    isComposing = true;
+  });
+
+  searchInput.addEventListener('compositionend', event => {
+    isComposing = false;
     state.query = event.target.value;
     renderApp();
     const restored = document.getElementById('searchInput');
     restored.focus();
     restored.setSelectionRange(restored.value.length, restored.value.length);
+  });
+
+  searchInput.addEventListener('input', event => {
+    if (isComposing) return;
+    state.query = event.target.value;
+    renderApp();
   });
 
   document.querySelectorAll('[data-filter]').forEach(control => {
