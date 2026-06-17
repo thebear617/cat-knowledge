@@ -349,7 +349,6 @@ const catProfiles = [
   },
   {
     name: '大头',
-    image: 'cat-daton-1.jpg',
     status: '预计领养',
     friendliness: '—',
     vaccine: '妙三多·一针 2025-07-27；二针 2025-09-09；三针 2025-10-07（紫薇京和）',
