@@ -152,10 +152,13 @@ function renderControls(filteredCount) {
   return `
     <section class="controls" aria-label="筛选和搜索">
       <div class="search-row">
-        <label class="search-box" for="searchInput">
+        <div class="search-box">
           <span>搜索</span>
-          <input id="searchInput" type="search" value="${escapeHtml(state.query)}" placeholder="猫名、疫苗、领养人、备注..." autocomplete="off">
-        </label>
+          <div class="search-input-row">
+            <input id="searchInput" type="search" value="${escapeHtml(state.query)}" placeholder="猫名、疫苗、领养人、备注..." autocomplete="off">
+            <button class="search-btn" id="searchBtn" title="搜索（回车也可）">搜索</button>
+          </div>
+        </div>
         <label class="filter-field sort-field" for="sort">
           <span>排序</span>
           <select id="sort" data-filter="sort">
@@ -189,16 +192,30 @@ function renderApp() {
   bindControls();
 }
 
-let searchTimer = null;
-
 function bindControls() {
   const searchInput = document.getElementById('searchInput');
+  const searchBtn = document.getElementById('searchBtn');
 
-  searchInput.addEventListener('input', event => {
-    state.query = event.target.value;
-    clearTimeout(searchTimer);
-    searchTimer = setTimeout(() => renderApp(), 200);
+  function doSearch() {
+    const val = searchInput.value.trim();
+    if (val !== state.query) {
+      state.query = val;
+      renderApp();
+    }
+  }
+
+  searchInput.addEventListener('keydown', event => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      doSearch();
+    }
   });
+
+  if (searchBtn) {
+    searchBtn.addEventListener('click', () => {
+      doSearch();
+    });
+  }
 
   document.querySelectorAll('[data-filter]').forEach(control => {
     control.addEventListener('change', event => {
