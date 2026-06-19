@@ -795,21 +795,33 @@ body.drawer-open {
 /* ===== Timeline Tab ===== */
 
 .timeline-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: .75rem;
+  position: relative;
+  padding-left: 1.6rem;
+}
+
+.timeline-grid::before {
+  content: '';
+  position: absolute;
+  left: .6rem;
+  top: .25rem;
+  bottom: .25rem;
+  width: 2px;
+  background: var(--line);
 }
 
 .timeline-card {
+  position: relative;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
   padding: 1rem;
   box-shadow: var(--shadow);
-  display: flex;
-  flex-direction: column;
-  gap: .4rem;
+  margin-bottom: .85rem;
   transition: border-color .18s, transform .18s, box-shadow .18s;
+}
+
+.timeline-card:last-child {
+  margin-bottom: 0;
 }
 
 .timeline-card:hover {
@@ -818,15 +830,29 @@ body.drawer-open {
   transform: translateY(-2px);
 }
 
+.timeline-card::before {
+  content: '';
+  position: absolute;
+  left: -1.32rem;
+  top: 1.2rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 2px solid #c08a2f;
+  box-shadow: 0 0 0 3px var(--bg);
+}
+
 .timeline-card-top {
   display: flex;
   gap: .5rem;
   align-items: center;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: .35rem;
 }
 
 .timeline-card-date {
-  font-size: .76rem;
+  font-size: .78rem;
   font-weight: 800;
   color: var(--muted);
 }
@@ -865,27 +891,57 @@ body.drawer-open {
 }
 
 .timeline-card-location {
+  margin-top: .2rem;
   font-size: .8rem;
   color: var(--muted);
 }
 
 .timeline-card-note {
+  margin-top: .4rem;
+  padding-top: .4rem;
+  border-top: 1px solid var(--line);
   font-size: .84rem;
   color: #4b5563;
   line-height: 1.55;
-  padding-top: .4rem;
-  border-top: 1px solid var(--line);
 }
 
 @media (min-width: 720px) {
   .timeline-grid {
-    grid-template-columns: repeat(2, 1fr);
+    padding-left: 0;
+  }
+
+  .timeline-grid::before {
+    left: 50%;
+  }
+
+  .timeline-card {
+    width: calc(50% - 1.4rem);
+    margin-bottom: 1rem;
+  }
+
+  .timeline-card:nth-child(odd) {
+    margin-left: 0;
+    margin-right: auto;
+  }
+
+  .timeline-card:nth-child(odd)::before {
+    left: auto;
+    right: -1.58rem;
+  }
+
+  .timeline-card:nth-child(even) {
+    margin-left: auto;
+    margin-right: 0;
+  }
+
+  .timeline-card:nth-child(even)::before {
+    left: -1.58rem;
   }
 }
 
 @media (min-width: 1040px) {
-  .timeline-grid {
-    grid-template-columns: repeat(3, 1fr);
+  .timeline-card {
+    width: calc(50% - 2rem);
   }
 }
 
