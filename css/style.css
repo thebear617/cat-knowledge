@@ -632,6 +632,247 @@ body.drawer-open {
   overflow: hidden;
 }
 
+.tab-bar {
+  display: flex;
+  gap: .5rem;
+  margin-bottom: 1rem;
+}
+
+.tab-button {
+  flex: 1;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: .7rem .6rem;
+  color: var(--muted);
+  font-size: .88rem;
+  font-weight: 800;
+  transition: border-color .18s, box-shadow .18s, background .18s, color .18s;
+  box-shadow: 0 1px 3px rgba(0,0,0,.04);
+}
+
+.tab-button:hover {
+  border-color: #c08a2f;
+}
+
+.tab-button.active {
+  border-color: #c08a2f;
+  background: #2f2924;
+  color: #f7c974;
+  box-shadow: var(--shadow);
+}
+
+.tab-panel {
+  animation: fadeIn .2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Supplies Tab ===== */
+
+.supplies-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.supply-category {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.supply-category h3 {
+  font-size: 1rem;
+  margin-bottom: .75rem;
+}
+
+.supply-empty {
+  color: var(--muted);
+  font-size: .86rem;
+}
+
+.supply-table {
+  display: grid;
+  gap: .25rem;
+}
+
+.supply-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 2fr;
+  gap: .5rem;
+  padding: .55rem .35rem;
+  border-radius: 6px;
+  font-size: .82rem;
+  align-items: center;
+}
+
+.supply-row-header {
+  color: var(--muted);
+  font-weight: 800;
+  font-size: .72rem;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: .4rem;
+  margin-bottom: .2rem;
+}
+
+.supply-row:not(.supply-row-header):nth-child(odd) {
+  background: var(--surface-soft);
+}
+
+/* ===== SOP Tab ===== */
+
+.sop-list {
+  display: grid;
+  gap: .75rem;
+}
+
+.sop-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.sop-title {
+  display: block;
+  padding: .9rem 1rem;
+  font-weight: 900;
+  font-size: 1rem;
+  cursor: pointer;
+  user-select: none;
+  transition: background .15s;
+}
+
+.sop-title:hover {
+  background: var(--surface-soft);
+}
+
+.sop-card[open] .sop-title {
+  border-bottom: 1px solid var(--line);
+}
+
+.sop-body {
+  padding: 1rem;
+}
+
+.sop-section {
+  margin-bottom: 1rem;
+}
+
+.sop-section:last-child {
+  margin-bottom: 0;
+}
+
+.sop-section h4 {
+  font-size: .88rem;
+  color: var(--amber);
+  margin-bottom: .35rem;
+}
+
+.sop-section ul {
+  padding-left: 1.2rem;
+}
+
+.sop-section li {
+  font-size: .86rem;
+  line-height: 1.7;
+  color: #33302d;
+}
+
+/* ===== Timeline Tab ===== */
+
+.timeline-list {
+  position: relative;
+  padding-left: 1.2rem;
+}
+
+.timeline-list::before {
+  content: '';
+  position: absolute;
+  left: .48rem;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--line);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 1.2rem;
+  padding-left: 1.8rem;
+}
+
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+.timeline-date {
+  font-size: .78rem;
+  font-weight: 800;
+  color: var(--muted);
+  margin-bottom: .3rem;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -.48rem;
+  top: .4rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #c08a2f;
+  border: 2px solid var(--bg);
+  z-index: 1;
+}
+
+.timeline-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: .85rem 1rem;
+  box-shadow: var(--shadow);
+}
+
+.timeline-header {
+  display: flex;
+  gap: .5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.timeline-header strong {
+  font-size: .95rem;
+}
+
+.timeline-type {
+  display: inline-block;
+  background: var(--amber-bg);
+  color: var(--amber);
+  border-radius: 999px;
+  padding: .1rem .5rem;
+  font-size: .7rem;
+  font-weight: 900;
+}
+
+.timeline-location {
+  margin-top: .3rem;
+  color: var(--muted);
+  font-size: .82rem;
+}
+
+.timeline-note {
+  margin-top: .4rem;
+  color: #4b5563;
+  font-size: .84rem;
+  line-height: 1.6;
+}
+
 .site-footer {
   border-top: 1px solid var(--line);
   color: var(--muted);

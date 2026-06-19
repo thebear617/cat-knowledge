@@ -3,6 +3,13 @@ const VACCINE_OPTIONS = ['全部', '待首针', '需补针', '超窗口', '三�
 const STERILIZED_OPTIONS = ['全部', '已绝育', '未确认'];
 const FRIENDLINESS_OPTIONS = ['全部', '不怕人', '有点怕人', '行踪不定', '状态待补充'];
 
+const TABS = [
+  { id: 'cats', title: '猫只档案' },
+  { id: 'supplies', title: '物资管理' },
+  { id: 'sop', title: '标准 SOP' },
+  { id: 'timeline', title: '猫猫编年史' }
+];
+
 const state = {
   query: '',
   status: '全部',
@@ -11,7 +18,8 @@ const state = {
   friendliness: '全部',
   sort: 'priority',
   selectedName: null,
-  drawerTab: 'profile'
+  drawerTab: 'profile',
+  activeTab: 'cats'
 };
 
 const app = document.getElementById('app');
@@ -121,7 +129,32 @@ function getFilteredCats() {
   });
 }
 
-function renderSummary() {
+const CDN_BASE = 'https://cdn.jsdelivr.net/gh/thebear617/cat-knowledge@main';
+const IMG_VER = Date.now();
+
+function cdnUrl(path) {
+  if (!path) return path;
+  return path.startsWith('http') ? path : CDN_BASE + '/' + path;
+}
+
+// ============== Tab Navigation ==============
+
+function buildTabBar() {
+  return `
+    <nav class="tab-bar" role="tablist">
+      ${TABS.map(tab => {
+        const active = tab.id === state.activeTab ? ' active' : '';
+        return `<button class="tab-button${active}" role="tab" data-tab="${tab.id}" aria-selected="${tab.id === state.activeTab}">
+          ${escapeHtml(tab.title)}
+        </button>`;
+      }).join('')}
+    </nav>
+  `;
+}
+
+// ============== Cat Profile Tab ==============
+
+function renderCatSummary() {
   return `
     <section class="summary-grid" aria-label="猫协档案统计">
       ${getSummary().map(item => `
@@ -147,7 +180,7 @@ function renderSelect(label, id, options, value) {
   `;
 }
 
-function renderControls(filteredCount) {
+function renderCatControls(filteredCount) {
   const availableStatuses = STATUS_ORDER.filter(status => status === '全部' || catProfiles.some(cat => cat.status === status));
   return `
     <section class="controls" aria-label="筛选和搜索">
@@ -182,73 +215,6 @@ function renderControls(filteredCount) {
   `;
 }
 
-function renderApp() {
-  const cats = getFilteredCats();
-  app.innerHTML = `
-    ${renderSummary()}
-    ${renderControls(cats.length)}
-    ${renderCatGrid(cats)}
-  `;
-  bindControls();
-}
-
-function bindControls() {
-  const searchInput = document.getElementById('searchInput');
-  const searchBtn = document.getElementById('searchBtn');
-
-  function doSearch() {
-    const val = searchInput.value.trim();
-    if (val !== state.query) {
-      state.query = val;
-      renderApp();
-    }
-  }
-
-  searchInput.addEventListener('keydown', event => {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      doSearch();
-    }
-  });
-
-  if (searchBtn) {
-    searchBtn.addEventListener('click', () => {
-      doSearch();
-    });
-  }
-
-  document.querySelectorAll('[data-filter]').forEach(control => {
-    control.addEventListener('change', event => {
-      state[event.target.dataset.filter] = event.target.value;
-      renderApp();
-    });
-  });
-
-  document.getElementById('resetFilters').addEventListener('click', () => {
-    state.query = '';
-    state.status = '全部';
-    state.vaccine = '全部';
-    state.sterilized = '全部';
-    state.friendliness = '全部';
-    state.sort = 'priority';
-    renderApp();
-  });
-
-  bindCatCards();
-}
-
-function bindCatCards() {
-  document.querySelectorAll('.cat-card').forEach(card => {
-    card.addEventListener('click', () => openDrawer(card.dataset.catName));
-    card.addEventListener('keydown', event => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        openDrawer(card.dataset.catName);
-      }
-    });
-  });
-}
-
 function renderStatusTag(cat) {
   return `<span class="status-pill status-${cat.status}">${escapeHtml(cat.status)}</span>`;
 }
@@ -260,14 +226,6 @@ function renderMeta(label, value) {
       <strong>${escapeHtml(value || '—')}</strong>
     </div>
   `;
-}
-
-const CDN_BASE = 'https://cdn.jsdelivr.net/gh/thebear617/cat-knowledge@main';
-const IMG_VER = Date.now();
-
-function cdnUrl(path) {
-  if (!path) return path;
-  return path.startsWith('http') ? path : CDN_BASE + '/' + path;
 }
 
 function renderCatCard(cat) {
@@ -435,6 +393,293 @@ function openPhotoViewer(img) {
 }
 
 window.openPhotoViewer = openPhotoViewer;
+
+// ============== Supplies Tab ==============
+
+function getFilteredSupplies() {
+  const q = normalize(state.query);
+  if (!q) return supplies;
+  return supplies.map(category => {
+    const matched = category.items.filter(item =>
+      normalize(item.name).includes(q) || normalize(item.notes || '').includes(q)
+    );
+    return matched.length > 0 ? { ...category, items: matched } : null;
+  }).filter(Boolean);
+}
+
+function renderSuppliesTab() {
+  const data = getFilteredSupplies();
+  let html = buildSearchBar('supplies', '物资名称、备注...');
+
+  if (!data.length) {
+    html += '<section class="empty-state"><h2>没有匹配的物资</h2><p>可以清除搜索试试。</p></section>';
+  } else {
+    html += '<div class="supplies-list">';
+    for (const cat of data) {
+      html += `<div class="supply-category">
+        <h3>${escapeHtml(cat.category)}</h3>`;
+      if (!cat.items.length) {
+        html += '<p class="supply-empty">暂无记录</p>';
+      } else {
+        html += '<div class="supply-table">';
+        html += '<div class="supply-row supply-row-header"><span>名称</span><span>规格</span><span>价格</span><span>日期</span><span>备注</span></div>';
+        for (const item of cat.items) {
+          html += `<div class="supply-row">
+            <span><strong>${escapeHtml(item.name)}</strong></span>
+            <span>${escapeHtml(item.spec || '—')}</span>
+            <span>${escapeHtml(item.price || '—')}</span>
+            <span>${escapeHtml(item.date || '—')}</span>
+            <span>${escapeHtml(item.notes || '—')}</span>
+          </div>`;
+        }
+        html += '</div>';
+      }
+      html += '</div>';
+    }
+    html += '</div>';
+  }
+
+  return html;
+}
+
+// ============== SOP Tab ==============
+
+function getFilteredSops() {
+  const q = normalize(state.query);
+  if (!q) return sops;
+  return sops.map(sop => {
+    const matched = sop.sections.map(section => {
+      const matchedItems = section.items.filter(item =>
+        normalize(item).includes(q)
+      );
+      return matchedItems.length > 0 ? { ...section, items: matchedItems } : null;
+    }).filter(Boolean);
+    return matched.length > 0 ? { ...sop, sections: matched } : null;
+  }).filter(Boolean);
+}
+
+function renderSopTab() {
+  const data = getFilteredSops();
+  let html = buildSearchBar('sop', '搜索 SOP 内容...');
+
+  if (!data.length) {
+    html += '<section class="empty-state"><h2>没有匹配的 SOP</h2><p>可以清除搜索试试。</p></section>';
+  } else {
+    html += '<div class="sop-list">';
+    for (const sop of data) {
+      html += `<details class="sop-card" open>
+        <summary class="sop-title">${escapeHtml(sop.title)}</summary>
+        <div class="sop-body">`;
+      for (const section of sop.sections) {
+        html += `<div class="sop-section">
+          <h4>${escapeHtml(section.title)}</h4>
+          <ul>`;
+        for (const item of section.items) {
+          html += `<li>${escapeHtml(item)}</li>`;
+        }
+        html += '</ul></div>';
+      }
+      html += '</div></details>';
+    }
+    html += '</div>';
+  }
+
+  return html;
+}
+
+// ============== Timeline Tab ==============
+
+function getFilteredTimeline() {
+  const q = normalize(state.query);
+  if (!q) return timelineEvents;
+  return timelineEvents.filter(event =>
+    normalize(event.cat).includes(q) ||
+    normalize(event.type).includes(q) ||
+    normalize(event.notes || '').includes(q) ||
+    normalize(event.location || '').includes(q)
+  );
+}
+
+function renderTimelineTab() {
+  const events = getFilteredTimeline();
+  let html = buildSearchBar('timeline', '搜索猫名、事件类型...');
+
+  if (!events.length) {
+    html += '<section class="empty-state"><h2>没有匹配的事件</h2><p>可以清除搜索试试。</p></section>';
+  } else {
+    html += '<div class="timeline-list">';
+    for (const event of events) {
+      html += `<div class="timeline-item">
+        <div class="timeline-date">${escapeHtml(event.date)}</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-header">
+            <strong>${escapeHtml(event.cat)}</strong>
+            <span class="timeline-type">${escapeHtml(event.type)}</span>
+          </div>
+          ${event.location ? `<p class="timeline-location">📍 ${escapeHtml(event.location)}</p>` : ''}
+          <p class="timeline-note">${escapeHtml(event.notes)}</p>
+        </div>
+      </div>`;
+    }
+    html += '</div>';
+  }
+
+  return html;
+}
+
+// ============== Shared Search Bar ==============
+
+function buildSearchBar(tabId, placeholder) {
+  return `
+    <section class="controls" aria-label="搜索">
+      <div class="search-row">
+        <div class="search-box">
+          <span>搜索</span>
+          <div class="search-input-row">
+            <input id="searchInput" type="search" value="${escapeHtml(state.query)}" placeholder="${placeholder}" autocomplete="off">
+            <button class="search-btn" id="searchBtn" title="搜索（回车也可）">搜索</button>
+          </div>
+        </div>
+      </div>
+      ${state.query ? `
+      <div class="result-bar">
+        <span></span>
+        <button class="text-button" id="clearSearch" type="button">✕ 清除搜索</button>
+      </div>` : ''}
+    </section>
+  `;
+}
+
+// ============== Main Render ==============
+
+function renderCatsTab() {
+  const cats = getFilteredCats();
+  return `
+    ${renderCatSummary()}
+    ${renderCatControls(cats.length)}
+    ${renderCatGrid(cats)}
+  `;
+}
+
+function renderApp() {
+  let content = '';
+
+  if (state.activeTab === 'cats') {
+    content = renderCatsTab();
+  } else if (state.activeTab === 'supplies') {
+    content = renderSuppliesTab();
+  } else if (state.activeTab === 'sop') {
+    content = renderSopTab();
+  } else if (state.activeTab === 'timeline') {
+    content = renderTimelineTab();
+  }
+
+  app.innerHTML = `
+    ${buildTabBar()}
+    <div class="tab-panel">
+      ${content}
+    </div>
+  `;
+
+  bindControls();
+}
+
+// ============== Event Binding ==============
+
+function bindControls() {
+  // Tab switching
+  app.querySelectorAll('.tab-button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const newTab = btn.dataset.tab;
+      if (newTab !== state.activeTab) {
+        state.activeTab = newTab;
+        state.query = '';
+        state.status = '全部';
+        state.vaccine = '全部';
+        state.sterilized = '全部';
+        state.friendliness = '全部';
+        state.sort = 'priority';
+        renderApp();
+      }
+    });
+  });
+
+  // Search
+  const searchInput = document.getElementById('searchInput');
+  const searchBtn = document.getElementById('searchBtn');
+
+  if (searchInput) {
+    function doSearch() {
+      const val = searchInput.value.trim();
+      if (val !== state.query) {
+        state.query = val;
+        renderApp();
+      }
+    }
+
+    searchInput.addEventListener('keydown', event => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        doSearch();
+      }
+    });
+
+    if (searchBtn) {
+      searchBtn.addEventListener('click', () => {
+        doSearch();
+      });
+    }
+  }
+
+  // Clear search
+  const clearSearch = document.getElementById('clearSearch');
+  if (clearSearch) {
+    clearSearch.addEventListener('click', () => {
+      state.query = '';
+      renderApp();
+    });
+  }
+
+  // Cats tab specific
+  if (state.activeTab === 'cats') {
+    document.querySelectorAll('[data-filter]').forEach(control => {
+      control.addEventListener('change', event => {
+        state[event.target.dataset.filter] = event.target.value;
+        renderApp();
+      });
+    });
+
+    const resetBtn = document.getElementById('resetFilters');
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        state.query = '';
+        state.status = '全部';
+        state.vaccine = '全部';
+        state.sterilized = '全部';
+        state.friendliness = '全部';
+        state.sort = 'priority';
+        renderApp();
+      });
+    }
+
+    bindCatCards();
+  }
+}
+
+function bindCatCards() {
+  document.querySelectorAll('.cat-card').forEach(card => {
+    card.addEventListener('click', () => openDrawer(card.dataset.catName));
+    card.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openDrawer(card.dataset.catName);
+      }
+    });
+  });
+}
+
+// ============== Global Events ==============
 
 drawerBackdrop.addEventListener('click', closeDrawer);
 document.addEventListener('keydown', event => {
