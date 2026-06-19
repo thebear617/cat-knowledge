@@ -511,17 +511,57 @@ function renderTimelineTab() {
   if (!events.length) {
     html += '<section class="empty-state"><h2>没有匹配的事件</h2><p>可以清除搜索试试。</p></section>';
   } else {
-    html += '<div class="timeline-grid">';
+    const months = {};
     for (const event of events) {
-      html += `<div class="timeline-card">
-        <div class="timeline-card-top">
-          <span class="timeline-card-date">${escapeHtml(event.date)}</span>
-          <span class="timeline-card-type timeline-card-type-${event.type}">${escapeHtml(event.type)}</span>
-        </div>
-        <div class="timeline-card-cat">${escapeHtml(event.cat)}</div>
-        ${event.location ? `<div class="timeline-card-location">📍 ${escapeHtml(event.location)}</div>` : ''}
-        ${event.notes ? `<div class="timeline-card-note">${escapeHtml(event.notes)}</div>` : ''}
-      </div>`;
+      const key = event.date.slice(0, 7);
+      if (!months[key]) months[key] = [];
+      months[key].push(event);
+    }
+
+    const monthGradients = [
+      { gradient: 'linear-gradient(135deg, #e0c3fc, #8ec5fc)', text: '#2f2924' },  // 1月 冬紫
+      { gradient: 'linear-gradient(135deg, #fdcbf1, #e6dee9)', text: '#2f2924' },  // 2月 浅粉
+      { gradient: 'linear-gradient(135deg, #ffecd2, #fcb69f)', text: '#2f2924' },  // 3月 蜜桃
+      { gradient: 'linear-gradient(135deg, #fad0c4, #ffd1ff)', text: '#2f2924' },  // 4月 春樱
+      { gradient: 'linear-gradient(135deg, #f6d365, #fda085)', text: '#2f2924' },  // 5月 暖阳
+      { gradient: 'linear-gradient(135deg, #e6b980, #eacda3)', text: '#2f2924' },  // 6月 焦糖
+      { gradient: 'linear-gradient(135deg, #fa709a, #fee140)', text: '#2f2924' },  // 7月 盛夏
+      { gradient: 'linear-gradient(135deg, #c79081, #dfa579)', text: '#f7c974' },   // 8月 沙漠
+      { gradient: 'linear-gradient(135deg, #f83600, #f9d423)', text: '#f7c974' },   // 9月 秋焰
+      { gradient: 'linear-gradient(135deg, #feada6, #f5efef)', text: '#2f2924' },  // 10月 柔粉
+      { gradient: 'linear-gradient(135deg, #868f96, #596164)', text: '#f7c974' },   // 11月 冬灰
+      { gradient: 'linear-gradient(135deg, #cfd9df, #e2ebf0)', text: '#2f2924' }   // 12月 银霜
+    ];
+    const monthNames = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
+    for (const [key, items] of Object.entries(months).sort()) {
+      const [year, month] = key.split('-');
+      const m = parseInt(month, 10);
+      const label = `${year}年${monthNames[m - 1]}`;
+      const g = monthGradients[m - 1];
+      const hasMatch = !!state.query;
+      html += `<details class="timeline-month-card"${hasMatch ? ' open' : ''}>
+        <summary class="timeline-month-header" style="background:${g.gradient};color:${g.text}">
+          <h3>${label}</h3>
+          <span class="timeline-month-count">${items.length} 条记录</span>
+          <span class="timeline-month-arrow">▾</span>
+        </summary>
+        <div class="timeline-month-body">`;
+      for (const event of items) {
+        const day = event.date.slice(5);
+        html += `<div class="timeline-month-item">
+          <span class="timeline-month-day">${day}</span>
+          <div class="timeline-month-content">
+            <div class="timeline-month-cat">
+              ${escapeHtml(event.cat)}
+              <span class="timeline-month-badge timeline-month-badge-${event.type}">${escapeHtml(event.type)}</span>
+            </div>
+            <div class="timeline-month-desc">
+              ${event.location ? `📍 ${escapeHtml(event.location)}` : ''}${event.location && event.notes ? ' · ' : ''}${event.notes ? escapeHtml(event.notes) : ''}
+            </div>
+          </div>
+        </div>`;
+      }
+      html += '</div></details>';
     }
     html += '</div>';
   }
