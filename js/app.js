@@ -511,19 +511,16 @@ function renderTimelineTab() {
   if (!events.length) {
     html += '<section class="empty-state"><h2>没有匹配的事件</h2><p>可以清除搜索试试。</p></section>';
   } else {
-    html += '<div class="timeline-list">';
+    html += '<div class="timeline-grid">';
     for (const event of events) {
-      html += `<div class="timeline-item">
-        <div class="timeline-date">${escapeHtml(event.date)}</div>
-        <div class="timeline-dot"></div>
-        <div class="timeline-card">
-          <div class="timeline-header">
-            <strong>${escapeHtml(event.cat)}</strong>
-            <span class="timeline-type">${escapeHtml(event.type)}</span>
-          </div>
-          ${event.location ? `<p class="timeline-location">📍 ${escapeHtml(event.location)}</p>` : ''}
-          <p class="timeline-note">${escapeHtml(event.notes)}</p>
+      html += `<div class="timeline-card">
+        <div class="timeline-card-top">
+          <span class="timeline-card-date">${escapeHtml(event.date)}</span>
+          <span class="timeline-card-type timeline-card-type-${event.type}">${escapeHtml(event.type)}</span>
         </div>
+        <div class="timeline-card-cat">${escapeHtml(event.cat)}</div>
+        ${event.location ? `<div class="timeline-card-location">📍 ${escapeHtml(event.location)}</div>` : ''}
+        ${event.notes ? `<div class="timeline-card-note">${escapeHtml(event.notes)}</div>` : ''}
       </div>`;
     }
     html += '</div>';
