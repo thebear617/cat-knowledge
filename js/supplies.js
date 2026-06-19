@@ -11,9 +11,9 @@ const supplies = [
   },
   {
     category: '猫粮',
-    note: '现有猫粮分布',
+    note: '现有猫粮分布。海棠 5 号楼为总仓',
     items: [
-      { name: '蓝氏 猎鸟乳鸽', location: '海棠 5 号楼', spec: '4.5 KG', status: '—', notes: '海棠片区' }
+      { name: '蓝氏 猎鸟乳鸽', location: '海棠 5 号楼（总仓）', spec: '4.5 KG', status: '—', notes: '' }
     ]
   },
   {
