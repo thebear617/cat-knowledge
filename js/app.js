@@ -7,7 +7,8 @@ const TABS = [
   { id: 'cats', title: '猫只档案' },
   { id: 'supplies', title: '物资管理' },
   { id: 'sop', title: '标准 SOP' },
-  { id: 'timeline', title: '猫猫编年史' }
+  { id: 'timeline', title: '猫猫编年史' },
+  { id: 'roles', title: '猫协分工' }
 ];
 
 const state = {
@@ -418,17 +419,20 @@ function renderSuppliesTab() {
     for (const cat of data) {
       html += `<div class="supply-category">
         <h3>${escapeHtml(cat.category)}</h3>`;
+      if (cat.note) {
+        html += `<p class="supply-cat-note">${escapeHtml(cat.note)}</p>`;
+      }
       if (!cat.items.length) {
         html += '<p class="supply-empty">暂无记录</p>';
       } else {
         html += '<div class="supply-table">';
-        html += '<div class="supply-row supply-row-header"><span>名称</span><span>规格</span><span>价格</span><span>日期</span><span>备注</span></div>';
+        html += '<div class="supply-row supply-row-header"><span>名称</span><span>位置</span><span>规格</span><span>状态</span><span>备注</span></div>';
         for (const item of cat.items) {
           html += `<div class="supply-row">
             <span><strong>${escapeHtml(item.name)}</strong></span>
+            <span>${escapeHtml(item.location || '—')}</span>
             <span>${escapeHtml(item.spec || '—')}</span>
-            <span>${escapeHtml(item.price || '—')}</span>
-            <span>${escapeHtml(item.date || '—')}</span>
+            <span>${escapeHtml(item.status || '—')}</span>
             <span>${escapeHtml(item.notes || '—')}</span>
           </div>`;
         }
@@ -528,6 +532,48 @@ function renderTimelineTab() {
   return html;
 }
 
+// ============== Roles Tab ==============
+
+function getFilteredRoles() {
+  const q = normalize(state.query);
+  if (!q) return roles;
+  return roles.map(role => {
+    const matched = role.phases.filter(phase =>
+      normalize(phase.label).includes(q) || normalize(phase.detail).includes(q)
+    );
+    return matched.length > 0 ? { ...role, phases: matched } : null;
+  }).filter(Boolean);
+}
+
+function renderRolesTab() {
+  const data = getFilteredRoles();
+  let html = buildSearchBar('roles', '搜索组名、职责...');
+
+  if (!data.length) {
+    html += '<section class="empty-state"><h2>没有匹配的分工</h2><p>可以清除搜索试试。</p></section>';
+  } else {
+    html += '<div class="roles-list">';
+    for (const role of data) {
+      html += `<div class="role-card">
+        <div class="role-header">
+          <h3>${escapeHtml(role.name)}</h3>
+          <p class="role-desc">${escapeHtml(role.description)}</p>
+        </div>
+        <div class="role-phases">`;
+      for (const phase of role.phases) {
+        html += `<div class="role-phase">
+          <span class="role-phase-label">${escapeHtml(phase.label)}</span>
+          <span class="role-phase-detail">${escapeHtml(phase.detail)}</span>
+        </div>`;
+      }
+      html += '</div></div>';
+    }
+    html += '</div>';
+  }
+
+  return html;
+}
+
 // ============== Shared Search Bar ==============
 
 function buildSearchBar(tabId, placeholder) {
@@ -573,6 +619,8 @@ function renderApp() {
     content = renderSopTab();
   } else if (state.activeTab === 'timeline') {
     content = renderTimelineTab();
+  } else if (state.activeTab === 'roles') {
+    content = renderRolesTab();
   }
 
   app.innerHTML = `

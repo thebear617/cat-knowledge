@@ -1,31 +1,29 @@
 const supplies = [
   {
-    category: '猫粮',
+    category: '容器',
+    note: '航空箱 / 猫包，编号管理。海五宿舍楼为物资总部',
     items: [
-      { name: '诚实一口 P40', spec: '1.5kg~12kg', price: '19.08/斤', date: '2026-06-17', notes: '📦 5档批量梯度（京东+淘宝）', status: '在用' },
-      { name: '诚实一口 P32', spec: '1.5kg~15kg', price: '14.27/斤', date: '2026-06-17', notes: '📦 4档批量梯度（京东）', status: '在用' },
-      { name: '蓝氏 猎鸟乳鸽', spec: '1.5kg~10kg', price: '20.15/斤', date: '2026-06-14', notes: '📦 5档批量梯度（京东+淘宝）', status: '在用' }
+      { name: '航空箱 1', location: '海棠 5 号楼', spec: '大（建议装二头🐷）', status: '空闲', notes: '' },
+      { name: '航空箱 2', location: '海棠 5 号楼', spec: '中（建议装中咪）', status: '空闲', notes: '' },
+      { name: '猫包 1', location: '竹园 1 号楼', spec: '小（建议装中小咪，谨慎装大咪巨咪）', status: '空闲', notes: '' },
+      { name: '猫包 2', location: '丁香 14 号楼', spec: '中（建议装中咪）', status: '空闲', notes: '' }
+    ]
+  },
+  {
+    category: '猫粮',
+    note: '现有猫粮分布',
+    items: [
+      { name: '蓝氏 猎鸟乳鸽', location: '海棠 5 号楼', spec: '4.5 KG', status: '—', notes: '海棠片区' }
     ]
   },
   {
     category: '猫砂',
+    note: '现有猫砂分布',
     items: []
   },
   {
-    category: '药品',
+    category: '其他物资',
+    note: '尿垫、抗生素、药品、玩具、猫砂盆及铲等',
     items: []
-  },
-  {
-    category: '航空箱/运输工具',
-    items: []
-  },
-  {
-    category: '合作医院',
-    items: [
-      { name: '紫薇京和', location: '紫薇田园都市', price: '妙三多三针 ¥85，抗体检测 ¥82', notes: '猫协长期合作医院，大面包、豆花、奶霜等均在此接种' },
-      { name: '缘愈', location: '—', price: '公猫绝育优先，抗体检测 ¥100+', notes: '豆腐脑绝育、小小黑送治均在此' },
-      { name: '博辰医院', location: '—', price: '口炎/猫瘟全包 ¥2000', notes: '北校区猫协商价，适合口炎和猫瘟重症救助' },
-      { name: '胡椒', location: '—', price: '妙三多三针 ¥172（送一针狂犬），抗体检测 ¥105，血常规 ¥150', notes: '价格高于京和，群内部分成员对此院有情绪' }
-    ]
   }
 ];

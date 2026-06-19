@@ -691,6 +691,13 @@ body.drawer-open {
   margin-bottom: .75rem;
 }
 
+.supply-cat-note {
+  color: var(--muted);
+  font-size: .78rem;
+  margin-top: -.25rem;
+  margin-bottom: .5rem;
+}
+
 .supply-empty {
   color: var(--muted);
   font-size: .86rem;
@@ -871,6 +878,66 @@ body.drawer-open {
   color: #4b5563;
   font-size: .84rem;
   line-height: 1.6;
+}
+
+/* ===== Roles Tab ===== */
+
+.roles-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.role-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.role-header {
+  padding: 1rem 1rem .6rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.role-header h3 {
+  font-size: 1.05rem;
+}
+
+.role-desc {
+  margin-top: .3rem;
+  color: var(--muted);
+  font-size: .84rem;
+  line-height: 1.5;
+}
+
+.role-phases {
+  padding: .6rem 1rem 1rem;
+}
+
+.role-phase {
+  display: flex;
+  gap: .6rem;
+  padding: .55rem 0;
+  border-bottom: 1px dashed var(--line);
+}
+
+.role-phase:last-child {
+  border-bottom: none;
+}
+
+.role-phase-label {
+  flex-shrink: 0;
+  min-width: 5rem;
+  font-size: .8rem;
+  font-weight: 800;
+  color: var(--amber);
+}
+
+.role-phase-detail {
+  font-size: .86rem;
+  color: #33302d;
+  line-height: 1.5;
 }
 
 .site-footer {
