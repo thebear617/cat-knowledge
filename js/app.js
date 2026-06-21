@@ -4,11 +4,13 @@ const STERILIZED_OPTIONS = ['全部', '已绝育', '未确认'];
 const FRIENDLINESS_OPTIONS = ['全部', '不怕人', '有点怕人', '行踪不定', '状态待补充'];
 
 const TABS = [
-  { id: 'cats', title: '猫只档案' },
+  { id: 'cats', title: '猫咪档案' },
   { id: 'supplies', title: '物资管理' },
   { id: 'sop', title: '标准 SOP' },
+  { id: 'plans', title: '近期计划' },
   { id: 'timeline', title: '猫猫编年史' },
-  { id: 'roles', title: '猫协分工' }
+  { id: 'roles', title: '猫协分工' },
+  { id: 'science', title: '猫猫科普' }
 ];
 
 const state = {
@@ -230,30 +232,11 @@ function renderMeta(label, value) {
 }
 
 function renderCatCard(cat) {
-  const vaccineBucket = getVaccineBucket(cat);
-  const sterilizedBucket = getSterilizedBucket(cat);
+  const firstImage = cat.images && cat.images.length ? cat.images[0] : null;
   return `
     <article class="cat-card" data-cat-name="${escapeHtml(cat.name)}" tabindex="0">
-      ${cat.image ? `<img class="cat-thumb" src="${cdnUrl(cat.image)}?v=${IMG_VER}" alt="${escapeHtml(cat.name)}" loading="lazy" onerror="this.parentElement.classList.add('img-missing')">` : ''}
-      <div class="cat-card-header">
-        <div>
-          <h2>${escapeHtml(cat.name)}</h2>
-          <p>${escapeHtml(cat.source)}</p>
-        </div>
-        ${renderStatusTag(cat)}
-      </div>
-      <div class="cat-tags">
-        <span class="tag vaccine-${vaccineBucket}">${escapeHtml(vaccineBucket)}</span>
-        <span class="tag">${escapeHtml(sterilizedBucket)}</span>
-        <span class="tag">${escapeHtml(getFriendlinessBucket(cat))}</span>
-      </div>
-      <div class="card-meta">
-        ${renderMeta('疫苗', cat.vaccine)}
-        ${renderMeta('下一针', cat.nextWindow)}
-        ${renderMeta('绝育', cat.sterilized)}
-        ${renderMeta('去向', cat.destination)}
-      </div>
-      <p class="card-note">${escapeHtml(cat.notes || '—')}</p>
+      ${firstImage ? `<img class="cat-card-photo" src="${cdnUrl(firstImage)}?v=${IMG_VER}" alt="${escapeHtml(cat.name)}" loading="lazy">` : `<div class="cat-card-placeholder">🐱</div>`}
+      <h2 class="cat-card-name">${escapeHtml(cat.name)}</h2>
     </article>
   `;
 }
@@ -446,6 +429,52 @@ function renderSuppliesTab() {
   return html;
 }
 
+// ============== Plans Tab ==============
+
+function getFilteredPlans() {
+  const q = normalize(state.query);
+  if (!q) return plans;
+  return plans.filter(plan =>
+    normalize(plan.title).includes(q) ||
+    plan.sections.some(s =>
+      normalize(s.title).includes(q) || normalize(s.content).includes(q)
+    )
+  );
+}
+
+function renderPlansTab() {
+  const data = getFilteredPlans();
+  let html = buildSearchBar('plans', '搜索计划、猫咪、人员...');
+
+  if (!data.length) {
+    html += '<section class="empty-state"><h2>暂无计划</h2><p>近期计划将在 Obsidian 中维护后同步至此。</p></section>';
+  } else {
+    html += '<div class="plans-list">';
+    for (const plan of data) {
+      const hasMatch = !!state.query;
+      html += `<details class="plans-card"${hasMatch ? ' open' : ''}>
+        <summary class="plans-card-header">
+          <div>
+            <h3>${escapeHtml(plan.date)}</h3>
+            <p class="plans-card-title">${escapeHtml(plan.title)}</p>
+          </div>
+          <span class="plans-card-arrow">▾</span>
+        </summary>
+        <div class="plans-card-body">`;
+      for (const section of plan.sections) {
+        html += `<div class="plans-section">
+          <h4>${escapeHtml(section.title)}</h4>
+          <p>${escapeHtml(section.content)}</p>
+        </div>`;
+      }
+      html += '</div></details>';
+    }
+    html += '</div>';
+  }
+
+  return html;
+}
+
 // ============== SOP Tab ==============
 
 function getFilteredSops() {
@@ -589,10 +618,19 @@ function renderRolesTab() {
   if (!data.length) {
     html += '<section class="empty-state"><h2>没有匹配的分工</h2><p>可以清除搜索试试。</p></section>';
   } else {
+    const roleGradients = [
+      { gradient: 'linear-gradient(135deg, #e8b84b, #e87850)', text: '#fff' },     // 义卖组 深暖金
+      { gradient: 'linear-gradient(135deg, #30cfd0, #330867)', text: '#fff' },     // 疫苗绝育组 青紫
+      { gradient: 'linear-gradient(135deg, #16a085, #f4d03f)', text: '#fff' },     // 赞助组 青绿金
+      { gradient: 'linear-gradient(135deg, #fa709a, #fee140)', text: '#2f2924' }   // 宣传财务组 粉金
+    ];
+
     html += '<div class="roles-list">';
-    for (const role of data) {
+    for (let i = 0; i < data.length; i++) {
+      const role = data[i];
+      const g = roleGradients[i % roleGradients.length];
       html += `<div class="role-card">
-        <div class="role-header">
+        <div class="role-header" style="background:${g.gradient};color:${g.text}">
           <h3>${escapeHtml(role.name)}</h3>
           <p class="role-desc">${escapeHtml(role.description)}</p>
         </div>
@@ -609,6 +647,28 @@ function renderRolesTab() {
   }
 
   return html;
+}
+
+// ============== Science Tab ==============
+
+function renderScienceTab() {
+  return `
+    <section class="controls" aria-label="搜索">
+      <div class="search-row">
+        <div class="search-box">
+          <span>搜索</span>
+          <div class="search-input-row">
+            <input id="searchInput" type="search" value="" placeholder="搜索科普文章..." autocomplete="off">
+            <button class="search-btn" id="searchBtn" title="搜索（回车也可）">搜索</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="empty-state">
+      <h2>🐱 猫猫科普</h2>
+      <p>科普内容即将上线，建设中。</p>
+    </section>
+  `;
 }
 
 // ============== Shared Search Bar ==============
@@ -652,12 +712,16 @@ function renderApp() {
     content = renderCatsTab();
   } else if (state.activeTab === 'supplies') {
     content = renderSuppliesTab();
+  } else if (state.activeTab === 'plans') {
+    content = renderPlansTab();
   } else if (state.activeTab === 'sop') {
     content = renderSopTab();
   } else if (state.activeTab === 'timeline') {
     content = renderTimelineTab();
   } else if (state.activeTab === 'roles') {
     content = renderRolesTab();
+  } else if (state.activeTab === 'science') {
+    content = renderScienceTab();
   }
 
   app.innerHTML = `
