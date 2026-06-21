@@ -132,7 +132,7 @@ function getFilteredCats() {
   });
 }
 
-const CDN_BASE = 'https://cdn.jsdelivr.net/gh/thebear617/cat-knowledge@main';
+const CDN_BASE = 'https://cdn.jsdelivr.net/gh/thebear617/cat-knowledge@v1.0.0';
 const IMG_VER = Date.now();
 
 function cdnUrl(path) {
