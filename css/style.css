@@ -276,12 +276,14 @@ select {
 }
 
 .cat-card {
+  position: relative;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
-  padding: 1rem;
+  overflow: hidden;
   box-shadow: var(--shadow);
   transition: border-color .18s, transform .18s, box-shadow .18s;
+  aspect-ratio: 1;
 }
 
 .cat-card:hover,
@@ -292,18 +294,35 @@ select {
   outline: none;
 }
 
-.cat-thumb {
-  width: calc(100% + 2rem);
-  height: 160px;
+.cat-card-photo {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  margin: -1rem -1rem 1rem;
-  border-radius: var(--radius) var(--radius) 0 0;
-  background: var(--line);
   display: block;
 }
 
-.cat-card.img-missing .cat-thumb {
-  display: none;
+.cat-card-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  background: var(--surface-soft);
+  color: var(--line);
+}
+
+.cat-card-name {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: .6rem .8rem;
+  background: linear-gradient(transparent, rgba(0,0,0,.65));
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 900;
+  line-height: 1.2;
 }
 
 .drawer-image {
@@ -312,25 +331,6 @@ select {
   object-fit: cover;
   margin: 0 -1.5rem 1rem;
   border-radius: var(--radius);
-}
-
-.cat-card-header {
-  display: flex;
-  gap: 1rem;
-  align-items: flex-start;
-  justify-content: space-between;
-}
-
-.cat-card h2 {
-  font-size: 1.18rem;
-  line-height: 1.3;
-}
-
-.cat-card-header p {
-  margin-top: .1rem;
-  color: var(--muted);
-  font-size: .78rem;
-  font-weight: 700;
 }
 
 .status-pill,
@@ -366,15 +366,11 @@ select {
   color: var(--red);
 }
 
-.cat-tags,
 .drawer-tags {
   display: flex;
   flex-wrap: wrap;
   gap: .4rem;
-}
-
-.cat-tags {
-  margin-top: .75rem;
+  margin-top: 1rem;
 }
 
 .tag {
@@ -396,40 +392,6 @@ select {
 .vaccine-三针完成 {
   background: var(--green-bg);
   color: var(--green);
-}
-
-.card-meta {
-  display: grid;
-  gap: .55rem;
-  margin-top: .9rem;
-}
-
-.meta-item {
-  display: grid;
-  grid-template-columns: 4rem 1fr;
-  gap: .6rem;
-}
-
-.meta-item span,
-.detail-row dt {
-  color: var(--muted);
-  font-size: .76rem;
-  font-weight: 800;
-}
-
-.meta-item strong,
-.detail-row dd {
-  color: #33302d;
-  font-size: .86rem;
-  font-weight: 650;
-}
-
-.card-note {
-  margin-top: .85rem;
-  padding-top: .8rem;
-  border-top: 1px solid var(--line);
-  color: #4b5563;
-  font-size: .86rem;
 }
 
 .empty-state {
@@ -623,9 +585,18 @@ select {
   padding: .8rem;
 }
 
+.detail-row dt {
+  color: var(--muted);
+  font-size: .76rem;
+  font-weight: 800;
+}
+
 .detail-row dd {
   margin-top: .22rem;
   line-height: 1.65;
+  color: #33302d;
+  font-size: .86rem;
+  font-weight: 650;
 }
 
 body.drawer-open {
@@ -792,6 +763,89 @@ body.drawer-open {
   color: #33302d;
 }
 
+/* ===== Plans Tab ===== */
+
+.plans-list {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.plans-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.plans-card-header {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .8rem 1rem;
+  background: #2f2924;
+  color: #f7c974;
+  cursor: pointer;
+  user-select: none;
+  transition: filter .15s;
+}
+
+.plans-card-header:hover {
+  filter: brightness(1.06);
+}
+
+.plans-card[open] .plans-card-header {
+  border-bottom: 1px solid rgba(255,255,255,.12);
+}
+
+.plans-card-header h3 {
+  font-size: .95rem;
+  font-weight: 900;
+}
+
+.plans-card-title {
+  margin-top: .15rem;
+  font-size: .78rem;
+  opacity: .75;
+}
+
+.plans-card-arrow {
+  margin-left: auto;
+  font-size: .85rem;
+  opacity: .5;
+  transition: transform .2s;
+}
+
+.plans-card[open] .plans-card-arrow {
+  transform: rotate(180deg);
+}
+
+.plans-card-body {
+  padding: 1rem;
+}
+
+.plans-section {
+  margin-bottom: 1rem;
+}
+
+.plans-section:last-child {
+  margin-bottom: 0;
+}
+
+.plans-section h4 {
+  font-size: .86rem;
+  font-weight: 800;
+  color: var(--amber);
+  margin-bottom: .3rem;
+}
+
+.plans-section p {
+  font-size: .88rem;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
 /* ===== Timeline Tab ===== */
 
 .timeline-month-list {
@@ -937,18 +991,21 @@ body.drawer-open {
 
 .role-header {
   padding: 1rem 1rem .6rem;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid rgba(255,255,255,.15);
 }
 
 .role-header h3 {
-  font-size: 1.05rem;
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #2f2924;
 }
 
 .role-desc {
   margin-top: .3rem;
-  color: var(--muted);
-  font-size: .84rem;
+  font-size: .92rem;
+  font-weight: 600;
   line-height: 1.5;
+  color: rgba(255,255,255,.82);
 }
 
 .role-phases {
