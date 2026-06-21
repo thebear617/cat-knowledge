@@ -137,7 +137,9 @@ const IMG_VER = Date.now();
 
 function cdnUrl(path) {
   if (!path) return path;
-  return path.startsWith('http') ? path : CDN_BASE + '/' + path;
+  if (path.startsWith('http')) return path;
+  const parts = path.split('/').map(encodeURIComponent).join('/');
+  return CDN_BASE + '/' + parts;
 }
 
 // ============== Tab Navigation ==============
