@@ -132,14 +132,13 @@ function getFilteredCats() {
   });
 }
 
-const CDN_BASE = 'https://cdn.jsdelivr.net/gh/thebear617/cat-knowledge@main';
 const IMG_VER = Date.now();
 
 function cdnUrl(path) {
   if (!path) return path;
   if (path.startsWith('http')) return path;
   const parts = path.split('/').map(encodeURIComponent).join('/');
-  return CDN_BASE + '/' + parts;
+  return parts;
 }
 
 // ============== Tab Navigation ==============
