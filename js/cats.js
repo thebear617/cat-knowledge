@@ -10,7 +10,7 @@ const catProfiles = [
     destination: '学校',
     notes: '原第二针窗口 5.20~5.27；因抓不到暂未接种，抓到后咨询医生补种方案。',
     source: '在校猫咪名单',
-    images: []
+    images: ['images/奶霜/奶霜1.jpg']
   },
   {
     name: '水手',
@@ -23,7 +23,7 @@ const catProfiles = [
     destination: '学校',
     notes: '第三针认捐人：蔚蓝future',
     source: '在校猫咪名单',
-    images: []
+    images: ['images/水手/水手1.jpg']
   },
   {
     name: '虎先锋',
@@ -36,7 +36,7 @@ const catProfiles = [
     destination: '学校',
     notes: '—',
     source: '在校猫咪名单',
-    images: []
+    images: ['images/虎先锋/虎先锋5.jpg', 'images/虎先锋/虎先锋4.jpg', 'images/虎先锋/虎先锋3.jpg', 'images/虎先锋/虎先锋2.jpg', 'images/虎先锋/虎先锋1.jpg']
   },
   {
     name: '警长',
@@ -49,7 +49,7 @@ const catProfiles = [
     destination: '学校',
     notes: '—',
     source: '在校猫咪名单',
-    images: []
+    images: ['images/警长/警长1.jpg']
   },
   {
     name: '银杏',
@@ -101,7 +101,7 @@ const catProfiles = [
     destination: '学校',
     notes: '第二针认捐人：鲨人不wink',
     source: '在校猫咪名单',
-    images: []
+    images: ['images/黑哥/黑哥2.jpg', 'images/黑哥/黑哥1.jpg']
   },
   {
     name: '斜眼狼儿子（彪哥）',
@@ -127,7 +127,7 @@ const catProfiles = [
     destination: '学校',
     notes: '第二针认捐人：刘岛；第三针认捐人：李介清',
     source: '在校猫咪名单',
-    images: []
+    images: ['images/豆介/豆介2.jpg', 'images/豆介/豆介1.jpg']
   },
   {
     name: '大面包',
@@ -140,7 +140,7 @@ const catProfiles = [
     destination: '学校',
     notes: '第三针由大面包car协助',
     source: '在校猫咪名单',
-    images: []
+    images: ['images/大面包/大面包2.jpg', 'images/大面包/大面包1.jpg']
   },
   {
     name: '芸豆',
@@ -153,7 +153,7 @@ const catProfiles = [
     destination: '学校',
     notes: '—',
     source: '在校猫咪名单',
-    images: []
+    images: ['images/芸豆/芸豆1.jpg']
   },
   {
     name: '二橙',
@@ -166,7 +166,7 @@ const catProfiles = [
     destination: '学校',
     notes: '—',
     source: '在校猫咪名单',
-    images: []
+    images: ['images/二橙/二橙3.jpg', 'images/二橙/二橙2.jpg', 'images/二橙/二橙1.jpg']
   },
   {
     name: '二柑',
@@ -179,7 +179,7 @@ const catProfiles = [
     destination: '学校',
     notes: '—',
     source: '在校猫咪名单',
-    images: ['images/二柑/二柑1.jpg']
+    images: ['images/二柑/二柑6.jpg', 'images/二柑/二柑5.jpg', 'images/二柑/二柑4.jpg', 'images/二柑/二柑3.jpg', 'images/二柑/二柑2.jpg', 'images/二柑/二柑1.jpg']
   },
   {
     name: '渣男',
@@ -192,7 +192,7 @@ const catProfiles = [
     destination: '学校',
     notes: '2026-05-31 诊断牙龈炎，治疗中。疫苗需等病后评估。',
     source: '在校猫咪名单',
-    images: []
+    images: ['images/渣男/渣男3.jpg', 'images/渣男/渣男2.jpg', 'images/渣男/渣男1.jpg']
   },
   {
     name: '豆腐脑',
@@ -205,7 +205,7 @@ const catProfiles = [
     destination: '学校',
     notes: '—',
     source: '在校猫咪名单',
-    images: []
+    images: ['images/豆腐脑/豆腐脑1.jpg']
   },
   {
     name: '脏白',
@@ -348,7 +348,7 @@ const catProfiles = [
     destination: '江苏南京',
     notes: '2026-06-01 领养前体检总体健康，轻微膀胱炎。',
     source: '已领养猫咪名单',
-    images: []
+    images: ['images/二头/二头3.jpg', 'images/二头/二头2.jpg', 'images/二头/二头1.jpg']
   },
   {
     name: '白介',
@@ -361,7 +361,7 @@ const catProfiles = [
     destination: '上海',
     notes: '预计 2026-06-15 领养',
     source: '已领养猫咪名单',
-    images: []
+    images: ['images/白介/白介2.jpg', 'images/白介/白介1.jpg']
   },
   {
     name: '小花',
@@ -374,7 +374,7 @@ const catProfiles = [
     destination: '待补充',
     notes: '预计 2026-06，具体日期待补充',
     source: '已领养猫咪名单',
-    images: []
+    images: ['images/小花/小花4.jpg', 'images/小花/小花3.jpg', 'images/小花/小花2.jpg', 'images/小花/小花1.jpg']
   },
   {
     name: '大头',
@@ -387,7 +387,7 @@ const catProfiles = [
     destination: '待补充',
     notes: '预计领养，具体日期待补充',
     source: '已领养猫咪名单',
-    images: ['images/大头/datou1.jpg', 'images/大头/datou2.jpg', 'images/大头/datou3.jpg']
+    images: ['images/大头/datou9.jpg', 'images/大头/datou8.jpg', 'images/大头/datou7.jpg', 'images/大头/datou6.jpg', 'images/大头/datou5.jpg', 'images/大头/datou4.jpg', 'images/大头/datou1.jpg', 'images/大头/datou2.jpg', 'images/大头/datou3.jpg']
   },
   {
     name: '漂亮橘',
@@ -400,7 +400,7 @@ const catProfiles = [
     destination: '待补充',
     notes: '预计领养，具体日期待补充',
     source: '已领养猫咪名单',
-    images: []
+    images: ['images/漂亮橘/漂亮橘4.jpg', 'images/漂亮橘/漂亮橘3.jpg', 'images/漂亮橘/漂亮橘2.jpg', 'images/漂亮橘/漂亮橘1.jpg']
   },
   {
     name: '橙留香',
@@ -413,7 +413,7 @@ const catProfiles = [
     destination: '待补充',
     notes: '预计领养，具体日期待补充',
     source: '已领养猫咪名单',
-    images: []
+    images: ['images/橙留香/橙留香3.jpg', 'images/橙留香/橙留香2.jpg', 'images/橙留香/橙留香1.jpg']
   },
   {
     name: '裤裤',
@@ -426,7 +426,7 @@ const catProfiles = [
     destination: '待补充',
     notes: '预计领养，具体日期待补充',
     source: '已领养猫咪名单',
-    images: []
+    images: ['images/裤裤/裤裤3.jpg', 'images/裤裤/裤裤2.jpg', 'images/裤裤/裤裤1.jpg']
   },
   {
     name: '深情哥',
@@ -439,7 +439,7 @@ const catProfiles = [
     destination: '待补充',
     notes: '预计领养，具体日期待补充',
     source: '已领养猫咪名单',
-    images: []
+    images: ['images/深情哥/深情哥2.jpg', 'images/深情哥/深情哥1.jpg']
   },
   {
     name: '咖啡',
