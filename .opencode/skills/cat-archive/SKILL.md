@@ -112,9 +112,9 @@ images        照片路径数组（相对路径）
 - 照片放入 `images/{猫名}/` 目录
 - 原图 ≤1200px，使用 `sips -Z 1200` 缩放
 - 缩略图在 `thumb/` 子目录，≤400px
-- 所有图片通过 jsDelivr CDN 加速（`https://cdn.jsdelivr.net/gh/thebear617/cat-knowledge@main/`）
+- 所有图片通过 GitHub Pages 相对路径直接加载（不再使用 jsDelivr CDN，因其在大陆不稳定）
 - 添加照片推荐使用 `./add-photo.sh <猫名> <照片路径>`
-- 同名图片更新内容但文件名不变时，jsDelivr 缓存未刷新，需 git tag 更新版本号
+- 同名图片更新内容但文件名不变时，GitHub Pages 缓存可能未及时刷新，强刷（Cmd+Shift+R）即可
 
 ## 部署
 
@@ -122,13 +122,14 @@ images        照片路径数组（相对路径）
 git add . && git commit -m "..." && git push origin main
 ```
 
-jsDelivr 缓存约 1-5 分钟刷新。
+GitHub Pages 部署后通常几秒内生效。
 
 ## 已知技术决策
 
 - 搜索框使用 keydown Enter + 按钮触发（非 input 事件），避免中文输入法组词中断
 - 图片网格使用 thumb 缩略图，点击大图时才加载原图
 - CDN URL 必须对中文文件名做 `encodeURIComponent` 编码（见 `references/debug-notes.md`）
+- 图片直接通过 GitHub Pages 相对路径加载，无需等待 CDN 缓存刷新
 
 ## 参考资料
 

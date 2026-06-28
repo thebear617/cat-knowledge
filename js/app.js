@@ -132,14 +132,11 @@ function getFilteredCats() {
   });
 }
 
-const CDN_BASE = 'https://cdn.jsdelivr.net/gh/thebear617/cat-knowledge@main';
-const IMG_VER = Date.now();
-
 function cdnUrl(path) {
   if (!path) return path;
   if (path.startsWith('http')) return path;
   const parts = path.split('/').map(encodeURIComponent).join('/');
-  return CDN_BASE + '/' + parts;
+  return parts;
 }
 
 // ============== Tab Navigation ==============
@@ -237,7 +234,7 @@ function renderCatCard(cat) {
   const firstImage = cat.images && cat.images.length ? cat.images[0] : null;
   return `
     <article class="cat-card" data-cat-name="${escapeHtml(cat.name)}" tabindex="0">
-      ${firstImage ? `<img class="cat-card-photo" src="${cdnUrl(firstImage)}?v=${IMG_VER}" alt="${escapeHtml(cat.name)}" loading="lazy">` : `<div class="cat-card-placeholder">🐱</div>`}
+      ${firstImage ? `<img class="cat-card-photo" src="${cdnUrl(firstImage)}" alt="${escapeHtml(cat.name)}" loading="lazy">` : `<div class="cat-card-placeholder">🐱</div>`}
       <h2 class="cat-card-name">${escapeHtml(cat.name)}</h2>
     </article>
   `;
@@ -287,7 +284,7 @@ function renderDrawer(cat) {
 
   if (tab === 'profile') {
     contentHtml = `
-      ${cat.image ? `<img class="drawer-image" src="${cdnUrl(cat.image)}?v=${IMG_VER}" alt="${escapeHtml(cat.name)}">` : ''}
+      ${cat.image ? `<img class="drawer-image" src="${cdnUrl(cat.image)}" alt="${escapeHtml(cat.name)}">` : ''}
       <div class="drawer-tags">
         ${renderStatusTag(cat)}
         <span class="tag vaccine-${getVaccineBucket(cat)}">${escapeHtml(getVaccineBucket(cat))}</span>
@@ -318,7 +315,7 @@ function renderDrawer(cat) {
         <div class="photo-grid">
           ${imgs.map(src => `
             <div class="photo-item">
-              <img src="${cdnUrl(src.replace(/([^/]+)$/, 'thumb/$1'))}?v=${IMG_VER}" data-full="${cdnUrl(src)}?v=${IMG_VER}" alt="${escapeHtml(cat.name)}" loading="lazy" onclick="openPhotoViewer(this)">
+              <img src="${cdnUrl(src.replace(/([^/]+)$/, 'thumb/$1'))}" data-full="${cdnUrl(src)}" alt="${escapeHtml(cat.name)}" loading="lazy" onclick="openPhotoViewer(this)">
             </div>
           `).join('')}
         </div>
