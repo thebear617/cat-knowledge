@@ -7,12 +7,16 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <div class="layout">
+    <div class="layout">
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="切换侧边栏">☰</button>
+    <div class="sidebar-backdrop" id="sidebarBackdrop" hidden></div>
+
     <nav class="sidebar" id="sidebar" aria-label="主导航">
       <div class="sidebar-brand">
+        <button class="sidebar-close" id="sidebarClose" aria-label="关闭侧边栏">✕</button>
         <p class="sidebar-eyebrow">XDU Cat</p>
         <h1 class="sidebar-title">猫猫手册</h1>
-      </div>
+    </div>
       <div class="sidebar-nav" id="sidebarNav"></div>
     </nav>
 

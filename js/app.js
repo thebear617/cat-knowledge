@@ -865,11 +865,39 @@ function bindCatCards() {
   });
 }
 
+// ============== Sidebar Toggle ==============
+
+function closeSidebar() { document.body.classList.remove('sidebar-open'); }
+function openSidebar() { document.body.classList.add('sidebar-open'); }
+
+(function initSidebarToggle() {
+  const toggle = document.getElementById('sidebarToggle');
+  const backdrop = document.getElementById('sidebarBackdrop');
+  const close = document.getElementById('sidebarClose');
+
+  if (toggle) toggle.addEventListener('click', openSidebar);
+  if (backdrop) backdrop.addEventListener('click', closeSidebar);
+  if (close) close.addEventListener('click', closeSidebar);
+
+  // Close sidebar on nav item click (mobile)
+  const nav = document.getElementById('sidebarNav');
+  if (nav) {
+    nav.addEventListener('click', e => {
+      if (e.target.closest('.sidebar-item') && window.innerWidth < 720) {
+        closeSidebar();
+      }
+    });
+  }
+})();
+
 // ============== Global Events ==============
 
 drawerBackdrop.addEventListener('click', closeDrawer);
 document.addEventListener('keydown', event => {
-  if (event.key === 'Escape' && !drawer.hidden) closeDrawer();
+  if (event.key === 'Escape') {
+    if (!drawer.hidden) closeDrawer();
+    closeSidebar();
+  }
 });
 
 document.addEventListener('DOMContentLoaded', renderApp);
