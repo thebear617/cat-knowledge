@@ -4,13 +4,14 @@ const STERILIZED_OPTIONS = ['全部', '已绝育', '未确认'];
 const FRIENDLINESS_OPTIONS = ['全部', '不怕人', '有点怕人', '行踪不定', '状态待补充'];
 
 const TABS = [
-  { id: 'cats', title: '猫咪档案' },
-  { id: 'supplies', title: '物资管理' },
-  { id: 'sop', title: '标准 SOP' },
-  { id: 'plans', title: '近期计划' },
-  { id: 'timeline', title: '猫猫编年史' },
-  { id: 'roles', title: '猫协分工' },
-  { id: 'science', title: '猫猫科普' }
+  { id: 'home', title: '首页', icon: '🏠' },
+  { id: 'cats', title: '猫咪档案', icon: '🐱' },
+  { id: 'supplies', title: '物资管理', icon: '📦' },
+  { id: 'sop', title: '标准 SOP', icon: '📋' },
+  { id: 'plans', title: '近期计划', icon: '📅' },
+  { id: 'timeline', title: '猫猫编年史', icon: '📜' },
+  { id: 'roles', title: '猫协分工', icon: '👥' },
+  { id: 'science', title: '猫猫科普', icon: '📖' }
 ];
 
 const state = {
@@ -22,7 +23,7 @@ const state = {
   sort: 'priority',
   selectedName: null,
   drawerTab: 'profile',
-  activeTab: 'cats'
+  activeTab: 'home'
 };
 
 const app = document.getElementById('app');
@@ -141,16 +142,45 @@ function cdnUrl(path) {
 
 // ============== Tab Navigation ==============
 
-function buildTabBar() {
+function renderSidebar() {
+  const nav = document.getElementById('sidebarNav');
+  if (!nav) return;
+  nav.innerHTML = TABS.map(tab => {
+    const active = tab.id === state.activeTab ? ' active' : '';
+    return `<button class="sidebar-item${active}" data-tab="${tab.id}" aria-current="${tab.id === state.activeTab ? 'page' : 'false'}">
+      <span class="sidebar-icon">${tab.icon}</span>
+      <span>${escapeHtml(tab.title)}</span>
+    </button>`;
+  }).join('');
+}
+
+// ============== Home Tab ==============
+
+function renderHomeTab() {
+  const summary = getSummary();
+  const catsWithPhotos = catProfiles.filter(cat => cat.images && cat.images.length > 0);
   return `
-    <nav class="tab-bar" role="tablist">
-      ${TABS.map(tab => {
-        const active = tab.id === state.activeTab ? ' active' : '';
-        return `<button class="tab-button${active}" role="tab" data-tab="${tab.id}" aria-selected="${tab.id === state.activeTab}">
-          ${escapeHtml(tab.title)}
-        </button>`;
+    <div class="home-hero">
+      <h2>校园流浪猫状态公开展示</h2>
+      <p>记录 XDU 校园猫咪的疫苗、绝育、领养信息，以医生意见为准。</p>
+    </div>
+    <section class="summary-grid" aria-label="猫协档案统计">
+      ${summary.map(item => `
+        <div class="summary-card tone-${item.tone}">
+          <span class="summary-value">${item.value}</span>
+          <span class="summary-label">${item.label}</span>
+        </div>
+      `).join('')}
+    </section>
+    <div class="home-photo-wall" aria-label="猫咪照片墙">
+      ${catsWithPhotos.map(cat => {
+        const img = cat.images[0];
+        return `<div class="home-photo-card" data-cat-name="${escapeHtml(cat.name)}" tabindex="0">
+          <img src="${cdnUrl(img)}" alt="${escapeHtml(cat.name)}" loading="lazy">
+          <span class="home-photo-label">${escapeHtml(cat.name)}</span>
+        </div>`;
       }).join('')}
-    </nav>
+    </div>
   `;
 }
 
@@ -707,7 +737,9 @@ function renderCatsTab() {
 function renderApp() {
   let content = '';
 
-  if (state.activeTab === 'cats') {
+  if (state.activeTab === 'home') {
+    content = renderHomeTab();
+  } else if (state.activeTab === 'cats') {
     content = renderCatsTab();
   } else if (state.activeTab === 'supplies') {
     content = renderSuppliesTab();
@@ -724,23 +756,24 @@ function renderApp() {
   }
 
   app.innerHTML = `
-    ${buildTabBar()}
     <div class="tab-panel">
       ${content}
     </div>
   `;
 
+  renderSidebar();
   bindControls();
 }
 
 // ============== Event Binding ==============
 
 function bindControls() {
-  // Tab switching
-  app.querySelectorAll('.tab-button').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const newTab = btn.dataset.tab;
-      if (newTab !== state.activeTab) {
+  const sidebarNav = document.getElementById('sidebarNav');
+  if (sidebarNav) {
+    sidebarNav.querySelectorAll('.sidebar-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const newTab = btn.dataset.tab;
+        if (newTab === state.activeTab) return;
         state.activeTab = newTab;
         state.query = '';
         state.status = '全部';
@@ -749,9 +782,9 @@ function bindControls() {
         state.friendliness = '全部';
         state.sort = 'priority';
         renderApp();
-      }
+      });
     });
-  });
+  }
 
   // Search
   const searchInput = document.getElementById('searchInput');
@@ -789,6 +822,10 @@ function bindControls() {
     });
   }
 
+  if (state.activeTab === 'home') {
+    bindCatCards();
+  }
+
   // Cats tab specific
   if (state.activeTab === 'cats') {
     document.querySelectorAll('[data-filter]').forEach(control => {
@@ -816,7 +853,8 @@ function bindControls() {
 }
 
 function bindCatCards() {
-  document.querySelectorAll('.cat-card').forEach(card => {
+  const selector = state.activeTab === 'home' ? '.home-photo-card' : '.cat-card';
+  document.querySelectorAll(selector).forEach(card => {
     card.addEventListener('click', () => openDrawer(card.dataset.catName));
     card.addEventListener('keydown', event => {
       if (event.key === 'Enter' || event.key === ' ') {
