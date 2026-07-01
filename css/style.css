@@ -1231,6 +1231,7 @@ body.drawer-open {
     color: #fff;
     font-size: 1.2rem;
     cursor: pointer;
+    -webkit-backface-visibility: hidden;
     transition: opacity .2s;
   }
 
@@ -1256,18 +1257,17 @@ body.drawer-open {
     left: 0;
     bottom: 0;
     z-index: 25;
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translateX(-100%);
     transform: translateX(-100%);
-    transition: transform .25s ease;
+    will-change: transform;
+    transition: -webkit-transform .25s ease, transform .25s ease;
     width: var(--sidebar-w);
   }
 
   body.sidebar-open .sidebar {
+    -webkit-transform: translateX(0);
     transform: translateX(0);
-  }
-
-  .sidebar {
-    -webkit-backface-visibility: hidden;
-    will-change: transform;
   }
 
   .sidebar-close {
