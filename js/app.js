@@ -867,8 +867,14 @@ function bindCatCards() {
 
 // ============== Sidebar Toggle ==============
 
-function closeSidebar() { document.body.classList.remove('sidebar-open'); }
-function openSidebar() { document.body.classList.add('sidebar-open'); }
+function closeSidebar() {
+  document.body.classList.remove('sidebar-open');
+  document.body.style.overflow = '';
+}
+function openSidebar() {
+  document.body.classList.add('sidebar-open');
+  document.body.style.overflow = 'hidden';
+}
 
 (function initSidebarToggle() {
   const toggle = document.getElementById('sidebarToggle');
