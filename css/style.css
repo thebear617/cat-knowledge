@@ -23,10 +23,12 @@
   --shadow: 0 1px 2px rgba(0, 0, 0, .06), 0 8px 24px rgba(39, 32, 26, .08);
   --radius: 10px;
   --max-w: 1180px;
+  --sidebar-w: 240px;
 }
 
 html {
   scroll-behavior: smooth;
+  height: 100%;
 }
 
 body {
@@ -35,6 +37,91 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", sans-serif;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  height: 100%;
+  overflow: hidden;
+}
+
+.layout {
+  display: flex;
+  height: 100%;
+}
+
+.sidebar {
+  flex-shrink: 0;
+  width: var(--sidebar-w);
+  background: #2f2924;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.sidebar-brand {
+  padding: 1.6rem 1.2rem 1.2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, .12);
+}
+
+.sidebar-eyebrow {
+  color: #f7c974;
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.sidebar-title {
+  margin-top: .15rem;
+  font-size: 1.35rem;
+  font-weight: 900;
+  line-height: 1.15;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: .6rem .6rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  width: 100%;
+  padding: .7rem .75rem;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: rgba(255, 255, 255, .72);
+  font-size: .9rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+  transition: background .15s, color .15s;
+}
+
+.sidebar-item:hover {
+  background: rgba(255, 255, 255, .08);
+  color: #fff;
+}
+
+.sidebar-item.active {
+  background: rgba(192, 138, 47, .22);
+  color: #f7c974;
+}
+
+.sidebar-icon {
+  font-size: 1.15rem;
+  width: 1.4rem;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.main-area {
+  flex: 1;
+  overflow-y: auto;
+  min-width: 0;
 }
 
 button,
@@ -113,6 +200,67 @@ select {
   max-width: var(--max-w);
   margin: 0 auto;
   padding: 1.2rem 1rem 3rem;
+}
+
+.home-hero {
+  padding: 2rem 0 .5rem;
+}
+
+.home-hero h2 {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--dark);
+}
+
+.home-hero p {
+  margin-top: .4rem;
+  color: var(--muted);
+  font-size: .95rem;
+  line-height: 1.6;
+}
+
+.home-photo-wall {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.home-photo-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform .15s, box-shadow .15s;
+  cursor: pointer;
+  position: relative;
+  aspect-ratio: 1;
+}
+
+.home-photo-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(39, 32, 26, .12);
+}
+
+.home-photo-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.home-photo-card .home-photo-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: .6rem .8rem;
+  background: linear-gradient(transparent, rgba(0,0,0,.65));
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 900;
 }
 
 .summary-grid {
@@ -603,36 +751,6 @@ body.drawer-open {
   overflow: hidden;
 }
 
-.tab-bar {
-  display: flex;
-  gap: .5rem;
-  margin-bottom: 1rem;
-}
-
-.tab-button {
-  flex: 1;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--surface);
-  padding: .7rem .6rem;
-  color: var(--muted);
-  font-size: .88rem;
-  font-weight: 800;
-  transition: border-color .18s, box-shadow .18s, background .18s, color .18s;
-  box-shadow: 0 1px 3px rgba(0,0,0,.04);
-}
-
-.tab-button:hover {
-  border-color: #c08a2f;
-}
-
-.tab-button.active {
-  border-color: #c08a2f;
-  background: #2f2924;
-  color: #f7c974;
-  box-shadow: var(--shadow);
-}
-
 .tab-panel {
   animation: fadeIn .2s ease;
 }
@@ -1061,6 +1179,10 @@ body.drawer-open {
   .cat-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .home-photo-wall {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (min-width: 1040px) {
@@ -1071,17 +1193,32 @@ body.drawer-open {
   .cat-grid {
     grid-template-columns: repeat(3, 1fr);
   }
+
+  .home-photo-wall {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 @media (max-width: 719px) {
-  .header-inner {
-    display: block;
-    padding: 2rem 1rem 1.6rem;
+  :root {
+    --sidebar-w: 180px;
   }
 
-  .header-panel {
-    margin-top: 1rem;
-    min-width: 0;
+  .sidebar-brand {
+    padding: 1.2rem .8rem .9rem;
+  }
+
+  .sidebar-title {
+    font-size: 1.1rem;
+  }
+
+  .sidebar-nav {
+    padding: .4rem .4rem .8rem;
+  }
+
+  .sidebar-item {
+    padding: .6rem .6rem;
+    font-size: .82rem;
   }
 
   .result-bar {
