@@ -160,28 +160,10 @@ body.sidebar-open .sidebar {
 
 当前版本（`27f78df`）已验证解决以下两个问题：
 
-### 修复 1：微信内置浏览器侧边栏折叠展开异常
+### 现象 1：微信内置浏览器侧边栏折叠展开异常
 
-**现象**：微信 X5 内核中，移动端侧边栏滑入/滑出动画卡死，元素定位错乱。
+微信 X5 内核中，移动端侧边栏滑入/滑出动画卡死，元素定位错乱。Chrome 桌面和移动端均正常。
 
-**根因**：一个 W3C 规范与 WebKit 实现的渲染分歧——`body { overflow: hidden }` 下 `position: fixed` 子元素在 X5 中被错误按 `absolute` 处理，被父级裁剪；叠加 X5 在滚动中暂停 CSS transition 的特性，导致 `transform` 动画不可靠。
+### 现象 2：图床加载缓慢，需切香港节点才能访问
 
-**修复方案（三管齐下）**：
-1. 移除 `body { overflow: hidden }`，滚动交由 `.main-area`（已有 `overflow-y: auto`）承载
-2. 补齐 `-webkit-` 前缀 + `will-change: transform` + `-webkit-backface-visibility: hidden`，强制 GPU 合成层
-3. 打开侧边栏时 JS 动态锁定 body 滚动（`document.body.style.overflow = 'hidden'`），关闭时恢复
-
-### 修复 2：图床加载缓慢，需切香港节点才能访问
-
-**现象**：首页照片墙、猫咪卡片、抽屉照片加载极慢或直接失败，需手动切换 VPN 香港节点才能正常显示。
-
-**根因**：原图片加载走 jsDelivr CDN（`cdn.jsdelivr.net/gh/thebear617/cat-knowledge@main`）。jsDelivr 在国内曾遭 DNS 污染和间歇性阻断，大陆运营商请求被重置或超时，香港节点因路由绕行较少相对可用。
-
-**修复方案**（commit `dbe26b4`）：
-- 移除 jsDelivr CDN 前缀（`CDN_BASE`）和版本号时间戳参数（`?v=${IMG_VER}`）
-- 改用 GitHub Pages 直连（相对路径 `images/xxx.jpg`），由 GitHub Pages 底层 Fastly CDN 分发
-- Fastly 在大陆部分运营商有直连节点，且无 DNS 污染问题，加载速度和成功率明显提升
-
-**关联文件**：
-- `js/app.js:136-141` — `cdnUrl()` 从拼接 CDN 前缀改为仅 URL 编码
-- `js/app.js` — 各 `src` 属性移除 `?v=${IMG_VER}` 时间戳
+首页照片墙、猫咪卡片、抽屉照片加载极慢或直接失败，需手动切换 VPN 香港节点才能正常显示。
