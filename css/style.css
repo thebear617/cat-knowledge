@@ -38,7 +38,6 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   height: 100%;
-  overflow: hidden;
 }
 
 .layout {
@@ -1264,6 +1263,11 @@ body.drawer-open {
 
   body.sidebar-open .sidebar {
     transform: translateX(0);
+  }
+
+  .sidebar {
+    -webkit-backface-visibility: hidden;
+    will-change: transform;
   }
 
   .sidebar-close {
