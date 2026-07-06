@@ -1,4 +1,4 @@
-const STATUS_ORDER = ['全部', '在校', '已领养', '已去喵星', '已失踪'];
+const STATUS_ORDER = ['全部', '就读中', '已毕业', '已去喵星', '已失踪'];
 const VACCINE_OPTIONS = ['全部', '待首针', '需补针', '超窗口', '三针完成'];
 const STERILIZED_OPTIONS = ['全部', '已绝育', '未确认'];
 const FRIENDLINESS_OPTIONS = ['全部', '亲人', '怕人', '非常怕人'];
@@ -65,7 +65,7 @@ function getFriendlinessBucket(cat) {
 
 function getPriorityScore(cat) {
   let score = 0;
-  if (cat.status === '在校') score += 50;
+  if (cat.status === '就读中') score += 50;
 
   if (getVaccineBucket(cat) === '超窗口') score += 40;
   if (getVaccineBucket(cat) === '待首针') score += 28;
@@ -86,8 +86,8 @@ function getSummary() {
 
   return [
     { label: '喵校友', value: counts.total, tone: 'dark', filter: 'all' },
-    { label: '就读中', value: counts.status['在校'] || 0, tone: 'green', filter: 'status-在校' },
-    { label: '已毕业', value: counts.status['已领养'] || 0, tone: 'blue', filter: 'status-已领养' },
+    { label: '就读中', value: counts.status['就读中'] || 0, tone: 'green', filter: 'status-就读中' },
+    { label: '已毕业', value: counts.status['已毕业'] || 0, tone: 'blue', filter: 'status-已毕业' },
     { label: '蛋定喵生', value: counts.sterilized['已绝育'] || 0, tone: 'green', filter: 'sterilized-已绝育' },
     { label: '疫苗毕业', value: counts.vaccine['三针完成'] || 0, tone: 'green', filter: 'vaccine-三针完成' }
   ];
