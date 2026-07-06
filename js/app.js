@@ -20,7 +20,6 @@ const state = {
   vaccine: '全部',
   sterilized: '全部',
   friendliness: '全部',
-  sort: 'priority',
   selectedName: null,
   drawerTab: 'profile',
   activeTab: 'home'
@@ -90,13 +89,11 @@ function getSummary() {
   }, { total: 0, status: {}, vaccine: {}, sterilized: {} });
 
   return [
-    { label: '全部猫咪', value: counts.total, tone: 'dark' },
-    { label: '在校管理', value: counts.status['在校'] || 0, tone: 'green' },
-    { label: '预计领养', value: counts.status['预计领养'] || 0, tone: 'amber' },
-    { label: '已领养', value: counts.status['已领养'] || 0, tone: 'blue' },
-    { label: '待首针', value: counts.vaccine['待首针'] || 0, tone: 'red' },
-    { label: '超窗口', value: counts.vaccine['超窗口'] || 0, tone: 'red' },
-    { label: '已绝育', value: counts.sterilized['已绝育'] || 0, tone: 'green' }
+    { label: '全部猫咪', value: counts.total, tone: 'dark', filter: 'all' },
+    { label: '在校管理', value: counts.status['在校'] || 0, tone: 'green', filter: 'status-在校' },
+    { label: '已领养', value: counts.status['已领养'] || 0, tone: 'blue', filter: 'status-已领养' },
+    { label: '已绝育', value: counts.sterilized['已绝育'] || 0, tone: 'green', filter: 'sterilized-已绝育' },
+    { label: '已三针', value: counts.vaccine['三针完成'] || 0, tone: 'green', filter: 'vaccine-三针完成' }
   ];
 }
 
@@ -123,14 +120,7 @@ function getFilteredCats() {
       && (state.friendliness === '全部' || getFriendlinessBucket(cat) === state.friendliness);
   });
 
-  return filtered.sort((a, b) => {
-    if (state.sort === 'name') return a.name.localeCompare(b.name, 'zh-Hans-CN');
-    if (state.sort === 'status') {
-      const statusDiff = STATUS_ORDER.indexOf(a.status) - STATUS_ORDER.indexOf(b.status);
-      return statusDiff || a.name.localeCompare(b.name, 'zh-Hans-CN');
-    }
-    return getPriorityScore(b) - getPriorityScore(a) || a.name.localeCompare(b.name, 'zh-Hans-CN');
-  });
+  return filtered.sort((a, b) => a.name.localeCompare(b.name, 'zh-Hans-CN'));
 }
 
 function cdnUrl(path) {
@@ -156,22 +146,44 @@ function renderSidebar() {
 
 // ============== Home Tab ==============
 
+function isHomeFiltered() {
+  return state.status !== '全部' || state.vaccine !== '全部' || state.sterilized !== '全部' || state.friendliness !== '全部' || state.query !== '';
+}
+
+function getActiveHomeFilter() {
+  if (state.status !== '全部') return `status-${state.status}`;
+  if (state.vaccine !== '全部') return `vaccine-${state.vaccine}`;
+  if (state.sterilized !== '全部') return `sterilized-${state.sterilized}`;
+  return '';
+}
+
 function renderHomeTab() {
   const summary = getSummary();
-  const catsWithPhotos = catProfiles.filter(cat => cat.images && cat.images.length > 0);
-  return `
+  const activeFilter = getActiveHomeFilter();
+  const filtered = isHomeFiltered();
+
+  let content = `
     <div class="home-hero">
       <h2>校园流浪猫状态公开展示</h2>
       <p>记录 XDU 校园猫咪的疫苗、绝育、领养信息，以医生意见为准。</p>
     </div>
     <section class="summary-grid" aria-label="猫协档案统计">
-      ${summary.map(item => `
-        <div class="summary-card tone-${item.tone}">
+      ${summary.map(item => {
+        const active = item.filter === 'all' ? !filtered : item.filter === activeFilter;
+        return `
+        <div class="summary-card tone-${item.tone} summary-clickable${active ? ' summary-active' : ''}" data-summary-filter="${escapeHtml(item.filter)}" tabindex="0">
           <span class="summary-value">${item.value}</span>
           <span class="summary-label">${item.label}</span>
-        </div>
-      `).join('')}
-    </section>
+        </div>`;
+      }).join('')}
+    </section>`;
+
+  if (filtered) {
+    const cats = getFilteredCats();
+    content += renderCatControls(cats.length) + renderCatGrid(cats);
+  } else {
+    const catsWithPhotos = catProfiles.filter(cat => cat.images && cat.images.length > 0);
+    content += `
     <div class="home-photo-wall" aria-label="猫咪照片墙">
       ${catsWithPhotos.map(cat => {
         const img = cat.images[0];
@@ -180,8 +192,10 @@ function renderHomeTab() {
           <span class="home-photo-label">${escapeHtml(cat.name)}</span>
         </div>`;
       }).join('')}
-    </div>
-  `;
+    </div>`;
+  }
+
+  return content;
 }
 
 // ============== Cat Profile Tab ==============
@@ -224,14 +238,6 @@ function renderCatControls(filteredCount) {
             <button class="search-btn" id="searchBtn" title="搜索（回车也可）">搜索</button>
           </div>
         </div>
-        <label class="filter-field sort-field" for="sort">
-          <span>排序</span>
-          <select id="sort" data-filter="sort">
-            <option value="priority"${state.sort === 'priority' ? ' selected' : ''}>跟进优先</option>
-            <option value="status"${state.sort === 'status' ? ' selected' : ''}>状态分组</option>
-            <option value="name"${state.sort === 'name' ? ' selected' : ''}>猫名排序</option>
-          </select>
-        </label>
       </div>
       <div class="filter-grid">
         ${renderSelect('状态', 'status', availableStatuses, state.status)}
@@ -780,7 +786,6 @@ function bindControls() {
         state.vaccine = '全部';
         state.sterilized = '全部';
         state.friendliness = '全部';
-        state.sort = 'priority';
         renderApp();
       });
     });
@@ -823,7 +828,29 @@ function bindControls() {
   }
 
   if (state.activeTab === 'home') {
+    if (isHomeFiltered()) {
+      document.querySelectorAll('[data-filter]').forEach(control => {
+        control.addEventListener('change', event => {
+          state[event.target.dataset.filter] = event.target.value;
+          renderApp();
+        });
+      });
+
+      const resetBtn = document.getElementById('resetFilters');
+      if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+          state.query = '';
+          state.status = '全部';
+          state.vaccine = '全部';
+          state.sterilized = '全部';
+          state.friendliness = '全部';
+          renderApp();
+        });
+      }
+    }
+
     bindCatCards();
+    bindSummaryCards();
   }
 
   // Cats tab specific
@@ -843,7 +870,6 @@ function bindControls() {
         state.vaccine = '全部';
         state.sterilized = '全部';
         state.friendliness = '全部';
-        state.sort = 'priority';
         renderApp();
       });
     }
@@ -853,13 +879,44 @@ function bindControls() {
 }
 
 function bindCatCards() {
-  const selector = state.activeTab === 'home' ? '.home-photo-card' : '.cat-card';
+  const selector = (state.activeTab === 'home' && !isHomeFiltered()) ? '.home-photo-card' : '.cat-card';
   document.querySelectorAll(selector).forEach(card => {
     card.addEventListener('click', () => openDrawer(card.dataset.catName));
     card.addEventListener('keydown', event => {
       if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
         openDrawer(card.dataset.catName);
+      }
+    });
+  });
+}
+
+function applyHomeFilter(filterKey) {
+  state.query = '';
+  state.status = '全部';
+  state.vaccine = '全部';
+  state.sterilized = '全部';
+  state.friendliness = '全部';
+
+  if (filterKey !== 'all') {
+    const [type, value] = filterKey.split('-', 2);
+    if (type === 'status') state.status = value;
+    else if (type === 'vaccine') state.vaccine = value;
+    else if (type === 'sterilized') state.sterilized = value;
+  }
+
+  renderApp();
+}
+
+function bindSummaryCards() {
+  document.querySelectorAll('.summary-clickable').forEach(card => {
+    card.addEventListener('click', () => {
+      applyHomeFilter(card.dataset.summaryFilter);
+    });
+    card.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        applyHomeFilter(card.dataset.summaryFilter);
       }
     });
   });
