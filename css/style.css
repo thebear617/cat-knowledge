@@ -289,6 +289,21 @@ select {
   box-shadow: var(--shadow);
 }
 
+.summary-clickable {
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+}
+
+.summary-clickable:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(39, 32, 26, .12);
+}
+
+.summary-active {
+  border-color: #c08a2f;
+  box-shadow: 0 0 0 2px rgba(192, 138, 47, .28);
+}
+
 .summary-value {
   display: block;
   font-size: 1.7rem;
