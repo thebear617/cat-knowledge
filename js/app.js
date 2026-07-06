@@ -85,11 +85,11 @@ function getSummary() {
   }, { total: 0, status: {}, vaccine: {}, sterilized: {} });
 
   return [
-    { label: '全部猫咪', value: counts.total, tone: 'dark', filter: 'all' },
-    { label: '在校管理', value: counts.status['在校'] || 0, tone: 'green', filter: 'status-在校' },
-    { label: '已领养', value: counts.status['已领养'] || 0, tone: 'blue', filter: 'status-已领养' },
-    { label: '已绝育', value: counts.sterilized['已绝育'] || 0, tone: 'green', filter: 'sterilized-已绝育' },
-    { label: '已三针', value: counts.vaccine['三针完成'] || 0, tone: 'green', filter: 'vaccine-三针完成' }
+    { label: '喵校友', value: counts.total, tone: 'dark', filter: 'all' },
+    { label: '就读中', value: counts.status['在校'] || 0, tone: 'green', filter: 'status-在校' },
+    { label: '已毕业', value: counts.status['已领养'] || 0, tone: 'blue', filter: 'status-已领养' },
+    { label: '蛋定喵生', value: counts.sterilized['已绝育'] || 0, tone: 'green', filter: 'sterilized-已绝育' },
+    { label: '疫苗毕业', value: counts.vaccine['三针完成'] || 0, tone: 'green', filter: 'vaccine-三针完成' }
   ];
 }
 
