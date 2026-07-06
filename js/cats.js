@@ -4,7 +4,7 @@ const catProfiles = [
     status: '就读中',
     friendliness: '非常怕人',
     vaccine: '一针 2026-04-29；二针未接种；三针未接种',
-    sterilized: '未绝育',
+    sterilized: '已绝育（日期待补充）',
     notes: '原第二针窗口 5.20~5.27；因抓不到暂未接种，抓到后咨询医生补种方案。',
     source: '就读中猫咪名单',
     images: ['images/奶霜/奶霜1.jpg']
@@ -14,7 +14,7 @@ const catProfiles = [
     status: '就读中',
     friendliness: '亲人',
     vaccine: '一针 2026-05-10；二针 2026-05-31；三针未接种',
-    sterilized: '未绝育',
+    sterilized: '已绝育（日期待补充）',
     notes: '第三针认捐人：蔚蓝future',
     source: '就读中猫咪名单',
     images: ['images/水手/水手1.jpg']
@@ -24,7 +24,7 @@ const catProfiles = [
     status: '就读中',
     friendliness: '非常怕人',
     vaccine: '一针 2026-05-11；二针未接种；三针未接种',
-    sterilized: '未绝育',
+    sterilized: '已绝育（日期待补充）',
     notes: '—',
     source: '就读中猫咪名单',
     images: ['images/虎先锋/虎先锋5.jpg', 'images/虎先锋/虎先锋4.jpg', 'images/虎先锋/虎先锋3.jpg', 'images/虎先锋/虎先锋2.jpg', 'images/虎先锋/虎先锋1.jpg']
@@ -34,7 +34,7 @@ const catProfiles = [
     status: '就读中',
     friendliness: '怕人',
     vaccine: '一针 2025-11-01；二针未接种；三针未接种',
-    sterilized: '未绝育',
+    sterilized: '已绝育（日期待补充）',
     notes: '—',
     source: '就读中猫咪名单',
     images: ['images/警长/警长1.jpg']
@@ -44,7 +44,7 @@ const catProfiles = [
     status: '就读中',
     friendliness: '亲人',
     vaccine: '一针 2025-11-30；二针未接种；三针未接种',
-    sterilized: '未绝育',
+    sterilized: '已绝育（日期待补充）',
     notes: '第二/三针认捐人：毛橘妈',
     source: '就读中猫咪名单',
     images: ['images/银杏/银杏1.jpg', 'images/银杏/银杏2.jpg', 'images/银杏/银杏3.jpg', 'images/银杏/银杏4.jpg', 'images/银杏/银杏5.jpg']
@@ -54,7 +54,7 @@ const catProfiles = [
     status: '就读中',
     friendliness: '怕人',
     vaccine: '一针 2025-11-30；二针未接种；三针未接种',
-    sterilized: '未绝育',
+    sterilized: '已绝育（日期待补充）',
     notes: '第二/三针认捐人：长乐',
     source: '就读中猫咪名单',
     images: ['images/黑小虎/黑小虎1.jpg']
@@ -84,7 +84,7 @@ const catProfiles = [
     status: '就读中',
     friendliness: '非常怕人',
     vaccine: '一针 2026-05-20；二针未接种；三针未接种',
-    sterilized: '未绝育',
+    sterilized: '已绝育（日期待补充）',
     notes: '斜眼狼儿子；第二针认捐人：鲨人不wink',
     source: '就读中猫咪名单',
     images: ['images/彪哥/彪哥4.jpg', 'images/彪哥/彪哥3.jpg', 'images/彪哥/彪哥2.jpg', 'images/彪哥/彪哥1.jpg']
@@ -94,7 +94,7 @@ const catProfiles = [
     status: '就读中',
     friendliness: '非常怕人',
     vaccine: '未接种',
-    sterilized: '未绝育',
+    sterilized: '已绝育（日期待补充）',
     notes: '第二针认捐人：刘岛；第三针认捐人：李介清',
     source: '就读中猫咪名单',
     images: ['images/豆介/豆介2.jpg', 'images/豆介/豆介1.jpg']
@@ -104,7 +104,7 @@ const catProfiles = [
     status: '就读中',
     friendliness: '亲人',
     vaccine: '一针 2025-08-01；二针 2025-09-01；三针 2026-04-29',
-    sterilized: '未绝育',
+    sterilized: '已绝育（日期待补充）',
     notes: '第三针由大面包car协助',
     source: '就读中猫咪名单',
     images: ['images/大面包/大面包2.jpg', 'images/大面包/大面包1.jpg']
@@ -114,7 +114,7 @@ const catProfiles = [
     status: '就读中',
     friendliness: '亲人',
     vaccine: '一针 2025-11-01；二针 2026-04-01；三针 2026-05-18',
-    sterilized: '未绝育',
+    sterilized: '已绝育（日期待补充）',
     notes: '—',
     source: '就读中猫咪名单',
     images: ['images/芸豆/芸豆1.jpg']
@@ -124,7 +124,7 @@ const catProfiles = [
     status: '已毕业',
     friendliness: '亲人',
     vaccine: '一针 2026-03-01；二针 2026-03-01；三针 2026-04-01',
-    sterilized: '未绝育',
+    sterilized: '已绝育（日期待补充）',
     notes: '—',
     source: '已毕业猫咪名单',
     images: ['images/二橙/二橙3.jpg', 'images/二橙/二橙2.jpg', 'images/二橙/二橙1.jpg']
@@ -134,7 +134,7 @@ const catProfiles = [
     status: '已毕业',
     friendliness: '亲人',
     vaccine: '一针 2026-03-01；二针 2026-03-01；三针 2026-04-01',
-    sterilized: '未绝育',
+    sterilized: '已绝育（日期待补充）',
     notes: '—',
     source: '已毕业猫咪名单',
     images: ['images/二柑/二柑6.jpg', 'images/二柑/二柑5.jpg', 'images/二柑/二柑4.jpg', 'images/二柑/二柑3.jpg', 'images/二柑/二柑2.jpg', 'images/二柑/二柑1.jpg']
@@ -144,7 +144,7 @@ const catProfiles = [
     status: '就读中',
     friendliness: '亲人',
     vaccine: '未接种',
-    sterilized: '未绝育',
+    sterilized: '已绝育（日期待补充）',
     notes: '2026-05-31 诊断牙龈炎，治疗中。疫苗需等病后评估。',
     source: '就读中猫咪名单',
     images: ['images/渣男/渣男3.jpg', 'images/渣男/渣男2.jpg', 'images/渣男/渣男1.jpg']
@@ -174,7 +174,7 @@ const catProfiles = [
     status: '就读中',
     friendliness: '怕人',
     vaccine: '未接种',
-    sterilized: '未绝育',
+    sterilized: '已绝育（日期待补充）',
     notes: '—',
     source: '就读中猫咪名单',
     images: ['images/蓝豆/蓝豆1.jpg']
@@ -184,7 +184,7 @@ const catProfiles = [
     status: '就读中',
     friendliness: '怕人',
     vaccine: '未接种',
-    sterilized: '未绝育',
+    sterilized: '已绝育（日期待补充）',
     notes: '—',
     source: '就读中猫咪名单',
     images: ['images/天水/天水1.jpg']
@@ -324,7 +324,7 @@ const catProfiles = [
     status: '已去喵星',
     friendliness: '亲人',
     vaccine: '—',
-    sterilized: '未绝育',
+    sterilized: '已绝育（日期待补充）',
     notes: '约 2026-04-30 因猫瘟去世，具体日期待补充。',
     source: '已离世或失踪猫咪名单',
     images: ['images/咖啡/咖啡2.jpg', 'images/咖啡/咖啡1.jpg']
@@ -348,5 +348,15 @@ const catProfiles = [
     notes: '纯白短毛，怕人，已绝育但疫苗未接种。',
     source: '就读中猫咪名单',
     images: ['images/金琥/金琥2.jpg', 'images/金琥/金琥1.jpg']
+  },
+  {
+    name: '邪恶奶牛',
+    status: '就读中',
+    friendliness: '非常怕人',
+    vaccine: '未接种',
+    sterilized: '未绝育',
+    notes: '—',
+    source: '就读中猫咪名单',
+    images: ['images/邪恶奶牛/邪恶奶牛1.jpg']
   }
 ];
