@@ -218,7 +218,7 @@ const catProfiles = [
     destination: '学校',
     notes: '—',
     source: '在校猫咪名单',
-    images: []
+    images: ['images/脏白/脏白2.jpg', 'images/脏白/脏白1.jpg']
   },
   {
     name: '蓝豆',
@@ -231,7 +231,7 @@ const catProfiles = [
     destination: '学校',
     notes: '—',
     source: '在校猫咪名单',
-    images: []
+    images: ['images/蓝豆/蓝豆1.jpg']
   },
   {
     name: '天水',
@@ -283,7 +283,7 @@ const catProfiles = [
     destination: '学校',
     notes: '2026-05-17 在缘愈绝育/治疗，术后恢复待跟进。',
     source: '在校猫咪名单',
-    images: []
+    images: ['images/小小黑/小小黑2.jpg', 'images/小小黑/小小黑1.jpg']
   },
   {
     name: '邪恶橘白',
@@ -453,5 +453,31 @@ const catProfiles = [
     notes: '约 2026-04-30 因猫瘟去世，具体日期待补充。',
     source: '已离世或失踪猫咪名单',
     images: []
+  },
+  {
+    name: '胆小橘',
+    status: '在校',
+    friendliness: '怕人',
+    vaccine: '未接种',
+    nextWindow: '待首针',
+    sterilized: '已绝育（日期待补充）',
+    adopter: '—',
+    destination: '学校',
+    notes: '橘白双色，怕人，已绝育但疫苗未接种。',
+    source: '在校猫咪名单',
+    images: ['images/胆小橘/胆小橘1.jpg']
+  },
+  {
+    name: '金琥',
+    status: '在校',
+    friendliness: '怕人',
+    vaccine: '未接种',
+    nextWindow: '待首针',
+    sterilized: '已绝育（日期待补充）',
+    adopter: '—',
+    destination: '学校',
+    notes: '纯白短毛，怕人，已绝育但疫苗未接种。',
+    source: '在校猫咪名单',
+    images: ['images/金琥/金琥2.jpg', 'images/金琥/金琥1.jpg']
   }
 ];
