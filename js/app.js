@@ -227,7 +227,7 @@ function renderCatControls(filteredCount) {
         <div class="search-box">
           <span>搜索</span>
           <div class="search-input-row">
-            <input id="searchInput" type="search" value="${escapeHtml(state.query)}" placeholder="猫名、疫苗、领养人、备注..." autocomplete="off">
+            <input id="searchInput" type="search" value="${escapeHtml(state.query)}" placeholder="猫名" autocomplete="off">
             <button class="search-btn" id="searchBtn" title="搜索（回车也可）">搜索</button>
           </div>
         </div>

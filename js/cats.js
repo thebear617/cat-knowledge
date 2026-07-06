@@ -47,7 +47,7 @@ const catProfiles = [
     sterilized: '未绝育',
     notes: '第二/三针认捐人：毛橘妈',
     source: '在校猫咪名单',
-    images: ['images/银杏/银杏1.jpg']
+    images: ['images/银杏/银杏1.jpg', 'images/银杏/银杏2.jpg', 'images/银杏/银杏3.jpg', 'images/银杏/银杏4.jpg', 'images/银杏/银杏5.jpg']
   },
   {
     name: '黑小虎',
@@ -87,7 +87,7 @@ const catProfiles = [
     sterilized: '未绝育',
     notes: '斜眼狼儿子；第二针认捐人：鲨人不wink',
     source: '在校猫咪名单',
-    images: []
+    images: ['images/彪哥/彪哥4.jpg', 'images/彪哥/彪哥3.jpg', 'images/彪哥/彪哥2.jpg', 'images/彪哥/彪哥1.jpg']
   },
   {
     name: '豆介',
