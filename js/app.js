@@ -63,18 +63,6 @@ function getFriendlinessBucket(cat) {
   return String(cat.friendliness || '');
 }
 
-function getPriorityScore(cat) {
-  let score = 0;
-  if (cat.status === '就读中') score += 50;
-
-  if (getVaccineBucket(cat) === '超窗口') score += 40;
-  if (getVaccineBucket(cat) === '待首针') score += 28;
-  if (getVaccineBucket(cat) === '需补针') score += 18;
-  if (getSterilizedBucket(cat) === '未确认') score += 8;
-  if (getFriendlinessBucket(cat) === '亲人') score += 6;
-  return score;
-}
-
 function getSummary() {
   const counts = catProfiles.reduce((acc, cat) => {
     acc.total += 1;
@@ -176,7 +164,7 @@ function renderHomeTab() {
     const cats = getFilteredCats();
     content += renderCatControls(cats.length) + renderCatGrid(cats);
   } else {
-    const catsWithPhotos = catProfiles.filter(cat => cat.images && cat.images.length > 0);
+    const catsWithPhotos = catProfiles.filter(cat => cat.images && cat.images.length > 0).sort((a, b) => a.name.localeCompare(b.name, 'zh-Hans-CN'));
     content += `
     <div class="home-photo-wall" aria-label="猫咪照片墙">
       ${catsWithPhotos.map(cat => {
