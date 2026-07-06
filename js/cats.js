@@ -234,7 +234,7 @@ const catProfiles = [
     status: '已领养',
     friendliness: '—',
     vaccine: '品牌待追溯·一针 2026-05-14（紫薇京和）；二针窗口 6.4~6.11；三针待认领',
-    sterilized: '待补充',
+    sterilized: '—',
     notes: '2026-05-14 疫苗费用由猫协垫付',
     source: '已领养猫咪名单',
     images: []
@@ -244,7 +244,7 @@ const catProfiles = [
     status: '已领养',
     friendliness: '不怕人',
     vaccine: '未接种（受伤期评估后未补种）',
-    sterilized: '待补充',
+    sterilized: '—',
     notes: '曾受伤，仍有猫传腹风险；领养时未补种疫苗。',
     source: '已领养猫咪名单',
     images: []
@@ -254,7 +254,7 @@ const catProfiles = [
     status: '已领养',
     friendliness: '—',
     vaccine: '品牌待追溯·一针 2026-04-29（紫薇京和）；二针待追溯；三针约 2026-05-24',
-    sterilized: '待补充',
+    sterilized: '—',
     notes: '三针医院或品牌待追溯',
     source: '已领养猫咪名单',
     images: []
@@ -274,7 +274,7 @@ const catProfiles = [
     status: '预计领养',
     friendliness: '—',
     vaccine: '品牌待追溯·一针待追溯；二针待追溯；三针窗口 5.26~6.2（紫薇京和）',
-    sterilized: '待补充',
+    sterilized: '—',
     notes: '预计 2026-06-15 领养',
     source: '已领养猫咪名单',
     images: ['images/白介/白介2.jpg', 'images/白介/白介1.jpg']
@@ -284,7 +284,7 @@ const catProfiles = [
     status: '预计领养',
     friendliness: '—',
     vaccine: '妙三多·三针已完成（具体日期待追溯）',
-    sterilized: '待补充',
+    sterilized: '—',
     notes: '预计 2026-06，具体日期待补充',
     source: '已领养猫咪名单',
     images: ['images/小花/小花4.jpg', 'images/小花/小花3.jpg', 'images/小花/小花2.jpg', 'images/小花/小花1.jpg']
@@ -294,7 +294,7 @@ const catProfiles = [
     status: '在校',
     friendliness: '状态待补充',
     vaccine: '妙三多·一针 2025-07-27；二针 2025-09-09；三针 2025-10-07（紫薇京和）',
-    sterilized: '待补充',
+    sterilized: '已绝育（日期待补充）',
     notes: '—',
     source: '在校猫咪名单',
     images: ['images/大头/datou9.jpg', 'images/大头/datou8.jpg', 'images/大头/datou7.jpg', 'images/大头/datou6.jpg', 'images/大头/datou5.jpg', 'images/大头/datou4.jpg', 'images/大头/datou1.jpg', 'images/大头/datou2.jpg', 'images/大头/datou3.jpg']
@@ -304,7 +304,7 @@ const catProfiles = [
     status: '在校',
     friendliness: '状态待补充',
     vaccine: '妙三多·一针 2026-05-10；二针 2026-05-31；三针待认领',
-    sterilized: '待补充',
+    sterilized: '已绝育（日期待补充）',
     notes: '—',
     source: '在校猫咪名单',
     images: ['images/漂亮橘/漂亮橘4.jpg', 'images/漂亮橘/漂亮橘3.jpg', 'images/漂亮橘/漂亮橘2.jpg', 'images/漂亮橘/漂亮橘1.jpg']
@@ -314,7 +314,7 @@ const catProfiles = [
     status: '已领养',
     friendliness: '—',
     vaccine: '喵倍护·三针已完成（具体日期待追溯）',
-    sterilized: '待补充',
+    sterilized: '—',
     notes: '预计领养，具体日期待补充',
     source: '已领养猫咪名单',
     images: ['images/橙留香/橙留香3.jpg', 'images/橙留香/橙留香2.jpg', 'images/橙留香/橙留香1.jpg']
@@ -324,7 +324,7 @@ const catProfiles = [
     status: '已领养',
     friendliness: '—',
     vaccine: '喵倍护·三针已完成（具体日期待追溯）',
-    sterilized: '待补充',
+    sterilized: '—',
     notes: '预计领养，具体日期待补充',
     source: '已领养猫咪名单',
     images: ['images/裤裤/裤裤3.jpg', 'images/裤裤/裤裤2.jpg', 'images/裤裤/裤裤1.jpg']
@@ -334,7 +334,7 @@ const catProfiles = [
     status: '已领养',
     friendliness: '—',
     vaccine: '喵倍护·三针已完成（具体日期待追溯）；加强针 2026-05-11',
-    sterilized: '待补充',
+    sterilized: '—',
     notes: '预计领养，具体日期待补充',
     source: '已领养猫咪名单',
     images: ['images/深情哥/深情哥2.jpg', 'images/深情哥/深情哥1.jpg']
