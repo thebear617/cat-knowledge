@@ -327,7 +327,7 @@ const catProfiles = [
     sterilized: '已绝育（日期待补充）',
     notes: '约 2026-04-30 因猫瘟去世，具体日期待补充。',
     source: '喵星或失踪猫咪名单',
-    images: ['images/咖啡/咖啡2.jpg', 'images/咖啡/咖啡1.jpg']
+    images: ['images/咖啡/咖啡1.jpg', 'images/咖啡/咖啡2.jpg']
   },
   {
     name: '胆小橘',
