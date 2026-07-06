@@ -147,8 +147,8 @@ function renderHomeTab() {
 
   let content = `
     <div class="home-hero">
-      <h2>校园流浪猫状态公开展示</h2>
-      <p>记录 XDU 校园猫咪的疫苗、绝育、领养信息，以医生意见为准。</p>
+      <h2>西电猫猫</h2>
+      <p>记录西电猫猫的在校、绝育、疫苗情况</p>
     </div>
     <section class="summary-grid" aria-label="猫协档案统计">
       ${summary.map(item => {
