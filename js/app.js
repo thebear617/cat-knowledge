@@ -47,7 +47,7 @@ function isEmptyValue(value) {
 }
 
 function getVaccineBucket(cat) {
-  const text = `${cat.vaccine} ${cat.nextWindow}`;
+  const text = `${cat.vaccine}`;
   if (text.includes('超窗口')) return '超窗口';
   if (text.includes('待首针') || text.includes('未接种')) return '待首针';
   if (text.includes('二针未接种') || text.includes('三针未接种') || text.includes('待认领')) return '需补针';
@@ -105,10 +105,7 @@ function getFilteredCats() {
       cat.status,
       cat.friendliness,
       cat.vaccine,
-      cat.nextWindow,
       cat.sterilized,
-      cat.adopter,
-      cat.destination,
       cat.notes,
       cat.source
     ].join(' '));
@@ -330,10 +327,7 @@ function renderDrawer(cat) {
       <dl class="detail-list">
         ${renderDetailRow('抓捕/亲人状态', cat.friendliness)}
         ${renderDetailRow('疫苗状态', cat.vaccine)}
-        ${renderDetailRow('下一针窗口', cat.nextWindow)}
         ${renderDetailRow('绝育状态', cat.sterilized)}
-        ${renderDetailRow('领养人', cat.adopter)}
-        ${renderDetailRow('去向', cat.destination)}
         ${renderDetailRow('备注', cat.notes)}
       </dl>
     `;
