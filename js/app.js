@@ -1,7 +1,7 @@
-const STATUS_ORDER = ['全部', '在校', '预计领养', '已领养', '已离世', '失踪'];
+const STATUS_ORDER = ['全部', '在校', '已领养', '已去喵星', '已失踪'];
 const VACCINE_OPTIONS = ['全部', '待首针', '需补针', '超窗口', '三针完成'];
 const STERILIZED_OPTIONS = ['全部', '已绝育', '未确认'];
-const FRIENDLINESS_OPTIONS = ['全部', '不怕人', '有点怕人', '行踪不定', '状态待补充'];
+const FRIENDLINESS_OPTIONS = ['全部', '亲人', '怕人', '非常怕人'];
 
 const TABS = [
   { id: 'home', title: '首页', icon: '🏠' },
@@ -60,22 +60,18 @@ function getSterilizedBucket(cat) {
 }
 
 function getFriendlinessBucket(cat) {
-  const text = String(cat.friendliness || '');
-  if (text.includes('不怕人')) return '不怕人';
-  if (text.includes('有点怕人') || text.includes('怕人')) return '有点怕人';
-  if (text.includes('行踪不定')) return '行踪不定';
-  return '状态待补充';
+  return String(cat.friendliness || '');
 }
 
 function getPriorityScore(cat) {
   let score = 0;
   if (cat.status === '在校') score += 50;
-  if (cat.status === '预计领养') score += 35;
+
   if (getVaccineBucket(cat) === '超窗口') score += 40;
   if (getVaccineBucket(cat) === '待首针') score += 28;
   if (getVaccineBucket(cat) === '需补针') score += 18;
   if (getSterilizedBucket(cat) === '未确认') score += 8;
-  if (getFriendlinessBucket(cat) === '不怕人') score += 6;
+  if (getFriendlinessBucket(cat) === '亲人') score += 6;
   return score;
 }
 
