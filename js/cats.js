@@ -101,12 +101,12 @@ const catProfiles = [
   },
   {
     name: '大面包',
-    status: '就读中',
+    status: '已毕业',
     friendliness: '亲人',
     vaccine: '一针 2025-08-01；二针 2025-09-01；三针 2026-04-29',
     sterilized: '已绝育（日期待补充）',
     notes: '第三针由大面包car协助',
-    source: '就读中猫咪名单',
+    source: '已毕业猫咪名单',
     images: ['images/大面包/大面包2.jpg', 'images/大面包/大面包1.jpg']
   },
   {
@@ -181,12 +181,12 @@ const catProfiles = [
   },
   {
     name: '天水',
-    status: '就读中',
+    status: '喵星或失踪',
     friendliness: '怕人',
     vaccine: '未接种',
     sterilized: '已绝育（日期待补充）',
     notes: '—',
-    source: '就读中猫咪名单',
+    source: '喵星或失踪猫咪名单',
     images: ['images/天水/天水1.jpg']
   },
   {
@@ -321,12 +321,12 @@ const catProfiles = [
   },
   {
     name: '咖啡',
-    status: '已去喵星',
+    status: '喵星或失踪',
     friendliness: '亲人',
     vaccine: '—',
     sterilized: '已绝育（日期待补充）',
     notes: '约 2026-04-30 因猫瘟去世，具体日期待补充。',
-    source: '已离世或失踪猫咪名单',
+    source: '喵星或失踪猫咪名单',
     images: ['images/咖啡/咖啡2.jpg', 'images/咖啡/咖啡1.jpg']
   },
   {
