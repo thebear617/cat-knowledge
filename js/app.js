@@ -77,8 +77,9 @@ function getSummary() {
     { label: '就读中', value: counts.status['就读中'] || 0, tone: 'green', filter: 'status-就读中' },
     { label: '已毕业', value: counts.status['已毕业'] || 0, tone: 'blue', filter: 'status-已毕业' },
     { label: '喵星或失踪', value: counts.status['喵星或失踪'] || 0, tone: 'red', filter: 'status-喵星或失踪' },
+    { label: '疫苗毕业', value: counts.vaccine['三针完成'] || 0, tone: 'green', filter: 'vaccine-三针完成' },
     { label: '蛋定喵生', value: counts.sterilized['已绝育'] || 0, tone: 'green', filter: 'sterilized-已绝育' },
-    { label: '疫苗毕业', value: counts.vaccine['三针完成'] || 0, tone: 'green', filter: 'vaccine-三针完成' }
+    { label: '在逃咪', value: counts.sterilized['未确认'] || 0, tone: 'amber', filter: 'sterilized-未确认' }
   ];
 }
 
