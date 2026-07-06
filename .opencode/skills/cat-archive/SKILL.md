@@ -1,30 +1,30 @@
 ---
 name: cat-archive
-description: Use when updating cat association archive website. Covers dual-write rule (Obsidian .md ←→ js/*.js), data source mapping, symlink _obsidian, deploy flow.
+description: Use when updating cat association archive website. Covers editing rules (js/*.js as primary source), Obsidian sync, data mapping, symlink _obsidian, deploy flow.
 ---
 
-# 猫协档案双写规则
+# 猫协档案编辑规则
 
-## 事实源与网站源
+## 数据源与网站源
 
 ```
-_obsidian/*.md          ← 事实源头（Obsidian，直接修改）
-   ↕ 双向同步
-js/*.js                 ← 网站数据（前端读取用）
+js/*.js                 ← 主事实源 + 编辑入口（直接修改）
+   ↓ 手动同步（agent 执行）
+_obsidian/*.md          ← Obsidian 副本（仅供浏览查阅）
    ↓ 部署
 https://thebear617.github.io/cat-knowledge/
 ```
 
 ## 软链
 
-`_obsidian/` 是指向 `/Users/mokaiche/Documents/notes/01-Projects/猫协/` 的软链接，**不要提交到 git**（已加入 .gitignore）。
+`_obsidian/` 是指向 `/Users/mokaiche/Documents/notes/01-Projects/猫协/` 的软链接，**不要提交到 git**（已加入 .gitignore）。`.md` 文件为 Obsidian 副本，仅供浏览查阅，不作为编辑入口。
 
 ## 项目结构
 
 ```
 cats/
 ├── index.html              # 入口
-├── _obsidian/              # Obsidian 源文件（软链）
+├── _obsidian/              # Obsidian 副本（软链，仅供查阅）
 ├── js/
 │   ├── cats.js             # 猫只档案数据
 │   ├── supplies.js         # 物资管理数据
@@ -43,23 +43,26 @@ cats/
 
 ## 文件映射
 
-| Obsidian 源 | 网站 JS | 说明 |
-|------------|--------|------|
-| `_obsidian/猫只档案与疫苗绝育.md` | `js/cats.js` | 猫只档案 tab 数据 |
-| `_obsidian/物资管理.md` | `js/supplies.js` | 物资管理 tab 数据 |
-| `_obsidian/近期计划.md` | `js/plans.js` | 近期计划 tab 数据 |
-| `_obsidian/猫只档案与疫苗绝育.md`（SOP 章节） | `js/sop.js` | 标准 SOP tab 数据 |
-| `_obsidian/行动记录与构思.md` | `js/timeline.js` | 猫猫编年史 tab 数据 |
-| `_obsidian/猫协分工.md` | `js/roles.js` | 猫协分工 tab 数据 |
+日常编辑入口为 `js/*.js`。`_obsidian/*.md` 为 Obsidian 副本（agent 手动同步，非日常编辑入口）。
 
-## 双写规则
+| 网站 JS（编辑入口） | Obsidian 副本 | 说明 |
+|--------|------------|------|
+| `js/cats.js` | `_obsidian/猫只档案与疫苗绝育.md` | 猫只档案 tab 数据 |
+| `js/supplies.js` | `_obsidian/物资管理.md` | 物资管理 tab 数据 |
+| `js/plans.js` | `_obsidian/近期计划.md` | 近期计划 tab 数据 |
+| `js/sop.js` | `_obsidian/猫只档案与疫苗绝育.md`（SOP 章节） | 标准 SOP tab 数据 |
+| `js/timeline.js` | `_obsidian/行动记录与构思.md` | 猫猫编年史 tab 数据 |
+| `js/roles.js` | `_obsidian/猫协分工.md` | 猫协分工 tab 数据 |
 
-每次修改数据时，必须同时更新两个源：
+## 编辑规则（JS 优先）
 
-1. **先读 `_obsidian/` 下的 .md 文件**，以 Obsidian 内容为唯一事实
-2. **更新 Obsidian .md** — 修改事实源
-3. **更新 js/*.js** — 同步网站结构化数据
-4. **提交 + push** — 部署到 GitHub Pages
+日常修改数据时，只编辑 `js/*.js`，**不需要**实时同步到 Obsidian `.md`。
+
+1. **直接修改 `js/*.js`** — 这是唯一编辑入口
+2. **必要时手动同步到 `.md`** — 由 agent 按指令执行，不作为日常要求
+3. **提交 + push** — 部署到 GitHub Pages
+
+如需将 JS 数据同步到 Obsidian `.md`，告知 agent 执行即可。
 
 ## 猫只数据字段
 
@@ -70,27 +73,25 @@ name          猫名
 status        在校 / 预计领养 / 已领养 / 已离世 / 失踪
 friendliness  抓捕/亲人状态
 vaccine       疫苗状态
-nextWindow    下一针窗口
 sterilized    绝育状态
-adopter       领养人
-destination   去向
-notes         备注
+notes         备注（认捐人、健康问题等）
 source        来源表
-images        照片路径数组（相对路径）
+images        照片路径数组（相对路径 `images/{猫名}/`）
 ```
 
 ## 事实源头规则
 
-- `js/cats.js` 只是前端展示用的结构化副本，不是最终事实源头
-- 猫协档案的事实源头始终在 Obsidian vault：`猫只档案与疫苗绝育.md`
-- 维护猫只状态、疫苗、绝育、领养和离世信息时，优先更新 Obsidian 档案
+- `js/cats.js` 是猫只档案的**唯一主事实源**
+- `_obsidian/猫只档案与疫苗绝育.md` 是 Obsidian 副本，仅供浏览查阅，不作为编辑入口
+- 维护猫只状态、疫苗、绝育、领养和离世信息时，直接编辑 `js/cats.js`
+- agent 可按需将 JS 数据同步到 `.md`，但不作为日常要求
 
 ## 约束
 
 - 领养记录：只写领养人群名，不写地点等额外信息
 - 不记录本人受伤/医疗信息
 - 猫名不含括号别名
-- `status` 固定枚举：`在校`、`预计领养`、`已领养`、`已离世`、`失踪`
+- `status` 固定枚举：`在校`、`已领养`、`已去喵星`、`已失踪`
 - 日期格式：YYYY-MM-DD；窗口期保留 `6.21~6.28` 格式
 - 不确定信息写 `待补充` 或 `未知`，不编造
 - 网站搜索：按 Enter 或点「搜索」按钮才触发
