@@ -1,6 +1,10 @@
 const timelineEvents = [
   { date: '2026-07-04', cat: '胆小橘', type: '绝育', location: '它之乐' },
+  { date: '2026-07-01', cat: '奶霜', type: '疫苗', location: '紫薇京和' },
   { date: '2026-06-28', cat: '金琥', type: '绝育', location: '它之乐' },
+  { date: '2026-06-28', cat: '水手、漂亮橘', type: '疫苗', location: '紫薇京和' },
+  { date: '2026-06-26', cat: '虎先锋', type: '疫苗', location: '紫薇京和' },
+  { date: '2026-06-26', cat: '豆介', type: '疫苗', location: '紫薇京和' },
   { date: '2026-06-09', cat: '邪恶橘白', type: '绝育' },
   { date: '2026-06-01', cat: '二头', type: '救助', location: '紫薇京和', notes: '领养前全套体检，轻微膀胱炎；当日送达寄养家庭' },
   { date: '2026-05-31', cat: '豆花', type: '送养' },

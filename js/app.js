@@ -1,11 +1,10 @@
 const STATUS_ORDER = ['全部', '就读中', '已毕业', '喵星或失踪'];
-const VACCINE_OPTIONS = ['全部', '待首针', '需补针', '超窗口', '三针完成'];
-const STERILIZED_OPTIONS = ['全部', '已绝育', '未确认'];
+const VACCINE_OPTIONS = ['全部', '零针', '一针', '两针', '疫苗毕业'];
+const STERILIZED_OPTIONS = ['全部', '已绝育', '未绝育'];
 const FRIENDLINESS_OPTIONS = ['全部', '亲人', '怕人', '非常怕人'];
 
 const TABS = [
   { id: 'home', title: '首页', icon: '🏠' },
-  { id: 'cats', title: '猫咪档案', icon: '🐱' },
   { id: 'supplies', title: '物资管理', icon: '📦' },
   { id: 'sop', title: '标准 SOP', icon: '📋' },
   { id: 'timeline', title: '猫猫编年史', icon: '📜' },
@@ -47,15 +46,17 @@ function isEmptyValue(value) {
 
 function getVaccineBucket(cat) {
   const text = `${cat.vaccine}`;
-  if (text.includes('超窗口')) return '超窗口';
-  if (text.includes('待首针') || text.includes('未接种')) return '待首针';
-  if (text.includes('二针未接种') || text.includes('三针未接种') || text.includes('待认领')) return '需补针';
-  if (text.includes('三针已完成') || /三针\s*(20\d{2}|约\s*20\d{2})/.test(text)) return '三针完成';
-  return '需补针';
+  const hasD1 = /一针\s*(202\d|✅)/.test(text);
+  const hasD2 = /二针\s*(202\d|✅)/.test(text);
+  const hasD3 = /三针\s*(202\d|已完成|✅)/.test(text);
+  if (hasD3) return '疫苗毕业';
+  if (hasD2) return '两针';
+  if (hasD1) return '一针';
+  return '零针';
 }
 
 function getSterilizedBucket(cat) {
-  return isEmptyValue(cat.sterilized) || String(cat.sterilized).includes('未') ? '未确认' : '已绝育';
+  return isEmptyValue(cat.sterilized) || String(cat.sterilized).includes('未') ? '未绝育' : '已绝育';
 }
 
 function getFriendlinessBucket(cat) {
@@ -71,14 +72,19 @@ function getSummary() {
     return acc;
   }, { total: 0, status: {}, vaccine: {}, sterilized: {} });
 
+  const enrolled = catProfiles.filter(c => c.status === '就读中');
+  const enrolledVaccineDone = enrolled.filter(c => getVaccineBucket(c) === '疫苗毕业').length;
+  const enrolledSterilized = enrolled.filter(c => getSterilizedBucket(c) === '已绝育').length;
+  const enrolledUnsterilized = enrolled.filter(c => getSterilizedBucket(c) === '未绝育').length;
+
   return [
     { label: '喵校友', value: counts.total, tone: 'dark', filter: 'all' },
     { label: '就读中', value: counts.status['就读中'] || 0, tone: 'green', filter: 'status-就读中' },
-    { label: '已毕业', value: counts.status['已毕业'] || 0, tone: 'blue', filter: 'status-已毕业' },
+    { label: '疫苗毕业', value: enrolledVaccineDone, tone: 'green', filter: 'vaccine-疫苗毕业' },
+    { label: '蛋定喵生', value: enrolledSterilized, tone: 'green', filter: 'sterilized-已绝育' },
+    { label: '在逃咪', value: enrolledUnsterilized, tone: 'amber', filter: 'sterilized-未绝育' },
     { label: '喵星或失踪', value: counts.status['喵星或失踪'] || 0, tone: 'red', filter: 'status-喵星或失踪' },
-    { label: '疫苗毕业', value: counts.vaccine['三针完成'] || 0, tone: 'green', filter: 'vaccine-三针完成' },
-    { label: '蛋定喵生', value: counts.sterilized['已绝育'] || 0, tone: 'green', filter: 'sterilized-已绝育' },
-    { label: '在逃咪', value: counts.sterilized['未确认'] || 0, tone: 'amber', filter: 'sterilized-未确认' }
+    { label: '已毕业', value: counts.status['已毕业'] || 0, tone: 'blue', filter: 'status-已毕业' }
   ];
 }
 
@@ -133,10 +139,10 @@ function isHomeFiltered() {
 }
 
 function getActiveHomeFilter() {
-  if (state.status !== '全部') return `status-${state.status}`;
   if (state.vaccine !== '全部') return `vaccine-${state.vaccine}`;
   if (state.sterilized !== '全部') return `sterilized-${state.sterilized}`;
-  return '';
+  if (state.status !== '全部') return `status-${state.status}`;
+  return null;
 }
 
 function renderHomeTab() {
@@ -147,7 +153,7 @@ function renderHomeTab() {
   let content = `
     <div class="home-hero">
       <h2>西电猫猫</h2>
-      <p>记录西电猫猫的在校、绝育、疫苗情况</p>
+      <p>追踪每只西电在校喵校友的疫苗、绝育与生活点滴</p>
     </div>
     <section class="summary-grid" aria-label="猫协档案统计">
       ${summary.map(item => {
@@ -210,6 +216,7 @@ function renderSelect(label, id, options, value) {
 
 function renderCatControls(filteredCount) {
   const availableStatuses = STATUS_ORDER.filter(status => status === '全部' || catProfiles.some(cat => cat.status === status));
+  const baseCount = state.status === '全部' ? catProfiles.length : catProfiles.filter(c => c.status === state.status).length;
   return `
     <section class="controls" aria-label="筛选和搜索">
       <div class="search-row">
@@ -228,7 +235,7 @@ function renderCatControls(filteredCount) {
         ${renderSelect('亲人/抓捕', 'friendliness', FRIENDLINESS_OPTIONS, state.friendliness)}
       </div>
       <div class="result-bar">
-        <span>当前显示 <strong>${filteredCount}</strong> / ${catProfiles.length} 只</span>
+        <span>当前显示 <strong>${filteredCount}</strong> / ${baseCount} 只</span>
         <button class="text-button" id="resetFilters" type="button">清空筛选</button>
       </div>
     </section>
@@ -664,22 +671,11 @@ function buildSearchBar(tabId, placeholder) {
 
 // ============== Main Render ==============
 
-function renderCatsTab() {
-  const cats = getFilteredCats();
-  return `
-    ${renderCatSummary()}
-    ${renderCatControls(cats.length)}
-    ${renderCatGrid(cats)}
-  `;
-}
-
 function renderApp() {
   let content = '';
 
   if (state.activeTab === 'home') {
     content = renderHomeTab();
-  } else if (state.activeTab === 'cats') {
-    content = renderCatsTab();
   } else if (state.activeTab === 'supplies') {
     content = renderSuppliesTab();
   } else if (state.activeTab === 'sop') {
@@ -783,30 +779,6 @@ function bindControls() {
     bindCatCards();
     bindSummaryCards();
   }
-
-  // Cats tab specific
-  if (state.activeTab === 'cats') {
-    document.querySelectorAll('[data-filter]').forEach(control => {
-      control.addEventListener('change', event => {
-        state[event.target.dataset.filter] = event.target.value;
-        renderApp();
-      });
-    });
-
-    const resetBtn = document.getElementById('resetFilters');
-    if (resetBtn) {
-      resetBtn.addEventListener('click', () => {
-        state.query = '';
-        state.status = '全部';
-        state.vaccine = '全部';
-        state.sterilized = '全部';
-        state.friendliness = '全部';
-        renderApp();
-      });
-    }
-
-    bindCatCards();
-  }
 }
 
 function bindCatCards() {
@@ -832,8 +804,10 @@ function applyHomeFilter(filterKey) {
   if (filterKey !== 'all') {
     const [type, value] = filterKey.split('-', 2);
     if (type === 'status') state.status = value;
-    else if (type === 'vaccine') state.vaccine = value;
-    else if (type === 'sterilized') state.sterilized = value;
+    else if (type === 'vaccine' || type === 'sterilized') {
+      state.status = '就读中';
+      state[type] = value;
+    }
   }
 
   renderApp();
