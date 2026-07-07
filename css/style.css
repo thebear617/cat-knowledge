@@ -996,13 +996,13 @@ body.drawer-open {
 
 /* ===== Timeline Tab ===== */
 
-.timeline-month-list {
+.timeline-list {
   display: flex;
   flex-direction: column;
-  gap: .5rem;
+  gap: .75rem;
 }
 
-.timeline-month-card {
+.timeline-month {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
@@ -1010,30 +1010,28 @@ body.drawer-open {
   overflow: hidden;
 }
 
-.timeline-month-header {
+.timeline-month-label {
   display: flex;
   align-items: center;
   gap: .75rem;
-  padding: .8rem 1rem;
+  padding: .7rem 1rem;
+  font-size: .95rem;
+  font-weight: 900;
   cursor: pointer;
   user-select: none;
   transition: filter .15s;
+  list-style: none;
 }
 
-.timeline-month-header:hover {
+.timeline-month-label::-webkit-details-marker {
+  display: none;
+}
+
+.timeline-month-label:hover {
   filter: brightness(1.06);
 }
 
-.timeline-month-card[open] .timeline-month-header {
-  border-bottom: 1px solid var(--line);
-}
-
-.timeline-month-header h3 {
-  font-size: .95rem;
-  font-weight: 900;
-}
-
-.timeline-month-count {
+.timeline-month-label span:first-of-type {
   font-size: .74rem;
   font-weight: 700;
   opacity: .65;
@@ -1046,81 +1044,113 @@ body.drawer-open {
   transition: transform .2s;
 }
 
-.timeline-month-card[open] .timeline-month-arrow {
+.timeline-month[open] .timeline-month-arrow {
   transform: rotate(180deg);
 }
 
-.timeline-month-body {
-  padding: .5rem 1rem 1rem;
+.timeline-month[open] .timeline-month-label {
+  border-bottom: 1px solid var(--line);
+  border-radius: var(--radius) var(--radius) 0 0;
 }
 
-.timeline-month-item {
+.timeline-events {
+  position: relative;
+  padding: .5rem 1rem 1rem 2rem;
+  margin-left: .5rem;
+  border-left: 2px solid var(--line);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -1.5rem;
+  top: .65rem;
+  width: .7rem;
+  height: .7rem;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--amber);
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.timeline-entry {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: .65rem .9rem;
+  transition: box-shadow .15s, background .15s;
+}
+
+.timeline-entry:hover {
+  box-shadow: var(--shadow);
+  background: var(--surface-soft);
+}
+
+.timeline-entry-header {
   display: flex;
-  gap: .6rem;
-  align-items: flex-start;
-  padding: .55rem 0;
-  border-bottom: 1px dashed var(--line);
+  align-items: center;
+  gap: .5rem;
+  flex-wrap: wrap;
 }
 
-.timeline-month-item:last-child {
-  border-bottom: none;
-}
-
-.timeline-month-day {
-  flex-shrink: 0;
-  width: 3rem;
-  padding-top: .12rem;
-  font-size: .72rem;
-  font-weight: 800;
-  color: var(--muted);
-}
-
-.timeline-month-content {
-  flex: 1;
-  min-width: 0;
-}
-
-.timeline-month-cat {
+.timeline-entry-cat {
   font-size: .9rem;
   font-weight: 800;
 }
 
-.timeline-month-desc {
-  margin-top: .1rem;
+.timeline-entry-date {
+  font-size: .74rem;
+  font-weight: 800;
+  color: var(--amber);
+  font-family: ui-monospace, "SF Mono", "Cascadia Code", monospace;
+}
+
+.timeline-entry-desc {
+  margin-top: .25rem;
   font-size: .8rem;
-  color: #4b5563;
+  color: var(--muted);
   line-height: 1.5;
 }
 
-.timeline-month-badge {
+.timeline-badge {
   display: inline-block;
   font-size: .66rem;
   font-weight: 900;
   padding: .08rem .45rem;
   border-radius: 999px;
-  margin-left: .4rem;
-  vertical-align: middle;
+  margin-left: auto;
 }
 
-.timeline-month-badge-救助 {
+.timeline-badge-救助 {
   background: var(--red-bg);
   color: var(--red);
 }
 
-.timeline-month-badge-疫苗 {
+.timeline-badge-疫苗 {
   background: var(--green-bg);
   color: var(--green);
 }
 
-.timeline-month-badge-绝育 {
+.timeline-badge-绝育 {
   background: var(--blue-bg);
   color: var(--blue);
 }
 
-.timeline-month-badge-送养 {
+.timeline-badge-送养 {
   background: var(--amber-bg);
   color: var(--amber);
 }
+
+/* ===== End Timeline Tab ===== */
 
 /* ===== Roles Tab ===== */
 
