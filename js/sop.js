@@ -155,7 +155,7 @@ const sops = [
   },
   {
     id: 'newcat',
-    title: '新猫去留考核流程',
+    title: '新猫去留',
     sections: [
       {
         title: '考核流程',
