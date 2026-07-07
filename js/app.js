@@ -5,9 +5,9 @@ const FRIENDLINESS_OPTIONS = ['全部', '亲人', '怕人', '非常怕人'];
 
 const TABS = [
   { id: 'home', title: '首页', icon: '🏠' },
+  { id: 'timeline', title: '猫猫编年史', icon: '📜' },
   { id: 'supplies', title: '物资管理', icon: '📦' },
   { id: 'sop', title: '标准 SOP', icon: '📋' },
-  { id: 'timeline', title: '猫猫编年史', icon: '📜' },
   { id: 'roles', title: '猫协分工', icon: '👥' },
   { id: 'science', title: '猫猫科普', icon: '📖' }
 ];
@@ -152,8 +152,8 @@ function renderHomeTab() {
 
   let content = `
     <div class="home-hero">
-      <h2>西电猫猫</h2>
-      <p>追踪每只西电在校喵校友的疫苗、绝育与生活点滴</p>
+      <h2>西电南校区猫猫</h2>
+      <p>追踪每只西电南校区在校喵校友的疫苗、绝育与生活点滴 · 图源：猫咪交流群</p>
     </div>
     <section class="summary-grid" aria-label="猫协档案统计">
       ${summary.map(item => {
@@ -419,30 +419,37 @@ function renderSuppliesTab() {
   if (!data.length) {
     html += '<section class="empty-state"><h2>没有匹配的物资</h2><p>可以清除搜索试试。</p></section>';
   } else {
+    const catGradients = [
+      { gradient: 'linear-gradient(135deg, #D3C5B5, #C9B99A)', text: '#2f2924' },  // 容器
+      { gradient: 'linear-gradient(135deg, #C9B99A, #A89F91)', text: '#fff' },      // 猫粮
+      { gradient: 'linear-gradient(135deg, #A89F91, #8B7D6B)', text: '#fff' },      // 猫砂
+      { gradient: 'linear-gradient(135deg, #D3C5B5, #8B7D6B)', text: '#fff' }      // 其他物资
+    ];
+    const catEmoji = { '猫粮': '🍖', '抓捕工具': '🔧', '航空箱 / 猫包': '🧳', '药品': '💊', '猫窝': '🛏️', '其它': '📦' };
     html += '<div class="supplies-list">';
+    let gi = 0;
     for (const cat of data) {
-      html += `<div class="supply-category">
-        <h3>${escapeHtml(cat.category)}</h3>`;
-      if (cat.note) {
-        html += `<p class="supply-cat-note">${escapeHtml(cat.note)}</p>`;
+      if (!cat.items.length) continue;
+      const g = catGradients[gi % catGradients.length];
+      gi++;
+      const emoji = catEmoji[cat.category] || '📦';
+      html += `<details class="supply-category" open>
+        <summary class="supply-cat-header" style="background:${g.gradient};color:${g.text}">
+          <h3>${emoji} ${escapeHtml(cat.category)}<span>${cat.items.length} 件</span><span class="supply-arrow">▾</span></h3>
+        </summary>
+        <div class="supply-cards">
+        <div class="supply-row supply-row-head">
+          <span>名称</span><span>规格</span><span>地点</span><span>备注</span>
+        </div>`;
+      for (const item of cat.items) {
+        html += `<div class="supply-row">
+          <span class="supply-cell supply-cell-name">${escapeHtml(item.name)}</span>
+          <span class="supply-cell supply-cell-spec">${escapeHtml(item.spec || '—')}</span>
+          <span class="supply-cell supply-cell-loc">${item.location ? `📍 ${escapeHtml(item.location)}` : '—'}</span>
+          <span class="supply-cell supply-cell-notes">${escapeHtml(item.notes || '—')}</span>
+        </div>`;
       }
-      if (!cat.items.length) {
-        html += '<p class="supply-empty">暂无记录</p>';
-      } else {
-        html += '<div class="supply-table">';
-        html += '<div class="supply-row supply-row-header"><span>名称</span><span>位置</span><span>规格</span><span>状态</span><span>备注</span></div>';
-        for (const item of cat.items) {
-          html += `<div class="supply-row">
-            <span><strong>${escapeHtml(item.name)}</strong></span>
-            <span>${escapeHtml(item.location || '—')}</span>
-            <span>${escapeHtml(item.spec || '—')}</span>
-            <span>${escapeHtml(item.status || '—')}</span>
-            <span>${escapeHtml(item.notes || '—')}</span>
-          </div>`;
-        }
-        html += '</div>';
-      }
-      html += '</div>';
+      html += '</div></details>';
     }
     html += '</div>';
   }

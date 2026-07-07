@@ -801,53 +801,133 @@ body.drawer-open {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
-  padding: 1rem;
   box-shadow: var(--shadow);
+  overflow: hidden;
 }
 
-.supply-category h3 {
-  font-size: 1rem;
-  margin-bottom: .75rem;
+.supply-cat-header {
+  padding: .8rem 1rem;
+  cursor: pointer;
+  user-select: none;
+  transition: filter .15s;
+  list-style: none;
 }
 
-.supply-cat-note {
-  color: var(--muted);
+.supply-cat-header::-webkit-details-marker {
+  display: none;
+}
+
+.supply-cat-header:hover {
+  filter: brightness(1.06);
+}
+
+.supply-category[open] .supply-cat-header {
+  border-bottom: 1px solid var(--line);
+}
+
+.supply-cat-header h3 {
+  font-size: .95rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.supply-cat-header h3 span:first-of-type {
+  font-size: .74rem;
+  font-weight: 700;
+  opacity: .65;
+}
+
+.supply-arrow {
+  margin-left: auto;
+  font-size: .85rem;
+  opacity: .5;
+  transition: transform .2s;
+}
+
+.supply-category[open] .supply-arrow {
+  transform: rotate(180deg);
+}
+
+.supply-cat-header p {
+  margin-top: .25rem;
   font-size: .78rem;
-  margin-top: -.25rem;
-  margin-bottom: .5rem;
+  opacity: .7;
+  line-height: 1.4;
 }
 
-.supply-empty {
+.supply-cards {
+  padding: 0;
+}
+
+.supply-row-head {
+  font-size: .7rem;
+  font-weight: 800;
   color: var(--muted);
-  font-size: .86rem;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  padding: .45rem 1rem;
+  border-bottom: 2px solid var(--line);
 }
 
-.supply-table {
-  display: grid;
-  gap: .25rem;
+.supply-row-head span {
+  white-space: nowrap;
 }
 
 .supply-row {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 2fr;
+  grid-template-columns: 2fr 1fr 1fr 2fr;
   gap: .5rem;
-  padding: .55rem .35rem;
-  border-radius: 6px;
+  padding: .5rem 1rem;
   font-size: .82rem;
   align-items: center;
+  transition: background .15s;
 }
 
-.supply-row-header {
-  color: var(--muted);
-  font-weight: 800;
-  font-size: .72rem;
-  border-bottom: 1px solid var(--line);
-  padding-bottom: .4rem;
-  margin-bottom: .2rem;
-}
-
-.supply-row:not(.supply-row-header):nth-child(odd) {
+.supply-row:hover {
   background: var(--surface-soft);
+}
+
+.supply-row + .supply-row {
+  border-top: 1px solid var(--line);
+}
+
+.supply-cell {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.supply-cell-name {
+  font-weight: 800;
+}
+
+.supply-cell-spec {
+  font-size: .78rem;
+  color: var(--green);
+  font-weight: 700;
+}
+
+.supply-cell-loc {
+  font-size: .78rem;
+  color: var(--muted);
+}
+
+.supply-cell-notes {
+  font-size: .74rem;
+  color: var(--amber);
+}
+
+@media (max-width: 600px) {
+  .supply-row {
+    grid-template-columns: 1fr 1fr;
+    font-size: .78rem;
+  }
+  .supply-cell-notes {
+    display: none;
+  }
 }
 
 /* ===== SOP Tab ===== */
