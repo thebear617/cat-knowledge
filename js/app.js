@@ -98,7 +98,8 @@ function getFilteredCats() {
       cat.vaccine,
       cat.sterilized,
       cat.notes,
-      cat.source
+      cat.area,
+      cat.gender
     ].join(' '));
 
     return (!q || haystack.includes(q))
@@ -320,6 +321,8 @@ function renderDrawer(cat) {
         ${renderDetailRow('抓捕/亲人状态', cat.friendliness)}
         ${renderDetailRow('疫苗状态', cat.vaccine)}
         ${renderDetailRow('绝育状态', cat.sterilized)}
+        ${renderDetailRow('区域', cat.area)}
+        ${renderDetailRow('性别', cat.gender)}
         ${renderDetailRow('备注', cat.notes)}
       </dl>
     `;
@@ -348,7 +351,6 @@ function renderDrawer(cat) {
   drawer.innerHTML = `
     <div class="drawer-header">
       <div>
-        <p>${escapeHtml(cat.source)}</p>
         <h2>${escapeHtml(cat.name)}</h2>
       </div>
       <button class="icon-button" id="closeDrawer" type="button" aria-label="关闭详情">×</button>
