@@ -459,31 +459,46 @@ function renderSuppliesTab() {
 
 // ============== SOP Tab ==============
 
-function getFilteredSops() {
-  const q = normalize(state.query);
-  if (!q) return sops;
-  return sops.map(sop => {
-    const matched = sop.sections.map(section => {
-      const matchedItems = section.items.filter(item =>
-        normalize(item).includes(q)
-      );
-      return matchedItems.length > 0 ? { ...section, items: matchedItems } : null;
-    }).filter(Boolean);
-    return matched.length > 0 ? { ...sop, sections: matched } : null;
-  }).filter(Boolean);
-}
-
 function renderSopTab() {
-  const data = getFilteredSops();
-  let html = buildSearchBar('sop', '搜索 SOP 内容...');
+  const data = sops;
+  let html = '';
 
   if (!data.length) {
-    html += '<section class="empty-state"><h2>没有匹配的 SOP</h2><p>可以清除搜索试试。</p></section>';
+    html += '<section class="empty-state"><h2>暂无 SOP</h2></section>';
   } else {
-    html += '<div class="sop-list">';
+    const sopIcons = { vaccine: '💉', sterilization: '✂️', rabies: '🦠', newcat: '🐱', reimbursement: '💰', principles: '📋' };
+    const sopGradients = [
+      { gradient: 'linear-gradient(135deg, #FEF3C7, #FDE68A)', text: '#2f2924' },
+      { gradient: 'linear-gradient(135deg, #FCE7F3, #F9A8D4)', text: '#2f2924' },
+      { gradient: 'linear-gradient(135deg, #D1FAE5, #A7F3D0)', text: '#2f2924' },
+      { gradient: 'linear-gradient(135deg, #DBEAFE, #BFDBFE)', text: '#2f2924' },
+      { gradient: 'linear-gradient(135deg, #F3E8FF, #E9D5FF)', text: '#2f2924' },
+      { gradient: 'linear-gradient(135deg, #FFF7ED, #FED7AA)', text: '#2f2924' }
+    ];
+
+    html += '<section class="sop-wrapper">';
+
+    html += '<div class="sop-nav">';
+    let ni = 0;
     for (const sop of data) {
-      html += `<details class="sop-card" open>
-        <summary class="sop-title">${escapeHtml(sop.title)}</summary>
+      const g = sopGradients[ni % sopGradients.length];
+      const icon = sopIcons[sop.id] || '📄';
+      ni++;
+      html += `<a href="#sop-${sop.id}" class="sop-nav-item" style="background:${g.gradient}">${icon} ${escapeHtml(sop.title)}</a>`;
+    }
+    html += '</div>';
+
+    html += '</section>';
+
+    html += '<section class="sop-wrapper">';
+
+    html += '<div class="sop-list">';
+    let si = 0;
+    for (const sop of data) {
+      const g = sopGradients[si % sopGradients.length];
+      si++;
+      html += `<details class="sop-card" id="sop-${sop.id}" open>
+        <summary class="sop-title" style="background:${g.gradient};color:${g.text}">${escapeHtml(sop.title)}<span class="sop-arrow">▾</span></summary>
         <div class="sop-body">`;
       for (const section of sop.sections) {
         html += `<div class="sop-section">
@@ -497,6 +512,8 @@ function renderSopTab() {
       html += '</div></details>';
     }
     html += '</div>';
+
+    html += '</section>';
   }
 
   return html;
@@ -582,29 +599,18 @@ function renderTimelineTab() {
 
 // ============== Roles Tab ==============
 
-function getFilteredRoles() {
-  const q = normalize(state.query);
-  if (!q) return roles;
-  return roles.map(role => {
-    const matched = role.phases.filter(phase =>
-      normalize(phase.label).includes(q) || normalize(phase.detail).includes(q)
-    );
-    return matched.length > 0 ? { ...role, phases: matched } : null;
-  }).filter(Boolean);
-}
-
 function renderRolesTab() {
-  const data = getFilteredRoles();
-  let html = buildSearchBar('roles', '搜索组名、职责...');
+  const data = roles;
+  let html = '';
 
   if (!data.length) {
-    html += '<section class="empty-state"><h2>没有匹配的分工</h2><p>可以清除搜索试试。</p></section>';
+    html += '<section class="empty-state"><h2>没有匹配的分工</h2></section>';
   } else {
     const roleGradients = [
-      { gradient: 'linear-gradient(135deg, #e8b84b, #e87850)', text: '#fff' },     // 义卖组 深暖金
-      { gradient: 'linear-gradient(135deg, #30cfd0, #330867)', text: '#fff' },     // 疫苗绝育组 青紫
-      { gradient: 'linear-gradient(135deg, #16a085, #f4d03f)', text: '#fff' },     // 赞助组 青绿金
-      { gradient: 'linear-gradient(135deg, #fa709a, #fee140)', text: '#2f2924' }   // 宣传财务组 粉金
+      { gradient: 'linear-gradient(135deg, #FEF3C7, #FDE68A)' },   // 义卖组 琥珀
+      { gradient: 'linear-gradient(135deg, #FCE7F3, #F9A8D4)' },   // 疫苗绝育组 粉玫
+      { gradient: 'linear-gradient(135deg, #D1FAE5, #A7F3D0)' },    // 赞助组 薄荷
+      { gradient: 'linear-gradient(135deg, #DBEAFE, #BFDBFE)' }     // 宣传财务组 晴蓝
     ];
 
     html += '<div class="roles-list">';
@@ -612,7 +618,7 @@ function renderRolesTab() {
       const role = data[i];
       const g = roleGradients[i % roleGradients.length];
       html += `<div class="role-card">
-        <div class="role-header" style="background:${g.gradient};color:${g.text}">
+        <div class="role-header" style="background:${g.gradient}">
           <h3>${escapeHtml(role.name)}</h3>
           <p class="role-desc">${escapeHtml(role.description)}</p>
         </div>

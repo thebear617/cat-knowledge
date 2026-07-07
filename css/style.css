@@ -932,12 +932,57 @@ body.drawer-open {
 
 /* ===== SOP Tab ===== */
 
+.sop-wrapper {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  padding: 1rem;
+}
+
+.sop-wrapper + .sop-wrapper {
+  margin-top: 1rem;
+}
+
+.sop-nav {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: .5rem;
+  margin-bottom: 1rem;
+}
+
+.sop-nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: .65rem .75rem;
+  border-radius: var(--radius);
+  font-size: .84rem;
+  font-weight: 800;
+  color: #2f2924;
+  text-decoration: none;
+  transition: filter .15s, box-shadow .15s;
+  border: 1px solid var(--line);
+}
+
+.sop-nav-item:hover {
+  filter: brightness(1.06);
+  box-shadow: var(--shadow);
+}
+
+@media (max-width: 600px) {
+  .sop-nav {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 .sop-list {
   display: grid;
   gap: .75rem;
 }
 
 .sop-card {
+  scroll-margin-top: 1rem;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
@@ -946,17 +991,35 @@ body.drawer-open {
 }
 
 .sop-title {
-  display: block;
-  padding: .9rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .8rem 1rem;
   font-weight: 900;
-  font-size: 1rem;
+  font-size: .95rem;
   cursor: pointer;
   user-select: none;
-  transition: background .15s;
+  transition: filter .15s;
+  list-style: none;
+}
+
+.sop-title::-webkit-details-marker {
+  display: none;
 }
 
 .sop-title:hover {
-  background: var(--surface-soft);
+  filter: brightness(1.06);
+}
+
+.sop-arrow {
+  margin-left: auto;
+  font-size: .85rem;
+  opacity: .5;
+  transition: transform .2s;
+}
+
+.sop-card[open] .sop-arrow {
+  transform: rotate(180deg);
 }
 
 .sop-card[open] .sop-title {
@@ -983,12 +1046,26 @@ body.drawer-open {
 
 .sop-section ul {
   padding-left: 1.2rem;
+  list-style: none;
 }
 
 .sop-section li {
   font-size: .86rem;
   line-height: 1.7;
   color: #33302d;
+  position: relative;
+  padding-left: .8rem;
+}
+
+.sop-section li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: .55rem;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--muted);
 }
 
 /* ===== Plans Tab ===== */
@@ -1253,17 +1330,18 @@ body.drawer-open {
 }
 
 .role-header h3 {
-  font-size: 1.15rem;
+  font-size: .95rem;
   font-weight: 900;
   color: #2f2924;
 }
 
 .role-desc {
-  margin-top: .3rem;
-  font-size: .92rem;
+  margin-top: .25rem;
+  font-size: .8rem;
   font-weight: 600;
-  line-height: 1.5;
-  color: rgba(255,255,255,.82);
+  line-height: 1.4;
+  color: #2f2924;
+  opacity: .7;
 }
 
 .role-phases {
