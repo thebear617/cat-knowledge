@@ -8,7 +8,6 @@ const TABS = [
   { id: 'cats', title: '猫咪档案', icon: '🐱' },
   { id: 'supplies', title: '物资管理', icon: '📦' },
   { id: 'sop', title: '标准 SOP', icon: '📋' },
-  { id: 'plans', title: '近期计划', icon: '📅' },
   { id: 'timeline', title: '猫猫编年史', icon: '📜' },
   { id: 'roles', title: '猫协分工', icon: '👥' },
   { id: 'science', title: '猫猫科普', icon: '📖' }
@@ -444,52 +443,6 @@ function renderSuppliesTab() {
   return html;
 }
 
-// ============== Plans Tab ==============
-
-function getFilteredPlans() {
-  const q = normalize(state.query);
-  if (!q) return plans;
-  return plans.filter(plan =>
-    normalize(plan.title).includes(q) ||
-    plan.sections.some(s =>
-      normalize(s.title).includes(q) || normalize(s.content).includes(q)
-    )
-  );
-}
-
-function renderPlansTab() {
-  const data = getFilteredPlans();
-  let html = buildSearchBar('plans', '搜索计划、猫咪、人员...');
-
-  if (!data.length) {
-    html += '<section class="empty-state"><h2>暂无计划</h2><p>近期计划将在 Obsidian 中维护后同步至此。</p></section>';
-  } else {
-    html += '<div class="plans-list">';
-    for (const plan of data) {
-      const hasMatch = !!state.query;
-      html += `<details class="plans-card"${hasMatch ? ' open' : ''}>
-        <summary class="plans-card-header">
-          <div>
-            <h3>${escapeHtml(plan.date)}</h3>
-            <p class="plans-card-title">${escapeHtml(plan.title)}</p>
-          </div>
-          <span class="plans-card-arrow">▾</span>
-        </summary>
-        <div class="plans-card-body">`;
-      for (const section of plan.sections) {
-        html += `<div class="plans-section">
-          <h4>${escapeHtml(section.title)}</h4>
-          <p>${escapeHtml(section.content)}</p>
-        </div>`;
-      }
-      html += '</div></details>';
-    }
-    html += '</div>';
-  }
-
-  return html;
-}
-
 // ============== SOP Tab ==============
 
 function getFilteredSops() {
@@ -729,8 +682,6 @@ function renderApp() {
     content = renderCatsTab();
   } else if (state.activeTab === 'supplies') {
     content = renderSuppliesTab();
-  } else if (state.activeTab === 'plans') {
-    content = renderPlansTab();
   } else if (state.activeTab === 'sop') {
     content = renderSopTab();
   } else if (state.activeTab === 'timeline') {
