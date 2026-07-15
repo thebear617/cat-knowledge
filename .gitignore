@@ -1,5 +1,5 @@
 .DS_Store
 *.log
 node_modules/
-_obsidian/
+_obsidian
 仙电猫猫守护.xlsx
