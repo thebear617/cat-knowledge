@@ -124,6 +124,12 @@ git add . && git commit -m "..." && git push origin main
 
 GitHub Pages 部署后通常几秒内生效。
 
+## Commit 规范
+
+- 中文 `type: 描述`，type 限定：`feat` / `chore` / `fix` / `style` / `refactor` / `docs` / `v*`
+- **加照片统一用 `chore`**（数据增补，无功能变化），例如 `chore: 增补大头照片（datou11）`
+- 之前那条 `feat: add-photo.sh 增加 PIL 回退 + 新增漂亮橘/大头照片` 混了脚本改动，不算单纯加图
+
 ## 已知技术决策
 
 - 搜索框使用 keydown Enter + 按钮触发（非 input 事件），避免中文输入法组词中断
