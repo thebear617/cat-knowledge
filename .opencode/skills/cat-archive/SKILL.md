@@ -76,6 +76,7 @@ vaccine       疫苗状态
 sterilized    绝育状态
 notes         备注（认捐人、健康问题等）
 source        来源表
+cover         可选·首图路径（首页照片墙 + 猫只卡片固定显示；不写则取 images[0]）
 images        照片路径数组（相对路径 `images/{猫名}/`）
 ```
 
@@ -129,6 +130,14 @@ GitHub Pages 部署后通常几秒内生效。
 - 中文 `type: 描述`，type 限定：`feat` / `chore` / `fix` / `style` / `refactor` / `docs` / `v*`
 - **加照片统一用 `chore`**（数据增补，无功能变化），例如 `chore: 增补大头照片（datou11）`
 - 之前那条 `feat: add-photo.sh 增加 PIL 回退 + 新增漂亮橘/大头照片` 混了脚本改动，不算单纯加图
+
+## 首图（cover）约定
+
+- 渲染逻辑：`getCatCover(cat)` 优先用 `cat.cover`，否则取 `cat.images[0]`
+- 作用于首页照片墙（`app.js` ~line 180）和猫只卡片（~line 265）
+- 抽屉「照片」tab 仍展示 `images[]` 全集，不受 cover 影响
+- `add-photo.sh` 新图改为 **append 到 images[] 末尾**，不再 prepend，避免覆盖 cover
+- 想换首图：直接改 `cat.cover` 字段值即可，不用动 `images[]` 顺序
 
 ## 已知技术决策
 

@@ -119,6 +119,11 @@ function cdnUrl(path) {
   return parts;
 }
 
+function getCatCover(cat) {
+  if (cat.cover) return cat.cover;
+  return cat.images && cat.images.length ? cat.images[0] : null;
+}
+
 // ============== Tab Navigation ==============
 
 function renderSidebar() {
@@ -175,7 +180,7 @@ function renderHomeTab() {
     content += `
     <div class="home-photo-wall" aria-label="猫咪照片墙">
       ${catsWithPhotos.map(cat => {
-        const img = cat.images[0];
+        const img = getCatCover(cat);
         return `<div class="home-photo-card" data-cat-name="${escapeHtml(cat.name)}" tabindex="0">
           <img src="${cdnUrl(img)}" alt="${escapeHtml(cat.name)}" loading="lazy">
           <span class="home-photo-label">${escapeHtml(cat.name)}</span>
@@ -257,7 +262,7 @@ function renderMeta(label, value) {
 }
 
 function renderCatCard(cat) {
-  const firstImage = cat.images && cat.images.length ? cat.images[0] : null;
+  const firstImage = getCatCover(cat);
   return `
     <article class="cat-card" data-cat-name="${escapeHtml(cat.name)}" tabindex="0">
       ${firstImage ? `<img class="cat-card-photo" src="${cdnUrl(firstImage)}" alt="${escapeHtml(cat.name)}" loading="lazy">` : `<div class="cat-card-placeholder">🐱</div>`}

@@ -108,7 +108,7 @@ for IMG in "${ADDED[@]}"; do
     echo "  已添加: $REL_PATH"
   elif echo "$CURRENT" | grep -q 'images: \['; then
     # Already has images: append to array
-    sed -i '' "${LINE_NO}s|images: \[|images: ['$REL_PATH', |" "$CATS_JS"
+    sed -i '' "${LINE_NO}s|images: \[\(.*\)\]|images: [\1, '$REL_PATH']|" "$CATS_JS"
     echo "  已追加: $REL_PATH"
   else
     echo "警告: 无法解析 images 行，请手动添加: $REL_PATH" >&2
