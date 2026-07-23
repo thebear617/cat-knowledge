@@ -1,6 +1,48 @@
 #!/bin/bash
 set -e
 
+# _detect_pil_python: 找到一个能 import PIL 的 python 解释器，缓存到 _PYTHON_BIN
+# 解决用户 shell alias 的 python3（装了 PIL）与 PATH 里的 python3（没装 PIL）不一致的问题
+_PYTHON_BIN=""
+_detect_pil_python() {
+  if [ -n "$_PYTHON_BIN" ]; then echo "$_PYTHON_BIN"; return 0; fi
+  for py in python3.10 python3.11 python3.12 python3.13 python3; do
+    if command -v "$py" >/dev/null 2>&1; then
+      if "$py" -c 'from PIL import Image' 2>/dev/null; then
+        _PYTHON_BIN="$(command -v "$py")"
+        echo "$_PYTHON_BIN"
+        return 0
+      fi
+    fi
+  done
+  return 1
+}
+
+# process_image <src> <dst> <max_size>
+# 用 sips 压缩图片（长边 ≤ max_size）。sips 失败时（如沙箱禁止写 /var/folders）回退到 Python PIL。
+process_image() {
+  local src="$1" dst="$2" max="$3"
+  if sips -Z "$max" -s format jpeg "$src" --out "$dst" >/dev/null 2>&1; then
+    return 0
+  fi
+  local py
+  if ! py="$(_detect_pil_python)"; then
+    echo "  ❌ sips 失败，且找不到安装了 Pillow 的 python。请 pip install Pillow。" >&2
+    return 1
+  fi
+  echo "  ⚠️  sips 不可用，回退到 PIL ($py)..." >&2
+  "$py" - "$src" "$dst" "$max" <<'PYEOF'
+import sys
+from PIL import Image
+src, dst, max_size = sys.argv[1], sys.argv[2], int(sys.argv[3])
+img = Image.open(src)
+if img.mode != "RGB":
+    img = img.convert("RGB")
+img.thumbnail((max_size, max_size), Image.LANCZOS)
+img.save(dst, "JPEG", quality=85, optimize=True)
+PYEOF
+}
+
 if [ $# -lt 2 ]; then
   echo "用法: ./add-photo.sh <猫名> <照片路径> [照片路径...]"
   echo "示例: ./add-photo.sh 二柑 ~/Downloads/photo.jpg"
@@ -33,9 +75,8 @@ for PHOTO in "$@"; do
   NEXT=$((NEXT + 1))
 
   TARGET="${IMAGES_DIR}/${CAT_NAME}${NEXT}.jpg"
-  sips -Z 1200 -s format jpeg "$PHOTO" --out "$TARGET" > /dev/null 2>&1
-
-  sips -Z 400 -s format jpeg "$TARGET" --out "${THUMB_DIR}/${CAT_NAME}${NEXT}.jpg" > /dev/null 2>&1
+  process_image "$PHOTO" "$TARGET" 1200
+  process_image "$TARGET" "${THUMB_DIR}/${CAT_NAME}${NEXT}.jpg" 400
 
   SIZE=$(du -h "$TARGET" | cut -f1)
   THUMB_SIZE=$(du -h "${THUMB_DIR}/${CAT_NAME}${NEXT}.jpg" | cut -f1)
