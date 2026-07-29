@@ -8,12 +8,17 @@ const STATUS_ORDER = ['全部', '就读中', '已毕业', '喵星或失踪'];
 const VACCINE_OPTIONS = ['全部', '零针', '一针', '两针', '疫苗毕业'];
 const STERILIZED_OPTIONS = ['全部', '已绝育', '未绝育'];
 const FRIENDLINESS_OPTIONS = ['全部', '亲人', '怕人', '非常怕人'];
+const OPERATIONS_VIEWS = [
+  { id: 'inventory', label: '物资库存', icon: '📦' },
+  { id: 'collaboration', label: '行动协作', icon: '🤝' },
+  { id: 'workflows', label: '工作流程', icon: '↗' }
+];
+const TIMELINE_TYPES = ['全部', '救助', '疫苗', '绝育', '送养'];
 
 const TABS = [
   { id: 'home', title: '首页', icon: '🏠' },
   { id: 'timeline', title: '猫猫编年史', icon: '📜' },
-  { id: 'supplies', title: '物资管理', icon: '📦' },
-  { id: 'roles', title: '猫协分工', icon: '👥' },
+  { id: 'supplies', title: '物资与协作', icon: '📦' },
   { id: 'knowledge', title: '知识科普', icon: '📖' }
 ];
 
@@ -26,6 +31,9 @@ const state = {
   selectedName: null,
   drawerTab: 'profile',
   activeTab: 'home',
+  operationsView: 'inventory',
+  inventoryCategory: '全部',
+  timelineType: '全部',
   knowledgeQuery: '',
   knowledgeCategory: '',
   knowledgeSubcategory: '',
@@ -435,29 +443,31 @@ function getFilteredSupplies() {
 }
 
 function renderSuppliesTab() {
-  const data = getFilteredSupplies();
-  let html = buildSearchBar('supplies', '物资名称、备注...');
+  const view = OPERATIONS_VIEWS.find(item => item.id === state.operationsView) || OPERATIONS_VIEWS[0];
+  return `<section class="operations-shell"><header class="operations-heading"><div><p>CAT OPERATIONS</p><h1>物资与协作</h1><span>把日常物资、协作分工与行动知识放在同一个入口。</span></div><strong>${view.icon} ${escapeHtml(view.label)}</strong></header><nav class="operations-tabs" aria-label="运营台内容切换">${OPERATIONS_VIEWS.map(item => `<button data-operations-view="${item.id}" class="${state.operationsView === item.id ? 'is-active' : ''}" type="button"><span>${item.icon}</span>${item.label}</button>`).join('')}</nav>${state.operationsView === 'inventory' ? renderInventoryView() : state.operationsView === 'collaboration' ? renderCollaborationView() : renderWorkflowView()}</section>`;
+}
+
+function renderInventoryView() {
+  const allData = getFilteredSupplies();
+  const data = state.inventoryCategory === '全部' ? allData : allData.filter(category => category.category === state.inventoryCategory);
+  const categoryIcons = { '猫粮': '🍖', '抓捕工具': '🔧', '航空箱 / 猫包': '🧳', '药品': '💊', '猫窝': '🛏️', '其它': '📦' };
+  const totalItems = data.reduce((count, category) => count + category.items.length, 0);
+  const totalRecordedItems = supplies.reduce((count, category) => count + category.items.length, 0);
+  const recordedLocations = new Set(supplies.flatMap(category => category.items.map(item => item.location).filter(Boolean))).size;
+  let html = '<section class="operations-layout"><div class="inventory-view">';
+  html += buildSearchBar('supplies', '搜索物资名称、地点或备注...');
+  html += `<section class="inventory-panel"><div class="inventory-panel-toolbar"><div class="inventory-category-filters" aria-label="物资分类筛选"><button data-inventory-category="全部" class="${state.inventoryCategory === '全部' ? 'is-active' : ''}" type="button">全部</button>${supplies.map(category => `<button data-inventory-category="${escapeHtml(category.category)}" class="${state.inventoryCategory === category.category ? 'is-active' : ''}" type="button">${escapeHtml(category.category)}</button>`).join('')}</div><div class="inventory-expand-controls"><button data-inventory-expand="all" type="button">全部展开</button><span></span><button data-inventory-expand="none" type="button">全部折叠</button></div></div><div class="inventory-summary"><strong>物资库存</strong><span>${data.length} 类 · ${totalItems} 项记录</span></div>`;
 
   if (!data.length) {
     html += '<section class="empty-state"><h2>没有匹配的物资</h2><p>可以清除搜索试试。</p></section>';
   } else {
-    const catGradients = [
-      { gradient: 'linear-gradient(135deg, #D3C5B5, #C9B99A)', text: '#2f2924' },  // 容器
-      { gradient: 'linear-gradient(135deg, #C9B99A, #A89F91)', text: '#fff' },      // 猫粮
-      { gradient: 'linear-gradient(135deg, #A89F91, #8B7D6B)', text: '#fff' },      // 猫砂
-      { gradient: 'linear-gradient(135deg, #D3C5B5, #8B7D6B)', text: '#fff' }      // 其他物资
-    ];
-    const catEmoji = { '猫粮': '🍖', '抓捕工具': '🔧', '航空箱 / 猫包': '🧳', '药品': '💊', '猫窝': '🛏️', '其它': '📦' };
     html += '<div class="supplies-list">';
-    let gi = 0;
     for (const cat of data) {
       if (!cat.items.length) continue;
-      const g = catGradients[gi % catGradients.length];
-      gi++;
-      const emoji = catEmoji[cat.category] || '📦';
-      html += `<details class="supply-category" open>
-        <summary class="supply-cat-header" style="background:${g.gradient};color:${g.text}">
-          <h3>${emoji} ${escapeHtml(cat.category)}<span>${cat.items.length} 件</span><span class="supply-arrow">▾</span></h3>
+      const emoji = categoryIcons[cat.category] || '📦';
+      html += `<details class="supply-category" data-supply-category="${escapeHtml(cat.category)}">
+        <summary class="supply-cat-header">
+          <h3><span class="supply-category-icon">${emoji}</span>${escapeHtml(cat.category)}<small>${cat.items.length} 项</small><span class="supply-arrow">⌄</span></h3>
         </summary>
         <div class="supply-cards">
         <div class="supply-row supply-row-head">
@@ -476,6 +486,8 @@ function renderSuppliesTab() {
     html += '</div>';
   }
 
+  html += '</div>';
+  html += `<aside class="inventory-aside" aria-label="库存统计看板"><section class="inventory-stat-card"><p>INVENTORY</p><h2>库存概览</h2><dl><div><dt>当前视图</dt><dd>${data.length} <span>类</span></dd></div><div><dt>匹配记录</dt><dd>${totalItems} <span>项</span></dd></div><div><dt>已收录地点</dt><dd>${recordedLocations} <span>处</span></dd></div></dl><small>全库共 ${totalRecordedItems} 项物资记录</small></section><section class="inventory-category-card"><p>CATEGORIES</p><h2>分类速览</h2><div>${supplies.map(category => `<button data-inventory-category="${escapeHtml(category.category)}" class="${state.inventoryCategory === category.category ? 'is-active' : ''}" type="button"><span>${categoryIcons[category.category] || '📦'}</span><strong>${escapeHtml(category.category)}</strong><small>${category.items.length} 项</small></button>`).join('')}</div></section></aside></section>`;
   return html;
 }
 
@@ -483,118 +495,91 @@ function renderSuppliesTab() {
 
 function getFilteredTimeline() {
   const q = normalize(state.query);
-  if (!q) return timelineEvents;
   return timelineEvents.filter(event =>
-    normalize(event.cat).includes(q) ||
-    normalize(event.type).includes(q) ||
-    normalize(event.notes || '').includes(q) ||
-    normalize(event.location || '').includes(q)
+    (!q || normalize(event.cat).includes(q) ||
+      normalize(event.type).includes(q) ||
+      normalize(event.notes || '').includes(q) ||
+      normalize(event.location || '').includes(q)) &&
+    (state.timelineType === '全部' || event.type === state.timelineType)
   );
+}
+
+function buildChronicleSearch() {
+  return `<div class="chronicle-search"><span>⌕</span><input id="searchInput" type="search" value="${escapeHtml(state.query)}" placeholder="搜索猫名 / 地点 / 备注" autocomplete="off"><button id="searchBtn" type="button">搜索</button>${state.query ? '<button id="clearSearch" class="chronicle-search-clear" type="button" aria-label="清除搜索">×</button>' : ''}</div>`;
+}
+
+function chronicleMotif(kind) {
+  const common = 'fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"';
+  const motifs = {
+    envelope: `<svg viewBox="0 0 72 48" aria-hidden="true"><rect x="8" y="9" width="54" height="30" rx="1.5" ${common}/><path d="m9 11 27 19 26-19M9 38l18-16m36 16L45 22" ${common}/><circle cx="55" cy="9" r="8" ${common}/><path d="M52 9h6M55 6v6" ${common}/></svg>`,
+    stamp: `<svg viewBox="0 0 64 52" aria-hidden="true"><path d="M11 8h42v36H11z" ${common}/><path d="m15 8 3 4 4-4 4 4 4-4 4 4 4-4 4 4 4-4 3 4M15 44l3-4 4 4 4-4 4 4 4-4 4 4 4-4 4 4 3-4" ${common}/><path d="M24 30c0-6 3-10 8-10s8 4 8 10c-2 3-5 5-8 5s-6-2-8-5Z" ${common}/><path d="m27 21-3-4 5 1m8 0 5-1-3 4M29 28h.1m6-.1h.1M29 32c2 1 4 1 6 0" ${common}/></svg>`,
+    flower: `<svg viewBox="0 0 52 60" aria-hidden="true"><path d="M27 32c-5-1-8-5-7-9 2-4 6-4 9-1-1-5 2-8 6-7 4 2 4 6 1 9 5-1 8 2 7 6-1 4-5 5-9 3 1 5-2 8-6 7-4-2-4-6-1-8-4 2-8 1-9-3Z" ${common}/><circle cx="28" cy="28" r="3" ${common}/><path d="M28 36c0 8-2 13-6 17m6-10c4 1 7 3 9 6M22 53l-5 2m5-2-2-5" ${common}/></svg>`,
+    paw: `<svg viewBox="0 0 42 34" aria-hidden="true"><ellipse cx="21" cy="23" rx="10" ry="7" fill="currentColor"/><circle cx="10" cy="13" r="4" fill="currentColor"/><circle cx="18" cy="8" r="4" fill="currentColor"/><circle cx="27" cy="8" r="4" fill="currentColor"/><circle cx="34" cy="14" r="4" fill="currentColor"/></svg>`
+  };
+  return motifs[kind] || '';
 }
 
 function renderTimelineTab() {
   const events = getFilteredTimeline();
-  let html = buildSearchBar('timeline', '搜索猫名、事件类型...');
+  const chroniclePhoto = cdnUrl(getCatCover(catProfiles[0]));
+  const months = {};
+  for (const event of events) {
+    const key = event.date.slice(0, 7);
+    if (!months[key]) months[key] = [];
+    months[key].push(event);
+  }
+  const monthNames = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
+  const typeDescriptions = { '救助': '发现受伤或需要帮助的猫咪', '疫苗': '进行疫苗接种记录', '绝育': '完成绝育手术记录', '送养': '成功进入送养流程' };
+  const visibleMonths = Object.keys(months).sort();
+  let html = `<section class="chronicle-shell"><div class="chronicle-layout"><main class="chronicle-rail"><header class="chronicle-heading"><div><div class="chronicle-title-line"><h1>猫猫编年史</h1><span class="chronicle-postmark">🐾</span></div><span>记录 2026 年 4 月至 7 月校园猫咪的点滴故事，每一次相遇都值得被珍藏。</span></div>${buildChronicleSearch()}</header><div class="chronicle-type-filters" aria-label="事件类型筛选">${TIMELINE_TYPES.map(type => `<button data-timeline-type="${type}" class="${state.timelineType === type ? 'is-active' : ''}" type="button">${type === '全部' ? '全部' : `<i class="timeline-filter-dot timeline-type-${type}"></i>${type}`}</button>`).join('')}</div><div class="chronicle-archive-body">`;
 
   if (!events.length) {
-    html += '<section class="empty-state"><h2>没有匹配的事件</h2><p>可以清除搜索试试。</p></section>';
+    html += '<section class="empty-state"><h2>没有匹配的事件</h2><p>可以清除搜索或切换事件类型。</p></section>';
   } else {
-    const months = {};
-    for (const event of events) {
-      const key = event.date.slice(0, 7);
-      if (!months[key]) months[key] = [];
-      months[key].push(event);
-    }
-
-    const monthGradients = [
-      { gradient: 'linear-gradient(135deg, #e0c3fc, #8ec5fc)', text: '#2f2924' },
-      { gradient: 'linear-gradient(135deg, #fdcbf1, #e6dee9)', text: '#2f2924' },
-      { gradient: 'linear-gradient(135deg, #ffecd2, #fcb69f)', text: '#2f2924' },
-      { gradient: 'linear-gradient(135deg, #fad0c4, #ffd1ff)', text: '#2f2924' },
-      { gradient: 'linear-gradient(135deg, #f6d365, #fda085)', text: '#2f2924' },
-      { gradient: 'linear-gradient(135deg, #e6b980, #eacda3)', text: '#2f2924' },
-      { gradient: 'linear-gradient(135deg, #fa709a, #fee140)', text: '#2f2924' },
-      { gradient: 'linear-gradient(135deg, #c79081, #dfa579)', text: '#f7c974' },
-      { gradient: 'linear-gradient(135deg, #f83600, #f9d423)', text: '#f7c974' },
-      { gradient: 'linear-gradient(135deg, #feada6, #f5efef)', text: '#2f2924' },
-      { gradient: 'linear-gradient(135deg, #868f96, #596164)', text: '#f7c974' },
-      { gradient: 'linear-gradient(135deg, #cfd9df, #e2ebf0)', text: '#2f2924' }
-    ];
-    const monthNames = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
-
     html += '<div class="timeline-list">';
+    html += `<div class="chronicle-floating-motifs" aria-hidden="true"><i class="chronicle-float-flower">${chronicleMotif('flower')}</i><i class="chronicle-float-stamp">${chronicleMotif('stamp')}</i><i class="chronicle-float-envelope">${chronicleMotif('envelope')}</i></div>`;
     for (const [key, items] of Object.entries(months).sort()) {
       const [year, month] = key.split('-');
-      const m = parseInt(month, 10);
-      const label = `${year}年${monthNames[m - 1]}`;
-      const g = monthGradients[m - 1];
-
-      html += `<details class="timeline-month" open>
-        <summary class="timeline-month-label" style="background:${g.gradient};color:${g.text}">${label}<span>${items.length} 条记录</span><span class="timeline-month-arrow">▾</span></summary>
-        <div class="timeline-events">`;
+      const m = Number(month);
+      const isFirst = key === visibleMonths[0];
+      html += `<section class="timeline-month" id="timeline-${key}"><header class="timeline-month-label"><span>${year}</span><h2>${String(m).padStart(2, '0')}</h2><small>${items.length} 条记录</small></header><div class="timeline-events">${isFirst ? '<div class="timeline-table-head"><span>日期</span><span>猫名</span><span>事件类型</span><span>地点</span><span>备注</span></div>' : ''}`;
       for (const event of items.sort((a, b) => a.date.localeCompare(b.date))) {
-        const day = event.date.slice(5);
-        html += `<div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-entry">
-            <div class="timeline-entry-header">
-              <span class="timeline-entry-cat">${escapeHtml(event.cat)}</span>
-              <span class="timeline-badge timeline-badge-${event.type}">${escapeHtml(event.type)}</span>
-              <span class="timeline-entry-date">${day}</span>
-            </div>`;
-        if (event.location || event.notes) {
-          html += `<div class="timeline-entry-desc">
-            ${event.location ? `📍 ${escapeHtml(event.location)}` : ''}${event.location && event.notes ? ' · ' : ''}${event.notes ? escapeHtml(event.notes) : ''}
-          </div>`;
-        }
-        html += '</div></div>';
+        html += `<article class="timeline-item timeline-type-${event.type}"><time datetime="${event.date}">${event.date.slice(5)}</time><span class="timeline-entry-cat">${escapeHtml(event.cat)}</span><span class="timeline-badge timeline-badge-${event.type}">${escapeHtml(event.type)}</span><span class="timeline-entry-location">${escapeHtml(event.location || '—')}</span><span class="timeline-entry-desc">${escapeHtml(event.notes || '—')}</span></article>`;
       }
-      html += '</div></details>';
+      html += '</div></section>';
     }
-    html += '</div>';
+    html += `</div><footer class="chronicle-quote"><span>“</span><p>它们或许只是我们校园里的过客，但对于它们，我们是全部。</p><i>${chronicleMotif('paw')}</i><b></b></footer>`;
   }
 
+  html += `</div></main><aside class="chronicle-aside" aria-label="编年史索引"><section class="chronicle-nav-card"><p>时间索引</p><div>${visibleMonths.map(key => { const [year, month] = key.split('-'); return `<button data-timeline-month="${key}" type="button"><span>${year} / ${month}</span><i></i></button>`; }).join('')}</div></section><section class="chronicle-legend-card"><p>事件类型图例</p><div>${TIMELINE_TYPES.slice(1).map(type => `<div><i class="timeline-filter-dot timeline-type-${type}"></i><span><strong>${type}</strong><small>${typeDescriptions[type]}</small></span></div>`).join('')}</div></section><section class="chronicle-total-card"><p>记录总数</p><strong>${timelineEvents.length}<small>条记录</small></strong><span>2026.04 — 2026.07</span></section>${chroniclePhoto ? `<figure class="chronicle-photo-card"><img src="${chroniclePhoto}" alt="${escapeHtml(catProfiles[0].name)}"><figcaption>愿每一次记录，都成为更好的明天。</figcaption></figure>` : ''}</aside></div></section>`;
   return html;
 }
 
-// ============== Roles Tab ==============
+// ============== Operations: Collaboration & Workflows ==============
 
-function renderRolesTab() {
-  const data = roles;
-  let html = '';
+function roleKnowledgeLinks(roleName) {
+  const links = {
+    '义卖组': ['校园猫协行动的核心原则'],
+    '疫苗绝育组': ['疫苗接种前后怎么准备', '绝育行动怎么安排'],
+    '赞助组': ['校园猫协行动的核心原则'],
+    '宣传财务组': ['救助费用如何按规则处理', '校园猫协行动的核心原则']
+  };
+  return (links[roleName] || []).map(title => knowledgePosts.find(post => post.title === title)).filter(Boolean);
+}
 
-  if (!data.length) {
-    html += '<section class="empty-state"><h2>没有匹配的分工</h2></section>';
-  } else {
-    const roleGradients = [
-      { gradient: 'linear-gradient(135deg, #FEF3C7, #FDE68A)' },   // 义卖组 琥珀
-      { gradient: 'linear-gradient(135deg, #FCE7F3, #F9A8D4)' },   // 疫苗绝育组 粉玫
-      { gradient: 'linear-gradient(135deg, #D1FAE5, #A7F3D0)' },    // 赞助组 薄荷
-      { gradient: 'linear-gradient(135deg, #DBEAFE, #BFDBFE)' }     // 宣传财务组 晴蓝
-    ];
+function renderCollaborationView() {
+  const roleIcons = { '义卖组': '🛍️', '疫苗绝育组': '🩺', '赞助组': '🤝', '宣传财务组': '📣' };
+  return `<section class="collaboration-view"><header class="operations-section-heading"><div><p>COLLABORATION</p><h2>行动协作</h2><span>每个小组保留职责、协作内容和相关知识入口，不预设虚假的任务状态。</span></div><strong>${roles.length} 个小组</strong></header><div class="collaboration-list">${roles.map(role => { const links = roleKnowledgeLinks(role.name); return `<article class="collaboration-role"><div class="collaboration-role-top"><span class="collaboration-role-icon">${roleIcons[role.name] || '👥'}</span><div><h3>${escapeHtml(role.name)}</h3><p>${escapeHtml(role.description)}</p></div></div><dl class="collaboration-phases">${role.phases.map(phase => `<div><dt>${escapeHtml(phase.label)}</dt><dd>${escapeHtml(phase.detail)}</dd></div>`).join('')}</dl>${links.length ? `<div class="role-knowledge-links"><span>相关知识</span>${links.map(post => `<button data-operations-knowledge-slug="${escapeHtml(post.slug)}" type="button">${escapeHtml(post.title)} →</button>`).join('')}</div>` : ''}</article>`; }).join('')}</div></section>`;
+}
 
-    html += '<div class="roles-list">';
-    for (let i = 0; i < data.length; i++) {
-      const role = data[i];
-      const g = roleGradients[i % roleGradients.length];
-      html += `<div class="role-card">
-        <div class="role-header" style="background:${g.gradient}">
-          <h3>${escapeHtml(role.name)}</h3>
-          <p class="role-desc">${escapeHtml(role.description)}</p>
-        </div>
-        <div class="role-phases">`;
-      for (const phase of role.phases) {
-        html += `<div class="role-phase">
-          <span class="role-phase-label">${escapeHtml(phase.label)}</span>
-          <span class="role-phase-detail">${escapeHtml(phase.detail)}</span>
-        </div>`;
-      }
-      html += '</div></div>';
-    }
-    html += '</div>';
-  }
-
-  return html;
+function renderWorkflowView() {
+  const workflows = [
+    { icon: '🐾', title: '新猫出现后的评估', text: '从发现、隔离到两周观察，再判断送养或放归路径。', steps: ['发现情况', '隔离观察', '记录评估', '确定路径'], article: '新猫出现后的去留评估' },
+    { icon: '💉', title: '疫苗接种准备', text: '在接种前后确认健康情况、时间窗口和观察要点。', steps: ['健康评估', '确认窗口', '接种记录', '后续观察'], article: '疫苗接种前后怎么准备' },
+    { icon: '✂️', title: '绝育行动安排', text: '围绕抓捕、接送、术后恢复和放归的行动安排。', steps: ['确认对象', '抓捕接送', '术后照护', '恢复放归'], article: '绝育行动怎么安排' },
+    { icon: '🧾', title: '救助费用处理', text: '将费用确认、救助执行与后续记录放进同一条规则。', steps: ['确认需求', '执行救助', '保留记录', '规则处理'], article: '救助费用如何按规则处理' }
+  ];
+  return `<section class="workflow-view"><header class="operations-section-heading"><div><p>WORKFLOWS</p><h2>工作流程</h2><span>这里是已有知识科普的行动入口；具体说明仍在 Markdown 文章中维护。</span></div><strong>4 条流程</strong></header><div class="workflow-list">${workflows.map(workflow => { const post = knowledgePosts.find(item => item.title === workflow.article); return `<article class="workflow-card"><div class="workflow-card-head"><span>${workflow.icon}</span><div><h3>${workflow.title}</h3><p>${workflow.text}</p></div></div><ol>${workflow.steps.map(step => `<li>${step}</li>`).join('')}</ol>${post ? `<button data-operations-knowledge-slug="${escapeHtml(post.slug)}" type="button">查看完整科普文章 →</button>` : ''}</article>`; }).join('')}</div></section>`;
 }
 
 // ============== Science Tab ==============
@@ -718,13 +703,13 @@ function renderApp() {
     content = renderSuppliesTab();
   } else if (state.activeTab === 'timeline') {
     content = renderTimelineTab();
-  } else if (state.activeTab === 'roles') {
-    content = renderRolesTab();
   } else if (state.activeTab === 'knowledge') {
     content = renderScienceTab();
   }
 
   app.classList.toggle('knowledge-app-shell', state.activeTab === 'knowledge');
+  app.classList.toggle('operations-app-shell', state.activeTab === 'supplies');
+  app.classList.toggle('chronicle-app-shell', state.activeTab === 'timeline');
   app.innerHTML = `
     <div class="tab-panel">
       ${content}
@@ -733,6 +718,7 @@ function renderApp() {
 
   renderSidebar();
   bindControls();
+  bindOperationsControls();
   bindKnowledgeControls();
   bindKnowledgeToc();
 }
@@ -752,6 +738,7 @@ function bindControls() {
         state.vaccine = '全部';
         state.sterilized = '全部';
         state.friendliness = '全部';
+        state.timelineType = '全部';
         renderApp();
       });
     });
@@ -818,6 +805,40 @@ function bindControls() {
     bindCatCards();
     bindSummaryCards();
   }
+
+  if (state.activeTab === 'timeline') {
+    document.querySelectorAll('[data-timeline-type]').forEach(button => button.addEventListener('click', () => {
+      state.timelineType = button.dataset.timelineType;
+      renderApp();
+    }));
+    document.querySelectorAll('[data-timeline-month]').forEach(button => button.addEventListener('click', () => {
+      document.getElementById(`timeline-${button.dataset.timelineMonth}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }));
+  }
+}
+
+function bindOperationsControls() {
+  document.querySelectorAll('[data-operations-view]').forEach(button => button.addEventListener('click', () => {
+    state.operationsView = button.dataset.operationsView;
+    state.query = '';
+    renderApp();
+  }));
+
+  document.querySelectorAll('[data-inventory-category]').forEach(button => button.addEventListener('click', () => {
+    state.inventoryCategory = button.dataset.inventoryCategory;
+    renderApp();
+  }));
+
+  document.querySelectorAll('[data-inventory-expand]').forEach(button => button.addEventListener('click', () => {
+    const shouldExpand = button.dataset.inventoryExpand === 'all';
+    document.querySelectorAll('.supply-category').forEach(category => { category.open = shouldExpand; });
+  }));
+
+  document.querySelectorAll('[data-operations-knowledge-slug]').forEach(button => button.addEventListener('click', () => {
+    state.activeTab = 'knowledge';
+    state.knowledgeArticle = button.dataset.operationsKnowledgeSlug;
+    renderApp();
+  }));
 }
 
 function bindKnowledgeControls() {
