@@ -1,6 +1,6 @@
 ---
 name: cat-archive
-description: Use when updating cat association archive website. Covers editing rules (js/*.js as primary source), Obsidian sync, data mapping, symlink _obsidian, deploy flow.
+description: Use when updating cat association archive website. Covers Astro page structure, structured data, images, content collections, and deploy flow.
 ---
 
 # 猫协档案编辑规则
@@ -8,61 +8,40 @@ description: Use when updating cat association archive website. Covers editing r
 ## 数据源与网站源
 
 ```
-js/*.js                 ← 主事实源 + 编辑入口（直接修改）
-   ↓ 手动同步（agent 执行）
-_obsidian/*.md          ← Obsidian 副本（仅供浏览查阅）
-   ↓ 部署
+js/*.js                 ← 结构化运营数据（直接修改）
+src/content/**/*.md     ← 科普与报告文章（直接修改）
+src/**/*.astro          ← 页面、布局与组件
+public/images/          ← 静态猫咪图片
+   ↓ 构建部署
 https://thebear617.github.io/cat-knowledge/
 ```
 
-## 软链
-
-`_obsidian/` 是指向 `/Users/mokaiche/Documents/notes/01-Projects/猫协/` 的软链接，**不要提交到 git**（已加入 .gitignore）。`.md` 文件为 Obsidian 副本，仅供浏览查阅，不作为编辑入口。
+仓库是唯一事实源；不维护 Obsidian 软链、同步或双写副本。
 
 ## 项目结构
 
 ```
 cats/
-├── index.html              # 入口
-├── _obsidian/              # Obsidian 副本（软链，仅供查阅）
+├── src/                    # Astro 页面、组件、内容集合
+├── public/images/          # 猫咪照片
 ├── js/
 │   ├── cats.js             # 猫只档案数据
 │   ├── supplies.js         # 物资管理数据
 │   ├── plans.js            # 近期计划数据
-│   ├── sop.js              # 标准 SOP 数据
 │   ├── timeline.js         # 猫猫编年史数据
 │   ├── roles.js            # 猫协分工数据
-│   └── app.js              # 主逻辑（渲染、搜索、事件）
-├── css/style.css           # 样式
-├── images/{猫名}/          # 猫咪照片
-│   ├── thumb/              # ≤400px 缩略图
-│   └── *.jpg               # ≤1200px 原图
+│   └── app.js              # 旧版渲染逻辑，仅供迁移回查
+├── src/styles/global.css   # 全局样式
 ├── add-photo.sh            # 照片一键处理脚本
 └── README.md               # 浏览者说明
 ```
 
-## 文件映射
+## 编辑规则
 
-日常编辑入口为 `js/*.js`。`_obsidian/*.md` 为 Obsidian 副本（agent 手动同步，非日常编辑入口）。
-
-| 网站 JS（编辑入口） | Obsidian 副本 | 说明 |
-|--------|------------|------|
-| `js/cats.js` | `_obsidian/猫只档案与疫苗绝育.md` | 猫只档案 tab 数据 |
-| `js/supplies.js` | `_obsidian/物资管理.md` | 物资管理 tab 数据 |
-| `js/plans.js` | `_obsidian/近期计划.md` | 近期计划 tab 数据 |
-| `js/sop.js` | `_obsidian/猫只档案与疫苗绝育.md`（SOP 章节） | 标准 SOP tab 数据 |
-| `js/timeline.js` | `_obsidian/行动记录与构思.md` | 猫猫编年史 tab 数据 |
-| `js/roles.js` | `_obsidian/猫协分工.md` | 猫协分工 tab 数据 |
-
-## 编辑规则（JS 优先）
-
-日常修改数据时，只编辑 `js/*.js`，**不需要**实时同步到 Obsidian `.md`。
-
-1. **直接修改 `js/*.js`** — 这是唯一编辑入口
-2. **必要时手动同步到 `.md`** — 由 agent 按指令执行，不作为日常要求
-3. **提交 + push** — 部署到 GitHub Pages
-
-如需将 JS 数据同步到 Obsidian `.md`，告知 agent 执行即可。
+1. 猫档案、物资、编年史与分工：直接编辑 `js/*.js`。
+2. 科普和月报：在 `src/content/` 新建带 frontmatter 的 Markdown。
+3. 页面和样式：编辑 `src/`；图片放入 `public/images/{猫名}/`。
+4. 提交 + push 后由 GitHub Actions 部署。
 
 ## 猫只数据字段
 
@@ -83,9 +62,7 @@ images        照片路径数组（相对路径 `images/{猫名}/`）
 ## 事实源头规则
 
 - `js/cats.js` 是猫只档案的**唯一主事实源**
-- `_obsidian/猫只档案与疫苗绝育.md` 是 Obsidian 副本，仅供浏览查阅，不作为编辑入口
 - 维护猫只状态、疫苗、绝育、领养和离世信息时，直接编辑 `js/cats.js`
-- agent 可按需将 JS 数据同步到 `.md`，但不作为日常要求
 
 ## 约束
 
@@ -103,14 +80,13 @@ images        照片路径数组（相对路径 `images/{猫名}/`）
 |-----|----|------|
 | 首页 | `home` | Hero + 照片墙 + 可点击统计卡片（筛选后展示猫咪列表） |
 | 物资管理 | `supplies` | 按类别分组表格 |
-| 标准 SOP | `sop` | 可折叠 SOP 条目 |
 | 猫猫编年史 | `timeline` | 垂直时间轴，月份折叠 |
 | 猫协分工 | `roles` | 四组职责卡片，独立渐变色头部 |
-| 猫猫科普 | `science` | 建设中 |
+| 知识科普 | `knowledge` | 侧边栏内的 Markdown 知识库视图，支持搜索、分类、三种浏览方式与文内阅读 |
 
 ## 图片管理
 
-- 照片放入 `images/{猫名}/` 目录
+- 照片放入 `public/images/{猫名}/` 目录
 - 原图 ≤1200px，使用 `sips -Z 1200` 缩放
 - 缩略图在 `thumb/` 子目录，≤400px
 - 所有图片通过 GitHub Pages 相对路径直接加载（不再使用 jsDelivr CDN，因其在大陆不稳定）
@@ -144,7 +120,7 @@ GitHub Pages 部署后通常几秒内生效。
 - 搜索框使用 keydown Enter + 按钮触发（非 input 事件），避免中文输入法组词中断
 - 图片网格使用 thumb 缩略图，点击大图时才加载原图
 - CDN URL 必须对中文文件名做 `encodeURIComponent` 编码（见 `references/debug-notes.md`）
-- 图片直接通过 GitHub Pages 相对路径加载，无需等待 CDN 缓存刷新
+- 图片直接通过 Astro 的 GitHub Pages 子路径加载
 
 ## 参考资料
 

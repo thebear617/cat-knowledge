@@ -53,7 +53,7 @@ CAT_NAME="$1"
 shift
 
 CATS_JS="js/cats.js"
-IMAGES_DIR="images/${CAT_NAME}"
+IMAGES_DIR="public/images/${CAT_NAME}"
 THUMB_DIR="${IMAGES_DIR}/thumb"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
@@ -87,7 +87,7 @@ done
 
 # Update cats.js
 for IMG in "${ADDED[@]}"; do
-  REL_PATH="$IMG"
+  REL_PATH="${IMG#public/}"
 
   # Check if cat exists
   if ! grep -q "['\"]${CAT_NAME}['\"]" "$CATS_JS" 2>/dev/null; then

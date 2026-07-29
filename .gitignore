@@ -1,5 +1,6 @@
 .DS_Store
 *.log
 node_modules/
-_obsidian
+.astro/
+dist/
 仙电猫猫守护.xlsx

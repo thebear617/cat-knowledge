@@ -1,0 +1,35 @@
+---
+import '../../css/style.css';
+import '../styles/knowledge.css';
+import { getCollection } from 'astro:content';
+const knowledgePosts = (await getCollection('science', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf())
+  .map(post => ({ slug: post.id.replace(/\.md$/, ''), title: post.data.title, description: post.data.description, publishedAt: post.data.publishedAt.toISOString(), category: post.data.category, subcategory: post.data.subcategory, tags: post.data.tags, body: post.body }));
+---
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>猫猫手册</title>
+  </head>
+  <body>
+    <div class="layout">
+      <button class="sidebar-toggle" id="sidebarToggle" aria-label="切换侧边栏">☰</button>
+      <div class="sidebar-backdrop" id="sidebarBackdrop" hidden></div>
+      <nav class="sidebar" id="sidebar" aria-label="主导航">
+        <div class="sidebar-brand">
+          <button class="sidebar-close" id="sidebarClose" aria-label="关闭侧边栏">✕</button>
+          <p class="sidebar-eyebrow">XDU Cat</p>
+          <h1 class="sidebar-title">猫猫手册</h1>
+        </div>
+        <div class="sidebar-nav" id="sidebarNav"></div>
+      </nav>
+      <div class="main-area"><main id="app" class="app-shell"></main></div>
+    </div>
+    <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
+    <aside class="cat-drawer" id="catDrawer" aria-live="polite" aria-label="猫咪详情" hidden></aside>
+    <script define:vars={{ knowledgePosts }}>window.__catKnowledgePosts = knowledgePosts;</script>
+    <script>import '../scripts/legacy-app.js';</script>
+  </body>
+</html>

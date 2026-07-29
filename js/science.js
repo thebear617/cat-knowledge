@@ -1,1 +1,1 @@
-const sciencePosts = [];
+export const sciencePosts = [];

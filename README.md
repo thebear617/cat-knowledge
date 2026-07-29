@@ -1,24 +1,21 @@
 # 猫猫手册
 
-XDU 猫协公开信息展示站，涵盖校园流浪猫疫苗、绝育、领养、物资、SOP 和行动记录。
+XDU 猫协公开信息展示站，记录校园猫咪档案、物资、行动和科普。
 
 🏠 在线地址：https://thebear617.github.io/cat-knowledge/
 
-## 页面板块
+## 技术架构
 
-| 板块 | 内容 |
-|------|------|
-| 猫只档案 | 校园猫咪状态、疫苗进度、绝育信息、领养去向 |
-| 物资管理 | 航空箱/猫包、猫粮分布追踪 |
-| 近期计划 | 当前任务窗口和待确认事项 |
-| 标准 SOP | 疫苗、绝育、狂犬处置等标准流程 |
-| 猫猫编年史 | 按月折叠的行动时间线 |
-| 猫协分工 | 义卖组、疫苗绝育组、赞助组、宣传财务组职责 |
+本站是 Astro 静态站点：结构化运营数据位于 `js/`，页面与组件位于 `src/`，图片位于 `public/images/`，科普文章使用 `src/content/science/` 下的 Markdown 内容集合。侧边栏的「知识科普」会在原有单页壳中切换至文章筛选、三种浏览方式与文内阅读视图。
 
-## 维护者
+仓库是唯一事实源，不与 Obsidian 建立同步或双写关系。
 
-数据事实源在 Obsidian vault（`01-Projects/猫协/`），由维护者通过双写规则同步到此仓库。详见 `.opencode/skills/cat-archive/SKILL.md`。
+## 本地开发与部署
 
-## 部署
+```bash
+npm install
+npm run dev
+npm run build
+```
 
-本仓库通过 GitHub Pages 部署，图片通过 jsDelivr CDN 加速。推送到 `main` 分支后自动构建。
+推送 `main` 后，GitHub Actions 构建并部署至 GitHub Pages。

@@ -1,4 +1,4 @@
-const catProfiles = [
+export const catProfiles = [
   {
     name: '奶霜',
     status: '就读中',

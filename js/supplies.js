@@ -1,4 +1,4 @@
-const supplies = [
+export const supplies = [
   {
     category: '猫粮',
     items: [
