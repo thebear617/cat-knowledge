@@ -179,40 +179,16 @@ function renderHomeTab() {
   const activeFilter = getActiveHomeFilter();
   const filtered = isHomeFiltered();
 
-  let content = `
-    <div class="home-hero">
-      <h2>西电南校区猫猫</h2>
-      <p>追踪每只西电南校区在校喵校友的疫苗、绝育与生活点滴 · 图源：猫咪交流群</p>
-    </div>
-    <section class="summary-grid" aria-label="猫协档案统计">
-      ${summary.map(item => {
-        const active = item.filter === 'all' ? !filtered : item.filter === activeFilter;
-        return `
-        <div class="summary-card tone-${item.tone} summary-clickable${active ? ' summary-active' : ''}" data-summary-filter="${escapeHtml(item.filter)}" tabindex="0">
-          <span class="summary-value">${item.value}</span>
-          <span class="summary-label">${item.label}</span>
-        </div>`;
-      }).join('')}
-    </section>`;
-
   if (filtered) {
-    const cats = getFilteredCats();
-    content += renderCatControls(cats.length) + renderCatGrid(cats);
-  } else {
-    const catsWithPhotos = catProfiles.filter(cat => cat.images && cat.images.length > 0).sort((a, b) => a.name.localeCompare(b.name, 'zh-Hans-CN'));
-    content += `
-    <div class="home-photo-wall" aria-label="猫咪照片墙">
-      ${catsWithPhotos.map(cat => {
-        const img = getCatCover(cat);
-        return `<div class="home-photo-card" data-cat-name="${escapeHtml(cat.name)}" tabindex="0">
-          <img src="${cdnUrl(img)}" alt="${escapeHtml(cat.name)}" loading="lazy">
-          <span class="home-photo-label">${escapeHtml(cat.name)}</span>
-        </div>`;
-      }).join('')}
-    </div>`;
+    return `<section class="home-filter-view"><header><p>猫咪档案</p><h2>筛选结果</h2></header>${renderCatControls(getFilteredCats().length)}${renderCatGrid(getFilteredCats())}</section>`;
   }
 
-  return content;
+  const catsWithPhotos = catProfiles.filter(cat => cat.images && cat.images.length > 0).sort((a, b) => a.name.localeCompare(b.name, 'zh-Hans-CN'));
+  const heroCat = catProfiles.find(cat => cat.name === '大头' && getCatCover(cat)) || catsWithPhotos[0];
+  const featuredCats = catsWithPhotos.filter(cat => cat.name !== heroCat?.name).slice(0, 5);
+  const homeStats = [summary.find(item => item.filter === 'all'), summary.find(item => item.filter === 'status-就读中'), summary.find(item => item.filter === 'status-已毕业'), summary.find(item => item.filter === 'sterilized-未绝育')].filter(Boolean);
+
+  return `<section class="home-yearbook"><div class="home-cover"><div class="home-cover-copy"><p class="home-edition">⌁ 2026 年鉴</p><h2>猫猫手册</h2><p class="home-cover-title">2026 春夏校园猫咪年鉴</p><span>/ 校园流浪猫生活记录 /</span><i></i><p class="home-cover-note">从镜头和档案中，<br>认识校园里的每一只猫。</p></div>${heroCat ? `<div class="home-cover-photos"><button class="home-cover-photo" data-cat-name="${escapeHtml(heroCat.name)}" type="button"><img src="${cdnUrl(getCatCover(heroCat))}" alt="${escapeHtml(heroCat.name)}"><strong>${escapeHtml(heroCat.name)}</strong></button><div class="home-cover-strip">${featuredCats.slice(0, 3).map(cat => `<button data-cat-name="${escapeHtml(cat.name)}" type="button"><img src="${cdnUrl(getCatCover(cat))}" alt="${escapeHtml(cat.name)}"></button>`).join('')}</div><span>2026 Spring & Summer</span></div>` : ''}</div><section class="home-stat-ribbon" aria-label="猫协档案统计">${homeStats.map(item => { const active = item.filter === 'all' ? !filtered : item.filter === activeFilter; return `<button class="${active ? 'is-active' : ''}" data-summary-filter="${escapeHtml(item.filter)}" type="button"><strong>${item.value}</strong><span>${escapeHtml(item.label)}</span></button>`; }).join('')}</section><section class="home-featured"><header><div><p>▣ 精选目录</p><span>点击照片，进入它们的档案</span></div><small>校园猫咪档案</small></header><div class="home-feature-grid">${featuredCats.map((cat, index) => `<button class="home-feature-card card-${index + 1}" data-cat-name="${escapeHtml(cat.name)}" type="button"><img src="${cdnUrl(getCatCover(cat))}" alt="${escapeHtml(cat.name)}" loading="lazy"><div><h3>${escapeHtml(cat.name)}</h3><p>${escapeHtml(cat.status)} · ${escapeHtml(getSterilizedBucket(cat))}</p><span>📍 ${escapeHtml(cat.area || '地点待补充')}</span></div></button>`).join('')}</div></section><footer class="home-yearbook-footer">谢谢关心它们的你　♡</footer></section>`;
 }
 
 // ============== Cat Profile Tab ==============
@@ -710,6 +686,7 @@ function renderApp() {
   app.classList.toggle('knowledge-app-shell', state.activeTab === 'knowledge');
   app.classList.toggle('operations-app-shell', state.activeTab === 'supplies');
   app.classList.toggle('chronicle-app-shell', state.activeTab === 'timeline');
+  app.classList.toggle('home-app-shell', state.activeTab === 'home');
   app.innerHTML = `
     <div class="tab-panel">
       ${content}
@@ -914,9 +891,10 @@ function bindKnowledgeToc() {
 }
 
 function bindCatCards() {
-  const selector = (state.activeTab === 'home' && !isHomeFiltered()) ? '.home-photo-card' : '.cat-card';
+  const selector = (state.activeTab === 'home' && !isHomeFiltered()) ? '[data-cat-name]' : '.cat-card';
   document.querySelectorAll(selector).forEach(card => {
     card.addEventListener('click', () => openDrawer(card.dataset.catName));
+    if (card.tagName === 'BUTTON') return;
     card.addEventListener('keydown', event => {
       if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();

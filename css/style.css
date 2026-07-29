@@ -284,6 +284,354 @@ select {
   font-weight: 900;
 }
 
+/* ===== Home: Yearbook Cover ===== */
+
+.app-shell.home-app-shell {
+  width: 100%;
+  max-width: none;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.home-yearbook,
+.home-filter-view {
+  min-height: 100%;
+  padding: 2.6rem clamp(1.4rem, 3.4vw, 3.75rem) 3rem;
+  background-color: #f7f0e4;
+  background-image: radial-gradient(rgba(112, 78, 46, .07) .55px, transparent .7px), linear-gradient(90deg, rgba(170, 133, 89, .06), transparent 14%, transparent 86%, rgba(170, 133, 89, .06));
+  background-size: 5px 5px, 100% 100%;
+}
+
+.home-cover,
+.home-stat-ribbon,
+.home-featured,
+.home-yearbook-footer,
+.home-filter-view > * {
+  max-width: 1320px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.home-cover {
+  display: grid;
+  grid-template-columns: minmax(16rem, .77fr) minmax(0, 1.45fr);
+  gap: 2.6rem;
+  align-items: center;
+}
+
+.home-cover-copy {
+  color: #4b3526;
+  font-family: Georgia, "Songti SC", STSong, serif;
+  padding: 1rem 0;
+}
+
+.home-edition {
+  color: #826149;
+  font-size: .9rem;
+  letter-spacing: .12em;
+}
+
+.home-cover-copy h2 {
+  margin-top: .45rem;
+  font-size: clamp(3rem, 6vw, 5.15rem);
+  font-weight: 700;
+  letter-spacing: .12em;
+  line-height: 1.04;
+}
+
+.home-cover-title {
+  margin-top: 1rem;
+  font-size: 1.25rem;
+  letter-spacing: .05em;
+}
+
+.home-cover-copy > span {
+  display: block;
+  margin-top: .35rem;
+  color: #907866;
+  font-size: .9rem;
+  letter-spacing: .1em;
+}
+
+.home-cover-copy i {
+  display: block;
+  width: 1.8rem;
+  margin: 1.75rem 0 1.15rem;
+  border-top: 2px solid #ac8a67;
+}
+
+.home-cover-note {
+  color: #715846;
+  font-size: 1rem;
+  letter-spacing: .08em;
+  line-height: 2;
+}
+
+.home-cover-photos {
+  position: relative;
+  min-height: 28rem;
+  padding: .75rem 7.4rem 1.9rem 0;
+}
+
+.home-cover-photo {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid #dfcfb9;
+  background: #fff9ee;
+  box-shadow: 5px 7px 16px rgba(78, 53, 31, .16);
+  padding: .65rem .65rem 1.9rem;
+  transform: rotate(1deg);
+}
+
+.home-cover-photo img {
+  display: block;
+  width: 100%;
+  height: 25rem;
+  object-fit: cover;
+}
+
+.home-cover-photo strong {
+  position: absolute;
+  left: 1.1rem;
+  bottom: .5rem;
+  color: #71513b;
+  font-family: Georgia, "Songti SC", STSong, serif;
+  font-size: .8rem;
+  font-weight: 400;
+}
+
+.home-cover-strip {
+  position: absolute;
+  top: 2rem;
+  right: 0;
+  display: grid;
+  gap: .45rem;
+  width: 8.3rem;
+  padding: .35rem;
+  border: 1px solid #dfcfb9;
+  background: #fff9ee;
+  box-shadow: 4px 5px 12px rgba(78, 53, 31, .12);
+  transform: rotate(2.4deg);
+}
+
+.home-cover-strip button {
+  overflow: hidden;
+  aspect-ratio: 1.35;
+  border: 0;
+  background: #eadfce;
+  padding: 0;
+}
+
+.home-cover-strip img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .2s;
+}
+
+.home-cover-strip button:hover img {
+  transform: scale(1.05);
+}
+
+.home-cover-photos > span {
+  position: absolute;
+  right: .2rem;
+  bottom: .25rem;
+  color: #8d7057;
+  font-family: Georgia, "Songti SC", STSong, serif;
+  font-size: .8rem;
+  letter-spacing: .08em;
+}
+
+.home-stat-ribbon {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  margin-top: -1rem;
+  position: relative;
+  z-index: 2;
+  border: 1px solid #dfcfb9;
+  background: #fff9ee;
+  box-shadow: 3px 4px 10px rgba(78, 53, 31, .1);
+  padding: .65rem 1rem;
+  transform: rotate(-.35deg);
+}
+
+.home-stat-ribbon button {
+  min-width: 9rem;
+  border: 0;
+  border-right: 1px solid #ddcbb4;
+  background: transparent;
+  color: #684b35;
+  padding: .15rem 1.4rem;
+}
+
+.home-stat-ribbon button:last-child {
+  border-right: 0;
+}
+
+.home-stat-ribbon button:hover,
+.home-stat-ribbon button.is-active {
+  color: #b05d22;
+}
+
+.home-stat-ribbon strong,
+.home-stat-ribbon span {
+  display: inline-block;
+}
+
+.home-stat-ribbon strong {
+  margin-right: .5rem;
+  font-family: Georgia, "Songti SC", STSong, serif;
+  font-size: 1.45rem;
+  font-weight: 400;
+}
+
+.home-stat-ribbon span {
+  color: #7e6755;
+  font-family: Georgia, "Songti SC", STSong, serif;
+  font-size: .82rem;
+}
+
+.home-featured {
+  margin-top: 3.4rem;
+}
+
+.home-featured > header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: .75rem;
+  border-bottom: 1px dashed #cbb497;
+}
+
+.home-featured > header p {
+  color: #5c4130;
+  font-family: Georgia, "Songti SC", STSong, serif;
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+}
+
+.home-featured > header span,
+.home-featured > header small {
+  color: #876e59;
+  font-family: Georgia, "Songti SC", STSong, serif;
+  font-size: .82rem;
+}
+
+.home-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.2rem;
+}
+
+.home-feature-card {
+  overflow: hidden;
+  border: 1px solid #dfcfb9;
+  border-radius: 1px;
+  background: #fff9ee;
+  box-shadow: 3px 4px 10px rgba(78, 53, 31, .13);
+  color: #5c4130;
+  padding: .55rem .55rem .75rem;
+  text-align: left;
+  transition: transform .18s, box-shadow .18s;
+}
+
+.home-feature-card:hover {
+  box-shadow: 6px 9px 16px rgba(78, 53, 31, .18);
+  transform: translateY(-5px) rotate(.3deg);
+}
+
+.home-feature-card.card-1 { transform: rotate(-2deg); }
+.home-feature-card.card-2 { transform: rotate(.8deg); }
+.home-feature-card.card-3 { transform: rotate(-.7deg); }
+.home-feature-card.card-4 { transform: rotate(1.3deg); }
+.home-feature-card.card-5 { transform: rotate(-1.1deg); }
+
+.home-feature-card.card-1:hover,
+.home-feature-card.card-2:hover,
+.home-feature-card.card-3:hover,
+.home-feature-card.card-4:hover,
+.home-feature-card.card-5:hover { transform: translateY(-5px) rotate(0); }
+
+.home-feature-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: .88;
+  object-fit: cover;
+}
+
+.home-feature-card div {
+  padding: .6rem .2rem 0;
+}
+
+.home-feature-card h3 {
+  font-family: Georgia, "Songti SC", STSong, serif;
+  font-size: 1.1rem;
+}
+
+.home-feature-card p,
+.home-feature-card span {
+  display: block;
+  margin-top: .25rem;
+  color: #826b57;
+  font-size: .72rem;
+  line-height: 1.45;
+}
+
+.home-yearbook-footer {
+  margin-top: 2.7rem;
+  color: #9a7b62;
+  font-family: Georgia, "Songti SC", STSong, serif;
+  font-size: 1rem;
+  letter-spacing: .12em;
+  text-align: center;
+}
+
+.home-filter-view > header {
+  padding-bottom: 1rem;
+}
+
+.home-filter-view > header p {
+  color: var(--amber);
+  font-size: .76rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+}
+
+.home-filter-view > header h2 {
+  margin-top: .1rem;
+  font-family: Georgia, "Songti SC", STSong, serif;
+  font-size: 2rem;
+}
+
+@media (max-width: 960px) {
+  .home-cover { grid-template-columns: 1fr; }
+  .home-cover-photos { max-width: 48rem; width: 100%; margin: 0 auto; }
+  .home-feature-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 680px) {
+  .home-yearbook,
+  .home-filter-view { padding: 1.5rem 1rem 2.2rem; }
+  .home-cover-photos { min-height: 20rem; padding-right: 4.7rem; }
+  .home-cover-photo img { height: 17.5rem; }
+  .home-cover-strip { top: 1rem; width: 5.4rem; }
+  .home-stat-ribbon { flex-wrap: wrap; justify-content: flex-start; margin-top: 1rem; }
+  .home-stat-ribbon button { min-width: 50%; border-right: 0; padding: .45rem .6rem; text-align: left; }
+  .home-featured { margin-top: 2.2rem; }
+  .home-featured > header { align-items: flex-start; flex-direction: column; }
+  .home-feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .85rem; }
+  .home-feature-card:last-child { grid-column: 1 / -1; max-width: calc(50% - .42rem); }
+}
+
 .summary-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
