@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/cat-knowledge/:path*",
+      "destination": "/:path*"
+    }
+  ]
+}
