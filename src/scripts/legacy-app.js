@@ -19,7 +19,7 @@ const TABS = [
   { id: 'home', title: '首页', icon: '🏠' },
   { id: 'timeline', title: '猫猫编年史', icon: '📜' },
   { id: 'supplies', title: '物资与协作', icon: '📦' },
-  { id: 'knowledge', title: '知识科普', icon: '📖' }
+  { id: 'knowledge', title: '猫猫知识', icon: '📖' }
 ];
 
 const state = {
@@ -522,7 +522,7 @@ function getFilteredTimeline() {
 }
 
 function buildChronicleSearch() {
-  return `<div class="chronicle-search"><span>⌕</span><input id="searchInput" type="search" value="${escapeHtml(state.query)}" placeholder="搜索猫名 / 地点 / 备注" autocomplete="off"><button id="searchBtn" type="button">搜索</button>${state.query ? '<button id="clearSearch" class="chronicle-search-clear" type="button" aria-label="清除搜索">×</button>' : ''}</div>`;
+  return `<div class="chronicle-search"><span>⌕</span><input id="searchInput" type="search" value="${escapeHtml(state.query)}" placeholder="搜索猫名、地点或备注" autocomplete="off"><button id="searchBtn" type="button">搜索</button>${state.query ? '<button id="clearSearch" class="chronicle-search-clear" type="button" aria-label="清除搜索">×</button>' : ''}</div>`;
 }
 
 function chronicleMotif(kind) {
@@ -548,7 +548,13 @@ function renderTimelineTab() {
   const monthNames = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
   const typeDescriptions = { '救助': '发现受伤或需要帮助的猫咪', '疫苗': '进行疫苗接种记录', '绝育': '完成绝育手术记录', '送养': '成功进入送养流程' };
   const visibleMonths = Object.keys(months).sort();
+  const mobileSummary = state.query ? `“${escapeHtml(state.query)}” · 找到 ${events.length} 条记录` : `2026 年 4–7 月 · 共 ${events.length} 条记录`;
+  const mobileMonthNav = visibleMonths.map((key, index) => {
+    const [year, month] = key.split('-');
+    return `<button data-timeline-month="${key}" type="button" aria-label="跳转到 ${year} 年 ${month} 月"><span>${index === 0 ? year : ''}</span><strong>${month}</strong></button>`;
+  }).join('');
   let html = `<section class="chronicle-shell"><div class="chronicle-layout"><main class="chronicle-rail"><header class="chronicle-heading"><div><div class="chronicle-title-line"><h1>猫猫编年史</h1><span class="chronicle-postmark">🐾</span></div><span>记录 2026 年 4 月至 7 月校园猫咪的点滴故事，每一次相遇都值得被珍藏。</span></div>${buildChronicleSearch()}</header><div class="chronicle-type-filters" aria-label="事件类型筛选">${TIMELINE_TYPES.map(type => `<button data-timeline-type="${type}" class="${state.timelineType === type ? 'is-active' : ''}" type="button">${type === '全部' ? '全部' : `<i class="timeline-filter-dot timeline-type-${type}"></i>${type}`}</button>`).join('')}</div><div class="chronicle-archive-body">`;
+  html += `<nav class="chronicle-mobile-month-nav" aria-label="月份导航">${mobileMonthNav}</nav><div class="chronicle-mobile-summary">${mobileSummary}${state.query ? '<button id="clearSearchMobile" type="button">清除</button>' : ''}</div>`;
 
   if (!events.length) {
     html += '<section class="empty-state"><h2>没有匹配的事件</h2><p>可以清除搜索或切换事件类型。</p></section>';
@@ -561,7 +567,9 @@ function renderTimelineTab() {
       const isFirst = key === visibleMonths[0];
       html += `<section class="timeline-month" id="timeline-${key}"><header class="timeline-month-label"><span>${year}</span><h2>${String(m).padStart(2, '0')}</h2><small>${items.length} 条记录</small></header><div class="timeline-events">${isFirst ? '<div class="timeline-table-head"><span>日期</span><span>猫名</span><span>事件类型</span><span>地点</span><span>备注</span></div>' : ''}`;
       for (const event of items.sort((a, b) => a.date.localeCompare(b.date))) {
-        html += `<article class="timeline-item timeline-type-${event.type}"><time datetime="${event.date}">${event.date.slice(5)}</time><span class="timeline-entry-cat">${escapeHtml(event.cat)}</span><span class="timeline-badge timeline-badge-${event.type}">${escapeHtml(event.type)}</span><span class="timeline-entry-location">${escapeHtml(event.location || '—')}</span><span class="timeline-entry-desc">${escapeHtml(event.notes || '—')}</span></article>`;
+        const location = isEmptyValue(event.location) ? '' : `<span class="timeline-entry-location">⌖ ${escapeHtml(event.location)}</span>`;
+        const notes = isEmptyValue(event.notes) ? '' : `<span class="timeline-entry-desc">${escapeHtml(event.notes)}</span>`;
+        html += `<article class="timeline-item timeline-type-${event.type}"><time datetime="${event.date}">${event.date.slice(5).replace('-', '.')}</time><span class="timeline-entry-cat">${escapeHtml(event.cat)}</span><span class="timeline-badge timeline-badge-${event.type}">${escapeHtml(event.type)}</span>${location}${notes}</article>`;
       }
       html += '</div></section>';
     }
@@ -586,7 +594,7 @@ function roleKnowledgeLinks(roleName) {
 
 function renderCollaborationView() {
   const roleIcons = { '义卖组': '🛍️', '疫苗绝育组': '🩺', '赞助组': '🤝', '宣传财务组': '📣' };
-  return `<section class="operations-archive-view collaboration-view"><header class="operations-section-heading archive-section-heading"><div><p>COLLABORATION FILES</p><h2>行动协作</h2><span>按小组归档职责、协作阶段与相关行动知识，不预设虚假的任务状态。</span></div><strong>${roles.length} 个协作小组</strong></header><div class="operations-archive-layout"><main class="collaboration-list">${roles.map((role, index) => { const links = roleKnowledgeLinks(role.name); return `<article class="collaboration-role"><span class="archive-item-number">0${index + 1}</span><div class="collaboration-role-top"><span class="collaboration-role-icon">${roleIcons[role.name] || '👥'}</span><div><h3>${escapeHtml(role.name)}</h3><p>${escapeHtml(role.description)}</p></div></div><dl class="collaboration-phases">${role.phases.map(phase => `<div><dt>${escapeHtml(phase.label)}</dt><dd>${escapeHtml(phase.detail)}</dd></div>`).join('')}</dl>${links.length ? `<div class="role-knowledge-links"><span>查阅条目</span>${links.map(post => `<button data-operations-knowledge-slug="${escapeHtml(post.slug)}" type="button">${escapeHtml(post.title)} →</button>`).join('')}</div>` : ''}</article>`; }).join('')}</main><aside class="operations-archive-aside"><section class="operations-note-card"><p>GROUP INDEX</p><h3>协作目录</h3><ol>${roles.map((role, index) => `<li><span>0${index + 1}</span>${escapeHtml(role.name)}</li>`).join('')}</ol></section><section class="operations-note-card operations-note-card-tilted"><p>COLLABORATION NOTE</p><h3>协作说明</h3><span>每个小组独立记录职责与阶段；具体操作以关联的知识科普文章为准。</span></section></aside></div></section>`;
+  return `<section class="operations-archive-view collaboration-view"><header class="operations-section-heading archive-section-heading"><div><p>COLLABORATION FILES</p><h2>行动协作</h2><span>按小组归档职责、协作阶段与相关行动知识，不预设虚假的任务状态。</span></div><strong>${roles.length} 个协作小组</strong></header><div class="operations-archive-layout"><main class="collaboration-list">${roles.map((role, index) => { const links = roleKnowledgeLinks(role.name); return `<article class="collaboration-role"><span class="archive-item-number">0${index + 1}</span><div class="collaboration-role-top"><span class="collaboration-role-icon">${roleIcons[role.name] || '👥'}</span><div><h3>${escapeHtml(role.name)}</h3><p>${escapeHtml(role.description)}</p></div></div><dl class="collaboration-phases">${role.phases.map(phase => `<div><dt>${escapeHtml(phase.label)}</dt><dd>${escapeHtml(phase.detail)}</dd></div>`).join('')}</dl>${links.length ? `<div class="role-knowledge-links"><span>查阅条目</span>${links.map(post => `<button data-operations-knowledge-slug="${escapeHtml(post.slug)}" type="button">${escapeHtml(post.title)} →</button>`).join('')}</div>` : ''}</article>`; }).join('')}</main><aside class="operations-archive-aside"><section class="operations-note-card"><p>GROUP INDEX</p><h3>协作目录</h3><ol>${roles.map((role, index) => `<li><span>0${index + 1}</span>${escapeHtml(role.name)}</li>`).join('')}</ol></section><section class="operations-note-card operations-note-card-tilted"><p>COLLABORATION NOTE</p><h3>协作说明</h3><span>每个小组独立记录职责与阶段；具体操作以关联的猫猫知识文章为准。</span></section></aside></div></section>`;
 }
 
 function renderWorkflowView() {
@@ -613,11 +621,16 @@ function renderScienceTab() {
   const subcategories = [...new Set(knowledgePosts.map(post => post.subcategory))];
   const posts = knowledgePosts.filter(knowledgePostMatches);
   const groups = categories.map(category => ({ category, posts: posts.filter(post => post.category === category) })).filter(group => group.posts.length);
-  const cards = state.knowledgeView === 'group' ? `<div class="knowledge-archive-groups">${groups.map((group, index) => renderKnowledgeArchiveGroup(group, index)).join('')}</div>` : state.knowledgeView === 'list' ? `<div class="knowledge-list">${posts.map(renderKnowledgeListRow).join('')}</div>` : `<div class="knowledge-cards">${posts.map(renderKnowledgeCard).join('')}</div>`;
+  const mobileKnowledge = typeof window !== 'undefined' && window.matchMedia('(max-width: 719px)').matches;
+  const view = mobileKnowledge && state.knowledgeView === 'grid' ? 'group' : state.knowledgeView;
+  const cards = view === 'group' ? `<div class="knowledge-archive-groups">${groups.map((group, index) => renderKnowledgeArchiveGroup(group, index)).join('')}</div>` : view === 'list' ? `<div class="knowledge-list">${posts.map(renderKnowledgeListRow).join('')}</div>` : `<div class="knowledge-cards">${posts.map(renderKnowledgeCard).join('')}</div>`;
   const hasFilter = state.knowledgeCategory || state.knowledgeSubcategory;
   const tagCounts = Object.entries(knowledgePosts.flatMap(post => post.tags || []).reduce((counts, tag) => ({ ...counts, [tag]: (counts[tag] || 0) + 1 }), {})).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'zh-Hans-CN'));
   const filterSummary = [state.knowledgeCategory || '全部分类', state.knowledgeSubcategory || '全部主题', state.knowledgeQuery || '未输入关键词'];
-  return `<section class="knowledge-shell"><header class="knowledge-heading"><div><h1>猫猫知识科普</h1><span>校园流浪猫救助与运营知识手册</span></div><div class="knowledge-heading-stamp"><b>知识在流转</b><span>善意在延续</span></div></header><div class="knowledge-toolbar"><label class="knowledge-search"><span>⌕</span><input id="knowledgeSearch" type="search" value="${escapeHtml(state.knowledgeQuery)}" placeholder="搜索文章 / 标签 / 关键词"></label><div class="knowledge-actions"><div class="knowledge-views" aria-label="视图切换">${['group', 'grid', 'list'].map(id => `<button data-knowledge-view="${id}" class="${state.knowledgeView === id ? 'is-active' : ''}" type="button" title="${knowledgeViewLabel(id)}" aria-label="${knowledgeViewLabel(id)}">${knowledgeViewIcon(id)}<span>${knowledgeViewLabel(id)}</span></button>`).join('')}</div><button id="knowledgeFilterToggle" class="knowledge-filter-btn${hasFilter ? ' has-filter' : ''}" type="button">筛选${hasFilter ? ' · 已选' : ''}</button>${state.knowledgeFilterOpen ? `<div class="knowledge-filter-popover"><div><strong>筛选文章</strong><button data-knowledge-clear type="button">清空条件</button></div><section><span>一级分类</span><p>${categories.map(item => `<button data-knowledge-category="${escapeHtml(item)}" class="${item === state.knowledgeCategory ? 'is-selected' : ''}" type="button">${escapeHtml(item)}</button>`).join('')}</p></section><section><span>二级主题</span><p>${subcategories.map(item => `<button data-knowledge-subcategory="${escapeHtml(item)}" class="${item === state.knowledgeSubcategory ? 'is-selected' : ''}" type="button">${escapeHtml(item)}</button>`).join('')}</p></section></div>` : ''}</div></div><p class="knowledge-result-count">共 <strong>${posts.length}</strong> 篇条目</p><div class="knowledge-archive-layout"><main class="knowledge-results view-${state.knowledgeView}">${cards || '<p class="knowledge-empty">没有找到匹配的文章。</p>'}</main><aside class="knowledge-archive-aside"><section class="knowledge-aside-card knowledge-filter-summary"><p>⌕ 当前检索条件</p><ul><li>一级分类：${escapeHtml(filterSummary[0])}</li><li>二级主题：${escapeHtml(filterSummary[1])}</li><li>关键词：${escapeHtml(filterSummary[2])}</li></ul>${hasFilter || state.knowledgeQuery ? '<button data-knowledge-clear type="button">清空条件</button>' : ''}</section><section class="knowledge-aside-card"><p>◇ 常用标签</p><div class="knowledge-tag-cloud">${tagCounts.map(([tag, count]) => `<button data-knowledge-tag="${escapeHtml(tag)}" type="button">${escapeHtml(tag)} <small>${count}</small></button>`).join('')}</div></section><section class="knowledge-aside-card"><p>▣ 分类索引</p><ol>${categories.map((category, index) => `<li><span>0${index + 1}</span>${escapeHtml(category)}<small>${knowledgePosts.filter(post => post.category === category).length} 篇</small></li>`).join('')}</ol></section><section class="knowledge-aside-card knowledge-tip-card"><p>检索小贴士</p><span>支持通过关键词、标签、主题组合检索；输入“疫苗管理”即可找到包含“疫苗”与“管理”的相关文章。</span></section></aside></div></section>`;
+  const viewButtons = ['group', 'grid', 'list'].filter(id => !mobileKnowledge || id !== 'grid').map(id => `<button data-knowledge-view="${id}" class="${view === id ? 'is-active' : ''}" type="button" title="${knowledgeViewLabel(id)}" aria-label="${knowledgeViewLabel(id)}">${knowledgeViewIcon(id)}<span>${knowledgeViewLabel(id)}</span></button>`).join('');
+  const filterTags = tagCounts.map(([tag, count]) => `<button data-knowledge-tag="${escapeHtml(tag)}" type="button">${escapeHtml(tag)} <small>${count}</small></button>`).join('');
+  const filterPanel = state.knowledgeFilterOpen ? `<div class="knowledge-filter-popover"><div><strong>筛选文章</strong><button data-knowledge-clear type="button">清空条件</button></div><section><span>一级分类</span><p>${categories.map(item => `<button data-knowledge-category="${escapeHtml(item)}" class="${item === state.knowledgeCategory ? 'is-selected' : ''}" type="button">${escapeHtml(item)}</button>`).join('')}</p></section><section><span>二级主题</span><p>${subcategories.map(item => `<button data-knowledge-subcategory="${escapeHtml(item)}" class="${item === state.knowledgeSubcategory ? 'is-selected' : ''}" type="button">${escapeHtml(item)}</button>`).join('')}</p></section><section><span>常用标签</span><p class="knowledge-filter-tags">${filterTags}</p></section></div>` : '';
+  return `<section class="knowledge-shell"><header class="knowledge-heading"><div><h1>猫猫知识</h1><span>校园流浪猫救助与运营知识手册</span></div><div class="knowledge-heading-stamp"><b>知识在流转</b><span>善意在延续</span></div></header><div class="knowledge-toolbar"><label class="knowledge-search"><span>⌕</span><input id="knowledgeSearch" type="search" value="${escapeHtml(state.knowledgeQuery)}" placeholder="搜索文章 / 标签 / 关键词"></label><div class="knowledge-actions"><div class="knowledge-views" aria-label="视图切换">${viewButtons}</div><button id="knowledgeFilterToggle" class="knowledge-filter-btn${hasFilter ? ' has-filter' : ''}" type="button">筛选${hasFilter ? ' · 已选' : ''}</button>${filterPanel}</div></div><p class="knowledge-result-count">共 <strong>${posts.length}</strong> 篇条目</p><div class="knowledge-archive-layout"><main class="knowledge-results view-${view}">${cards || '<p class="knowledge-empty">没有找到匹配的文章。</p>'}</main><aside class="knowledge-archive-aside"><section class="knowledge-aside-card knowledge-filter-summary"><p>⌕ 当前检索条件</p><ul><li>一级分类：${escapeHtml(filterSummary[0])}</li><li>二级主题：${escapeHtml(filterSummary[1])}</li><li>关键词：${escapeHtml(filterSummary[2])}</li></ul>${hasFilter || state.knowledgeQuery ? '<button data-knowledge-clear type="button">清空条件</button>' : ''}</section><section class="knowledge-aside-card"><p>◇ 常用标签</p><div class="knowledge-tag-cloud">${filterTags}</div></section><section class="knowledge-aside-card"><p>▣ 分类索引</p><ol>${categories.map((category, index) => `<li><span>0${index + 1}</span>${escapeHtml(category)}<small>${knowledgePosts.filter(post => post.category === category).length} 篇</small></li>`).join('')}</ol></section><section class="knowledge-aside-card knowledge-tip-card"><p>检索小贴士</p><span>支持通过关键词、标签、主题组合检索；输入“疫苗管理”即可找到包含“疫苗”与“管理”的相关文章。</span></section></aside></div></section>`;
 }
 
 function knowledgeCategoryIcon(category) {
@@ -807,13 +820,13 @@ function bindControls() {
   }
 
   // Clear search
-  const clearSearch = document.getElementById('clearSearch');
-  if (clearSearch) {
+  const clearSearchButtons = document.querySelectorAll('#clearSearch, #clearSearchMobile');
+  clearSearchButtons.forEach(clearSearch => {
     clearSearch.addEventListener('click', () => {
       state.query = '';
       renderApp();
     });
-  }
+  });
 
   if (state.activeTab === 'home') {
     const filterToggle = document.getElementById('filterToggle');
@@ -935,7 +948,7 @@ function bindKnowledgeControls() {
   document.querySelectorAll('[data-knowledge-focus-category]').forEach(button => button.addEventListener('click', () => {
     state.knowledgeCategory = button.dataset.knowledgeFocusCategory;
     state.knowledgeSubcategory = '';
-    state.knowledgeView = 'grid';
+    state.knowledgeView = window.matchMedia('(max-width: 719px)').matches ? 'group' : 'grid';
     renderApp();
   }));
   document.querySelectorAll('[data-knowledge-tag]').forEach(button => button.addEventListener('click', () => {

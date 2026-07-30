@@ -272,7 +272,11 @@
 .knowledge-list-row { border-color: #d7bea0; border-radius: .4rem; background: rgba(255, 250, 241, .62); color: #573a26; }
 .knowledge-list-row:hover { border-color: #b78355; background: rgba(255, 250, 241, .9); }
 
-@media (max-width: 1050px) {
+@media (max-width: 1100px) {
+  .knowledge-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 900px) {
   .knowledge-archive-layout { grid-template-columns: 1fr; }
   .knowledge-archive-aside { grid-template-columns: repeat(2, minmax(0, 1fr)); position: static; }
   .knowledge-tip-card { grid-column: 1 / -1; }
@@ -293,4 +297,113 @@
   .knowledge-archive-row > span, .knowledge-archive-row i { display: none; }
   .knowledge-archive-aside { grid-template-columns: 1fr; }
   .knowledge-tip-card { grid-column: auto; }
+}
+
+@media (max-width: 719px) {
+  .knowledge-shell {
+    margin-top: 0;
+    padding: 1.1rem .85rem 2.25rem;
+  }
+
+  .knowledge-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: .7rem;
+    padding-top: .25rem;
+  }
+
+  .knowledge-heading h1 {
+    font-size: clamp(2.25rem, 11vw, 3.25rem);
+    line-height: 1.1;
+    letter-spacing: -.04em;
+  }
+
+  .knowledge-heading-stamp {
+    align-self: flex-start;
+  }
+
+  .knowledge-toolbar {
+    gap: .7rem;
+    padding: 1rem 0;
+  }
+
+  .knowledge-actions {
+    width: 100%;
+    gap: .5rem;
+  }
+
+  .knowledge-views {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .knowledge-views button {
+    flex: 1;
+    min-width: 2.5rem;
+    min-height: 2.75rem;
+  }
+
+  .knowledge-filter-btn {
+    min-height: 2.75rem;
+    padding-right: .9rem;
+    padding-left: .9rem;
+  }
+
+  .knowledge-filter-popover {
+    right: 0;
+    width: min(100%, 23rem);
+  }
+
+  .knowledge-filter-tags {
+    max-height: 8.5rem;
+    overflow-y: auto;
+  }
+
+  .knowledge-filter-tags button {
+    min-height: 2.25rem;
+  }
+
+  .knowledge-results {
+    padding-top: 1.25rem;
+  }
+
+  .knowledge-archive-group,
+  .knowledge-card,
+  .knowledge-list-row {
+    border-radius: .65rem;
+  }
+
+  .knowledge-card {
+    min-height: 0;
+    padding: 1rem;
+  }
+
+  .knowledge-card h2 {
+    font-size: 1.1rem;
+  }
+
+  .knowledge-archive-aside {
+    display: none;
+  }
+
+  .knowledge-list-row {
+    gap: .6rem;
+    padding: .9rem;
+  }
+
+  .knowledge-article-layout {
+    padding: .9rem .85rem 2.25rem;
+  }
+
+  .knowledge-article-header {
+    margin-top: .8rem;
+  }
+
+  .knowledge-article h1 {
+    font-size: 1.5rem;
+  }
+
+  .knowledge-body {
+    font-size: .95rem;
+  }
 }
