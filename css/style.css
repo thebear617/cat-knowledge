@@ -586,6 +586,98 @@ select {
   line-height: 1.45;
 }
 
+.home-directory {
+  margin: 3.8rem auto 0;
+  max-width: 1320px;
+}
+
+.home-directory > header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: .75rem;
+  border-bottom: 1px dashed #cbb497;
+}
+
+.home-directory > header p {
+  color: #5c4130;
+  font-family: Georgia, "Songti SC", STSong, serif;
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+}
+
+.home-directory > header span,
+.home-directory > header small {
+  color: #876e59;
+  font-family: Georgia, "Songti SC", STSong, serif;
+  font-size: .82rem;
+}
+
+.home-directory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+  gap: 1rem;
+  margin-top: 1.2rem;
+}
+
+.home-directory-empty {
+  margin-top: 1.2rem;
+  border: 1px dashed #cbb497;
+  color: #876e59;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.home-directory-card {
+  position: relative;
+  min-height: 11rem;
+  overflow: hidden;
+  border: 1px solid #dfcfb9;
+  background: #e8ddcb;
+  box-shadow: 2px 3px 7px rgba(78, 53, 31, .11);
+  color: #fff9ee;
+  padding: 0;
+  text-align: left;
+  transition: transform .18s, box-shadow .18s;
+}
+
+.home-directory-card:hover {
+  box-shadow: 5px 7px 13px rgba(78, 53, 31, .17);
+  transform: translateY(-3px);
+}
+
+.home-directory-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 11rem;
+  object-fit: cover;
+}
+
+.home-directory-card::after {
+  position: absolute;
+  inset: 45% 0 0;
+  background: linear-gradient(transparent, rgba(51, 35, 24, .72));
+  content: '';
+}
+
+.home-directory-card span {
+  position: absolute;
+  z-index: 1;
+  right: .7rem;
+  bottom: .55rem;
+  left: .7rem;
+  overflow: hidden;
+  color: #fff9ee;
+  font-family: Georgia, "Songti SC", STSong, serif;
+  font-size: 1rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .home-yearbook-footer {
   margin-top: 2.7rem;
   color: #9a7b62;
@@ -627,9 +719,13 @@ select {
   .home-stat-ribbon { flex-wrap: wrap; justify-content: flex-start; margin-top: 1rem; }
   .home-stat-ribbon button { min-width: 50%; border-right: 0; padding: .45rem .6rem; text-align: left; }
   .home-featured { margin-top: 2.2rem; }
-  .home-featured > header { align-items: flex-start; flex-direction: column; }
+  .home-featured > header,
+  .home-directory > header { align-items: flex-start; flex-direction: column; }
+  .directory-filter-grid { grid-template-columns: 1fr; }
   .home-feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .85rem; }
   .home-feature-card:last-child { grid-column: 1 / -1; max-width: calc(50% - .42rem); }
+  .home-directory { margin-top: 2.7rem; }
+  .home-directory-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
 }
 
 .summary-grid {
@@ -690,6 +786,253 @@ select {
   background: var(--surface);
   padding: 1rem;
   box-shadow: var(--shadow);
+}
+
+.directory-toolbar {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  margin-top: 1.15rem;
+}
+
+.directory-search {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  min-width: 0;
+  height: 2.85rem;
+  border: 1px solid #d8c6ad;
+  border-radius: 999px;
+  background: rgba(255, 249, 238, .76);
+  color: #8a6f58;
+  padding-left: .9rem;
+  transition: border-color .18s, box-shadow .18s;
+}
+
+.directory-search:focus-within {
+  border-color: #b78355;
+  box-shadow: 0 0 0 3px rgba(183, 131, 85, .12);
+}
+
+.directory-search svg,
+.directory-filter-toggle svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+.directory-search input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #4d3829;
+  padding: 0 .65rem;
+  font: inherit;
+  font-size: .88rem;
+}
+
+.directory-search input::placeholder { color: #a48d79; }
+
+.directory-search button {
+  display: grid;
+  place-items: center;
+  align-self: stretch;
+  min-width: 2.65rem;
+  border: 0;
+  border-left: 1px solid #e4d4bd;
+  border-radius: 0 999px 999px 0;
+  background: transparent;
+  color: #8a6f58;
+  font-size: 1rem;
+}
+
+.directory-search button:hover { color: #a45e2c; }
+
+.directory-search button .paw-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: currentColor;
+  stroke: none;
+}
+
+.directory-filter-wrap { position: relative; }
+
+.directory-filter-toggle {
+  display: grid;
+  width: 2.85rem;
+  height: 2.85rem;
+  place-items: center;
+  border: 1px solid #d8c6ad;
+  border-radius: .8rem;
+  background: #fff9ee;
+  color: #775842;
+  box-shadow: 1px 2px 4px rgba(78, 53, 31, .08);
+  transition: background .18s, color .18s, border-color .18s;
+}
+
+.directory-filter-toggle:hover,
+.directory-filter-toggle.has-filter,
+.directory-filter-toggle[aria-expanded="true"] {
+  border-color: #ba8051;
+  background: #a96c3d;
+  color: #fffaf0;
+}
+
+.directory-filter-popover {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + .6rem);
+  right: 0;
+  width: min(23rem, calc(100vw - 2rem));
+  border: 1px solid #cdb795;
+  border-radius: .45rem;
+  background-color: #f8efdf;
+  background-image: radial-gradient(rgba(112, 78, 46, .07) .55px, transparent .7px);
+  background-size: 5px 5px;
+  box-shadow: 5px 7px 15px rgba(78, 53, 31, .15);
+  padding: 1.05rem;
+}
+
+.directory-filter-popover[hidden] { display: none; }
+
+.directory-filter-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .6rem;
+  border-bottom: 1px dashed #cbb497;
+  color: #5d4230;
+  padding-bottom: .65rem;
+}
+
+.directory-filter-heading strong {
+  font-family: Georgia, "Songti SC", STSong, serif;
+  letter-spacing: .08em;
+}
+.directory-filter-heading span { color: #947965; font-size: .76rem; }
+
+.directory-filter-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .75rem;
+  margin-top: .9rem;
+}
+
+.directory-filter-grid .filter-field { min-width: 0; }
+.directory-filter-grid .filter-field span {
+  color: #856a54;
+  font-family: Georgia, "Songti SC", STSong, serif;
+  font-size: .76rem;
+  font-weight: 400;
+}
+.directory-select { position: relative; }
+
+.directory-select-toggle {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  min-height: 2.6rem;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #dac5a7;
+  border-radius: .45rem;
+  background-color: rgba(255, 250, 241, .72);
+  color: #634a37;
+  padding: .55rem .65rem .55rem .7rem;
+  font: inherit;
+  text-align: left;
+}
+
+.directory-select-toggle:hover,
+.directory-select-toggle[aria-expanded="true"] {
+  border-color: #b78355;
+  box-shadow: 0 0 0 3px rgba(183, 131, 85, .1);
+}
+
+.directory-select-toggle svg {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+  transition: transform .18s;
+}
+
+.directory-select-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
+
+.directory-select-menu {
+  position: absolute;
+  z-index: 25;
+  top: calc(100% + .3rem);
+  right: 0;
+  left: 0;
+  max-height: 13.5rem;
+  overflow-y: auto;
+  border: 1px solid #cdb795;
+  border-radius: .45rem;
+  background-color: #f8efdf;
+  background-image: radial-gradient(rgba(112, 78, 46, .07) .55px, transparent .7px);
+  background-size: 5px 5px;
+  box-shadow: 4px 6px 13px rgba(78, 53, 31, .16);
+  padding: .28rem;
+}
+
+.directory-select-menu[hidden] { display: none; }
+
+.directory-select-option {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-radius: .28rem;
+  background: transparent;
+  color: #654a36;
+  padding: .48rem .55rem;
+  font: inherit;
+  font-size: .84rem;
+  text-align: left;
+}
+
+.directory-select-option:hover,
+.directory-select-option.is-selected {
+  background: rgba(174, 119, 75, .16);
+  color: #a45e2c;
+}
+
+.directory-select-option.is-selected::before {
+  display: inline-block;
+  width: .9rem;
+  color: #a45e2c;
+  content: '✓';
+}
+
+.directory-filter-grid .filter-field select {
+  min-width: 0;
+  border-color: #dac5a7;
+  border-radius: .45rem;
+  background-color: rgba(255, 250, 241, .72);
+  color: #634a37;
+}
+
+.directory-filter-reset {
+  width: 100%;
+  margin-top: .9rem;
+  border: 0;
+  border-top: 1px dashed #cbb497;
+  background: transparent;
+  color: #a45e2c;
+  padding: .75rem 0 0;
+  font: inherit;
+  font-size: .82rem;
+  font-weight: 700;
 }
 
 .search-row {

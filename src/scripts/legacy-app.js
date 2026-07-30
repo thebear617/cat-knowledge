@@ -28,6 +28,7 @@ const state = {
   vaccine: '全部',
   sterilized: '全部',
   friendliness: '全部',
+  area: '全部',
   selectedName: null,
   drawerTab: 'profile',
   activeTab: 'home',
@@ -45,6 +46,7 @@ const state = {
 const knowledgePosts = window.__catKnowledgePosts || [];
 let knowledgeTocScrollContainer = null;
 let knowledgeTocScrollHandler = null;
+let homeFeaturedRefreshTimer = null;
 
 const app = document.getElementById('app');
 const drawer = document.getElementById('catDrawer');
@@ -129,7 +131,8 @@ function getFilteredCats() {
       && (state.status === '全部' || cat.status === state.status)
       && (state.vaccine === '全部' || getVaccineBucket(cat) === state.vaccine)
       && (state.sterilized === '全部' || getSterilizedBucket(cat) === state.sterilized)
-      && (state.friendliness === '全部' || getFriendlinessBucket(cat) === state.friendliness);
+      && (state.friendliness === '全部' || getFriendlinessBucket(cat) === state.friendliness)
+      && (state.area === '全部' || cat.area === state.area);
   });
 
   return filtered.sort((a, b) => a.name.localeCompare(b.name, 'zh-Hans-CN'));
@@ -145,6 +148,23 @@ function cdnUrl(path) {
 function getCatCover(cat) {
   if (cat.cover) return cat.cover;
   return cat.images && cat.images.length ? cat.images[0] : null;
+}
+
+function getDirectoryCover(cat) {
+  const directoryCovers = {
+    大头: 'images/大头/datou5.jpg'
+  };
+  return directoryCovers[cat.name] || getCatCover(cat);
+}
+
+function getTimedFeaturedCats(cats, heroCat) {
+  const candidates = cats.filter(cat => cat.name !== heroCat?.name);
+  if (!candidates.length) return [];
+
+  const batchSize = Math.min(5, candidates.length);
+  const slot = Math.floor(Date.now() / (15 * 60 * 1000));
+  const start = slot % candidates.length;
+  return Array.from({ length: batchSize }, (_, index) => candidates[(start + index) % candidates.length]);
 }
 
 // ============== Tab Navigation ==============
@@ -164,7 +184,7 @@ function renderSidebar() {
 // ============== Home Tab ==============
 
 function isHomeFiltered() {
-  return state.status !== '全部' || state.vaccine !== '全部' || state.sterilized !== '全部' || state.friendliness !== '全部' || state.query !== '';
+  return state.status !== '全部' || state.vaccine !== '全部' || state.sterilized !== '全部' || state.friendliness !== '全部' || state.area !== '全部' || state.query !== '';
 }
 
 function getActiveHomeFilter() {
@@ -179,16 +199,13 @@ function renderHomeTab() {
   const activeFilter = getActiveHomeFilter();
   const filtered = isHomeFiltered();
 
-  if (filtered) {
-    return `<section class="home-filter-view"><header><p>猫咪档案</p><h2>筛选结果</h2></header>${renderCatControls(getFilteredCats().length)}${renderCatGrid(getFilteredCats())}</section>`;
-  }
-
   const catsWithPhotos = catProfiles.filter(cat => cat.images && cat.images.length > 0).sort((a, b) => a.name.localeCompare(b.name, 'zh-Hans-CN'));
   const heroCat = catProfiles.find(cat => cat.name === '大头' && getCatCover(cat)) || catsWithPhotos[0];
-  const featuredCats = catsWithPhotos.filter(cat => cat.name !== heroCat?.name).slice(0, 5);
+  const featuredCats = getTimedFeaturedCats(catsWithPhotos, heroCat);
+  const directoryCats = filtered ? getFilteredCats() : catsWithPhotos;
   const homeStats = [summary.find(item => item.filter === 'all'), summary.find(item => item.filter === 'status-就读中'), summary.find(item => item.filter === 'status-已毕业'), summary.find(item => item.filter === 'sterilized-未绝育')].filter(Boolean);
 
-  return `<section class="home-yearbook"><div class="home-cover"><div class="home-cover-copy"><p class="home-edition">⌁ 2026 年鉴</p><h2>猫猫手册</h2><p class="home-cover-title">2026 春夏校园猫咪年鉴</p><span>/ 校园流浪猫生活记录 /</span><i></i><p class="home-cover-note">从镜头和档案中，<br>认识校园里的每一只猫。</p></div>${heroCat ? `<div class="home-cover-photos"><button class="home-cover-photo" data-cat-name="${escapeHtml(heroCat.name)}" type="button"><img src="${cdnUrl(getCatCover(heroCat))}" alt="${escapeHtml(heroCat.name)}"><strong>${escapeHtml(heroCat.name)}</strong></button><div class="home-cover-strip">${featuredCats.slice(0, 3).map(cat => `<button data-cat-name="${escapeHtml(cat.name)}" type="button"><img src="${cdnUrl(getCatCover(cat))}" alt="${escapeHtml(cat.name)}"></button>`).join('')}</div><span>2026 Spring & Summer</span></div>` : ''}</div><section class="home-stat-ribbon" aria-label="猫协档案统计">${homeStats.map(item => { const active = item.filter === 'all' ? !filtered : item.filter === activeFilter; return `<button class="${active ? 'is-active' : ''}" data-summary-filter="${escapeHtml(item.filter)}" type="button"><strong>${item.value}</strong><span>${escapeHtml(item.label)}</span></button>`; }).join('')}</section><section class="home-featured"><header><div><p>▣ 精选目录</p><span>点击照片，进入它们的档案</span></div><small>校园猫咪档案</small></header><div class="home-feature-grid">${featuredCats.map((cat, index) => `<button class="home-feature-card card-${index + 1}" data-cat-name="${escapeHtml(cat.name)}" type="button"><img src="${cdnUrl(getCatCover(cat))}" alt="${escapeHtml(cat.name)}" loading="lazy"><div><h3>${escapeHtml(cat.name)}</h3><p>${escapeHtml(cat.status)} · ${escapeHtml(getSterilizedBucket(cat))}</p><span>📍 ${escapeHtml(cat.area || '地点待补充')}</span></div></button>`).join('')}</div></section><footer class="home-yearbook-footer">谢谢关心它们的你　♡</footer></section>`;
+  return `<section class="home-yearbook"><div class="home-cover"><div class="home-cover-copy"><p class="home-edition">⌁ 2026 年鉴</p><h2>猫猫手册</h2><p class="home-cover-title">2026 春夏校园猫咪年鉴</p><span>/ 校园流浪猫生活记录 /</span><i></i><p class="home-cover-note">从镜头和档案中，<br>认识校园里的每一只猫。</p></div>${heroCat ? `<div class="home-cover-photos"><button class="home-cover-photo" data-cat-name="${escapeHtml(heroCat.name)}" type="button"><img src="${cdnUrl(getCatCover(heroCat))}" alt="${escapeHtml(heroCat.name)}"><strong>${escapeHtml(heroCat.name)}</strong></button><div class="home-cover-strip">${featuredCats.slice(0, 3).map(cat => `<button data-cat-name="${escapeHtml(cat.name)}" type="button"><img src="${cdnUrl(getCatCover(cat))}" alt="${escapeHtml(cat.name)}"></button>`).join('')}</div><span>2026 Spring & Summer</span></div>` : ''}</div><section class="home-stat-ribbon" aria-label="猫协档案统计">${homeStats.map(item => { const active = item.filter === 'all' ? !filtered : item.filter === activeFilter; return `<button class="${active ? 'is-active' : ''}" data-summary-filter="${escapeHtml(item.filter)}" type="button"><strong>${item.value}</strong><span>${escapeHtml(item.label)}</span></button>`; }).join('')}</section><section class="home-featured"><header><div><p>▣ 精选目录</p><span>点击照片，进入它们的档案</span></div><small>每 15 分钟更新</small></header><div class="home-feature-grid">${featuredCats.map((cat, index) => `<button class="home-feature-card card-${index + 1}" data-cat-name="${escapeHtml(cat.name)}" type="button"><img src="${cdnUrl(getCatCover(cat))}" alt="${escapeHtml(cat.name)}" loading="lazy"><div><h3>${escapeHtml(cat.name)}</h3><p>${escapeHtml(cat.status)} · ${escapeHtml(getSterilizedBucket(cat))}</p><span>📍 ${escapeHtml(cat.area || '地点待补充')}</span></div></button>`).join('')}</div></section><section class="home-directory"><header><div><p>◆ 全部猫咪档案</p><span>已收录 ${catsWithPhotos.length} 只猫咪的照片与档案</span></div><small>CAT DIRECTORY</small></header>${renderCatControls(directoryCats.length)}${directoryCats.length ? `<div class="home-directory-grid">${directoryCats.map(cat => `<button class="home-directory-card" data-cat-name="${escapeHtml(cat.name)}" type="button"><img src="${cdnUrl(getDirectoryCover(cat))}" alt="${escapeHtml(cat.name)}" loading="lazy"><span>${escapeHtml(cat.name)}</span></button>`).join('')}</div>` : '<p class="home-directory-empty">没有匹配的猫咪，可以清空筛选后再试。</p>'}</section><footer class="home-yearbook-footer">谢谢关心它们的你　♡</footer></section>`;
 }
 
 // ============== Cat Profile Tab ==============
@@ -208,40 +225,47 @@ function renderCatSummary() {
 
 function renderSelect(label, id, options, value) {
   return `
-    <label class="filter-field" for="${id}">
+    <div class="filter-field directory-select">
       <span>${label}</span>
-      <select id="${id}" data-filter="${id}">
-        ${options.map(option => `
-          <option value="${escapeHtml(option)}"${option === value ? ' selected' : ''}>${escapeHtml(option)}</option>
-        `).join('')}
-      </select>
-    </label>
+      <button class="directory-select-toggle" type="button" data-select-toggle aria-expanded="false" aria-controls="${id}SelectMenu">
+        <span>${escapeHtml(value)}</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"></path></svg>
+      </button>
+      <div class="directory-select-menu" id="${id}SelectMenu" role="listbox" aria-label="${escapeHtml(label)}" hidden>
+        ${options.map(option => `<button class="directory-select-option${option === value ? ' is-selected' : ''}" type="button" role="option" aria-selected="${option === value}" data-select-option data-select-filter="${id}" data-select-value="${escapeHtml(option)}">${escapeHtml(option)}</button>`).join('')}
+      </div>
+    </div>
   `;
 }
 
 function renderCatControls(filteredCount) {
   const availableStatuses = STATUS_ORDER.filter(status => status === '全部' || catProfiles.some(cat => cat.status === status));
+  const areaOptions = ['全部', ...new Set(catProfiles.map(cat => cat.area).filter(area => !isEmptyValue(area)))].sort((a, b) => a === '全部' ? -1 : a.localeCompare(b, 'zh-Hans-CN'));
   const baseCount = state.status === '全部' ? catProfiles.length : catProfiles.filter(c => c.status === state.status).length;
+  const hasFilters = isHomeFiltered();
   return `
-    <section class="controls" aria-label="筛选和搜索">
-      <div class="search-row">
-        <div class="search-box">
-          <span>搜索</span>
-          <div class="search-input-row">
-            <input id="searchInput" type="search" value="${escapeHtml(state.query)}" placeholder="猫名" autocomplete="off">
-            <button class="search-btn" id="searchBtn" title="搜索（回车也可）">搜索</button>
+    <section class="directory-toolbar" aria-label="搜索和筛选猫咪档案">
+      <div class="directory-search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3"></circle><path d="m16 16 4.3 4.3"></path></svg>
+        <input id="searchInput" type="search" value="${escapeHtml(state.query)}" placeholder="搜索猫名、地点或备注" autocomplete="off" aria-label="搜索猫名、地点或备注">
+        <button id="searchBtn" type="button" aria-label="搜索">
+          <svg viewBox="0 0 24 24" aria-hidden="true" class="paw-icon"><circle cx="6.2" cy="9.3" r="2.1"></circle><circle cx="11.1" cy="6.2" r="2.1"></circle><circle cx="16.1" cy="8.1" r="2.1"></circle><circle cx="18.3" cy="13" r="2.1"></circle><path d="M12.1 11.1c-3.1 0-5.3 2.2-5.3 4.8 0 2 1.4 3.2 3.3 3.2.8 0 1.4-.2 2-.6.6.4 1.3.6 2 .6 1.9 0 3.2-1.2 3.2-3.2 0-2.6-2.1-4.8-5.2-4.8Z"></path></svg>
+        </button>
+      </div>
+      <div class="directory-filter-wrap">
+        <button class="directory-filter-toggle${hasFilters ? ' has-filter' : ''}" id="filterToggle" type="button" aria-label="筛选猫咪档案" aria-expanded="false" aria-controls="filterPopover">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7.5 12h9M10.5 18h3"></path></svg>
+        </button>
+        <div class="directory-filter-popover" id="filterPopover" hidden>
+          <div class="directory-filter-heading"><strong>筛选档案</strong><span>当前显示 ${filteredCount} / ${baseCount} 只</span></div>
+          <div class="directory-filter-grid">
+            ${renderSelect('状态', 'status', availableStatuses, state.status)}
+            ${renderSelect('疫苗', 'vaccine', VACCINE_OPTIONS, state.vaccine)}
+            ${renderSelect('绝育', 'sterilized', STERILIZED_OPTIONS, state.sterilized)}
+            ${renderSelect('地区', 'area', areaOptions, state.area)}
           </div>
+          ${hasFilters ? '<button class="directory-filter-reset" id="resetFilters" type="button">清空全部筛选</button>' : ''}
         </div>
-      </div>
-      <div class="filter-grid">
-        ${renderSelect('状态', 'status', availableStatuses, state.status)}
-        ${renderSelect('疫苗', 'vaccine', VACCINE_OPTIONS, state.vaccine)}
-        ${renderSelect('绝育', 'sterilized', STERILIZED_OPTIONS, state.sterilized)}
-        ${renderSelect('亲人/抓捕', 'friendliness', FRIENDLINESS_OPTIONS, state.friendliness)}
-      </div>
-      <div class="result-bar">
-        <span>当前显示 <strong>${filteredCount}</strong> / ${baseCount} 只</span>
-        <button class="text-button" id="resetFilters" type="button">清空筛选</button>
       </div>
     </section>
   `;
@@ -671,6 +695,10 @@ function buildSearchBar(tabId, placeholder) {
 // ============== Main Render ==============
 
 function renderApp() {
+  if (homeFeaturedRefreshTimer) {
+    window.clearTimeout(homeFeaturedRefreshTimer);
+    homeFeaturedRefreshTimer = null;
+  }
   let content = '';
 
   if (state.activeTab === 'home') {
@@ -698,6 +726,12 @@ function renderApp() {
   bindOperationsControls();
   bindKnowledgeControls();
   bindKnowledgeToc();
+
+  if (state.activeTab === 'home') {
+    const fifteenMinutes = 15 * 60 * 1000;
+    const delay = fifteenMinutes - (Date.now() % fifteenMinutes) + 50;
+    homeFeaturedRefreshTimer = window.setTimeout(renderApp, delay);
+  }
 }
 
 // ============== Event Binding ==============
@@ -715,6 +749,7 @@ function bindControls() {
         state.vaccine = '全部';
         state.sterilized = '全部';
         state.friendliness = '全部';
+        state.area = '全部';
         state.timelineType = '全部';
         renderApp();
       });
@@ -758,25 +793,50 @@ function bindControls() {
   }
 
   if (state.activeTab === 'home') {
-    if (isHomeFiltered()) {
-      document.querySelectorAll('[data-filter]').forEach(control => {
-        control.addEventListener('change', event => {
-          state[event.target.dataset.filter] = event.target.value;
-          renderApp();
-        });
+    const filterToggle = document.getElementById('filterToggle');
+    const filterPopover = document.getElementById('filterPopover');
+    if (filterToggle && filterPopover) {
+      filterToggle.addEventListener('click', () => {
+        const isOpen = !filterPopover.hidden;
+        filterPopover.hidden = isOpen;
+        filterToggle.setAttribute('aria-expanded', String(!isOpen));
       });
+    }
 
-      const resetBtn = document.getElementById('resetFilters');
-      if (resetBtn) {
-        resetBtn.addEventListener('click', () => {
-          state.query = '';
-          state.status = '全部';
-          state.vaccine = '全部';
-          state.sterilized = '全部';
-          state.friendliness = '全部';
-          renderApp();
-        });
-      }
+    const closeSelectMenus = () => {
+      document.querySelectorAll('.directory-select-menu').forEach(menu => { menu.hidden = true; });
+      document.querySelectorAll('[data-select-toggle]').forEach(toggle => toggle.setAttribute('aria-expanded', 'false'));
+    };
+
+    document.querySelectorAll('[data-select-toggle]').forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        const menu = document.getElementById(toggle.getAttribute('aria-controls'));
+        if (!menu) return;
+        const willOpen = menu.hidden;
+        closeSelectMenus();
+        menu.hidden = !willOpen;
+        toggle.setAttribute('aria-expanded', String(willOpen));
+      });
+    });
+
+    document.querySelectorAll('[data-select-option]').forEach(option => {
+      option.addEventListener('click', () => {
+        state[option.dataset.selectFilter] = option.dataset.selectValue;
+        renderApp();
+      });
+    });
+
+    const resetBtn = document.getElementById('resetFilters');
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        state.query = '';
+        state.status = '全部';
+        state.vaccine = '全部';
+        state.sterilized = '全部';
+        state.friendliness = '全部';
+        state.area = '全部';
+        renderApp();
+      });
     }
 
     bindCatCards();
@@ -891,7 +951,7 @@ function bindKnowledgeToc() {
 }
 
 function bindCatCards() {
-  const selector = (state.activeTab === 'home' && !isHomeFiltered()) ? '[data-cat-name]' : '.cat-card';
+  const selector = state.activeTab === 'home' ? '[data-cat-name]' : '.cat-card';
   document.querySelectorAll(selector).forEach(card => {
     card.addEventListener('click', () => openDrawer(card.dataset.catName));
     if (card.tagName === 'BUTTON') return;
@@ -910,6 +970,7 @@ function applyHomeFilter(filterKey) {
   state.vaccine = '全部';
   state.sterilized = '全部';
   state.friendliness = '全部';
+  state.area = '全部';
 
   if (filterKey !== 'all') {
     const [type, value] = filterKey.split('-', 2);
@@ -924,10 +985,11 @@ function applyHomeFilter(filterKey) {
 }
 
 function bindSummaryCards() {
-  document.querySelectorAll('.summary-clickable').forEach(card => {
+  document.querySelectorAll('.summary-clickable, [data-summary-filter]').forEach(card => {
     card.addEventListener('click', () => {
       applyHomeFilter(card.dataset.summaryFilter);
     });
+    if (card.tagName === 'BUTTON') return;
     card.addEventListener('keydown', event => {
       if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
