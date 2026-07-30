@@ -436,7 +436,10 @@ function getFilteredSupplies() {
   if (!q) return supplies;
   return supplies.map(category => {
     const matched = category.items.filter(item =>
-      normalize(item.name).includes(q) || normalize(item.notes || '').includes(q)
+      normalize(item.name).includes(q)
+      || normalize(item.spec || '').includes(q)
+      || normalize(item.location || '').includes(q)
+      || normalize(item.notes || '').includes(q)
     );
     return matched.length > 0 ? { ...category, items: matched } : null;
   }).filter(Boolean);
@@ -444,7 +447,7 @@ function getFilteredSupplies() {
 
 function renderSuppliesTab() {
   const view = OPERATIONS_VIEWS.find(item => item.id === state.operationsView) || OPERATIONS_VIEWS[0];
-  return `<section class="operations-shell"><header class="operations-heading"><div><p>CAT OPERATIONS</p><h1>物资与协作</h1><span>把日常物资、协作分工与行动知识放在同一个入口。</span></div><strong>${view.icon} ${escapeHtml(view.label)}</strong></header><nav class="operations-tabs" aria-label="运营台内容切换">${OPERATIONS_VIEWS.map(item => `<button data-operations-view="${item.id}" class="${state.operationsView === item.id ? 'is-active' : ''}" type="button"><span>${item.icon}</span>${item.label}</button>`).join('')}</nav>${state.operationsView === 'inventory' ? renderInventoryView() : state.operationsView === 'collaboration' ? renderCollaborationView() : renderWorkflowView()}</section>`;
+  return `<section class="operations-shell"><header class="operations-heading"><div><p>校园救助行动手册</p><h1>物资与协作 <span aria-hidden="true">◌</span></h1><strong>${state.operationsView === 'inventory' ? '物资库存档案' : escapeHtml(view.label)}</strong></div><div class="operations-stamp" aria-label="猫协运营档案室"><span>猫协运营档案室</span><b>物资记录专用章</b><i>CAT ASSOCIATION</i></div></header><nav class="operations-tabs" aria-label="运营台内容切换">${OPERATIONS_VIEWS.map(item => `<button data-operations-view="${item.id}" class="${state.operationsView === item.id ? 'is-active' : ''}" type="button"><span>${item.icon}</span>${item.label}</button>`).join('')}</nav>${state.operationsView === 'inventory' ? renderInventoryView() : state.operationsView === 'collaboration' ? renderCollaborationView() : renderWorkflowView()}</section>`;
 }
 
 function renderInventoryView() {
@@ -453,10 +456,13 @@ function renderInventoryView() {
   const categoryIcons = { '猫粮': '🍖', '抓捕工具': '🔧', '航空箱 / 猫包': '🧳', '药品': '💊', '猫窝': '🛏️', '其它': '📦' };
   const totalItems = data.reduce((count, category) => count + category.items.length, 0);
   const totalRecordedItems = supplies.reduce((count, category) => count + category.items.length, 0);
-  const recordedLocations = new Set(supplies.flatMap(category => category.items.map(item => item.location).filter(Boolean))).size;
-  let html = '<section class="operations-layout"><div class="inventory-view">';
-  html += buildSearchBar('supplies', '搜索物资名称、地点或备注...');
-  html += `<section class="inventory-panel"><div class="inventory-panel-toolbar"><div class="inventory-category-filters" aria-label="物资分类筛选"><button data-inventory-category="全部" class="${state.inventoryCategory === '全部' ? 'is-active' : ''}" type="button">全部</button>${supplies.map(category => `<button data-inventory-category="${escapeHtml(category.category)}" class="${state.inventoryCategory === category.category ? 'is-active' : ''}" type="button">${escapeHtml(category.category)}</button>`).join('')}</div><div class="inventory-expand-controls"><button data-inventory-expand="all" type="button">全部展开</button><span></span><button data-inventory-expand="none" type="button">全部折叠</button></div></div><div class="inventory-summary"><strong>物资库存</strong><span>${data.length} 类 · ${totalItems} 项记录</span></div>`;
+  const allItems = supplies.flatMap(category => category.items);
+  const recordedLocations = [...new Set(allItems.flatMap(item => (item.location || '').split(/\s*\/\s*/).filter(Boolean)))];
+  const itemsWithNotes = allItems.filter(item => item.notes).length;
+  let html = '<section class="operations-layout inventory-archive-layout"><div class="inventory-view">';
+  html += `<section class="inventory-archive-toolbar" aria-label="库存搜索和分类筛选"><div class="inventory-archive-search"><span>⌕</span><input id="searchInput" type="search" value="${escapeHtml(state.query)}" placeholder="搜索物资名称 / 规格 / 地点 / 备注" autocomplete="off"><button id="searchBtn" type="button" aria-label="搜索"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.2" cy="9.3" r="2.1"></circle><circle cx="11.1" cy="6.2" r="2.1"></circle><circle cx="16.1" cy="8.1" r="2.1"></circle><circle cx="18.3" cy="13" r="2.1"></circle><path d="M12.1 11.1c-3.1 0-5.3 2.2-5.3 4.8 0 2 1.4 3.2 3.3 3.2.8 0 1.4-.2 2-.6.6.4 1.3.6 2 .6 1.9 0 3.2-1.2 3.2-3.2 0-2.6-2.1-4.8-5.2-4.8Z"></path></svg></button></div><div class="inventory-category-filters" aria-label="物资分类筛选"><button data-inventory-category="全部" class="${state.inventoryCategory === '全部' ? 'is-active' : ''}" type="button">全部</button>${supplies.map(category => `<button data-inventory-category="${escapeHtml(category.category)}" class="${state.inventoryCategory === category.category ? 'is-active' : ''}" type="button">${escapeHtml(category.category)}</button>`).join('')}</div></section>`;
+  html += `<section class="inventory-archive-stats" aria-label="库存概览"><article><span>▣</span><div><small>库存分类</small><strong>${data.length}</strong><em>类</em></div><p>当前视图</p></article><article><span>☷</span><div><small>收录条目</small><strong>${totalItems}</strong><em>项</em></div><p>可检索物资</p></article><article><span>⌑</span><div><small>已标注地点</small><strong>${recordedLocations.length}</strong><em>处</em></div><p>存放位置</p></article><article><span>✎</span><div><small>档案备注</small><strong>${itemsWithNotes}</strong><em>条</em></div><p>待留意信息</p></article></section>`;
+  html += `<section class="inventory-panel"><div class="inventory-panel-toolbar"><div class="inventory-summary"><strong>物资清单</strong><span>按类别归档 · ${data.length} 类 ${totalItems} 项记录</span></div><div class="inventory-expand-controls"><button data-inventory-expand="all" type="button">全部展开</button><span></span><button data-inventory-expand="none" type="button">全部折叠</button></div></div>`;
 
   if (!data.length) {
     html += '<section class="empty-state"><h2>没有匹配的物资</h2><p>可以清除搜索试试。</p></section>';
@@ -467,7 +473,7 @@ function renderInventoryView() {
       const emoji = categoryIcons[cat.category] || '📦';
       html += `<details class="supply-category" data-supply-category="${escapeHtml(cat.category)}">
         <summary class="supply-cat-header">
-          <h3><span class="supply-category-icon">${emoji}</span>${escapeHtml(cat.category)}<small>${cat.items.length} 项</small><span class="supply-arrow">⌄</span></h3>
+          <h3><span class="supply-category-icon">${emoji}</span>${escapeHtml(cat.category)}<small>共 ${cat.items.length} 项</small><span class="supply-arrow">⌄</span></h3>
         </summary>
         <div class="supply-cards">
         <div class="supply-row supply-row-head">
@@ -487,7 +493,7 @@ function renderInventoryView() {
   }
 
   html += '</div>';
-  html += `<aside class="inventory-aside" aria-label="库存统计看板"><section class="inventory-stat-card"><p>INVENTORY</p><h2>库存概览</h2><dl><div><dt>当前视图</dt><dd>${data.length} <span>类</span></dd></div><div><dt>匹配记录</dt><dd>${totalItems} <span>项</span></dd></div><div><dt>已收录地点</dt><dd>${recordedLocations} <span>处</span></dd></div></dl><small>全库共 ${totalRecordedItems} 项物资记录</small></section><section class="inventory-category-card"><p>CATEGORIES</p><h2>分类速览</h2><div>${supplies.map(category => `<button data-inventory-category="${escapeHtml(category.category)}" class="${state.inventoryCategory === category.category ? 'is-active' : ''}" type="button"><span>${categoryIcons[category.category] || '📦'}</span><strong>${escapeHtml(category.category)}</strong><small>${category.items.length} 项</small></button>`).join('')}</div></section></aside></section>`;
+  html += `<aside class="inventory-aside" aria-label="库存档案索引"><section class="inventory-note-card inventory-category-card"><p>CATALOGUE</p><h2>分类速览</h2><div>${supplies.map(category => `<button data-inventory-category="${escapeHtml(category.category)}" class="${state.inventoryCategory === category.category ? 'is-active' : ''}" type="button"><span>${categoryIcons[category.category] || '📦'}</span><strong>${escapeHtml(category.category)}</strong><small>${category.items.length} 项</small></button>`).join('')}</div></section><section class="inventory-note-card inventory-location-card"><p>LOCATION INDEX</p><h2>存放索引</h2><ul>${recordedLocations.map(location => `<li><span>●</span>${escapeHtml(location)}</li>`).join('')}</ul></section><section class="inventory-note-card inventory-tip-card"><p>ARCHIVE NOTE</p><h2>归档说明</h2><p>所有数量、地点和备注均以现有物资档案为准；展开分类即可查看完整记录。</p><small>全库共 ${totalRecordedItems} 项物资记录</small></section></aside></section>`;
   return html;
 }
 
@@ -569,7 +575,7 @@ function roleKnowledgeLinks(roleName) {
 
 function renderCollaborationView() {
   const roleIcons = { '义卖组': '🛍️', '疫苗绝育组': '🩺', '赞助组': '🤝', '宣传财务组': '📣' };
-  return `<section class="collaboration-view"><header class="operations-section-heading"><div><p>COLLABORATION</p><h2>行动协作</h2><span>每个小组保留职责、协作内容和相关知识入口，不预设虚假的任务状态。</span></div><strong>${roles.length} 个小组</strong></header><div class="collaboration-list">${roles.map(role => { const links = roleKnowledgeLinks(role.name); return `<article class="collaboration-role"><div class="collaboration-role-top"><span class="collaboration-role-icon">${roleIcons[role.name] || '👥'}</span><div><h3>${escapeHtml(role.name)}</h3><p>${escapeHtml(role.description)}</p></div></div><dl class="collaboration-phases">${role.phases.map(phase => `<div><dt>${escapeHtml(phase.label)}</dt><dd>${escapeHtml(phase.detail)}</dd></div>`).join('')}</dl>${links.length ? `<div class="role-knowledge-links"><span>相关知识</span>${links.map(post => `<button data-operations-knowledge-slug="${escapeHtml(post.slug)}" type="button">${escapeHtml(post.title)} →</button>`).join('')}</div>` : ''}</article>`; }).join('')}</div></section>`;
+  return `<section class="operations-archive-view collaboration-view"><header class="operations-section-heading archive-section-heading"><div><p>COLLABORATION FILES</p><h2>行动协作</h2><span>按小组归档职责、协作阶段与相关行动知识，不预设虚假的任务状态。</span></div><strong>${roles.length} 个协作小组</strong></header><div class="operations-archive-layout"><main class="collaboration-list">${roles.map((role, index) => { const links = roleKnowledgeLinks(role.name); return `<article class="collaboration-role"><span class="archive-item-number">0${index + 1}</span><div class="collaboration-role-top"><span class="collaboration-role-icon">${roleIcons[role.name] || '👥'}</span><div><h3>${escapeHtml(role.name)}</h3><p>${escapeHtml(role.description)}</p></div></div><dl class="collaboration-phases">${role.phases.map(phase => `<div><dt>${escapeHtml(phase.label)}</dt><dd>${escapeHtml(phase.detail)}</dd></div>`).join('')}</dl>${links.length ? `<div class="role-knowledge-links"><span>查阅条目</span>${links.map(post => `<button data-operations-knowledge-slug="${escapeHtml(post.slug)}" type="button">${escapeHtml(post.title)} →</button>`).join('')}</div>` : ''}</article>`; }).join('')}</main><aside class="operations-archive-aside"><section class="operations-note-card"><p>GROUP INDEX</p><h3>协作目录</h3><ol>${roles.map((role, index) => `<li><span>0${index + 1}</span>${escapeHtml(role.name)}</li>`).join('')}</ol></section><section class="operations-note-card operations-note-card-tilted"><p>COLLABORATION NOTE</p><h3>协作说明</h3><span>每个小组独立记录职责与阶段；具体操作以关联的知识科普文章为准。</span></section></aside></div></section>`;
 }
 
 function renderWorkflowView() {
@@ -579,7 +585,7 @@ function renderWorkflowView() {
     { icon: '✂️', title: '绝育行动安排', text: '围绕抓捕、接送、术后恢复和放归的行动安排。', steps: ['确认对象', '抓捕接送', '术后照护', '恢复放归'], article: '绝育行动怎么安排' },
     { icon: '🧾', title: '救助费用处理', text: '将费用确认、救助执行与后续记录放进同一条规则。', steps: ['确认需求', '执行救助', '保留记录', '规则处理'], article: '救助费用如何按规则处理' }
   ];
-  return `<section class="workflow-view"><header class="operations-section-heading"><div><p>WORKFLOWS</p><h2>工作流程</h2><span>这里是已有知识科普的行动入口；具体说明仍在 Markdown 文章中维护。</span></div><strong>4 条流程</strong></header><div class="workflow-list">${workflows.map(workflow => { const post = knowledgePosts.find(item => item.title === workflow.article); return `<article class="workflow-card"><div class="workflow-card-head"><span>${workflow.icon}</span><div><h3>${workflow.title}</h3><p>${workflow.text}</p></div></div><ol>${workflow.steps.map(step => `<li>${step}</li>`).join('')}</ol>${post ? `<button data-operations-knowledge-slug="${escapeHtml(post.slug)}" type="button">查看完整科普文章 →</button>` : ''}</article>`; }).join('')}</div></section>`;
+  return `<section class="operations-archive-view workflow-view"><header class="operations-section-heading archive-section-heading"><div><p>FIELD MANUAL</p><h2>工作流程</h2><span>把已有的救助行动知识整理成可快速查阅的步骤卷宗。</span></div><strong>${workflows.length} 条行动流程</strong></header><div class="operations-archive-layout"><main class="workflow-list">${workflows.map((workflow, index) => { const post = knowledgePosts.find(item => item.title === workflow.article); return `<article class="workflow-card"><header class="workflow-card-head"><span>${workflow.icon}</span><div><small>流程 0${index + 1}</small><h3>${workflow.title}</h3><p>${workflow.text}</p></div></header><ol>${workflow.steps.map(step => `<li>${escapeHtml(step)}</li>`).join('')}</ol>${post ? `<footer><button data-operations-knowledge-slug="${escapeHtml(post.slug)}" type="button">查阅完整科普文章 →</button></footer>` : ''}</article>`; }).join('')}</main><aside class="operations-archive-aside"><section class="operations-note-card"><p>PROCESS INDEX</p><h3>行动索引</h3><ol>${workflows.map((workflow, index) => `<li><span>0${index + 1}</span>${escapeHtml(workflow.title)}</li>`).join('')}</ol></section><section class="operations-note-card operations-note-card-tilted"><p>FIELD NOTE</p><h3>使用提示</h3><span>流程卡用于快速确认步骤；遇到具体情形时，请继续查阅对应的完整科普文章。</span></section></aside></div></section>`;
 }
 
 // ============== Science Tab ==============
