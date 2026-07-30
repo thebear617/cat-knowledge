@@ -602,9 +602,11 @@ function renderScienceTab() {
   const subcategories = [...new Set(knowledgePosts.map(post => post.subcategory))];
   const posts = knowledgePosts.filter(knowledgePostMatches);
   const groups = categories.map(category => ({ category, posts: posts.filter(post => post.category === category) })).filter(group => group.posts.length);
-  const cards = state.knowledgeView === 'group' ? `<div class="knowledge-group-grid">${groups.map(group => `<section class="knowledge-group"><div class="knowledge-group-heading"><div class="knowledge-group-title"><span class="knowledge-group-icon">${knowledgeCategoryIcon(group.category)}</span><h2>${escapeHtml(group.category)}</h2><span>${group.posts.length} 篇</span></div><button class="knowledge-group-view-all" data-knowledge-focus-category="${escapeHtml(group.category)}" type="button">查看全部 →</button></div><div class="knowledge-cards">${group.posts.map(renderKnowledgeCard).join('')}</div></section>`).join('')}</div>` : state.knowledgeView === 'list' ? `<div class="knowledge-list">${posts.map(renderKnowledgeListRow).join('')}</div>` : `<div class="knowledge-cards">${posts.map(renderKnowledgeCard).join('')}</div>`;
+  const cards = state.knowledgeView === 'group' ? `<div class="knowledge-archive-groups">${groups.map((group, index) => renderKnowledgeArchiveGroup(group, index)).join('')}</div>` : state.knowledgeView === 'list' ? `<div class="knowledge-list">${posts.map(renderKnowledgeListRow).join('')}</div>` : `<div class="knowledge-cards">${posts.map(renderKnowledgeCard).join('')}</div>`;
   const hasFilter = state.knowledgeCategory || state.knowledgeSubcategory;
-  return `<section class="knowledge-shell"><header class="knowledge-heading"><p>CAT KNOWLEDGE</p><h1>知识科普</h1><span>照护、救助与校园共处的行动知识。</span></header><div class="knowledge-toolbar"><label class="knowledge-search"><span>⌕</span><input id="knowledgeSearch" type="search" value="${escapeHtml(state.knowledgeQuery)}" placeholder="搜索文章、标签或关键词"></label><div class="knowledge-actions"><div class="knowledge-views" aria-label="视图切换">${['group', 'grid', 'list'].map(id => `<button data-knowledge-view="${id}" class="${state.knowledgeView === id ? 'is-active' : ''}" type="button" title="${knowledgeViewLabel(id)}" aria-label="${knowledgeViewLabel(id)}">${knowledgeViewIcon(id)}</button>`).join('')}</div><button id="knowledgeFilterToggle" class="knowledge-filter-btn${hasFilter ? ' has-filter' : ''}" type="button">筛选${hasFilter ? ' · 已选' : ''}</button>${state.knowledgeFilterOpen ? `<div class="knowledge-filter-popover"><div><strong>筛选文章</strong><button id="knowledgeFilterClear" type="button">清除</button></div><section><span>一级分类</span><p>${categories.map(item => `<button data-knowledge-category="${escapeHtml(item)}" class="${item === state.knowledgeCategory ? 'is-selected' : ''}" type="button">${escapeHtml(item)}</button>`).join('')}</p></section><section><span>二级主题</span><p>${subcategories.map(item => `<button data-knowledge-subcategory="${escapeHtml(item)}" class="${item === state.knowledgeSubcategory ? 'is-selected' : ''}" type="button">${escapeHtml(item)}</button>`).join('')}</p></section></div>` : ''}</div></div><div class="knowledge-results view-${state.knowledgeView}">${cards || '<p class="knowledge-empty">没有找到匹配的文章。</p>'}</div></section>`;
+  const tagCounts = Object.entries(knowledgePosts.flatMap(post => post.tags || []).reduce((counts, tag) => ({ ...counts, [tag]: (counts[tag] || 0) + 1 }), {})).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'zh-Hans-CN'));
+  const filterSummary = [state.knowledgeCategory || '全部分类', state.knowledgeSubcategory || '全部主题', state.knowledgeQuery || '未输入关键词'];
+  return `<section class="knowledge-shell"><header class="knowledge-heading"><div><h1>猫猫知识科普</h1><span>校园流浪猫救助与运营知识手册</span></div><div class="knowledge-heading-stamp"><b>知识在流转</b><span>善意在延续</span></div></header><div class="knowledge-toolbar"><label class="knowledge-search"><span>⌕</span><input id="knowledgeSearch" type="search" value="${escapeHtml(state.knowledgeQuery)}" placeholder="搜索文章 / 标签 / 关键词"></label><div class="knowledge-actions"><div class="knowledge-views" aria-label="视图切换">${['group', 'grid', 'list'].map(id => `<button data-knowledge-view="${id}" class="${state.knowledgeView === id ? 'is-active' : ''}" type="button" title="${knowledgeViewLabel(id)}" aria-label="${knowledgeViewLabel(id)}">${knowledgeViewIcon(id)}<span>${knowledgeViewLabel(id)}</span></button>`).join('')}</div><button id="knowledgeFilterToggle" class="knowledge-filter-btn${hasFilter ? ' has-filter' : ''}" type="button">筛选${hasFilter ? ' · 已选' : ''}</button>${state.knowledgeFilterOpen ? `<div class="knowledge-filter-popover"><div><strong>筛选文章</strong><button data-knowledge-clear type="button">清空条件</button></div><section><span>一级分类</span><p>${categories.map(item => `<button data-knowledge-category="${escapeHtml(item)}" class="${item === state.knowledgeCategory ? 'is-selected' : ''}" type="button">${escapeHtml(item)}</button>`).join('')}</p></section><section><span>二级主题</span><p>${subcategories.map(item => `<button data-knowledge-subcategory="${escapeHtml(item)}" class="${item === state.knowledgeSubcategory ? 'is-selected' : ''}" type="button">${escapeHtml(item)}</button>`).join('')}</p></section></div>` : ''}</div></div><p class="knowledge-result-count">共 <strong>${posts.length}</strong> 篇条目</p><div class="knowledge-archive-layout"><main class="knowledge-results view-${state.knowledgeView}">${cards || '<p class="knowledge-empty">没有找到匹配的文章。</p>'}</main><aside class="knowledge-archive-aside"><section class="knowledge-aside-card knowledge-filter-summary"><p>⌕ 当前检索条件</p><ul><li>一级分类：${escapeHtml(filterSummary[0])}</li><li>二级主题：${escapeHtml(filterSummary[1])}</li><li>关键词：${escapeHtml(filterSummary[2])}</li></ul>${hasFilter || state.knowledgeQuery ? '<button data-knowledge-clear type="button">清空条件</button>' : ''}</section><section class="knowledge-aside-card"><p>◇ 常用标签</p><div class="knowledge-tag-cloud">${tagCounts.map(([tag, count]) => `<button data-knowledge-tag="${escapeHtml(tag)}" type="button">${escapeHtml(tag)} <small>${count}</small></button>`).join('')}</div></section><section class="knowledge-aside-card"><p>▣ 分类索引</p><ol>${categories.map((category, index) => `<li><span>0${index + 1}</span>${escapeHtml(category)}<small>${knowledgePosts.filter(post => post.category === category).length} 篇</small></li>`).join('')}</ol></section><section class="knowledge-aside-card knowledge-tip-card"><p>检索小贴士</p><span>支持通过关键词、标签、主题组合检索；输入“疫苗管理”即可找到包含“疫苗”与“管理”的相关文章。</span></section></aside></div></section>`;
 }
 
 function knowledgeCategoryIcon(category) {
@@ -636,6 +638,10 @@ function renderKnowledgeCard(post) {
 
 function renderKnowledgeListRow(post) {
   return `<button class="knowledge-list-row" data-knowledge-slug="${escapeHtml(post.slug)}" type="button"><div><p class="knowledge-card-meta">${escapeHtml(post.category)} / ${escapeHtml(post.subcategory)}</p><h2>${escapeHtml(post.title)}</h2><p>${escapeHtml(post.description)}</p></div><span>${new Date(post.publishedAt).toLocaleDateString('zh-CN')} →</span></button>`;
+}
+
+function renderKnowledgeArchiveGroup(group, index) {
+  return `<section class="knowledge-archive-group"><header><div><span>${knowledgeCategoryIcon(group.category)} 0${index + 1}</span><h2>${escapeHtml(group.category)}</h2></div><small>共 ${group.posts.length} 篇</small></header><div class="knowledge-archive-table-head"><span>文章标题</span><span>日期</span><span>二级主题</span><span>标签</span></div>${group.posts.map(post => `<button class="knowledge-archive-row" data-knowledge-slug="${escapeHtml(post.slug)}" type="button"><div><h3>${escapeHtml(post.title)}</h3><p>${escapeHtml(post.description)}</p></div><time>${new Date(post.publishedAt).toLocaleDateString('zh-CN')}</time><span>${escapeHtml(post.subcategory)}</span><i>${(post.tags || []).map(tag => `<em>${escapeHtml(tag)}</em>`).join('')}</i></button>`).join('')}</section>`;
 }
 
 function getArticleHeadings(markdown) {
@@ -898,12 +904,13 @@ function bindKnowledgeControls() {
   });
   document.querySelectorAll('[data-knowledge-view]').forEach(button => button.addEventListener('click', () => { state.knowledgeView = button.dataset.knowledgeView; renderApp(); }));
   document.getElementById('knowledgeFilterToggle')?.addEventListener('click', () => { state.knowledgeFilterOpen = !state.knowledgeFilterOpen; renderApp(); });
-  document.getElementById('knowledgeFilterClear')?.addEventListener('click', () => {
+  document.querySelectorAll('[data-knowledge-clear]').forEach(button => button.addEventListener('click', () => {
+    state.knowledgeQuery = '';
     state.knowledgeCategory = '';
     state.knowledgeSubcategory = '';
     state.knowledgeFilterOpen = false;
     renderApp();
-  });
+  }));
   document.querySelectorAll('[data-knowledge-category]').forEach(button => button.addEventListener('click', () => {
     const value = button.dataset.knowledgeCategory;
     state.knowledgeCategory = state.knowledgeCategory === value ? '' : value;
@@ -918,6 +925,10 @@ function bindKnowledgeControls() {
     state.knowledgeCategory = button.dataset.knowledgeFocusCategory;
     state.knowledgeSubcategory = '';
     state.knowledgeView = 'grid';
+    renderApp();
+  }));
+  document.querySelectorAll('[data-knowledge-tag]').forEach(button => button.addEventListener('click', () => {
+    state.knowledgeQuery = button.dataset.knowledgeTag;
     renderApp();
   }));
   document.querySelectorAll('[data-knowledge-slug]').forEach(card => card.addEventListener('click', () => { state.knowledgeArticle = card.dataset.knowledgeSlug; renderApp(); }));
