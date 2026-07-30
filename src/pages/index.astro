@@ -5,6 +5,7 @@ import { getCollection } from 'astro:content';
 const knowledgePosts = (await getCollection('science', ({ data }) => !data.draft))
   .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf())
   .map(post => ({ slug: post.id.replace(/\.md$/, ''), title: post.data.title, description: post.data.description, publishedAt: post.data.publishedAt.toISOString(), category: post.data.category, subcategory: post.data.subcategory, tags: post.data.tags, body: post.body }));
+const assetBase = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 ---
 <!doctype html>
 <html lang="zh-CN">
@@ -20,10 +21,13 @@ const knowledgePosts = (await getCollection('science', ({ data }) => !data.draft
       <nav class="sidebar" id="sidebar" aria-label="主导航">
         <div class="sidebar-brand">
           <button class="sidebar-close" id="sidebarClose" aria-label="关闭侧边栏">✕</button>
-          <p class="sidebar-eyebrow">XDU Cat</p>
-          <h1 class="sidebar-title">猫猫手册</h1>
+          <svg class="sidebar-brand-paw" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.2" cy="9.3" r="2.1"></circle><circle cx="11.1" cy="6.2" r="2.1"></circle><circle cx="16.1" cy="8.1" r="2.1"></circle><circle cx="18.3" cy="13" r="2.1"></circle><path d="M12.1 11.1c-3.1 0-5.3 2.2-5.3 4.8 0 2 1.4 3.2 3.3 3.2.8 0 1.4-.2 2-.6.6.4 1.3.6 2 .6 1.9 0 3.2-1.2 3.2-3.2 0-2.6-2.1-4.8-5.2-4.8Z"></path></svg>
+          <p class="sidebar-eyebrow">XDU CAT</p>
+          <h1 class="sidebar-title">西电猫猫</h1>
+          <span class="sidebar-subtitle">猫猫手册</span>
         </div>
         <div class="sidebar-nav" id="sidebarNav"></div>
+        <div class="sidebar-footer" aria-hidden="true"><img class="sidebar-cat-illustration" src={`${assetBase}sidebar-cat-line.png`} alt=""><p>小小的相遇，<br>是校园里最温柔的事。</p></div>
       </nav>
       <div class="main-area"><main id="app" class="app-shell"></main></div>
     </div>
