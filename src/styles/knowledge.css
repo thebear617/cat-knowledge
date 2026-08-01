@@ -307,19 +307,28 @@
 
   .knowledge-heading {
     align-items: flex-start;
-    flex-direction: column;
-    gap: .7rem;
+    flex-direction: row;
+    gap: .5rem;
     padding-top: .25rem;
   }
 
+  .knowledge-heading > div:first-child { flex: 1; min-width: 0; }
+
   .knowledge-heading h1 {
-    font-size: clamp(2.25rem, 11vw, 3.25rem);
+    font-size: clamp(2rem, 9.5vw, 2.75rem);
     line-height: 1.1;
     letter-spacing: -.04em;
   }
 
+  .knowledge-heading > div > span { font-size: .82rem; letter-spacing: .04em; }
+
   .knowledge-heading-stamp {
-    align-self: flex-start;
+    box-sizing: border-box;
+    width: 6.8rem;
+    min-width: 6.8rem;
+    margin-top: .15rem;
+    padding: .4rem .3rem;
+    transform: rotate(1deg);
   }
 
   .knowledge-toolbar {

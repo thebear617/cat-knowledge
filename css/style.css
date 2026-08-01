@@ -3645,8 +3645,23 @@ body.drawer-open {
 
 @media (max-width: 600px) {
   .operations-shell { padding: 1.15rem 1rem 2rem; }
-  .operations-heading { gap: .75rem; }
-  .operations-stamp { min-width: 7.2rem; padding: .4rem; }
+  .operations-heading {
+    align-items: flex-start;
+    flex-direction: row;
+    gap: .5rem;
+  }
+  .operations-heading > div:first-child { flex: 1; min-width: 0; }
+  .operations-heading p { font-size: .76rem; letter-spacing: .07em; }
+  .operations-heading h1 { font-size: clamp(2rem, 9vw, 2.45rem); letter-spacing: .04em; }
+  .operations-heading div > strong { font-size: .78rem; letter-spacing: .05em; }
+  .operations-stamp {
+    box-sizing: border-box;
+    width: 7.1rem;
+    min-width: 7.1rem;
+    margin-top: .15rem;
+    padding: .4rem .35rem;
+    transform: rotate(1deg);
+  }
   .operations-stamp span { font-size: .66rem; }
   .operations-stamp b { font-size: .55rem; }
   .operations-tabs button { min-width: 8rem; }
@@ -4658,7 +4673,7 @@ body.drawer-open {
     gap: .15rem;
     min-height: 3.65rem;
     margin: 0 0 .55rem;
-    padding: .2rem .35rem;
+    padding: .2rem .35rem .2rem 3.65rem;
     border-top: 1px dashed #cbb497;
     border-bottom: 1px dashed #cbb497;
     overflow-x: auto;
@@ -4685,9 +4700,8 @@ body.drawer-open {
   }
 
   .chronicle-mobile-month-nav button:first-child {
-    min-width: 4.2rem;
-    align-items: flex-start;
-    padding: .28rem .65rem .42rem;
+    position: relative;
+    min-width: 3.25rem;
   }
 
   .chronicle-mobile-month-nav button:hover,
@@ -4703,7 +4717,12 @@ body.drawer-open {
   }
 
   .chronicle-mobile-month-nav button:first-child span {
-    margin-bottom: .32rem;
+    position: absolute;
+    top: 50%;
+    right: calc(100% + .85rem);
+    margin: 0;
+    transform: translateY(-50%);
+    white-space: nowrap;
   }
 
   .chronicle-mobile-month-nav strong {
