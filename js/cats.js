@@ -19,7 +19,7 @@ export const catProfiles = [
     notes: '第三针认捐人：蔚蓝future',
     area: '丁香',
     gender: '公',
-    images: ['images/水手/水手1.jpg']
+    images: ['images/水手/水手1.jpg', 'images/水手/水手2.jpg']
   },
   {
     name: '虎先锋',
@@ -306,7 +306,7 @@ export const catProfiles = [
     area: '丁香',
     gender: '公',
     cover: 'images/大头/datou10.jpg',
-    images: ['images/大头/datou11.jpg', 'images/大头/datou10.jpg', 'images/大头/datou9.jpg', 'images/大头/datou8.jpg', 'images/大头/datou7.jpg', 'images/大头/datou6.jpg', 'images/大头/datou5.jpg', 'images/大头/datou4.jpg', 'images/大头/datou1.jpg', 'images/大头/datou2.jpg', 'images/大头/datou3.jpg']
+    images: ['images/大头/datou11.jpg', 'images/大头/datou10.jpg', 'images/大头/datou9.jpg', 'images/大头/datou8.jpg', 'images/大头/datou7.jpg', 'images/大头/datou6.jpg', 'images/大头/datou5.jpg', 'images/大头/datou4.jpg', 'images/大头/datou1.jpg', 'images/大头/datou2.jpg', 'images/大头/datou3.jpg', 'images/大头/大头12.jpg']
   },
   {
     name: '漂亮橘',
@@ -317,7 +317,7 @@ export const catProfiles = [
     notes: '—',
     area: '丁香',
     gender: '公',
-    images: ['images/漂亮橘/漂亮橘5.jpg', 'images/漂亮橘/漂亮橘4.jpg', 'images/漂亮橘/漂亮橘3.jpg', 'images/漂亮橘/漂亮橘2.jpg', 'images/漂亮橘/漂亮橘1.jpg']
+    images: ['images/漂亮橘/漂亮橘5.jpg', 'images/漂亮橘/漂亮橘4.jpg', 'images/漂亮橘/漂亮橘3.jpg', 'images/漂亮橘/漂亮橘2.jpg', 'images/漂亮橘/漂亮橘1.jpg', 'images/漂亮橘/漂亮橘6.jpg']
   },
   {
     name: '橙留香',
