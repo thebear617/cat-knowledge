@@ -154,15 +154,15 @@ export const catProfiles = [
     images: ['images/二柑/二柑6.jpg', 'images/二柑/二柑5.jpg', 'images/二柑/二柑4.jpg', 'images/二柑/二柑3.jpg', 'images/二柑/二柑2.jpg', 'images/二柑/二柑1.jpg']
   },
   {
-    name: '渣男',
+    name: '赫兹',
     status: '就读中',
     friendliness: '亲人',
     vaccine: '未接种',
     sterilized: '已绝育（日期待补充）',
-    notes: '2026-05-31 诊断牙龈炎，治疗中。疫苗需等病后评估。',
+    notes: '曾用名「渣男」；2026-05-31 诊断牙龈炎，治疗中。疫苗需等病后评估。',
     area: '丁香',
     gender: '公',
-    images: ['images/渣男/渣男3.jpg', 'images/渣男/渣男2.jpg', 'images/渣男/渣男1.jpg']
+    images: ['images/赫兹/赫兹3.jpg', 'images/赫兹/赫兹2.jpg', 'images/赫兹/赫兹1.jpg', 'images/赫兹/赫兹4.jpg']
   },
   {
     name: '豆腐脑',
@@ -317,7 +317,7 @@ export const catProfiles = [
     notes: '—',
     area: '丁香',
     gender: '公',
-    images: ['images/漂亮橘/漂亮橘5.jpg', 'images/漂亮橘/漂亮橘4.jpg', 'images/漂亮橘/漂亮橘3.jpg', 'images/漂亮橘/漂亮橘2.jpg', 'images/漂亮橘/漂亮橘1.jpg', 'images/漂亮橘/漂亮橘6.jpg']
+    images: ['images/漂亮橘/漂亮橘5.jpg', 'images/漂亮橘/漂亮橘4.jpg', 'images/漂亮橘/漂亮橘3.jpg', 'images/漂亮橘/漂亮橘2.jpg', 'images/漂亮橘/漂亮橘1.jpg', 'images/漂亮橘/漂亮橘6.jpg', 'images/漂亮橘/漂亮橘7.jpg']
   },
   {
     name: '橙留香',
