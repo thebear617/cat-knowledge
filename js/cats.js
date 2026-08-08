@@ -19,7 +19,7 @@ export const catProfiles = [
     notes: '第三针认捐人：蔚蓝future',
     area: '丁香',
     gender: '公',
-    images: ['images/水手/水手1.jpg', 'images/水手/水手2.jpg']
+    images: ['images/水手/水手1.jpg', 'images/水手/水手2.jpg', 'images/水手/水手3.jpg', 'images/水手/水手4.jpg']
   },
   {
     name: '虎先锋',
@@ -162,7 +162,7 @@ export const catProfiles = [
     notes: '曾用名「渣男」；2026-05-31 诊断牙龈炎，治疗中。疫苗需等病后评估。',
     area: '丁香',
     gender: '公',
-    images: ['images/赫兹/赫兹3.jpg', 'images/赫兹/赫兹2.jpg', 'images/赫兹/赫兹1.jpg', 'images/赫兹/赫兹4.jpg']
+    images: ['images/赫兹/赫兹3.jpg', 'images/赫兹/赫兹2.jpg', 'images/赫兹/赫兹1.jpg', 'images/赫兹/赫兹4.jpg', 'images/赫兹/赫兹5.jpg']
   },
   {
     name: '豆腐脑',
