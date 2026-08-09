@@ -1,7 +1,9 @@
-import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders';
+import { defineCollection } from 'astro:content';
+import { z } from 'astro/zod';
 
 const science = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.md', base: './src/content/science' }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -9,8 +11,9 @@ const science = defineCollection({
     category: z.string(),
     subcategory: z.string(),
     tags: z.array(z.string()).default([]),
-    draft: z.boolean().default(false)
-  })
+    draft: z.boolean().default(false),
+    slug: z.string().optional(),
+  }),
 });
 
 export const collections = { science };

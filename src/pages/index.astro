@@ -4,7 +4,7 @@ import '../styles/knowledge.css';
 import { getCollection } from 'astro:content';
 const knowledgePosts = (await getCollection('science', ({ data }) => !data.draft))
   .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf())
-  .map(post => ({ slug: post.id.replace(/\.md$/, ''), title: post.data.title, description: post.data.description, publishedAt: post.data.publishedAt.toISOString(), category: post.data.category, subcategory: post.data.subcategory, tags: post.data.tags, body: post.body }));
+  .map(post => ({ slug: post.data.slug || post.id.replace(/\.md$/, ''), title: post.data.title, description: post.data.description, publishedAt: post.data.publishedAt.toISOString(), category: post.data.category, subcategory: post.data.subcategory, tags: post.data.tags, body: post.body }));
 const assetBase = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 ---
 <!doctype html>
