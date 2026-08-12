@@ -848,6 +848,56 @@ function renderProcurementSection({ category, subgroups }) {
   `;
 }
 
+function renderProcurementCardSection({ category, subgroups }) {
+  const allItems = subgroups.flatMap(g => g.items);
+  const perJins = allItems.map(computePerJin).filter(v => v != null);
+  const min = perJins.length ? Math.min(...perJins).toFixed(1) : '—';
+  const max = perJins.length ? Math.max(...perJins).toFixed(1) : '—';
+  const body = subgroups.map(group => {
+    const subTitle = group.subcategory
+      ? `<h3 class="price-subsection-title">${escapeHtml(group.subcategory)}</h3>`
+      : '';
+    const grid = `<div class="price-card-grid">${group.items.map((item, i) => renderProcurementCard(item, i + 1)).join('')}</div>`;
+    return `${subTitle}${grid}`;
+  }).join('');
+  return `
+    <section class="price-section">
+      <h2 class="price-section-title">${escapeHtml(category)}
+        <small>${allItems.length} 个商品 · ¥${min}–${max}/斤 · 按单价升序</small>
+      </h2>
+      ${body}
+    </section>
+  `;
+}
+
+function renderProcurementCard(item, rank) {
+  const perJin = computePerJin(item);
+  const badge = rank <= 3 ? `<span class="price-card-rank">${priceRankBadge(rank)}</span>` : '';
+  const note = item.note
+    ? `<span class="price-card-note">${pawSvg()}${escapeHtml(item.note)}</span>`
+    : '';
+  const link = item.url
+    ? `<a class="price-buy" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer" title="前往京东">↗</a>`
+    : '';
+  return `
+    <article class="price-card">
+      ${badge}
+      <div class="price-card-brand">${escapeHtml(item.brand)}</div>
+      <h4 class="price-card-product">${escapeHtml(item.product)}${link}</h4>
+      <div class="price-card-row">
+        <span class="price-spec-pill">${escapeHtml(item.spec)}</span>
+        <span class="price-card-total">¥${Number(item.price).toFixed(2)}</span>
+      </div>
+      <div class="price-card-perjin">${formatPerJin(perJin)}</div>
+      ${note}
+    </article>
+  `;
+}
+
+function renderProcurementCardView(grouped) {
+  return grouped.map(renderProcurementCardSection).join('');
+}
+
 function renderProcurementRow(item, rank) {
   const perJin = computePerJin(item);
   const note = item.note
@@ -879,8 +929,16 @@ function renderProcurementTab() {
   const totalCount = priceSnapshot.items.length;
   const categoryCount = new Set(priceSnapshot.items.map(item => item.category)).size;
   const body = grouped.length
-    ? grouped.map(renderProcurementSection).join('')
+    ? (state.procurementView === 'card' ? renderProcurementCardView(grouped) : grouped.map(renderProcurementSection).join(''))
     : `<div class="procurement-skeleton"><p>没有匹配的物资，稍后再来看看</p></div>`;
+  const viewToggle = `
+  <div class="procurement-toolbar">
+    <div class="procurement-view-toggle" role="group" aria-label="视图切换">
+      <button type="button" class="${state.procurementView === 'card' ? 'is-active' : ''}" data-procurement-view="card">卡片视图</button>
+      <button type="button" class="${state.procurementView === 'table' ? 'is-active' : ''}" data-procurement-view="table">表格视图</button>
+    </div>
+  </div>
+`;
   return `
     <section class="procurement-shell">
       <header class="procurement-header">
@@ -891,6 +949,7 @@ function renderProcurementTab() {
         </div>
         <span class="procurement-meta-stamp">最后更新于 ${escapeHtml(priceSnapshot.meta.fetchedAt)}</span>
       </header>
+      ${viewToggle}
       <div class="procurement-stats">
         <span class="procurement-stat"><strong>${totalCount}</strong><small>件商品</small></span>
         <span class="procurement-stat"><strong>${categoryCount}</strong><small>个分类</small></span>
@@ -939,6 +998,7 @@ function renderApp() {
 
   renderSidebar();
   bindControls();
+  bindProcurementControls();
   bindOperationsControls();
   bindKnowledgeControls();
   bindKnowledgeToc();
@@ -1071,6 +1131,17 @@ function bindControls() {
       document.getElementById(`timeline-${button.dataset.timelineMonth}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }));
   }
+}
+
+function bindProcurementControls() {
+  document.querySelectorAll('.procurement-view-toggle [data-procurement-view]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const view = btn.dataset.procurementView;
+      if (view === state.procurementView) return;
+      state.procurementView = view;
+      renderApp();
+    });
+  });
 }
 
 function bindOperationsControls() {

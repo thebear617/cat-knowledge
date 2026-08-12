@@ -4952,3 +4952,28 @@ body.drawer-open {
 .price-paw { width: 13px; height: 13px; color: var(--ink-gold); flex: none; }
 .price-buy { margin-left: .35rem; color: #a98256; text-decoration: none; font-size: .85rem; }
 .price-buy:hover { color: var(--ink-gold); }
+
+/* 工具条与视图切换 */
+.procurement-toolbar { display: flex; align-items: center; justify-content: flex-end; gap: .75rem; margin: 0 0 1.25rem; flex-wrap: wrap; }
+.procurement-view-toggle { display: inline-flex; border: 1px solid var(--paper-rule); border-radius: 999px; overflow: hidden; background: var(--paper-soft); }
+.procurement-view-toggle button { border: none; background: transparent; padding: .4rem .9rem; font-size: .78rem; color: #7c604b; cursor: pointer; }
+.procurement-view-toggle button.is-active { background: #8b5e34; color: #fff; }
+
+/* 卡片视图 */
+.price-card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-bottom: 1.5rem; }
+.price-card { position: relative; background: var(--paper-soft); border: 1px solid var(--paper-rule); border-radius: 12px; padding: 1rem 1.1rem 1.1rem; box-shadow: 0 1px 2px rgba(0,0,0,.05), 0 6px 18px rgba(39,32,26,.06); transition: transform .15s ease, box-shadow .15s ease; }
+.price-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(39,32,26,.1); }
+.price-card-rank { position: absolute; top: .6rem; right: .6rem; }
+.price-card-brand { font-size: .72rem; letter-spacing: .06em; color: #a98256; text-transform: uppercase; margin-bottom: .25rem; }
+.price-card-product { font-family: Georgia, "Songti SC", STSong, serif; font-size: 1.02rem; color: #503522; margin: 0 0 .6rem; line-height: 1.4; }
+.price-card-row { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-bottom: .7rem; }
+.price-card-total { font-size: .78rem; color: #7a6855; }
+.price-card-perjin { font-family: Georgia, "Songti SC", STSong, serif; font-size: 1.5rem; font-weight: 700; color: var(--ink-gold); margin-bottom: .5rem; }
+.price-card-note { display: inline-flex; align-items: center; gap: .3rem; font-size: .76rem; color: #7a6855; }
+
+@media (max-width: 980px) {
+  .price-card-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 720px) {
+  .price-card-grid { grid-template-columns: 1fr; }
+}
