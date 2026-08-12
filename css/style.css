@@ -4902,3 +4902,16 @@ body.drawer-open {
     line-height: 1.7;
   }
 }
+
+/* ============== 物资采购 Procurement ============== */
+.procurement-shell { max-width: 1180px; margin: 0 auto; padding: 1.2rem 1rem 3rem; }
+.procurement-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; }
+.procurement-eyebrow { font-size: .72rem; letter-spacing: .18em; color: #a98256; text-transform: uppercase; margin-bottom: .25rem; }
+.procurement-title { font-family: Georgia, "Songti SC", STSong, serif; font-size: clamp(2.3rem, 4vw, 3.4rem); color: #503522; margin: 0; }
+.procurement-subtitle { color: #746b63; font-size: .92rem; margin-top: .4rem; }
+.procurement-meta-stamp { font-family: Georgia, "Songti SC", STSong, serif; font-size: .82rem; color: #825333; border: 1px dashed #d8c6ad; border-radius: .5rem; padding: .35rem .7rem; transform: rotate(-2deg); white-space: nowrap; }
+.procurement-dossier { background: #fff9ee; border: 1px solid #d8c6ad; border-radius: 16px; padding: 12px; box-shadow: 0 1px 2px rgba(0,0,0,.06), 0 8px 24px rgba(39,32,26,.08); }
+.procurement-dossier-inner { border: 1px solid #e5e1da; border-radius: 10px; padding: 1.5rem 1.25rem; min-height: 320px; }
+.procurement-view-body { color: #746b63; }
+.procurement-skeleton { font-size: .85rem; text-align: center; padding: 4rem 1rem; color: #a48d79; }
+.procurement-footer-tagline { margin-top: 1.5rem; min-height: 24px; }

@@ -19,6 +19,7 @@ const TABS = [
   { id: 'home', title: '首页', icon: '🏠' },
   { id: 'timeline', title: '猫猫编年史', icon: '📜' },
   { id: 'supplies', title: '物资与协作', icon: '📦' },
+  { id: 'procurement', title: '物资采购', icon: '🛒' },
   { id: 'knowledge', title: '猫猫知识', icon: '📖' }
 ];
 
@@ -40,7 +41,10 @@ const state = {
   knowledgeSubcategory: '',
   knowledgeView: 'group',
   knowledgeFilterOpen: false,
-  knowledgeArticle: null
+  knowledgeArticle: null,
+  procurementQuery: '',
+  procurementMaxPerJin: '',
+  procurementView: 'table'
 };
 
 const knowledgePosts = window.__catKnowledgePosts || [];
@@ -187,6 +191,7 @@ function sidebarNavIcon(tabId) {
     home: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3.5 10 8.5-7 8.5 7v10H14v-6H10v6H3.5Z" ${common}/></svg>`,
     timeline: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3.5h14v17H5zM8 8h8M8 12h8M8 16h5" ${common}/><path d="m7 3.5 1 2m8-2-1 2" ${common}/></svg>`,
     supplies: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 8 8-4 8 4v10l-8 4-8-4Z" ${common}/><path d="m4 8 8 4 8-4M12 12v10" ${common}/></svg>`,
+    procurement: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10l1 4v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" ${common}/><path d="M6 7h12M10 11h4" ${common}/></svg>`,
     knowledge: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5c3.2-1.5 5.9-1 8 1.1 2.1-2.1 4.8-2.6 8-1.1v13c-3.2-1.5-5.9-1-8 1.1-2.1-2.1-4.8-2.6-8-1.1Z" ${common}/><path d="M12 6.6v13" ${common}/></svg>`
   };
   return icons[tabId] || icons.home;
@@ -728,6 +733,31 @@ function buildSearchBar(tabId, placeholder) {
   `;
 }
 
+// ============== Procurement Tab ==============
+
+function renderProcurementTab() {
+  return `
+    <section class="procurement-shell">
+      <header class="procurement-header">
+        <div>
+          <p class="procurement-eyebrow">PRICE WATCH</p>
+          <h2 class="procurement-title">物资采购</h2>
+          <p class="procurement-subtitle">记录常用猫咪物资价格，辅助日常采购与补给决策</p>
+        </div>
+        <span class="procurement-meta-stamp">最后更新于 2026-08-12</span>
+      </header>
+      <div class="procurement-dossier">
+        <div class="procurement-dossier-inner">
+          <div class="procurement-view-body procurement-skeleton">
+            <p>骨架占位：P1 纸面质感 · P2 表格 · P3 卡片 · P4 工具条 · P5 装饰</p>
+          </div>
+        </div>
+      </div>
+      <footer class="procurement-footer-tagline"></footer>
+    </section>
+  `;
+}
+
 // ============== Main Render ==============
 
 function renderApp() {
@@ -743,6 +773,8 @@ function renderApp() {
     content = renderSuppliesTab();
   } else if (state.activeTab === 'timeline') {
     content = renderTimelineTab();
+  } else if (state.activeTab === 'procurement') {
+    content = renderProcurementTab();
   } else if (state.activeTab === 'knowledge') {
     content = renderScienceTab();
   }
@@ -750,6 +782,7 @@ function renderApp() {
   app.classList.toggle('knowledge-app-shell', state.activeTab === 'knowledge');
   app.classList.toggle('operations-app-shell', state.activeTab === 'supplies');
   app.classList.toggle('chronicle-app-shell', state.activeTab === 'timeline');
+  app.classList.toggle('procurement-app-shell', state.activeTab === 'procurement');
   app.classList.toggle('home-app-shell', state.activeTab === 'home');
   app.innerHTML = `
     <div class="tab-panel">
@@ -787,6 +820,9 @@ function bindControls() {
         state.friendliness = '全部';
         state.area = '全部';
         state.timelineType = '全部';
+        state.procurementQuery = '';
+        state.procurementMaxPerJin = '';
+        state.procurementView = 'table';
         renderApp();
       });
     });
