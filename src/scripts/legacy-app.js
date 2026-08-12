@@ -930,15 +930,26 @@ function renderProcurementTab() {
   const categoryCount = new Set(priceSnapshot.items.map(item => item.category)).size;
   const body = grouped.length
     ? (state.procurementView === 'card' ? renderProcurementCardView(grouped) : grouped.map(renderProcurementSection).join(''))
-    : `<div class="procurement-skeleton"><p>没有匹配的物资，稍后再来看看</p></div>`;
-  const viewToggle = `
-  <div class="procurement-toolbar">
-    <div class="procurement-view-toggle" role="group" aria-label="视图切换">
-      <button type="button" class="${state.procurementView === 'card' ? 'is-active' : ''}" data-procurement-view="card">卡片视图</button>
-      <button type="button" class="${state.procurementView === 'table' ? 'is-active' : ''}" data-procurement-view="table">表格视图</button>
+    : `<div class="procurement-skeleton"><p>没有匹配的物资，稍后再来看看</p><p class="procurement-skeleton-hint">试试清空搜索或放宽价格上限</p></div>`;
+  const toolbar = `
+    <div class="procurement-toolbar">
+      <div class="procurement-search">
+        <svg class="procurement-search-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M11 4.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Zm7.5 14-3-3"/></svg>
+        <input id="procurementSearchInput" type="search" placeholder="搜索品牌 / 商品" value="${escapeHtml(state.procurementQuery)}" aria-label="搜索品牌或商品">
+      </div>
+      <select id="procurementPriceFilter" class="procurement-select" aria-label="每斤价格上限筛选">
+        <option value="" ${state.procurementMaxPerJin === '' ? 'selected' : ''}>每斤不限</option>
+        <option value="10" ${state.procurementMaxPerJin === '10' ? 'selected' : ''}>每斤 ≤ 10 元</option>
+        <option value="20" ${state.procurementMaxPerJin === '20' ? 'selected' : ''}>每斤 ≤ 20 元</option>
+        <option value="30" ${state.procurementMaxPerJin === '30' ? 'selected' : ''}>每斤 ≤ 30 元</option>
+        <option value="50" ${state.procurementMaxPerJin === '50' ? 'selected' : ''}>每斤 ≤ 50 元</option>
+      </select>
+      <div class="procurement-view-toggle" role="group" aria-label="视图切换">
+        <button type="button" class="${state.procurementView === 'card' ? 'is-active' : ''}" data-procurement-view="card">卡片视图</button>
+        <button type="button" class="${state.procurementView === 'table' ? 'is-active' : ''}" data-procurement-view="table">表格视图</button>
+      </div>
     </div>
-  </div>
-`;
+  `;
   return `
     <section class="procurement-shell">
       <header class="procurement-header">
@@ -949,11 +960,11 @@ function renderProcurementTab() {
         </div>
         <span class="procurement-meta-stamp">最后更新于 ${escapeHtml(priceSnapshot.meta.fetchedAt)}</span>
       </header>
-      ${viewToggle}
       <div class="procurement-stats">
         <span class="procurement-stat"><strong>${totalCount}</strong><small>件商品</small></span>
         <span class="procurement-stat"><strong>${categoryCount}</strong><small>个分类</small></span>
       </div>
+      ${toolbar}
       <div class="procurement-dossier">
         <div class="procurement-dossier-inner">
           <div class="procurement-view-body">${body}</div>
@@ -1134,6 +1145,40 @@ function bindControls() {
 }
 
 function bindProcurementControls() {
+  const searchInput = document.getElementById('procurementSearchInput');
+  if (searchInput) {
+    let debounceTimer = null;
+    const doSearch = () => {
+      const val = searchInput.value.trim();
+      if (val !== state.procurementQuery) {
+        state.procurementQuery = val;
+        renderApp();
+      }
+    };
+    searchInput.addEventListener('keydown', event => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        window.clearTimeout(debounceTimer);
+        doSearch();
+      }
+    });
+    searchInput.addEventListener('input', () => {
+      window.clearTimeout(debounceTimer);
+      debounceTimer = window.setTimeout(doSearch, 200);
+    });
+  }
+
+  const priceFilter = document.getElementById('procurementPriceFilter');
+  if (priceFilter) {
+    priceFilter.addEventListener('change', () => {
+      const val = priceFilter.value;
+      if (val !== state.procurementMaxPerJin) {
+        state.procurementMaxPerJin = val;
+        renderApp();
+      }
+    });
+  }
+
   document.querySelectorAll('.procurement-view-toggle [data-procurement-view]').forEach(btn => {
     btn.addEventListener('click', () => {
       const view = btn.dataset.procurementView;

@@ -4954,10 +4954,18 @@ body.drawer-open {
 .price-buy:hover { color: var(--ink-gold); }
 
 /* 工具条与视图切换 */
-.procurement-toolbar { display: flex; align-items: center; justify-content: flex-end; gap: .75rem; margin: 0 0 1.25rem; flex-wrap: wrap; }
+.procurement-toolbar { display: flex; align-items: center; gap: .75rem; margin: 0 0 1.5rem; flex-wrap: wrap; }
+.procurement-search { position: relative; flex: 1; min-width: 200px; }
+.procurement-search-icon { position: absolute; left: .7rem; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; color: #a48d79; pointer-events: none; }
+.procurement-search input { width: 100%; border: 1px solid var(--paper-rule); border-radius: 999px; background: var(--paper-soft); padding: .5rem 1rem .5rem 2.2rem; font-size: .85rem; color: #3d2f22; outline: none; }
+.procurement-search input:focus { border-color: #c08a2f; box-shadow: 0 0 0 3px rgba(192,138,47,.16); }
+.procurement-search input::placeholder { color: #a48d79; }
+.procurement-select { border: 1px solid var(--paper-rule); border-radius: 999px; background: var(--paper-soft); padding: .5rem .9rem; font-size: .82rem; color: #503522; outline: none; cursor: pointer; }
+.procurement-select:focus { border-color: #c08a2f; box-shadow: 0 0 0 3px rgba(192,138,47,.16); }
 .procurement-view-toggle { display: inline-flex; border: 1px solid var(--paper-rule); border-radius: 999px; overflow: hidden; background: var(--paper-soft); }
 .procurement-view-toggle button { border: none; background: transparent; padding: .4rem .9rem; font-size: .78rem; color: #7c604b; cursor: pointer; }
 .procurement-view-toggle button.is-active { background: #8b5e34; color: #fff; }
+.procurement-skeleton-hint { margin-top: .45rem; font-size: .78rem; color: #b7a494; }
 
 /* 卡片视图 */
 .price-card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-bottom: 1.5rem; }
