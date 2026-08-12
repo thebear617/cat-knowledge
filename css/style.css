@@ -4923,3 +4923,32 @@ body.drawer-open {
 .procurement-view-body { color: #746b63; }
 .procurement-skeleton { font-size: .85rem; text-align: center; padding: 4rem 1rem; color: #a48d79; }
 .procurement-footer-tagline { margin-top: 1.5rem; min-height: 24px; }
+
+/* 表格视图 */
+.price-section { margin-bottom: 2.2rem; }
+.price-section-title { font-family: Georgia, "Songti SC", STSong, serif; font-size: 1.6rem; color: #503522; margin: 0 0 .35rem; display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap; }
+.price-section-title small { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", sans-serif; font-size: .72rem; font-weight: 400; color: #8d7967; letter-spacing: .02em; }
+.price-subsection-title { font-family: Georgia, "Songti SC", STSong, serif; font-size: 1.05rem; color: #7c604b; margin: 1.2rem 0 .5rem; }
+.price-table { width: 100%; border-collapse: collapse; }
+.price-row { border-bottom: 1px dashed #d8c6ad; }
+.price-row:hover { background: rgba(238,219,190,.22); }
+.price-row:last-child { border-bottom: none; }
+.price-cell { padding: .65rem .5rem; vertical-align: middle; font-size: .85rem; color: #3d2f22; }
+.price-cell--rank { width: 48px; text-align: center; }
+.price-cell--brand { width: 14%; font-weight: 700; color: #503522; }
+.price-cell--product { width: 26%; }
+.price-cell--spec { width: 12%; }
+.price-cell--price { width: 12%; color: #7a6855; }
+.price-cell--perjin { width: 22%; }
+.price-cell--note { width: 22%; color: #7a6855; }
+.price-rank { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; font-size: .78rem; font-weight: 700; color: #fff; }
+.price-rank--gold { background: linear-gradient(135deg, #f0c75e, #d9a441); }
+.price-rank--silver { background: linear-gradient(135deg, #c8c4ba, #a8a49a); }
+.price-rank--bronze { background: linear-gradient(135deg, #d7a37a, #b9815a); }
+.price-rank--plain { background: transparent; border: 1px solid #503522; color: #503522; }
+.price-spec-pill { display: inline-block; background: var(--paper-soft); border: 1px solid var(--paper-rule); border-radius: 999px; padding: .15rem .55rem; font-size: .76rem; color: #7c604b; }
+.price-perjin { font-family: Georgia, "Songti SC", STSong, serif; font-size: 1.35rem; font-weight: 700; color: var(--ink-gold); }
+.price-note { display: inline-flex; align-items: center; gap: .3rem; font-size: .78rem; }
+.price-paw { width: 13px; height: 13px; color: var(--ink-gold); flex: none; }
+.price-buy { margin-left: .35rem; color: #a98256; text-decoration: none; font-size: .85rem; }
+.price-buy:hover { color: var(--ink-gold); }

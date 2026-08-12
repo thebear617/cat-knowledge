@@ -66,6 +66,96 @@ function escapeHtml(value) {
     .replaceAll("'", '&#039;');
 }
 
+// ============== Procurement 工具函数 ==============
+const PROCUREMENT_CATEGORIES = [
+  { category: '主粮', subcategories: ['幼猫粮', '成猫粮', '全期粮', '老年猫粮'] },
+  { category: '猫砂', subcategories: [] },
+  { category: '罐头', subcategories: ['主食罐', '零食罐'] },
+  { category: '零食', subcategories: ['冻干', '猫条', '肉泥'] },
+  { category: '营养品', subcategories: ['化毛膏', '益生菌', '猫草'] },
+  { category: '用品', subcategories: [] },
+];
+
+function parseSpecToGrams(spec) {
+  const m = String(spec ?? '').trim().match(/([\d.]+)\s*(kg|g|斤|克|公斤)/i);
+  if (!m) return null;
+  const value = parseFloat(m[1]);
+  if (!Number.isFinite(value) || value <= 0) return null;
+  const unit = m[2].toLowerCase();
+  if (unit === 'kg' || unit === '公斤') return value * 1000;
+  if (unit === 'g' || unit === '克') return value;
+  if (unit === '斤') return value * 500;
+  return null;
+}
+
+function computePerJin(item) {
+  const grams = parseSpecToGrams(item.spec);
+  if (grams == null) return null;
+  const price = Number(item.price);
+  if (!Number.isFinite(price)) return null;
+  return price / (grams / 500);
+}
+
+function formatPerJin(value) {
+  if (value == null || !Number.isFinite(value)) return '—';
+  return `${value.toFixed(1)} 元/斤`;
+}
+
+function getProcurementFiltered() {
+  let items = priceSnapshot.items.slice();
+  const q = (state.procurementQuery || '').trim().toLowerCase();
+  if (q) {
+    items = items.filter(item =>
+      String(item.brand || '').toLowerCase().includes(q) ||
+      String(item.product || '').toLowerCase().includes(q)
+    );
+  }
+  const max = Number(state.procurementMaxPerJin);
+  if (state.procurementMaxPerJin !== '' && Number.isFinite(max)) {
+    items = items.filter(item => {
+      const perJin = computePerJin(item);
+      return perJin != null && perJin <= max;
+    });
+  }
+  // 排序：每斤单价升序，无法解析的排最后
+  items.sort((a, b) => {
+    const pa = computePerJin(a);
+    const pb = computePerJin(b);
+    if (pa == null && pb == null) return 0;
+    if (pa == null) return 1;
+    if (pb == null) return -1;
+    return pa - pb;
+  });
+  return items;
+}
+
+function groupProcurementByCategory(items) {
+  return PROCUREMENT_CATEGORIES
+    .map(({ category, subcategories }) => {
+      const catItems = items.filter(item => item.category === category);
+      if (!catItems.length) return null;
+      const subgroups = [];
+      if (subcategories.length) {
+        subcategories.forEach(sub => {
+          const subItems = catItems.filter(item => (item.subcategory || '') === sub);
+          if (subItems.length) subgroups.push({ subcategory: sub, items: subItems });
+        });
+      }
+      const rest = catItems.filter(item => !subcategories.includes(item.subcategory || ''));
+      if (rest.length) subgroups.push({ subcategory: null, items: rest });
+      if (!subgroups.length) subgroups.push({ subcategory: null, items: catItems });
+      return { category, subgroups };
+    })
+    .filter(Boolean);
+}
+
+function priceRankBadge(rank) {
+  if (rank === 1) return '<span class="price-rank price-rank--gold" aria-hidden="true">1</span>';
+  if (rank === 2) return '<span class="price-rank price-rank--silver" aria-hidden="true">2</span>';
+  if (rank === 3) return '<span class="price-rank price-rank--bronze" aria-hidden="true">3</span>';
+  return `<span class="price-rank price-rank--plain" aria-hidden="true">${rank}</span>`;
+}
+
 function normalize(value) {
   return String(value ?? '').toLowerCase();
 }
@@ -736,9 +826,61 @@ function buildSearchBar(tabId, placeholder) {
 
 // ============== Procurement Tab ==============
 
+function renderProcurementSection({ category, subgroups }) {
+  const allItems = subgroups.flatMap(g => g.items);
+  const perJins = allItems.map(computePerJin).filter(v => v != null);
+  const min = perJins.length ? Math.min(...perJins).toFixed(1) : '—';
+  const max = perJins.length ? Math.max(...perJins).toFixed(1) : '—';
+  const body = subgroups.map(group => {
+    const rows = group.items.map((item, i) => renderProcurementRow(item, i + 1)).join('');
+    const subTitle = group.subcategory
+      ? `<h3 class="price-subsection-title">${escapeHtml(group.subcategory)}</h3>`
+      : '';
+    return `${subTitle}<table class="price-table"><tbody>${rows}</tbody></table>`;
+  }).join('');
+  return `
+    <section class="price-section">
+      <h2 class="price-section-title">${escapeHtml(category)}
+        <small>${allItems.length} 个商品 · ¥${min}–${max}/斤 · 按单价升序</small>
+      </h2>
+      ${body}
+    </section>
+  `;
+}
+
+function renderProcurementRow(item, rank) {
+  const perJin = computePerJin(item);
+  const note = item.note
+    ? `<span class="price-note">${pawSvg()}${escapeHtml(item.note)}</span>`
+    : '';
+  const link = item.url
+    ? `<a class="price-buy" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer" title="前往京东">↗</a>`
+    : '';
+  return `
+    <tr class="price-row">
+      <td class="price-cell price-cell--rank">${priceRankBadge(rank)}</td>
+      <td class="price-cell price-cell--brand">${escapeHtml(item.brand)}</td>
+      <td class="price-cell price-cell--product">${escapeHtml(item.product)}${link}</td>
+      <td class="price-cell price-cell--spec"><span class="price-spec-pill">${escapeHtml(item.spec)}</span></td>
+      <td class="price-cell price-cell--price">¥${Number(item.price).toFixed(2)}</td>
+      <td class="price-cell price-cell--perjin"><span class="price-perjin">${formatPerJin(perJin)}</span></td>
+      <td class="price-cell price-cell--note">${note}</td>
+    </tr>
+  `;
+}
+
+function pawSvg() {
+  return `<svg class="price-paw" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.5 10a2.2 2.2 0 1 0 0-4.4 2.2 2.2 0 0 0 0 4.4Zm4.5 1a2.4 2.4 0 1 0 0-4.8 2.4 2.4 0 0 0 0 4.8Zm4.6-1.2a2.3 2.3 0 1 0 0-4.6 2.3 2.3 0 0 0 0 4.6Zm3.4 2.6c-1 1.4-2.6 1.6-4 .9-.7-.4-1.3-.4-2-.4s-1.3 0-2 .4c-1.4.7-3 .5-4-.9-1.5-2.1 1.6-5.1 5-5.1s6.5 3 4 5.1Zm-7.3 1.4c.8-.3 1.6-.3 2.4 0 1 .4 2 .5 2.9.1 1.4-.6 2.8.3 3.2 1.5.4 1.2-.5 2.4-1.7 2.7-1.4.4-3.3.8-5.3.8s-3.9-.4-5.3-.8c-1.2-.3-2.1-1.5-1.7-2.7.4-1.2 1.8-2.1 3.2-1.5.9.4 1.9.3 2.9-.1Z"/></svg>`;
+}
+
 function renderProcurementTab() {
+  const filtered = getProcurementFiltered();
+  const grouped = groupProcurementByCategory(filtered);
   const totalCount = priceSnapshot.items.length;
   const categoryCount = new Set(priceSnapshot.items.map(item => item.category)).size;
+  const body = grouped.length
+    ? grouped.map(renderProcurementSection).join('')
+    : `<div class="procurement-skeleton"><p>没有匹配的物资，稍后再来看看</p></div>`;
   return `
     <section class="procurement-shell">
       <header class="procurement-header">
@@ -755,9 +897,7 @@ function renderProcurementTab() {
       </div>
       <div class="procurement-dossier">
         <div class="procurement-dossier-inner">
-          <div class="procurement-view-body procurement-skeleton">
-            <p>骨架占位：P1 纸面质感 · P2 表格 · P3 卡片 · P4 工具条 · P5 装饰</p>
-          </div>
+          <div class="procurement-view-body">${body}</div>
         </div>
       </div>
       <footer class="procurement-footer-tagline"></footer>
