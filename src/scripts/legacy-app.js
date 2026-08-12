@@ -20,7 +20,7 @@ const TABS = [
   { id: 'home', title: '首页', icon: '🏠' },
   { id: 'timeline', title: '猫猫编年史', icon: '📜' },
   { id: 'supplies', title: '物资与协作', icon: '📦' },
-  { id: 'procurement', title: '物资采购', icon: '🛒' },
+  { id: 'procurement', title: '价格参考', icon: '🛒' },
   { id: 'knowledge', title: '猫猫知识', icon: '📖' }
 ];
 
@@ -33,7 +33,7 @@ const state = {
   area: '全部',
   selectedName: null,
   drawerTab: 'profile',
-  activeTab: 'home',
+  activeTab: 'procurement',
   operationsView: 'inventory',
   inventoryCategory: '全部',
   timelineType: '全部',
@@ -44,14 +44,24 @@ const state = {
   knowledgeFilterOpen: false,
   knowledgeArticle: null,
   procurementQuery: '',
+  procurementCategory: '主粮',
+  procurementSubcategory: '',
   procurementMaxPerJin: '',
-  procurementView: 'table'
+  procurementPage: 1,
+  procurementSort: 'brand',
+  procurementSortOpen: false,
+  procurementView: 'table',
+  procurementFilterOpen: false
 };
 
 const knowledgePosts = window.__catKnowledgePosts || [];
 let knowledgeTocScrollContainer = null;
 let knowledgeTocScrollHandler = null;
 let homeFeaturedRefreshTimer = null;
+let procurementFilterOutsideClickBound = false;
+let procurementFilterEscapeBound = false;
+let procurementSortOutsideClickBound = false;
+let procurementSortEscapeBound = false;
 
 const app = document.getElementById('app');
 const drawer = document.getElementById('catDrawer');
@@ -69,11 +79,24 @@ function escapeHtml(value) {
 // ============== Procurement 工具函数 ==============
 const PROCUREMENT_CATEGORIES = [
   { category: '主粮', subcategories: ['幼猫粮', '成猫粮', '全期粮', '老年猫粮'] },
-  { category: '猫砂', subcategories: [] },
-  { category: '罐头', subcategories: ['主食罐', '零食罐'] },
+  { category: '猫砂 / 清洁护理', subcategories: ['猫砂', '清洁护理'] },
+  { category: '罐头 / 湿粮', subcategories: ['主食罐', '零食罐'] },
   { category: '零食', subcategories: ['冻干', '猫条', '肉泥'] },
-  { category: '营养品', subcategories: ['化毛膏', '益生菌', '猫草'] },
-  { category: '用品', subcategories: [] },
+  { category: '驱虫 / 药品', subcategories: ['外驱', '内驱'] },
+  { category: '航空箱 / 猫包', subcategories: ['航空箱', '猫包'] },
+  { category: '猫窝 / 保暖', subcategories: [] },
+];
+
+const PROCUREMENT_INDEX_GROUPS = [
+  { title: '日常喂养', categories: ['主粮', '罐头 / 湿粮', '零食'] },
+  { title: '健康护理', categories: ['驱虫 / 药品', '猫砂 / 清洁护理'] },
+  { title: '救助与安置', categories: ['航空箱 / 猫包', '猫窝 / 保暖'] },
+];
+const PROCUREMENT_PAGE_SIZE = 9;
+const PROCUREMENT_SORT_OPTIONS = [
+  { value: 'brand', label: '按品牌排序' },
+  { value: 'price-asc', label: '按单价升序' },
+  { value: 'price-desc', label: '按单价降序' },
 ];
 
 function parseSpecToGrams(spec) {
@@ -101,14 +124,30 @@ function formatPerJin(value) {
   return `${value.toFixed(1)} 元/斤`;
 }
 
+function formatItemPrice(item) {
+  if (item.priceUnit) {
+    const price = Number(item.price);
+    return Number.isFinite(price) ? `¥${price.toFixed(2)} / ${item.priceUnit}` : '—';
+  }
+  return formatPerJin(computePerJin(item));
+}
+
 function getProcurementFiltered() {
   let items = priceSnapshot.items.slice();
   const q = (state.procurementQuery || '').trim().toLowerCase();
   if (q) {
     items = items.filter(item =>
       String(item.brand || '').toLowerCase().includes(q) ||
-      String(item.product || '').toLowerCase().includes(q)
+      String(item.series || '').toLowerCase().includes(q) ||
+      String(item.product || '').toLowerCase().includes(q) ||
+      String(item.sourceTitle || '').toLowerCase().includes(q)
     );
+  }
+  if (state.procurementCategory !== '全部') {
+    items = items.filter(item => item.category === state.procurementCategory);
+  }
+  if (state.procurementSubcategory !== '') {
+    items = items.filter(item => item.subcategory === state.procurementSubcategory);
   }
   const max = Number(state.procurementMaxPerJin);
   if (state.procurementMaxPerJin !== '' && Number.isFinite(max)) {
@@ -117,16 +156,41 @@ function getProcurementFiltered() {
       return perJin != null && perJin <= max;
     });
   }
-  // 排序：每斤单价升序，无法解析的排最后
-  items.sort((a, b) => {
-    const pa = computePerJin(a);
-    const pb = computePerJin(b);
+  return sortProcurementItems(items);
+}
+
+function sortProcurementItems(items) {
+  const sortValue = state.procurementSort || 'brand';
+  return items.sort((a, b) => {
+    if (sortValue === 'brand') {
+      const brandOrder = normalize(a.brand).localeCompare(normalize(b.brand), 'zh-CN');
+      if (brandOrder) return brandOrder;
+      const seriesOrder = normalize(a.series).localeCompare(normalize(b.series), 'zh-CN');
+      if (seriesOrder) return seriesOrder;
+      return normalize(a.product).localeCompare(normalize(b.product), 'zh-CN');
+    }
+    const pa = a.priceUnit ? Number(a.price) : computePerJin(a);
+    const pb = b.priceUnit ? Number(b.price) : computePerJin(b);
     if (pa == null && pb == null) return 0;
     if (pa == null) return 1;
     if (pb == null) return -1;
-    return pa - pb;
+    return sortValue === 'price-desc' ? pb - pa : pa - pb;
   });
-  return items;
+}
+
+function getProcurementPage(items) {
+  const totalPages = Math.max(1, Math.ceil(items.length / PROCUREMENT_PAGE_SIZE));
+  const requestedPage = Number(state.procurementPage) || 1;
+  const page = Math.min(Math.max(requestedPage, 1), totalPages);
+  const start = (page - 1) * PROCUREMENT_PAGE_SIZE;
+  if (state.procurementPage !== page) state.procurementPage = page;
+  return {
+    items: items.slice(start, start + PROCUREMENT_PAGE_SIZE),
+    page,
+    totalPages,
+    start,
+    end: Math.min(start + PROCUREMENT_PAGE_SIZE, items.length),
+  };
 }
 
 function groupProcurementByCategory(items) {
@@ -147,13 +211,6 @@ function groupProcurementByCategory(items) {
       return { category, subgroups };
     })
     .filter(Boolean);
-}
-
-function priceRankBadge(rank) {
-  if (rank === 1) return '<span class="price-rank price-rank--gold" aria-hidden="true">1</span>';
-  if (rank === 2) return '<span class="price-rank price-rank--silver" aria-hidden="true">2</span>';
-  if (rank === 3) return '<span class="price-rank price-rank--bronze" aria-hidden="true">3</span>';
-  return `<span class="price-rank price-rank--plain" aria-hidden="true">${rank}</span>`;
 }
 
 function normalize(value) {
@@ -826,151 +883,323 @@ function buildSearchBar(tabId, placeholder) {
 
 // ============== Procurement Tab ==============
 
-function renderProcurementSection({ category, subgroups }) {
+function renderProcurementSection({ category, subgroups }, summaryItems = null, toolbar = '') {
   const allItems = subgroups.flatMap(g => g.items);
-  const perJins = allItems.map(computePerJin).filter(v => v != null);
-  const min = perJins.length ? Math.min(...perJins).toFixed(1) : '—';
-  const max = perJins.length ? Math.max(...perJins).toFixed(1) : '—';
-  const body = subgroups.map(group => {
-    const rows = group.items.map((item, i) => renderProcurementRow(item, i + 1)).join('');
-    const subTitle = group.subcategory
-      ? `<h3 class="price-subsection-title">${escapeHtml(group.subcategory)}</h3>`
-      : '';
-    return `${subTitle}<table class="price-table"><tbody>${rows}</tbody></table>`;
-  }).join('');
+  const sectionMeta = procurementSectionTagline(category);
+  const rows = sortProcurementItems(allItems.slice()).map(item => renderProcurementRow(item)).join('');
   return `
-    <section class="price-section">
-      <h2 class="price-section-title">${escapeHtml(category)}
-        <small>${allItems.length} 个商品 · ¥${min}–${max}/斤 · 按单价升序</small>
-      </h2>
-      ${body}
+    <section class="price-section" data-price-category="${escapeHtml(category)}">
+      <div class="price-section-header">
+        <h2 class="price-section-title">${escapeHtml(category)}
+          <small>${sectionMeta}</small>
+        </h2>
+        ${toolbar}
+      </div>
+      <div class="price-table-wrap">
+        <table class="price-table">
+          <thead>
+            <tr>
+              <th class="price-cell price-cell--brand" scope="col">品牌</th>
+              <th class="price-cell price-cell--series" scope="col">系列</th>
+              <th class="price-cell price-cell--product" scope="col">商品</th>
+              <th class="price-cell price-cell--spec" scope="col">规格</th>
+              <th class="price-cell price-cell--perjin" scope="col">单价</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
     </section>
   `;
 }
 
-function renderProcurementCardSection({ category, subgroups }) {
+function renderProcurementCardSection({ category, subgroups }, summaryItems = null, toolbar = '') {
   const allItems = subgroups.flatMap(g => g.items);
-  const perJins = allItems.map(computePerJin).filter(v => v != null);
-  const min = perJins.length ? Math.min(...perJins).toFixed(1) : '—';
-  const max = perJins.length ? Math.max(...perJins).toFixed(1) : '—';
+  const sectionMeta = procurementSectionTagline(category);
   const body = subgroups.map(group => {
     const subTitle = group.subcategory
       ? `<h3 class="price-subsection-title">${escapeHtml(group.subcategory)}</h3>`
       : '';
-    const grid = `<div class="price-card-grid">${group.items.map((item, i) => renderProcurementCard(item, i + 1)).join('')}</div>`;
+    const grid = `<div class="price-card-grid">${group.items.map(item => renderProcurementCard(item)).join('')}</div>`;
     return `${subTitle}${grid}`;
   }).join('');
   return `
     <section class="price-section">
-      <h2 class="price-section-title">${escapeHtml(category)}
-        <small>${allItems.length} 个商品 · ¥${min}–${max}/斤 · 按单价升序</small>
-      </h2>
+      <div class="price-section-header">
+        <h2 class="price-section-title">${escapeHtml(category)}
+          <small>${sectionMeta}</small>
+        </h2>
+        ${toolbar}
+      </div>
       ${body}
     </section>
   `;
 }
 
-function renderProcurementCard(item, rank) {
-  const perJin = computePerJin(item);
-  const badge = rank <= 3 ? `<span class="price-card-rank">${priceRankBadge(rank)}</span>` : '';
-  const note = item.note
-    ? `<span class="price-card-note">${pawSvg()}${escapeHtml(item.note)}</span>`
-    : '';
+function procurementSectionTagline(category) {
+  const taglines = {
+    '主粮': '猫猫的幸福，先从一顿靠谱的饭开始。',
+    '猫砂': '把日常照料好，猫猫就能自在地过日子。',
+    '罐头 / 湿粮': '偶尔开个罐，快乐就有了形状。',
+  };
+  return taglines[category] || '把猫猫的日常，照料得妥妥当当。';
+}
+
+function renderProcurementCard(item) {
   const link = item.url
     ? `<a class="price-buy" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer" title="前往京东">↗</a>`
     : '';
   return `
     <article class="price-card">
-      ${badge}
       <div class="price-card-brand">${escapeHtml(item.brand)}</div>
+      <div class="price-card-series"><span>系列</span>${escapeHtml(item.series || '待补充')}</div>
       <h4 class="price-card-product">${escapeHtml(item.product)}${link}</h4>
       <div class="price-card-row">
         <span class="price-spec-pill">${escapeHtml(item.spec)}</span>
-        <span class="price-card-total">¥${Number(item.price).toFixed(2)}</span>
       </div>
-      <div class="price-card-perjin">${formatPerJin(perJin)}</div>
-      ${note}
+      <div class="price-card-perjin">${formatItemPrice(item)}</div>
     </article>
   `;
 }
 
-function renderProcurementCardView(grouped) {
-  return grouped.map(renderProcurementCardSection).join('');
+function renderProcurementCardView(grouped, summaryByCategory, toolbar = '') {
+  return grouped.map((section, index) => renderProcurementCardSection(section, summaryByCategory.get(section.category), index === 0 ? toolbar : '')).join('');
 }
 
-function renderProcurementRow(item, rank) {
-  const perJin = computePerJin(item);
-  const note = item.note
-    ? `<span class="price-note">${pawSvg()}${escapeHtml(item.note)}</span>`
-    : '';
+function renderProcurementRow(item) {
   const link = item.url
     ? `<a class="price-buy" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer" title="前往京东">↗</a>`
     : '';
   return `
     <tr class="price-row">
-      <td class="price-cell price-cell--rank">${priceRankBadge(rank)}</td>
       <td class="price-cell price-cell--brand">${escapeHtml(item.brand)}</td>
-      <td class="price-cell price-cell--product">${escapeHtml(item.product)}${link}</td>
+      <td class="price-cell price-cell--series">${escapeHtml(item.series || '待补充')}</td>
+      <td class="price-cell price-cell--product"><span class="price-product-content">${escapeHtml(item.product)}${link}</span></td>
       <td class="price-cell price-cell--spec"><span class="price-spec-pill">${escapeHtml(item.spec)}</span></td>
-      <td class="price-cell price-cell--price">¥${Number(item.price).toFixed(2)}</td>
-      <td class="price-cell price-cell--perjin"><span class="price-perjin">${formatPerJin(perJin)}</span></td>
-      <td class="price-cell price-cell--note">${note}</td>
+      <td class="price-cell price-cell--perjin"><span class="price-perjin">${formatItemPrice(item)}</span></td>
     </tr>
   `;
 }
 
-function pawSvg() {
-  return `<svg class="price-paw" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.5 10a2.2 2.2 0 1 0 0-4.4 2.2 2.2 0 0 0 0 4.4Zm4.5 1a2.4 2.4 0 1 0 0-4.8 2.4 2.4 0 0 0 0 4.8Zm4.6-1.2a2.3 2.3 0 1 0 0-4.6 2.3 2.3 0 0 0 0 4.6Zm3.4 2.6c-1 1.4-2.6 1.6-4 .9-.7-.4-1.3-.4-2-.4s-1.3 0-2 .4c-1.4.7-3 .5-4-.9-1.5-2.1 1.6-5.1 5-5.1s6.5 3 4 5.1Zm-7.3 1.4c.8-.3 1.6-.3 2.4 0 1 .4 2 .5 2.9.1 1.4-.6 2.8.3 3.2 1.5.4 1.2-.5 2.4-1.7 2.7-1.4.4-3.3.8-5.3.8s-3.9-.4-5.3-.8c-1.2-.3-2.1-1.5-1.7-2.7.4-1.2 1.8-2.1 3.2-1.5.9.4 1.9.3 2.9-.1Z"/></svg>`;
+function renderProcurementPagination({ page, totalPages }, totalItems) {
+  if (totalItems <= PROCUREMENT_PAGE_SIZE) return '';
+  const pageButtons = Array.from({ length: totalPages }, (_, index) => {
+    const pageNumber = index + 1;
+    return `<button type="button" class="procurement-pagination-page${pageNumber === page ? ' is-current' : ''}" data-procurement-page="${pageNumber}" aria-label="第 ${pageNumber} 页"${pageNumber === page ? ' aria-current="page"' : ''}>${pageNumber}</button>`;
+  }).join('');
+  return `
+    <nav class="procurement-pagination" aria-label="采购记录翻页">
+      <div class="procurement-pagination-controls">
+        <button type="button" class="procurement-pagination-direction" data-procurement-page="${page - 1}" aria-label="上一页" title="上一页"${page === 1 ? ' disabled' : ''}><svg class="procurement-pagination-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+        ${pageButtons}
+        <button type="button" class="procurement-pagination-direction" data-procurement-page="${page + 1}" aria-label="下一页" title="下一页"${page === totalPages ? ' disabled' : ''}><svg class="procurement-pagination-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+      </div>
+    </nav>
+  `;
+}
+
+function procurementFolderSvg() {
+  return `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 6.5h6l2 2h9v10.5h-17Z"/><path d="M3.5 6.5v-1h6l2 2"/></svg>`;
+}
+
+function procurementBoxSvg() {
+  return `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 7 8-4 8 4v11l-8 4-8-4Z"/><path d="m4 7 8 4 8-4M12 11v11"/></svg>`;
+}
+
+function procurementCategoryCounts() {
+  return priceSnapshot.items.reduce((counts, item) => {
+    counts[item.category] = (counts[item.category] || 0) + 1;
+    return counts;
+  }, {});
+}
+
+function renderProcurementFilterPopover() {
+  const categoryCounts = procurementCategoryCounts();
+  const categoryOptions = PROCUREMENT_CATEGORIES
+    .filter(({ category }) => categoryCounts[category])
+    .map(({ category }) => `<button class="procurement-filter-chip${state.procurementCategory === category ? ' is-active' : ''}" type="button" data-procurement-filter-kind="category" data-procurement-filter-value="${escapeHtml(category)}"><span>${escapeHtml(category)}</span><strong>${categoryCounts[category]}</strong></button>`)
+    .join('');
+  const subcategoryCounts = priceSnapshot.items
+    .filter(item => state.procurementCategory === '全部' || item.category === state.procurementCategory)
+    .reduce((counts, item) => {
+      if (item.subcategory) counts[item.subcategory] = (counts[item.subcategory] || 0) + 1;
+      return counts;
+    }, {});
+  const subcategoryOptions = Object.entries(subcategoryCounts)
+    .map(([subcategory, count]) => `<button class="procurement-filter-chip${state.procurementSubcategory === subcategory ? ' is-active' : ''}" type="button" data-procurement-filter-kind="subcategory" data-procurement-filter-value="${escapeHtml(subcategory)}"><span>${escapeHtml(subcategory)}</span><strong>${count}</strong></button>`)
+    .join('');
+  const priceOptions = [
+    { value: '', label: '不限' },
+    { value: '10', label: '≤ 10 元/斤' },
+    { value: '20', label: '≤ 20 元/斤' },
+    { value: '30', label: '≤ 30 元/斤' },
+    { value: '50', label: '≤ 50 元/斤' },
+  ].map(option => `<button class="procurement-filter-chip${state.procurementMaxPerJin === option.value ? ' is-active' : ''}" type="button" data-procurement-filter-kind="price" data-procurement-filter-value="${option.value}">${option.label}</button>`).join('');
+  return `
+    <div class="procurement-filter-wrap">
+      <button class="procurement-filter-toggle" id="procurementFilterToggle" type="button" aria-label="筛选物资" title="筛选物资" aria-haspopup="dialog" aria-expanded="${state.procurementFilterOpen}" aria-controls="procurementFilterPopover">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7.5 12h9M10.5 18h3"/></svg>
+      </button>
+      <div class="procurement-filter-popover" id="procurementFilterPopover" role="dialog" aria-label="采购筛选"${state.procurementFilterOpen ? '' : ' hidden'}>
+        <div class="procurement-filter-popover-head">
+          <div><strong>筛选物资</strong><span>按类别和单价缩小范围</span></div>
+          <button type="button" class="procurement-filter-close" data-procurement-filter-close aria-label="关闭筛选">✕</button>
+        </div>
+        <div class="procurement-filter-popover-body">
+          <section class="procurement-filter-group">
+            <span class="procurement-filter-label">物资类别</span>
+            <div class="procurement-filter-options">
+              <button class="procurement-filter-chip${state.procurementCategory === '全部' ? ' is-active' : ''}" type="button" data-procurement-filter-kind="category" data-procurement-filter-value="全部"><span>全部</span><strong>${priceSnapshot.items.length}</strong></button>
+              ${categoryOptions}
+            </div>
+          </section>
+          <section class="procurement-filter-group">
+            <span class="procurement-filter-label">细分类型${state.procurementCategory !== '全部' ? ` · ${escapeHtml(state.procurementCategory)}` : ''}</span>
+            <div class="procurement-filter-options">
+              <button class="procurement-filter-chip${state.procurementSubcategory === '' ? ' is-active' : ''}" type="button" data-procurement-filter-kind="subcategory" data-procurement-filter-value=""><span>全部</span></button>
+              ${subcategoryOptions || '<span class="procurement-filter-empty">当前类别暂无细分类型</span>'}
+            </div>
+          </section>
+          <section class="procurement-filter-group">
+            <span class="procurement-filter-label">每斤单价</span>
+            <div class="procurement-filter-options">${priceOptions}</div>
+          </section>
+        </div>
+        <div class="procurement-filter-popover-foot">
+          <button type="button" class="procurement-filter-clear" data-procurement-filter-clear>清除筛选</button>
+          <button type="button" class="procurement-filter-done" data-procurement-filter-close>完成</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderProcurementSortPopover() {
+  const current = PROCUREMENT_SORT_OPTIONS.find(option => option.value === state.procurementSort) || PROCUREMENT_SORT_OPTIONS[0];
+  const options = PROCUREMENT_SORT_OPTIONS.map(option => `
+    <button class="procurement-sort-option${option.value === state.procurementSort ? ' is-active' : ''}" type="button" data-procurement-sort-value="${option.value}"${option.value === state.procurementSort ? ' aria-current="true"' : ''}>
+      <span>${escapeHtml(option.label)}</span>${option.value === state.procurementSort ? '<span aria-hidden="true">✓</span>' : ''}
+    </button>`).join('');
+  return `
+    <div class="procurement-sort-wrap">
+      <button class="procurement-sort-toggle" id="procurementSortToggle" type="button" aria-label="排序：${escapeHtml(current.label)}" title="排序：${escapeHtml(current.label)}" aria-haspopup="dialog" aria-expanded="${state.procurementSortOpen}" aria-controls="procurementSortPopover">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5v14M7 5 4.5 7.5M7 5 9.5 7.5M17 19V5m0 14 2.5-2.5M17 19l-2.5-2.5"/></svg>
+      </button>
+      <div class="procurement-sort-popover" id="procurementSortPopover" role="dialog" aria-label="选择排序方式"${state.procurementSortOpen ? '' : ' hidden'}>
+        <strong>排序方式</strong>
+        <div class="procurement-sort-options">${options}</div>
+      </div>
+    </div>
+  `;
+}
+
+function renderProcurementIndex() {
+  const counts = procurementCategoryCounts();
+  const categoryGroups = PROCUREMENT_INDEX_GROUPS.map(group => {
+    const categories = group.categories.filter(category => counts[category]);
+    if (!categories.length) return '';
+    return `
+      <section class="procurement-index-group">
+        <h3><span class="procurement-index-icon">${procurementFolderSvg()}</span>${escapeHtml(group.title)}</h3>
+        <div class="procurement-index-list">
+          ${categories.map(category => `
+            <button class="procurement-index-item${state.procurementCategory === category ? ' is-active' : ''}" type="button" data-procurement-index-category="${escapeHtml(category)}">
+              <span>${escapeHtml(category)}</span><strong>${counts[category]}</strong>
+            </button>`).join('')}
+        </div>
+      </section>`;
+  }).join('');
+  const foodItems = priceSnapshot.items.filter(item => item.category === '主粮');
+  const subcategoryCounts = foodItems.reduce((counts, item) => {
+    const subcategory = item.subcategory || '未分类';
+    counts[subcategory] = (counts[subcategory] || 0) + 1;
+    return counts;
+  }, {});
+  return `
+    <aside class="procurement-index" aria-label="物资索引">
+      <header class="procurement-index-header">
+        <div class="procurement-index-title"><span>✣</span><h2>物资索引</h2><span>✣</span></div>
+        <p>按物资类型浏览采购价格</p>
+        <button class="procurement-index-all${state.procurementCategory === '全部' ? ' is-active' : ''}" type="button" data-procurement-index-category="全部">全部商品 <strong>${priceSnapshot.items.length}</strong></button>
+      </header>
+      ${categoryGroups}
+      ${Object.keys(subcategoryCounts).length ? `
+        <section class="procurement-index-group procurement-index-subgroups">
+          <h3><span class="procurement-index-icon">✣</span>主粮分类</h3>
+          <div class="procurement-index-chips">${Object.entries(subcategoryCounts).map(([subcategory, count]) => `<span>${escapeHtml(subcategory)} <strong>${count}</strong></span>`).join('')}</div>
+        </section>` : ''}
+      <section class="procurement-index-note">
+        <h3><span class="procurement-index-icon">▣</span>猫猫采购小抄</h3>
+        <div class="procurement-index-focus">
+          <ul><li><span class="procurement-note-paw">${chronicleMotif('paw')}</span>猫猫不懂什么叫远方</li><li><span class="procurement-note-paw">${chronicleMotif('paw')}</span>它只认得晒太阳的位置</li><li><span class="procurement-note-paw">${chronicleMotif('paw')}</span>和回家的脚步声</li></ul>
+        </div>
+      </section>
+    </aside>
+  `;
 }
 
 function renderProcurementTab() {
   const filtered = getProcurementFiltered();
-  const grouped = groupProcurementByCategory(filtered);
+  const pageData = getProcurementPage(filtered);
+  const grouped = groupProcurementByCategory(pageData.items);
+  const summaryByCategory = filtered.reduce((summary, item) => {
+    const categoryItems = summary.get(item.category) || [];
+    categoryItems.push(item);
+    summary.set(item.category, categoryItems);
+    return summary;
+  }, new Map());
   const totalCount = priceSnapshot.items.length;
   const categoryCount = new Set(priceSnapshot.items.map(item => item.category)).size;
-  const body = grouped.length
-    ? (state.procurementView === 'card' ? renderProcurementCardView(grouped) : grouped.map(renderProcurementSection).join(''))
-    : `<div class="procurement-skeleton"><p>没有匹配的物资，稍后再来看看</p><p class="procurement-skeleton-hint">试试清空搜索或放宽价格上限</p></div>`;
   const toolbar = `
     <div class="procurement-toolbar">
       <div class="procurement-search">
         <svg class="procurement-search-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M11 4.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Zm7.5 14-3-3"/></svg>
-        <input id="procurementSearchInput" type="search" placeholder="搜索品牌 / 商品" value="${escapeHtml(state.procurementQuery)}" aria-label="搜索品牌或商品">
+        <input id="procurementSearchInput" type="search" placeholder="搜索品牌 / 系列 / 商品" value="${escapeHtml(state.procurementQuery)}" aria-label="搜索品牌、系列或商品">
       </div>
-      <select id="procurementPriceFilter" class="procurement-select" aria-label="每斤价格上限筛选">
-        <option value="" ${state.procurementMaxPerJin === '' ? 'selected' : ''}>每斤不限</option>
-        <option value="10" ${state.procurementMaxPerJin === '10' ? 'selected' : ''}>每斤 ≤ 10 元</option>
-        <option value="20" ${state.procurementMaxPerJin === '20' ? 'selected' : ''}>每斤 ≤ 20 元</option>
-        <option value="30" ${state.procurementMaxPerJin === '30' ? 'selected' : ''}>每斤 ≤ 30 元</option>
-        <option value="50" ${state.procurementMaxPerJin === '50' ? 'selected' : ''}>每斤 ≤ 50 元</option>
-      </select>
+      ${renderProcurementFilterPopover()}
+      ${renderProcurementSortPopover()}
       <div class="procurement-view-toggle" role="group" aria-label="视图切换">
-        <button type="button" class="${state.procurementView === 'card' ? 'is-active' : ''}" data-procurement-view="card">卡片视图</button>
-        <button type="button" class="${state.procurementView === 'table' ? 'is-active' : ''}" data-procurement-view="table">表格视图</button>
+        <button type="button" class="${state.procurementView === 'card' ? 'is-active' : ''}" data-procurement-view="card" aria-label="卡片视图" title="卡片视图">
+          <svg class="procurement-view-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1"/></svg>
+        </button>
+        <button type="button" class="${state.procurementView === 'table' ? 'is-active' : ''}" data-procurement-view="table" aria-label="表格视图" title="表格视图">
+          <svg class="procurement-view-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M4 9.5h16M4 14.5h16M10 4v16"/></svg>
+        </button>
       </div>
     </div>
   `;
+  const body = grouped.length
+    ? (state.procurementView === 'card'
+      ? renderProcurementCardView(grouped, summaryByCategory, toolbar)
+      : grouped.map((section, index) => renderProcurementSection(section, summaryByCategory.get(section.category), index === 0 ? toolbar : '')).join(''))
+    : `<div class="procurement-skeleton"><p>没有匹配的物资，稍后再来看看</p><p class="procurement-skeleton-hint">试试清空搜索或放宽价格上限</p></div>`;
+  const pagination = renderProcurementPagination(pageData, filtered.length);
   return `
     <section class="procurement-shell">
-      <header class="procurement-header">
-        <div>
-          <p class="procurement-eyebrow">PRICE WATCH</p>
-          <h2 class="procurement-title">物资采购</h2>
-          <p class="procurement-subtitle">记录常用猫咪物资价格，辅助日常采购与补给决策</p>
-        </div>
-        <span class="procurement-meta-stamp">最后更新于 ${escapeHtml(priceSnapshot.meta.fetchedAt)}</span>
-      </header>
-      <div class="procurement-stats">
-        <span class="procurement-stat"><strong>${totalCount}</strong><small>件商品</small></span>
-        <span class="procurement-stat"><strong>${categoryCount}</strong><small>个分类</small></span>
+      <div class="procurement-layout">
+        <main class="procurement-main">
+          <section class="procurement-main-card">
+            <header class="procurement-header">
+              <div class="procurement-heading-line">
+                <h2 class="procurement-title">价格参考</h2>
+                <p class="procurement-subtitle">记录常用猫咪物资价格，供个人参考决策</p>
+              </div>
+              <span class="procurement-meta-stamp">▣ 最后更新于 ${escapeHtml(priceSnapshot.meta.fetchedAt)}</span>
+            </header>
+            <div class="procurement-stats">
+              <span class="procurement-stat"><span class="procurement-stat-icon">${procurementBoxSvg()}</span><span><strong>已收录 ${totalCount}</strong><small>件商品</small></span></span>
+              <span class="procurement-stat"><span class="procurement-stat-icon">${procurementFolderSvg()}</span><span><strong>覆盖 ${categoryCount}</strong><small>个分类</small></span></span>
+            </div>
+            <div class="procurement-dossier">
+              <div class="procurement-dossier-inner">
+                <div class="procurement-view-body">${body}</div>
+                ${pagination}
+              </div>
+            </div>
+          </section>
+        </main>
+        ${renderProcurementIndex()}
       </div>
-      ${toolbar}
-      <div class="procurement-dossier">
-        <div class="procurement-dossier-inner">
-          <div class="procurement-view-body">${body}</div>
-        </div>
-      </div>
-      <footer class="procurement-footer-tagline"></footer>
     </section>
   `;
 }
@@ -1039,8 +1268,13 @@ function bindControls() {
         state.area = '全部';
         state.timelineType = '全部';
         state.procurementQuery = '';
+        state.procurementSubcategory = '';
         state.procurementMaxPerJin = '';
+        state.procurementPage = 1;
+        state.procurementSort = 'brand';
+        state.procurementSortOpen = false;
         state.procurementView = 'table';
+        state.procurementFilterOpen = false;
         renderApp();
       });
     });
@@ -1152,6 +1386,7 @@ function bindProcurementControls() {
       const val = searchInput.value.trim();
       if (val !== state.procurementQuery) {
         state.procurementQuery = val;
+        state.procurementPage = 1;
         renderApp();
       }
     };
@@ -1168,16 +1403,134 @@ function bindProcurementControls() {
     });
   }
 
-  const priceFilter = document.getElementById('procurementPriceFilter');
-  if (priceFilter) {
-    priceFilter.addEventListener('change', () => {
-      const val = priceFilter.value;
-      if (val !== state.procurementMaxPerJin) {
-        state.procurementMaxPerJin = val;
-        renderApp();
-      }
+  const filterToggle = document.getElementById('procurementFilterToggle');
+  if (filterToggle) {
+    filterToggle.addEventListener('click', () => {
+      state.procurementSortOpen = false;
+      state.procurementFilterOpen = !state.procurementFilterOpen;
+      renderApp();
     });
   }
+
+  const sortToggle = document.getElementById('procurementSortToggle');
+  if (sortToggle) {
+    sortToggle.addEventListener('click', () => {
+      state.procurementFilterOpen = false;
+      state.procurementSortOpen = !state.procurementSortOpen;
+      renderApp();
+    });
+  }
+
+  document.querySelectorAll('[data-procurement-sort-value]').forEach(button => {
+    button.addEventListener('click', () => {
+      const value = button.dataset.procurementSortValue;
+      if (!PROCUREMENT_SORT_OPTIONS.some(option => option.value === value)) return;
+      state.procurementSort = value;
+      state.procurementPage = 1;
+      state.procurementSortOpen = false;
+      renderApp();
+    });
+  });
+
+  document.querySelectorAll('[data-procurement-filter-kind]').forEach(button => {
+    button.addEventListener('click', () => {
+      const kind = button.dataset.procurementFilterKind;
+      const value = button.dataset.procurementFilterValue || '';
+      if (kind === 'category') {
+        state.procurementCategory = value || '全部';
+        const availableSubcategories = new Set(priceSnapshot.items
+          .filter(item => state.procurementCategory === '全部' || item.category === state.procurementCategory)
+          .map(item => item.subcategory)
+          .filter(Boolean));
+        if (state.procurementSubcategory && !availableSubcategories.has(state.procurementSubcategory)) {
+          state.procurementSubcategory = '';
+        }
+      } else if (kind === 'subcategory') {
+        state.procurementSubcategory = value;
+      } else if (kind === 'price') {
+        state.procurementMaxPerJin = value;
+      }
+      state.procurementPage = 1;
+      state.procurementFilterOpen = true;
+      renderApp();
+    });
+  });
+
+  document.querySelectorAll('[data-procurement-filter-close]').forEach(button => {
+    button.addEventListener('click', () => {
+      state.procurementFilterOpen = false;
+      renderApp();
+    });
+  });
+
+  document.querySelector('[data-procurement-filter-clear]')?.addEventListener('click', () => {
+    state.procurementCategory = '全部';
+    state.procurementSubcategory = '';
+    state.procurementMaxPerJin = '';
+    state.procurementPage = 1;
+    state.procurementFilterOpen = true;
+    renderApp();
+  });
+
+  if (!procurementFilterOutsideClickBound) {
+    document.addEventListener('click', event => {
+      if (!state.procurementFilterOpen || state.activeTab !== 'procurement') return;
+      const target = event.target;
+      if (target instanceof Element && target.closest('.procurement-filter-wrap')) return;
+      state.procurementFilterOpen = false;
+      renderApp();
+    });
+    procurementFilterOutsideClickBound = true;
+  }
+
+  if (!procurementFilterEscapeBound) {
+    document.addEventListener('keydown', event => {
+      if (event.key !== 'Escape' || !state.procurementFilterOpen || state.activeTab !== 'procurement') return;
+      state.procurementFilterOpen = false;
+      renderApp();
+    });
+    procurementFilterEscapeBound = true;
+  }
+
+  if (!procurementSortOutsideClickBound) {
+    document.addEventListener('click', event => {
+      if (!state.procurementSortOpen || state.activeTab !== 'procurement') return;
+      const target = event.target;
+      if (target instanceof Element && target.closest('.procurement-sort-wrap')) return;
+      state.procurementSortOpen = false;
+      renderApp();
+    });
+    procurementSortOutsideClickBound = true;
+  }
+
+  if (!procurementSortEscapeBound) {
+    document.addEventListener('keydown', event => {
+      if (event.key !== 'Escape' || !state.procurementSortOpen || state.activeTab !== 'procurement') return;
+      state.procurementSortOpen = false;
+      renderApp();
+    });
+    procurementSortEscapeBound = true;
+  }
+
+  document.querySelectorAll('[data-procurement-index-category]').forEach(button => {
+    button.addEventListener('click', () => {
+      const category = button.dataset.procurementIndexCategory;
+      state.procurementCategory = category;
+      state.procurementSubcategory = '';
+      state.procurementPage = 1;
+      state.procurementFilterOpen = false;
+      renderApp();
+    });
+  });
+
+  document.querySelectorAll('[data-procurement-page]').forEach(button => {
+    button.addEventListener('click', () => {
+      const page = Number(button.dataset.procurementPage);
+      if (!Number.isInteger(page) || page < 1 || page === state.procurementPage) return;
+      state.procurementPage = page;
+      renderApp();
+    });
+  });
 
   document.querySelectorAll('.procurement-view-toggle [data-procurement-view]').forEach(btn => {
     btn.addEventListener('click', () => {

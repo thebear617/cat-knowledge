@@ -4907,81 +4907,233 @@ body.drawer-open {
   }
 }
 
-/* ============== 物资采购 Procurement ============== */
-.procurement-shell { max-width: 1180px; margin: 0 auto; padding: 1.2rem 1rem 3rem; }
-.procurement-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; }
+/* ============== 价格参考 Procurement ============== */
+.app-shell.procurement-app-shell { width: 100%; max-width: none; padding: 0; }
+.procurement-shell { max-width: 1420px; margin: 0 auto; padding: 1.1rem 1rem 2.7rem; }
+.procurement-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(18rem, 20rem); align-items: stretch; gap: 1rem; }
+.procurement-main { min-width: 0; }
+.procurement-main-card { padding: clamp(1.1rem, 2vw, 1.65rem); border: 1px solid var(--paper-rule); border-radius: .85rem; background-color: var(--paper-soft); background-image: radial-gradient(rgba(112,78,46,.06) .55px, transparent .7px); background-size: 14px 14px; box-shadow: 0 5px 16px rgba(78, 53, 31, .09); }
+.procurement-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+.procurement-heading-line { display: flex; min-width: 0; align-items: baseline; gap: .8rem; }
 .procurement-eyebrow { font-size: .72rem; letter-spacing: .18em; color: #a98256; text-transform: uppercase; margin-bottom: .25rem; }
-.procurement-title { font-family: Georgia, "Songti SC", STSong, serif; font-size: clamp(2.3rem, 4vw, 3.4rem); color: #503522; margin: 0; }
-.procurement-subtitle { color: #746b63; font-size: .92rem; margin-top: .4rem; }
+.procurement-title { font-family: Georgia, "Songti SC", STSong, serif; font-size: clamp(2rem, 3.5vw, 3rem); line-height: 1.12; color: #503522; margin: 0; }
+.procurement-subtitle { min-width: 0; overflow: hidden; color: #746b63; font-size: .78rem; line-height: 1.4; margin: 0; text-overflow: ellipsis; white-space: nowrap; }
 .procurement-meta-stamp { font-family: Georgia, "Songti SC", STSong, serif; font-size: .82rem; color: var(--ink-gold); border: 1px dashed var(--paper-rule); border-radius: .5rem; padding: .35rem .7rem; transform: rotate(-2deg); white-space: nowrap; }
 .procurement-stats { display: flex; gap: .75rem; margin: 0 0 1.5rem; }
-.procurement-stat { display: inline-flex; align-items: baseline; gap: .4rem; background: var(--paper-soft); border: 1px solid var(--paper-rule); border-radius: 999px; padding: .3rem .8rem; }
-.procurement-stat strong { font-family: Georgia, "Songti SC", STSong, serif; font-size: 1.15rem; color: var(--ink-gold); }
+.procurement-stat { display: inline-flex; align-items: center; gap: .55rem; background: rgba(255, 249, 238, .72); border: 1px solid var(--paper-rule); border-radius: .4rem; padding: .45rem .75rem; }
+.procurement-stat > span:last-child { display: inline-flex; align-items: baseline; gap: .35rem; }
+.procurement-stat strong { font-family: Georgia, "Songti SC", STSong, serif; font-size: 1rem; color: var(--ink-gold); }
 .procurement-stat small { font-size: .72rem; color: #746b63; }
-.procurement-dossier { background-color: var(--paper-soft); background-image: radial-gradient(rgba(112,78,46,.06) .55px, transparent .7px); background-size: 14px 14px; border: 1px solid var(--paper-rule); border-radius: 16px; padding: 12px; box-shadow: 0 1px 2px rgba(0,0,0,.06), 0 8px 24px rgba(39,32,26,.08); }
+.procurement-stat-icon { display: inline-flex; width: 1.15rem; height: 1.15rem; color: #a46c45; }
+.procurement-stat-icon svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.procurement-dossier { padding: 0; }
 .procurement-dossier-inner { background: rgba(255,250,241,.6); border: 1px solid var(--line); border-radius: 10px; padding: 1.5rem 1.25rem; min-height: 320px; }
 .procurement-view-body { color: #746b63; }
 .procurement-skeleton { font-size: .85rem; text-align: center; padding: 4rem 1rem; color: #a48d79; }
-.procurement-footer-tagline { margin-top: 1.5rem; min-height: 24px; }
 
 /* 表格视图 */
 .price-section { margin-bottom: 2.2rem; }
-.price-section-title { font-family: Georgia, "Songti SC", STSong, serif; font-size: 1.6rem; color: #503522; margin: 0 0 .35rem; display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap; }
-.price-section-title small { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", sans-serif; font-size: .72rem; font-weight: 400; color: #8d7967; letter-spacing: .02em; }
+.price-section-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: .7rem; }
+.price-section-title { min-width: 0; flex: 1; font-family: Georgia, "Songti SC", STSong, serif; font-size: 1.6rem; color: #503522; margin: 0 0 .35rem; }
+.price-section-title small { display: inline; margin-left: .6rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", sans-serif; font-size: .72rem; font-weight: 400; color: #8d7967; letter-spacing: .02em; }
 .price-subsection-title { font-family: Georgia, "Songti SC", STSong, serif; font-size: 1.05rem; color: #7c604b; margin: 1.2rem 0 .5rem; }
-.price-table { width: 100%; border-collapse: collapse; }
+.price-table-wrap { overflow-x: auto; border: 1px solid #ddc9aa; border-radius: .55rem; background: rgba(255, 249, 238, .68); }
+.price-table { width: 100%; min-width: 760px; table-layout: fixed; border-collapse: collapse; }
+.price-table thead { background: rgba(242, 229, 210, .58); }
+.price-table th { font-weight: 700; color: #6f5037; text-align: left; white-space: nowrap; }
 .price-row { border-bottom: 1px dashed #d8c6ad; }
 .price-row:hover { background: rgba(238,219,190,.22); }
 .price-row:last-child { border-bottom: none; }
 .price-cell { padding: .65rem .5rem; vertical-align: middle; font-size: .85rem; color: #3d2f22; }
-.price-cell--rank { width: 48px; text-align: center; }
 .price-cell--brand { width: 14%; font-weight: 700; color: #503522; }
-.price-cell--product { width: 26%; }
-.price-cell--spec { width: 12%; }
-.price-cell--price { width: 12%; color: #7a6855; }
-.price-cell--perjin { width: 22%; }
-.price-cell--note { width: 22%; color: #7a6855; }
-.price-rank { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; font-size: .78rem; font-weight: 700; color: #fff; }
-.price-rank--gold { background: linear-gradient(135deg, #f0c75e, #d9a441); }
-.price-rank--silver { background: linear-gradient(135deg, #c8c4ba, #a8a49a); }
-.price-rank--bronze { background: linear-gradient(135deg, #d7a37a, #b9815a); }
-.price-rank--plain { background: transparent; border: 1px solid #503522; color: #503522; }
+.price-cell--series { width: 21%; color: #7a6855; }
+.price-cell--product { width: 35%; }
+.price-cell--spec { width: 14%; }
+.price-cell--perjin { width: 16%; color: #7a6855; }
 .price-spec-pill { display: inline-block; background: var(--paper-soft); border: 1px solid var(--paper-rule); border-radius: 999px; padding: .15rem .55rem; font-size: .76rem; color: #7c604b; }
-.price-perjin { font-family: Georgia, "Songti SC", STSong, serif; font-size: 1.35rem; font-weight: 700; color: var(--ink-gold); }
+.price-perjin { font-family: inherit; font-size: inherit; font-weight: inherit; color: inherit; }
 .price-note { display: inline-flex; align-items: center; gap: .3rem; font-size: .78rem; }
-.price-paw { width: 13px; height: 13px; color: var(--ink-gold); flex: none; }
 .price-buy { margin-left: .35rem; color: #a98256; text-decoration: none; font-size: .85rem; }
 .price-buy:hover { color: var(--ink-gold); }
+.price-product-content { display: inline; min-width: 0; }
 
 /* 工具条与视图切换 */
-.procurement-toolbar { display: flex; align-items: center; gap: .75rem; margin: 0 0 1.5rem; flex-wrap: wrap; }
-.procurement-search { position: relative; flex: 1; min-width: 200px; }
+.procurement-toolbar { display: flex; align-items: center; justify-content: flex-end; gap: .5rem; margin: 0; flex: none; flex-wrap: nowrap; }
+.procurement-toolbar-panel { padding: .7rem .75rem; border: 1px solid var(--paper-rule); border-radius: .6rem; background: rgba(255, 249, 238, .72); box-shadow: 0 2px 7px rgba(78, 53, 31, .05); }
+.procurement-search { position: relative; width: clamp(13rem, 20vw, 18rem); flex: 0 1 18rem; min-width: 10rem; }
 .procurement-search-icon { position: absolute; left: .7rem; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; color: #a48d79; pointer-events: none; }
-.procurement-search input { width: 100%; border: 1px solid var(--paper-rule); border-radius: 999px; background: var(--paper-soft); padding: .5rem 1rem .5rem 2.2rem; font-size: .85rem; color: #3d2f22; outline: none; }
+.procurement-search input { width: 100%; border: 1px solid #bc833d; border-radius: .45rem; background: var(--paper-soft); padding: .55rem 1rem .55rem 2.2rem; font-size: .85rem; color: #3d2f22; outline: none; }
 .procurement-search input:focus { border-color: #c08a2f; box-shadow: 0 0 0 3px rgba(192,138,47,.16); }
 .procurement-search input::placeholder { color: #a48d79; }
-.procurement-select { border: 1px solid var(--paper-rule); border-radius: 999px; background: var(--paper-soft); padding: .5rem .9rem; font-size: .82rem; color: #503522; outline: none; cursor: pointer; }
+.procurement-select { border: 1px solid #bc833d; border-radius: .45rem; background: var(--paper-soft); padding: .55rem .9rem; font-size: .82rem; color: #503522; outline: none; cursor: pointer; }
 .procurement-select:focus { border-color: #c08a2f; box-shadow: 0 0 0 3px rgba(192,138,47,.16); }
-.procurement-view-toggle { display: inline-flex; border: 1px solid var(--paper-rule); border-radius: 999px; overflow: hidden; background: var(--paper-soft); }
-.procurement-view-toggle button { border: none; background: transparent; padding: .4rem .9rem; font-size: .78rem; color: #7c604b; cursor: pointer; }
+.procurement-view-toggle { display: inline-flex; border: 1px solid var(--paper-rule); border-radius: .45rem; overflow: hidden; background: var(--paper-soft); }
+.procurement-view-toggle button { display: grid; width: 2.55rem; height: 2.55rem; place-items: center; border: none; background: transparent; color: #7c604b; padding: 0; cursor: pointer; }
+.procurement-view-icon { width: 1.05rem; height: 1.05rem; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.6; }
 .procurement-view-toggle button.is-active { background: #8b5e34; color: #fff; }
 .procurement-skeleton-hint { margin-top: .45rem; font-size: .78rem; color: #b7a494; }
+
+.procurement-sort-wrap { position: relative; flex: none; }
+.procurement-sort-toggle { display: grid; width: 2.55rem; height: 2.55rem; place-items: center; border: 1px solid var(--paper-rule); border-radius: .45rem; background: var(--paper-soft); color: #7c604b; padding: 0; cursor: pointer; transition: background .18s, color .18s, border-color .18s; }
+.procurement-sort-toggle svg { width: 1.05rem; height: 1.05rem; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.65; }
+.procurement-sort-toggle:hover, .procurement-sort-toggle[aria-expanded="true"] { border-color: #ba8051; background: #a96c3d; color: #fffaf0; }
+.procurement-sort-popover { position: absolute; z-index: 30; top: calc(100% + .55rem); right: 0; width: 10.5rem; border: 1px solid #cdb795; border-radius: .6rem; background-color: #f8efdf; background-image: radial-gradient(rgba(112, 78, 46, .07) .55px, transparent .7px); background-size: 5px 5px; box-shadow: 5px 7px 15px rgba(78, 53, 31, .16); padding: .7rem; }
+.procurement-sort-popover[hidden] { display: none; }
+.procurement-sort-popover > strong { display: block; padding: .15rem .25rem .5rem; color: #5d4230; font-family: Georgia, "Songti SC", STSong, serif; font-size: .8rem; letter-spacing: .08em; }
+.procurement-sort-options { display: grid; gap: .25rem; }
+.procurement-sort-option { display: flex; align-items: center; justify-content: space-between; gap: .5rem; width: 100%; border: 1px solid transparent; border-radius: .35rem; background: transparent; color: #654a36; padding: .42rem .45rem; font-size: .76rem; text-align: left; cursor: pointer; }
+.procurement-sort-option:hover, .procurement-sort-option.is-active { border-color: #d8bd97; background: rgba(200, 164, 122, .16); color: #a45e2c; }
+.procurement-sort-option.is-active span:last-child { color: #a45e2c; font-weight: 700; }
+
+.procurement-filter-wrap { position: relative; flex: none; }
+.procurement-filter-toggle { display: grid; width: 2.85rem; height: 2.85rem; place-items: center; border: 1px solid #d8c6ad; border-radius: .8rem; background: #fff9ee; color: #775842; padding: 0; box-shadow: 1px 2px 4px rgba(78, 53, 31, .08); cursor: pointer; transition: background .18s, color .18s, border-color .18s; }
+.procurement-filter-toggle svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; }
+.procurement-filter-toggle:hover, .procurement-filter-toggle[aria-expanded="true"] { border-color: #ba8051; background: #a96c3d; color: #fffaf0; }
+.procurement-filter-popover { position: absolute; z-index: 30; top: calc(100% + .55rem); right: 0; width: min(25rem, calc(100vw - 2rem)); border: 1px solid #cdb795; border-radius: .6rem; background-color: #f8efdf; background-image: radial-gradient(rgba(112, 78, 46, .07) .55px, transparent .7px); background-size: 5px 5px; box-shadow: 5px 7px 15px rgba(78, 53, 31, .16); }
+.procurement-filter-popover[hidden] { display: none; }
+.procurement-filter-popover-head { display: flex; align-items: flex-start; justify-content: space-between; gap: .8rem; padding: .8rem 1rem .7rem; border-bottom: 1px dashed #cbb497; }
+.procurement-filter-popover-head div { display: grid; gap: .16rem; }
+.procurement-filter-popover-head strong { color: #5d4230; font-family: Georgia, "Songti SC", STSong, serif; letter-spacing: .08em; }
+.procurement-filter-popover-head span { color: #947965; font-size: .72rem; }
+.procurement-filter-close { border: 0; background: transparent; color: #947965; padding: .1rem; font-size: 1rem; line-height: 1; cursor: pointer; }
+.procurement-filter-close:hover { color: #a45e2c; }
+.procurement-filter-popover-body { display: grid; gap: .85rem; padding: .9rem 1rem .65rem; }
+.procurement-filter-group { display: grid; gap: .45rem; }
+.procurement-filter-label { color: #856a54; font-family: Georgia, "Songti SC", STSong, serif; font-size: .76rem; }
+.procurement-filter-options { display: flex; flex-wrap: wrap; gap: .4rem; }
+.procurement-filter-chip { display: inline-flex; align-items: baseline; gap: .3rem; border: 1px solid #dac5a7; border-radius: .4rem; background: rgba(255, 250, 241, .72); color: #654a36; padding: .35rem .6rem; font-size: .78rem; cursor: pointer; transition: border-color .16s, background .16s, color .16s; }
+.procurement-filter-chip strong { color: #947965; font-size: .7rem; font-weight: 600; }
+.procurement-filter-chip:hover { border-color: #b78355; color: #a45e2c; }
+.procurement-filter-chip.is-active { border-color: #a96c3d; background: linear-gradient(180deg, #bd8150, #a96c3d); color: #fffaf0; }
+.procurement-filter-chip.is-active strong { color: #fffaf0; }
+.procurement-filter-empty { color: #a58c76; font-size: .76rem; }
+.procurement-filter-popover-foot { display: flex; align-items: center; justify-content: space-between; gap: .8rem; padding: .65rem 1rem .75rem; border-top: 1px solid #d9c6aa; }
+.procurement-filter-clear { border: 0; background: transparent; color: #806651; padding: .3rem 0; font-size: .78rem; cursor: pointer; text-decoration: underline; }
+.procurement-filter-clear:hover { color: #a45e2c; }
+.procurement-filter-done { border: 0; border-radius: .4rem; background: #8b5e34; color: #fff9ef; padding: .42rem .9rem; font-size: .78rem; cursor: pointer; }
+.procurement-filter-done:hover { background: #704727; }
+.procurement-pagination { display: flex; align-items: center; justify-content: center; margin-top: 1rem; padding-top: .8rem; border-top: 1px solid #e0d2c0; }
+.procurement-pagination-controls { display: inline-flex; align-items: center; justify-content: center; gap: .35rem; }
+.procurement-pagination-controls button { min-width: 2.55rem; height: 2.35rem; border: 1px solid #e0d2c0; border-radius: .55rem; background: rgba(255, 253, 249, .82); color: #806f60; padding: 0 .65rem; font-size: .8rem; line-height: 1; cursor: pointer; transition: border-color .16s, background .16s, color .16s; }
+.procurement-pagination-controls button:hover:not(:disabled) { border-color: #ba6b1c; background: #fff6e8; color: #a45108; }
+.procurement-pagination-controls button.is-current { border-color: #b85e0b; background: #fff2dc; color: #a24d05; font-weight: 700; }
+.procurement-pagination-controls button:disabled { border-color: #eee6dd; background: #fffdfa; color: #cbbfb2; cursor: not-allowed; }
+.procurement-pagination-direction { width: 2.35rem; min-width: 2.35rem !important; padding: 0 !important; }
+.procurement-pagination-arrow { width: 1rem; height: 1rem; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; }
 
 /* 卡片视图 */
 .price-card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-bottom: 1.5rem; }
 .price-card { position: relative; background: var(--paper-soft); border: 1px solid var(--paper-rule); border-radius: 12px; padding: 1rem 1.1rem 1.1rem; box-shadow: 0 1px 2px rgba(0,0,0,.05), 0 6px 18px rgba(39,32,26,.06); transition: transform .15s ease, box-shadow .15s ease; }
 .price-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(39,32,26,.1); }
-.price-card-rank { position: absolute; top: .6rem; right: .6rem; }
 .price-card-brand { font-size: .72rem; letter-spacing: .06em; color: #a98256; text-transform: uppercase; margin-bottom: .25rem; }
+.price-card-series { display: flex; align-items: baseline; gap: .35rem; margin: -.05rem 0 .45rem; color: #7a6855; font-size: .78rem; }
+.price-card-series span { color: #aa8a6b; font-size: .68rem; letter-spacing: .08em; }
 .price-card-product { font-family: Georgia, "Songti SC", STSong, serif; font-size: 1.02rem; color: #503522; margin: 0 0 .6rem; line-height: 1.4; }
-.price-card-row { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-bottom: .7rem; }
-.price-card-total { font-size: .78rem; color: #7a6855; }
-.price-card-perjin { font-family: Georgia, "Songti SC", STSong, serif; font-size: 1.5rem; font-weight: 700; color: var(--ink-gold); margin-bottom: .5rem; }
-.price-card-note { display: inline-flex; align-items: center; gap: .3rem; font-size: .76rem; color: #7a6855; }
+.price-card-row { display: flex; align-items: center; gap: .5rem; margin-bottom: .7rem; }
+.price-card-perjin { font-size: .85rem; color: #7a6855; margin-bottom: .5rem; }
 
 @media (max-width: 980px) {
   .price-card-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 720px) {
   .price-card-grid { grid-template-columns: 1fr; }
+}
+
+/* 采购页右侧索引 */
+.procurement-index {
+  position: sticky;
+  top: 1rem;
+  min-width: 0;
+  padding: 1.05rem 1rem 1rem;
+  border: 1px solid var(--paper-rule);
+  border-radius: .75rem;
+  background-color: rgba(255, 249, 238, .82);
+  background-image: radial-gradient(rgba(112, 78, 46, .055) .55px, transparent .7px);
+  background-size: 8px 8px;
+  box-shadow: 2px 3px 10px rgba(78, 53, 31, .08);
+}
+.procurement-index-header { padding-bottom: .85rem; border-bottom: 1px dashed #d4b990; text-align: center; }
+.procurement-index-title { display: flex; align-items: center; justify-content: center; gap: .55rem; color: #5d3d26; }
+.procurement-index-title h2 { font-family: Georgia, "Songti SC", STSong, serif; font-size: 1.35rem; letter-spacing: .08em; }
+.procurement-index-title span { color: var(--ink-gold); font-size: .9rem; }
+.procurement-index-header p { margin-top: .2rem; color: #896f58; font-family: Georgia, "Songti SC", STSong, serif; font-size: .78rem; }
+.procurement-index-all { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-top: .75rem; border: 1px solid #d8bd97; border-radius: .35rem; background: transparent; color: #68472d; padding: .45rem .65rem; font-size: .82rem; text-align: left; }
+.procurement-index-all strong { font-weight: 600; color: #8a633d; }
+.procurement-index-all:hover, .procurement-index-all.is-active { border-color: #b47a29; background: #a56b23; color: #fff8ea; }
+.procurement-index-all:hover strong, .procurement-index-all.is-active strong { color: #fff8ea; }
+.procurement-index-group { padding: .9rem 0 .75rem; border-bottom: 1px dashed #d4b990; }
+.procurement-index-group h3, .procurement-index-note h3 { display: flex; align-items: center; gap: .45rem; color: #62442e; font-family: Georgia, "Songti SC", STSong, serif; font-size: .95rem; }
+.procurement-index-icon { display: inline-flex; align-items: center; justify-content: center; width: 1.05rem; height: 1.05rem; color: #8b5e34; font-size: .8rem; }
+.procurement-index-icon svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.procurement-index-list { display: grid; gap: .1rem; margin-top: .4rem; }
+.procurement-index-item { display: flex; align-items: center; justify-content: space-between; width: 100%; border: 0; border-radius: .35rem; background: transparent; color: #684b35; padding: .38rem .55rem .38rem 1.5rem; font-size: .82rem; text-align: left; }
+.procurement-index-item strong { color: #7d6248; font-size: .78rem; font-weight: 500; }
+.procurement-index-item:hover { background: rgba(200, 164, 122, .16); }
+.procurement-index-item.is-active { background: linear-gradient(90deg, #a56b23, #c08a3c); color: #fff8ea; box-shadow: 0 2px 4px rgba(111, 68, 23, .12); }
+.procurement-index-item.is-active strong { color: #fff8ea; }
+.procurement-index-subgroups { padding-bottom: .9rem; }
+.procurement-index-chips { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .55rem; }
+.procurement-index-chips span { border: 1px solid #d8bd97; border-radius: .35rem; color: #795b3d; padding: .3rem .5rem; font-size: .75rem; }
+.procurement-index-chips strong { margin-left: .25rem; color: #8b5e34; font-weight: 600; }
+.procurement-index-note { padding-top: .9rem; }
+.procurement-index-focus { position: relative; margin-top: .85rem; padding: .7rem .8rem; border: 1px solid #e0c8a5; background: rgba(249, 238, 216, .72); box-shadow: 2px 3px 6px rgba(78, 53, 31, .08); transform: rotate(.7deg); }
+.procurement-index-focus::after { position: absolute; top: -.55rem; right: .45rem; width: .65rem; height: 1.4rem; border: 1px solid #9a8065; border-radius: .3rem; content: ''; transform: rotate(27deg); }
+.procurement-index-focus strong { color: #65452d; font-family: Georgia, "Songti SC", STSong, serif; font-size: .8rem; }
+.procurement-index-focus ul { display: grid; grid-template-columns: 1fr; gap: .25rem; margin-top: .4rem; padding: 0; list-style: none; color: #765941; font-size: .75rem; }
+.procurement-index-focus li { display: flex; align-items: center; gap: .3rem; }
+.procurement-index-focus li::before { display: none; }
+.procurement-note-paw { display: inline-flex; flex: 0 0 auto; width: .72rem; height: .58rem; color: #9a6b31; }
+.procurement-note-paw svg { display: block; width: 100%; height: 100%; }
+
+@media (max-width: 1100px) {
+  .procurement-layout { grid-template-columns: minmax(0, 1fr) 17rem; }
+  .procurement-index { padding-right: .8rem; padding-left: .8rem; }
+  .price-cell { padding-right: .4rem; padding-left: .4rem; font-size: .8rem; }
+}
+
+@media (max-width: 1300px) {
+  .procurement-header { align-items: flex-start; flex-direction: column; gap: .5rem; }
+  .procurement-heading-line { width: 100%; }
+  .procurement-title { flex: none; white-space: nowrap; }
+  .procurement-meta-stamp { align-self: flex-start; }
+  .price-section-header { align-items: flex-start; flex-direction: column; gap: .35rem; }
+  .price-section-title { width: 100%; }
+  .procurement-toolbar { width: 100%; justify-content: flex-start; }
+}
+
+@media (max-width: 820px) {
+  .procurement-layout { grid-template-columns: minmax(0, 1fr); }
+  .procurement-index { position: static; }
+  .procurement-index-group,
+  .procurement-index-note { display: none; }
+  .procurement-index-header { border-bottom: 0; padding-bottom: .2rem; text-align: left; }
+  .procurement-index-title { justify-content: flex-start; }
+  .procurement-index-header p { margin-left: 2.15rem; }
+  .procurement-index-all { margin-top: .6rem; }
+}
+
+@media (max-width: 600px) {
+  .procurement-shell { padding: .8rem .7rem 2rem; }
+  .procurement-header { align-items: flex-start; flex-direction: column; gap: .8rem; margin-bottom: 1rem; }
+  .procurement-heading-line { display: block; }
+  .procurement-title { font-size: clamp(2rem, 10vw, 2.6rem); }
+  .procurement-subtitle { display: none; }
+  .procurement-meta-stamp { align-self: flex-start; transform: rotate(1deg); }
+  .procurement-stats { gap: .45rem; margin-bottom: 1rem; }
+  .procurement-stat { min-width: 0; padding: .4rem .5rem; }
+  .procurement-stat > span:last-child { display: block; }
+  .procurement-stat strong { display: block; font-size: .9rem; }
+  .procurement-stat small { font-size: .68rem; }
+  .procurement-toolbar-panel { align-items: stretch; flex-direction: column; gap: .55rem; padding: .6rem; }
+  .price-section-header { align-items: flex-start; flex-direction: column; gap: .5rem; }
+  .procurement-toolbar { width: 100%; align-items: center; justify-content: stretch; flex-wrap: wrap; gap: .55rem; }
+  .procurement-search { width: auto; min-width: 0; flex: 1 1 calc(100% - 6.7rem); }
+  .procurement-filter-wrap { align-self: flex-end; }
+  .procurement-view-toggle { width: auto; }
+  .procurement-filter-popover { right: 0; left: 0; width: auto; }
+  .procurement-main-card { padding: .7rem; border-radius: .8rem; }
+  .procurement-dossier { padding: 0; }
+  .procurement-dossier-inner { padding: 1rem .7rem; }
+  .price-section-title { font-size: 1.35rem; }
+  .price-section-title small { font-size: .68rem; }
 }
