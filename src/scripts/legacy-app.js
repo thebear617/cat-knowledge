@@ -2,6 +2,7 @@ import { catProfiles } from '../../js/cats.js';
 import { supplies } from '../../js/supplies.js';
 import { timelineEvents } from '../../js/timeline.js';
 import { roles } from '../../js/roles.js';
+import { priceSnapshot } from '../data/price-snapshot.js';
 
 const BASE_URL = `${import.meta.env.BASE_URL.replace(/\/?$/, '/')}`;
 const STATUS_ORDER = ['全部', '就读中', '已毕业', '喵星或失踪'];
@@ -736,6 +737,8 @@ function buildSearchBar(tabId, placeholder) {
 // ============== Procurement Tab ==============
 
 function renderProcurementTab() {
+  const totalCount = priceSnapshot.items.length;
+  const categoryCount = new Set(priceSnapshot.items.map(item => item.category)).size;
   return `
     <section class="procurement-shell">
       <header class="procurement-header">
@@ -744,8 +747,12 @@ function renderProcurementTab() {
           <h2 class="procurement-title">物资采购</h2>
           <p class="procurement-subtitle">记录常用猫咪物资价格，辅助日常采购与补给决策</p>
         </div>
-        <span class="procurement-meta-stamp">最后更新于 2026-08-12</span>
+        <span class="procurement-meta-stamp">最后更新于 ${escapeHtml(priceSnapshot.meta.fetchedAt)}</span>
       </header>
+      <div class="procurement-stats">
+        <span class="procurement-stat"><strong>${totalCount}</strong><small>件商品</small></span>
+        <span class="procurement-stat"><strong>${categoryCount}</strong><small>个分类</small></span>
+      </div>
       <div class="procurement-dossier">
         <div class="procurement-dossier-inner">
           <div class="procurement-view-body procurement-skeleton">

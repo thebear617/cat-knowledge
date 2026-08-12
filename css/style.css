@@ -24,6 +24,10 @@
   --radius: 10px;
   --max-w: 1180px;
   --sidebar-w: 240px;
+  --paper-bg: #f7f0e4;
+  --paper-soft: #fff9ee;
+  --paper-rule: #d8c6ad;
+  --ink-gold: #b8832b;
 }
 
 html {
@@ -4909,9 +4913,13 @@ body.drawer-open {
 .procurement-eyebrow { font-size: .72rem; letter-spacing: .18em; color: #a98256; text-transform: uppercase; margin-bottom: .25rem; }
 .procurement-title { font-family: Georgia, "Songti SC", STSong, serif; font-size: clamp(2.3rem, 4vw, 3.4rem); color: #503522; margin: 0; }
 .procurement-subtitle { color: #746b63; font-size: .92rem; margin-top: .4rem; }
-.procurement-meta-stamp { font-family: Georgia, "Songti SC", STSong, serif; font-size: .82rem; color: #825333; border: 1px dashed #d8c6ad; border-radius: .5rem; padding: .35rem .7rem; transform: rotate(-2deg); white-space: nowrap; }
-.procurement-dossier { background: #fff9ee; border: 1px solid #d8c6ad; border-radius: 16px; padding: 12px; box-shadow: 0 1px 2px rgba(0,0,0,.06), 0 8px 24px rgba(39,32,26,.08); }
-.procurement-dossier-inner { border: 1px solid #e5e1da; border-radius: 10px; padding: 1.5rem 1.25rem; min-height: 320px; }
+.procurement-meta-stamp { font-family: Georgia, "Songti SC", STSong, serif; font-size: .82rem; color: var(--ink-gold); border: 1px dashed var(--paper-rule); border-radius: .5rem; padding: .35rem .7rem; transform: rotate(-2deg); white-space: nowrap; }
+.procurement-stats { display: flex; gap: .75rem; margin: 0 0 1.5rem; }
+.procurement-stat { display: inline-flex; align-items: baseline; gap: .4rem; background: var(--paper-soft); border: 1px solid var(--paper-rule); border-radius: 999px; padding: .3rem .8rem; }
+.procurement-stat strong { font-family: Georgia, "Songti SC", STSong, serif; font-size: 1.15rem; color: var(--ink-gold); }
+.procurement-stat small { font-size: .72rem; color: #746b63; }
+.procurement-dossier { background-color: var(--paper-soft); background-image: radial-gradient(rgba(112,78,46,.06) .55px, transparent .7px); background-size: 14px 14px; border: 1px solid var(--paper-rule); border-radius: 16px; padding: 12px; box-shadow: 0 1px 2px rgba(0,0,0,.06), 0 8px 24px rgba(39,32,26,.08); }
+.procurement-dossier-inner { background: rgba(255,250,241,.6); border: 1px solid var(--line); border-radius: 10px; padding: 1.5rem 1.25rem; min-height: 320px; }
 .procurement-view-body { color: #746b63; }
 .procurement-skeleton { font-size: .85rem; text-align: center; padding: 4rem 1rem; color: #a48d79; }
 .procurement-footer-tagline { margin-top: 1.5rem; min-height: 24px; }
