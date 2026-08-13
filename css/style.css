@@ -4957,7 +4957,7 @@ body.drawer-open {
 .price-buy:hover { color: var(--ink-gold); }
 .price-product-content { display: inline; min-width: 0; }
 
-/* 工具条与视图切换 */
+/* 工具条 */
 .procurement-toolbar { display: flex; align-items: center; justify-content: flex-end; gap: .5rem; margin: 0; flex: none; flex-wrap: nowrap; }
 .procurement-toolbar-panel { padding: .7rem .75rem; border: 1px solid var(--paper-rule); border-radius: .6rem; background: rgba(255, 249, 238, .72); box-shadow: 0 2px 7px rgba(78, 53, 31, .05); }
 .procurement-search { position: relative; width: clamp(13rem, 20vw, 18rem); flex: 0 1 18rem; min-width: 10rem; }
@@ -4967,10 +4967,6 @@ body.drawer-open {
 .procurement-search input::placeholder { color: #a48d79; }
 .procurement-select { border: 1px solid #bc833d; border-radius: .45rem; background: var(--paper-soft); padding: .55rem .9rem; font-size: .82rem; color: #503522; outline: none; cursor: pointer; }
 .procurement-select:focus { border-color: #c08a2f; box-shadow: 0 0 0 3px rgba(192,138,47,.16); }
-.procurement-view-toggle { display: inline-flex; border: 1px solid var(--paper-rule); border-radius: .45rem; overflow: hidden; background: var(--paper-soft); }
-.procurement-view-toggle button { display: grid; width: 2.55rem; height: 2.55rem; place-items: center; border: none; background: transparent; color: #7c604b; padding: 0; cursor: pointer; }
-.procurement-view-icon { width: 1.05rem; height: 1.05rem; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.6; }
-.procurement-view-toggle button.is-active { background: #8b5e34; color: #fff; }
 .procurement-skeleton-hint { margin-top: .45rem; font-size: .78rem; color: #b7a494; }
 
 .procurement-sort-wrap { position: relative; flex: none; }
@@ -5020,24 +5016,6 @@ body.drawer-open {
 .procurement-pagination-controls button:disabled { border-color: #eee6dd; background: #fffdfa; color: #cbbfb2; cursor: not-allowed; }
 .procurement-pagination-direction { width: 2.35rem; min-width: 2.35rem !important; padding: 0 !important; }
 .procurement-pagination-arrow { width: 1rem; height: 1rem; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; }
-
-/* 卡片视图 */
-.price-card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-bottom: 1.5rem; }
-.price-card { position: relative; background: var(--paper-soft); border: 1px solid var(--paper-rule); border-radius: 12px; padding: 1rem 1.1rem 1.1rem; box-shadow: 0 1px 2px rgba(0,0,0,.05), 0 6px 18px rgba(39,32,26,.06); transition: transform .15s ease, box-shadow .15s ease; }
-.price-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(39,32,26,.1); }
-.price-card-brand { font-size: .72rem; letter-spacing: .06em; color: #a98256; text-transform: uppercase; margin-bottom: .25rem; }
-.price-card-series { display: flex; align-items: baseline; gap: .35rem; margin: -.05rem 0 .45rem; color: #7a6855; font-size: .78rem; }
-.price-card-series span { color: #aa8a6b; font-size: .68rem; letter-spacing: .08em; }
-.price-card-product { font-family: Georgia, "Songti SC", STSong, serif; font-size: 1.02rem; color: #503522; margin: 0 0 .6rem; line-height: 1.4; }
-.price-card-row { display: flex; align-items: center; gap: .5rem; margin-bottom: .7rem; }
-.price-card-perjin { font-size: .85rem; color: #7a6855; margin-bottom: .5rem; }
-
-@media (max-width: 980px) {
-  .price-card-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 720px) {
-  .price-card-grid { grid-template-columns: 1fr; }
-}
 
 /* 采购页右侧索引 */
 .procurement-index {
@@ -5103,7 +5081,8 @@ body.drawer-open {
 
 @media (max-width: 820px) {
   .procurement-layout { grid-template-columns: minmax(0, 1fr); }
-  .procurement-index { position: static; }
+  .procurement-index { order: -1; position: static; }
+  .procurement-main { order: 1; }
   .procurement-index-group,
   .procurement-index-note { display: none; }
   .procurement-index-header { border-bottom: 0; padding-bottom: .2rem; text-align: left; }
@@ -5129,11 +5108,370 @@ body.drawer-open {
   .procurement-toolbar { width: 100%; align-items: center; justify-content: stretch; flex-wrap: wrap; gap: .55rem; }
   .procurement-search { width: auto; min-width: 0; flex: 1 1 calc(100% - 6.7rem); }
   .procurement-filter-wrap { align-self: flex-end; }
-  .procurement-view-toggle { width: auto; }
   .procurement-filter-popover { right: 0; left: 0; width: auto; }
   .procurement-main-card { padding: .7rem; border-radius: .8rem; }
   .procurement-dossier { padding: 0; }
   .procurement-dossier-inner { padding: 1rem .7rem; }
   .price-section-title { font-size: 1.35rem; }
   .price-section-title small { font-size: .68rem; }
+}
+
+/* 价格参考移动端重排：让页面先适合阅读，再保留桌面表格的信息密度 */
+@media (max-width: 719px) {
+  .procurement-shell {
+    padding-top: calc(4.35rem + env(safe-area-inset-top));
+    padding-right: max(.65rem, env(safe-area-inset-right));
+    padding-left: max(.65rem, env(safe-area-inset-left));
+  }
+
+  .procurement-main-card {
+    padding: .75rem;
+    border-radius: .8rem;
+  }
+
+  .procurement-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: .45rem;
+    margin-bottom: .85rem;
+  }
+
+  .procurement-heading-line {
+    display: block;
+    width: auto;
+    min-width: 0;
+  }
+
+  .procurement-title {
+    overflow: hidden;
+    font-size: clamp(1.8rem, 9vw, 2.3rem);
+    letter-spacing: .02em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .procurement-subtitle {
+    display: none;
+  }
+
+  .procurement-meta-stamp {
+    justify-self: end;
+    align-self: center;
+    font-size: .62rem;
+    padding: .28rem .45rem;
+    transform: rotate(1deg);
+  }
+
+  .procurement-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .45rem;
+    margin-bottom: .85rem;
+  }
+
+  .procurement-stat {
+    min-width: 0;
+    justify-content: center;
+    gap: .42rem;
+    padding: .45rem .4rem;
+  }
+
+  .procurement-stat-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .procurement-stat > span:last-child {
+    display: block;
+    min-width: 0;
+    text-align: left;
+  }
+
+  .procurement-stat strong {
+    display: block;
+    font-size: .88rem;
+    white-space: nowrap;
+  }
+
+  .procurement-stat small {
+    display: block;
+    margin-top: .08rem;
+    font-size: .64rem;
+  }
+
+  .procurement-dossier-inner {
+    padding: .75rem .55rem;
+  }
+
+  .price-section {
+    margin-bottom: 1rem;
+  }
+
+  .price-section-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    min-width: 0;
+    gap: .55rem;
+    margin-bottom: .65rem;
+  }
+
+  .price-section-title {
+    width: 100%;
+    font-size: 1.38rem;
+    line-height: 1.2;
+  }
+
+  .price-section-title small {
+    display: block;
+    overflow: hidden;
+    margin: .18rem 0 0;
+    font-size: .66rem;
+    line-height: 1.45;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .procurement-toolbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 2.55rem;
+    align-items: center;
+    justify-content: initial;
+    justify-self: stretch;
+    min-width: 0;
+    width: 100%;
+    gap: .35rem;
+  }
+
+  .procurement-search {
+    grid-column: auto;
+    width: auto;
+    flex: none;
+    min-width: 0;
+  }
+
+  .procurement-search input {
+    display: block;
+    width: 100%;
+    height: 2.7rem;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    font-size: .78rem;
+  }
+
+  .procurement-sort-wrap {
+    width: 2.55rem;
+  }
+
+  .procurement-filter-wrap {
+    display: none;
+  }
+
+  .procurement-filter-toggle,
+  .procurement-sort-toggle {
+    width: 2.55rem;
+    height: 2.7rem;
+  }
+
+  .procurement-filter-popover {
+    position: fixed;
+    top: calc(4.25rem + env(safe-area-inset-top));
+    right: max(.7rem, env(safe-area-inset-right));
+    left: max(.7rem, env(safe-area-inset-left));
+    width: auto;
+    max-height: calc(100dvh - 5.2rem);
+    overflow-y: auto;
+  }
+
+  .procurement-filter-popover-body {
+    gap: .7rem;
+    padding: .75rem .8rem .55rem;
+  }
+
+  /* 移动端由物资索引负责切换 category，筛选浮层只保留当前 category 的 subcategory。 */
+  .procurement-filter-popover-head span,
+  .procurement-filter-category-group,
+  .procurement-filter-price-group {
+    display: none;
+  }
+
+  .procurement-filter-subcategory-group {
+    gap: .55rem;
+  }
+
+  .procurement-filter-popover-foot {
+    position: sticky;
+    bottom: 0;
+    background: #f8efdf;
+  }
+
+  /* 移动端不再把五列硬塞进横向滚动区域，改成一条紧凑的采购记录。 */
+  .price-table-wrap {
+    overflow: visible;
+  }
+
+  .price-table {
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .price-table thead {
+    display: none;
+  }
+
+  .price-table tbody {
+    display: grid;
+    gap: .35rem;
+    padding: .35rem;
+  }
+
+  .price-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'brand price'
+      'product price'
+      'series spec';
+    gap: .18rem .55rem;
+    min-width: 0;
+    padding: .5rem .55rem;
+    border: 1px solid #e0cdb1;
+    border-radius: .5rem;
+    background: rgba(255, 250, 241, .7);
+  }
+
+  .price-row:last-child {
+    border-bottom: 1px solid #e0cdb1;
+  }
+
+  .price-cell {
+    width: auto;
+    min-width: 0;
+    padding: 0;
+    font-size: .76rem;
+    line-height: 1.35;
+  }
+
+  .price-cell--brand {
+    grid-area: brand;
+    font-size: .78rem;
+  }
+
+  .price-cell--series {
+    grid-area: series;
+    overflow: hidden;
+    color: #9a8068;
+    font-size: .66rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .price-cell--product {
+    grid-area: product;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .price-cell--spec {
+    grid-area: spec;
+    justify-self: end;
+  }
+
+  .price-cell--perjin {
+    display: flex;
+    grid-area: price;
+    align-items: center;
+    justify-content: flex-end;
+    white-space: nowrap;
+  }
+
+  .price-spec-pill {
+    padding: .12rem .42rem;
+    font-size: .64rem;
+  }
+
+  .price-buy {
+    font-size: .78rem;
+  }
+
+  .procurement-pagination {
+    margin-top: .75rem;
+    padding-top: .7rem;
+  }
+
+  .procurement-pagination-controls {
+    gap: .28rem;
+  }
+
+  .procurement-pagination-controls button {
+    min-width: 2.35rem;
+    height: 2.25rem;
+    padding: 0 .5rem;
+  }
+
+  /* 移动端保留分类索引，隐藏诗签，避免出现只剩空白的侧栏卡片。 */
+  .procurement-index {
+    padding: .85rem .75rem .75rem;
+    border-radius: .7rem;
+  }
+
+  .procurement-index-header {
+    padding-bottom: .7rem;
+    text-align: center;
+  }
+
+  .procurement-index-title {
+    justify-content: center;
+  }
+
+  .procurement-index-header p {
+    margin-left: 0;
+  }
+
+  .procurement-index-group {
+    display: block;
+    padding: .65rem 0 .55rem;
+  }
+
+  .procurement-index-group h3,
+  .procurement-index-note h3 {
+    font-size: .85rem;
+  }
+
+  .procurement-index-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .18rem .35rem;
+    margin-top: .3rem;
+  }
+
+  .procurement-index-item {
+    min-width: 0;
+    padding: .42rem .45rem;
+    font-size: .73rem;
+  }
+
+  .procurement-index-item strong {
+    font-size: .7rem;
+  }
+
+  .procurement-index-subgroups {
+    display: none;
+    padding-top: .65rem;
+  }
+
+  .procurement-index-chips {
+    gap: .28rem;
+    margin-top: .35rem;
+  }
+
+  .procurement-index-chips span {
+    padding: .26rem .42rem;
+    font-size: .68rem;
+  }
+
+  .procurement-index-note {
+    display: none;
+  }
 }

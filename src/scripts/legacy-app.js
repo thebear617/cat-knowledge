@@ -50,7 +50,6 @@ const state = {
   procurementPage: 1,
   procurementSort: 'brand',
   procurementSortOpen: false,
-  procurementView: 'table',
   procurementFilterOpen: false
 };
 
@@ -93,6 +92,7 @@ const PROCUREMENT_INDEX_GROUPS = [
   { title: '救助与安置', categories: ['航空箱 / 猫包', '猫窝 / 保暖'] },
 ];
 const PROCUREMENT_PAGE_SIZE = 9;
+const PROCUREMENT_MOBILE_PAGE_SIZE = 5;
 const PROCUREMENT_SORT_OPTIONS = [
   { value: 'brand', label: '按品牌排序' },
   { value: 'price-asc', label: '按单价升序' },
@@ -178,18 +178,24 @@ function sortProcurementItems(items) {
   });
 }
 
+function getProcurementPageSize() {
+  return window.innerWidth <= 719 ? PROCUREMENT_MOBILE_PAGE_SIZE : PROCUREMENT_PAGE_SIZE;
+}
+
 function getProcurementPage(items) {
-  const totalPages = Math.max(1, Math.ceil(items.length / PROCUREMENT_PAGE_SIZE));
+  const pageSize = getProcurementPageSize();
+  const totalPages = Math.max(1, Math.ceil(items.length / pageSize));
   const requestedPage = Number(state.procurementPage) || 1;
   const page = Math.min(Math.max(requestedPage, 1), totalPages);
-  const start = (page - 1) * PROCUREMENT_PAGE_SIZE;
+  const start = (page - 1) * pageSize;
   if (state.procurementPage !== page) state.procurementPage = page;
   return {
-    items: items.slice(start, start + PROCUREMENT_PAGE_SIZE),
+    items: items.slice(start, start + pageSize),
     page,
     totalPages,
+    pageSize,
     start,
-    end: Math.min(start + PROCUREMENT_PAGE_SIZE, items.length),
+    end: Math.min(start + pageSize, items.length),
   };
 }
 
@@ -913,29 +919,6 @@ function renderProcurementSection({ category, subgroups }, summaryItems = null, 
   `;
 }
 
-function renderProcurementCardSection({ category, subgroups }, summaryItems = null, toolbar = '') {
-  const allItems = subgroups.flatMap(g => g.items);
-  const sectionMeta = procurementSectionTagline(category);
-  const body = subgroups.map(group => {
-    const subTitle = group.subcategory
-      ? `<h3 class="price-subsection-title">${escapeHtml(group.subcategory)}</h3>`
-      : '';
-    const grid = `<div class="price-card-grid">${group.items.map(item => renderProcurementCard(item)).join('')}</div>`;
-    return `${subTitle}${grid}`;
-  }).join('');
-  return `
-    <section class="price-section">
-      <div class="price-section-header">
-        <h2 class="price-section-title">${escapeHtml(category)}
-          <small>${sectionMeta}</small>
-        </h2>
-        ${toolbar}
-      </div>
-      ${body}
-    </section>
-  `;
-}
-
 function procurementSectionTagline(category) {
   const taglines = {
     '主粮': '猫猫的幸福，先从一顿靠谱的饭开始。',
@@ -943,27 +926,6 @@ function procurementSectionTagline(category) {
     '罐头 / 湿粮': '偶尔开个罐，快乐就有了形状。',
   };
   return taglines[category] || '把猫猫的日常，照料得妥妥当当。';
-}
-
-function renderProcurementCard(item) {
-  const link = item.url
-    ? `<a class="price-buy" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer" title="前往京东">↗</a>`
-    : '';
-  return `
-    <article class="price-card">
-      <div class="price-card-brand">${escapeHtml(item.brand)}</div>
-      <div class="price-card-series"><span>系列</span>${escapeHtml(item.series || '待补充')}</div>
-      <h4 class="price-card-product">${escapeHtml(item.product)}${link}</h4>
-      <div class="price-card-row">
-        <span class="price-spec-pill">${escapeHtml(item.spec)}</span>
-      </div>
-      <div class="price-card-perjin">${formatItemPrice(item)}</div>
-    </article>
-  `;
-}
-
-function renderProcurementCardView(grouped, summaryByCategory, toolbar = '') {
-  return grouped.map((section, index) => renderProcurementCardSection(section, summaryByCategory.get(section.category), index === 0 ? toolbar : '')).join('');
 }
 
 function renderProcurementRow(item) {
@@ -981,8 +943,8 @@ function renderProcurementRow(item) {
   `;
 }
 
-function renderProcurementPagination({ page, totalPages }, totalItems) {
-  if (totalItems <= PROCUREMENT_PAGE_SIZE) return '';
+function renderProcurementPagination({ page, totalPages, pageSize }, totalItems) {
+  if (totalItems <= pageSize) return '';
   const pageButtons = Array.from({ length: totalPages }, (_, index) => {
     const pageNumber = index + 1;
     return `<button type="button" class="procurement-pagination-page${pageNumber === page ? ' is-current' : ''}" data-procurement-page="${pageNumber}" aria-label="第 ${pageNumber} 页"${pageNumber === page ? ' aria-current="page"' : ''}>${pageNumber}</button>`;
@@ -1046,21 +1008,21 @@ function renderProcurementFilterPopover() {
           <button type="button" class="procurement-filter-close" data-procurement-filter-close aria-label="关闭筛选">✕</button>
         </div>
         <div class="procurement-filter-popover-body">
-          <section class="procurement-filter-group">
+          <section class="procurement-filter-group procurement-filter-category-group">
             <span class="procurement-filter-label">物资类别</span>
             <div class="procurement-filter-options">
               <button class="procurement-filter-chip${state.procurementCategory === '全部' ? ' is-active' : ''}" type="button" data-procurement-filter-kind="category" data-procurement-filter-value="全部"><span>全部</span><strong>${priceSnapshot.items.length}</strong></button>
               ${categoryOptions}
             </div>
           </section>
-          <section class="procurement-filter-group">
+          <section class="procurement-filter-group procurement-filter-subcategory-group">
             <span class="procurement-filter-label">细分类型${state.procurementCategory !== '全部' ? ` · ${escapeHtml(state.procurementCategory)}` : ''}</span>
             <div class="procurement-filter-options">
               <button class="procurement-filter-chip${state.procurementSubcategory === '' ? ' is-active' : ''}" type="button" data-procurement-filter-kind="subcategory" data-procurement-filter-value=""><span>全部</span></button>
               ${subcategoryOptions || '<span class="procurement-filter-empty">当前类别暂无细分类型</span>'}
             </div>
           </section>
-          <section class="procurement-filter-group">
+          <section class="procurement-filter-group procurement-filter-price-group">
             <span class="procurement-filter-label">每斤单价</span>
             <div class="procurement-filter-options">${priceOptions}</div>
           </section>
@@ -1142,12 +1104,6 @@ function renderProcurementTab() {
   const filtered = getProcurementFiltered();
   const pageData = getProcurementPage(filtered);
   const grouped = groupProcurementByCategory(pageData.items);
-  const summaryByCategory = filtered.reduce((summary, item) => {
-    const categoryItems = summary.get(item.category) || [];
-    categoryItems.push(item);
-    summary.set(item.category, categoryItems);
-    return summary;
-  }, new Map());
   const totalCount = priceSnapshot.items.length;
   const categoryCount = new Set(priceSnapshot.items.map(item => item.category)).size;
   const toolbar = `
@@ -1158,20 +1114,10 @@ function renderProcurementTab() {
       </div>
       ${renderProcurementFilterPopover()}
       ${renderProcurementSortPopover()}
-      <div class="procurement-view-toggle" role="group" aria-label="视图切换">
-        <button type="button" class="${state.procurementView === 'card' ? 'is-active' : ''}" data-procurement-view="card" aria-label="卡片视图" title="卡片视图">
-          <svg class="procurement-view-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1"/></svg>
-        </button>
-        <button type="button" class="${state.procurementView === 'table' ? 'is-active' : ''}" data-procurement-view="table" aria-label="表格视图" title="表格视图">
-          <svg class="procurement-view-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M4 9.5h16M4 14.5h16M10 4v16"/></svg>
-        </button>
-      </div>
     </div>
   `;
   const body = grouped.length
-    ? (state.procurementView === 'card'
-      ? renderProcurementCardView(grouped, summaryByCategory, toolbar)
-      : grouped.map((section, index) => renderProcurementSection(section, summaryByCategory.get(section.category), index === 0 ? toolbar : '')).join(''))
+    ? grouped.map((section, index) => renderProcurementSection(section, null, index === 0 ? toolbar : '')).join('')
     : `<div class="procurement-skeleton"><p>没有匹配的物资，稍后再来看看</p><p class="procurement-skeleton-hint">试试清空搜索或放宽价格上限</p></div>`;
   const pagination = renderProcurementPagination(pageData, filtered.length);
   return `
@@ -1273,7 +1219,6 @@ function bindControls() {
         state.procurementPage = 1;
         state.procurementSort = 'brand';
         state.procurementSortOpen = false;
-        state.procurementView = 'table';
         state.procurementFilterOpen = false;
         renderApp();
       });
@@ -1532,14 +1477,6 @@ function bindProcurementControls() {
     });
   });
 
-  document.querySelectorAll('.procurement-view-toggle [data-procurement-view]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const view = btn.dataset.procurementView;
-      if (view === state.procurementView) return;
-      state.procurementView = view;
-      renderApp();
-    });
-  });
 }
 
 function bindOperationsControls() {
