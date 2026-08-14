@@ -85,7 +85,7 @@ export const catProfiles = [
     notes: '第二针认捐人：鲨人不wink',
     area: '竹园',
     gender: '公',
-    images: ['images/黑哥/黑哥2.jpg', 'images/黑哥/黑哥1.jpg']
+    images: ['images/黑哥/黑哥2.jpg', 'images/黑哥/黑哥1.jpg', 'images/黑哥/黑哥3.jpg']
   },
   {
     name: '彪哥',
@@ -317,7 +317,8 @@ export const catProfiles = [
     notes: '—',
     area: '丁香',
     gender: '公',
-    images: ['images/漂亮橘/漂亮橘5.jpg', 'images/漂亮橘/漂亮橘4.jpg', 'images/漂亮橘/漂亮橘3.jpg', 'images/漂亮橘/漂亮橘2.jpg', 'images/漂亮橘/漂亮橘1.jpg', 'images/漂亮橘/漂亮橘6.jpg', 'images/漂亮橘/漂亮橘7.jpg']
+    cover: 'images/漂亮橘/漂亮橘7.jpg',
+    images: ['images/漂亮橘/漂亮橘5.jpg', 'images/漂亮橘/漂亮橘4.jpg', 'images/漂亮橘/漂亮橘3.jpg', 'images/漂亮橘/漂亮橘2.jpg', 'images/漂亮橘/漂亮橘1.jpg', 'images/漂亮橘/漂亮橘6.jpg', 'images/漂亮橘/漂亮橘7.jpg', 'images/漂亮橘/漂亮橘8.jpg']
   },
   {
     name: '橙留香',
