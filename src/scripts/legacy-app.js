@@ -66,6 +66,33 @@ let activeSummaryTooltip = null;
 const app = document.getElementById('app');
 const drawer = document.getElementById('catDrawer');
 const drawerBackdrop = document.getElementById('drawerBackdrop');
+const mainArea = document.querySelector('.main-area');
+let mainAreaScrollLock = null;
+
+function lockMainAreaScroll() {
+  if (!mainArea || mainAreaScrollLock) return;
+  mainAreaScrollLock = {
+    scrollTop: mainArea.scrollTop,
+    overflow: mainArea.style.overflow
+  };
+  mainArea.style.overflow = 'hidden';
+}
+
+function unlockMainAreaScroll() {
+  if (!mainArea || !mainAreaScrollLock) return;
+  const { scrollTop, overflow } = mainAreaScrollLock;
+  mainArea.style.overflow = overflow;
+  mainArea.scrollTop = scrollTop;
+  mainAreaScrollLock = null;
+}
+
+function focusWithoutScrolling(element) {
+  try {
+    element.focus({ preventScroll: true });
+  } catch {
+    element.focus();
+  }
+}
 
 function escapeHtml(value) {
   return String(value ?? '')
@@ -608,8 +635,10 @@ function renderDrawer(cat, { page = 1 } = {}) {
   `;
 
   document.body.classList.add('drawer-open');
-  document.getElementById('closeDrawer').focus();
-  document.getElementById('closeDrawer').addEventListener('click', closeDrawer);
+  lockMainAreaScroll();
+  const closeButton = document.getElementById('closeDrawer');
+  focusWithoutScrolling(closeButton);
+  closeButton.addEventListener('click', closeDrawer);
 
   drawer.querySelectorAll('[data-photo-page]').forEach(button => {
     button.addEventListener('click', () => {
@@ -700,6 +729,7 @@ function closeDrawer() {
   drawerBackdrop.hidden = true;
   drawer.innerHTML = '';
   document.body.classList.remove('drawer-open');
+  unlockMainAreaScroll();
 }
 
 let lastPhotoLayoutIsMobile = isMobilePhotoLayout();
