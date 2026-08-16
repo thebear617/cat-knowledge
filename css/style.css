@@ -1230,14 +1230,6 @@ select {
   outline-offset: 2px;
 }
 
-.drawer-image {
-  width: calc(100% + 3rem);
-  max-height: 300px;
-  object-fit: cover;
-  margin: 0 -1.5rem 1rem;
-  border-radius: var(--radius);
-}
-
 .status-pill,
 .tag {
   display: inline-flex;
@@ -1401,6 +1393,42 @@ select {
 
 .drawer-tags {
   margin-top: 1rem;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.drawer-tags > .status-pill,
+.drawer-tags > .tag {
+  flex: 0 0 auto;
+}
+
+.drawer-tags-secondary {
+  display: contents;
+}
+
+.drawer-tags-secondary > .tag {
+  flex: 0 0 auto;
+}
+
+.drawer-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  margin-top: 1rem;
+}
+
+.drawer-profile {
+  margin-top: 1rem;
+}
+
+.drawer-profile .drawer-tags {
+  margin-top: 0;
+}
+
+.drawer-photos {
+  margin-top: 1.5rem;
 }
 
 .summary-detail {
@@ -1428,45 +1456,6 @@ select {
 .summary-detail[role="tooltip"] {
   opacity: 1;
   transform: translateY(0);
-}
-
-.drawer-tabs {
-  display: flex;
-  gap: 0;
-  margin-top: 1rem;
-  border-bottom: 2px solid var(--line);
-}
-
-.drawer-tab {
-  flex: 1;
-  padding: .55rem 0;
-  border: none;
-  background: transparent;
-  color: var(--muted);
-  font-size: .88rem;
-  font-weight: 900;
-  cursor: pointer;
-  position: relative;
-  transition: color .18s;
-}
-
-.drawer-tab::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: transparent;
-  transition: background .18s;
-}
-
-.drawer-tab.active {
-  color: var(--text);
-}
-
-.drawer-tab.active::after {
-  background: #c08a2f;
 }
 
 .drawer-content {
@@ -1502,6 +1491,56 @@ select {
   aspect-ratio: 1;
   object-fit: cover;
   display: block;
+}
+
+.photo-pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.photo-pagination-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+}
+
+.photo-pagination-controls button {
+  min-width: 2.35rem;
+  height: 2.25rem;
+  border: 1px solid #e0d2c0;
+  border-radius: .55rem;
+  background: rgba(255, 253, 249, .82);
+  color: #806f60;
+  padding: 0 .6rem;
+  font-size: .8rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.photo-pagination-controls button:hover:not(:disabled),
+.photo-pagination-controls button.is-current {
+  border-color: #b85e0b;
+  background: #fff2dc;
+  color: #a24d05;
+}
+
+.photo-pagination-controls button.is-current {
+  font-weight: 700;
+}
+
+.photo-pagination-controls button:disabled {
+  border-color: #eee6dd;
+  background: #fffdfa;
+  color: #cbbfb2;
+  cursor: not-allowed;
+}
+
+.photo-pagination-direction {
+  width: 2.35rem;
+  min-width: 2.35rem !important;
+  padding: 0 !important;
+  font-size: 1.25rem !important;
 }
 
 .photo-empty {
@@ -4700,16 +4739,52 @@ body.drawer-open {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .cat-drawer {
-    top: max(.5rem, env(safe-area-inset-top));
-    right: max(.5rem, env(safe-area-inset-right));
-    bottom: max(.5rem, env(safe-area-inset-bottom));
-    left: max(.5rem, env(safe-area-inset-left));
-    width: auto;
-    max-height: none;
+  .cat-drawer:not([hidden]) {
+    top: max(12px, env(safe-area-inset-top));
+    right: max(12px, env(safe-area-inset-right));
+    bottom: auto;
+    left: max(12px, env(safe-area-inset-left));
+    width: auto !important;
+    height: auto;
+    max-width: none;
+    max-height: calc(100dvh - max(12px, env(safe-area-inset-top)) - max(12px, env(safe-area-inset-bottom)));
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
     border-radius: 1rem;
     transform: none;
     animation: none;
+  }
+
+  .cat-drawer > *,
+  .drawer-content,
+  .drawer-profile,
+  .drawer-photos {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .drawer-tags {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: .3rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .drawer-tags .status-pill,
+  .drawer-tags .tag {
+    flex-shrink: 0;
+    padding: .12rem .45rem;
+    font-size: .68rem;
+  }
+
+  .drawer-tags-secondary {
+    display: contents;
+  }
+
+  .photo-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
