@@ -1203,6 +1203,33 @@ select {
   line-height: 1.2;
 }
 
+.cat-card-statuses {
+  position: absolute;
+  top: .65rem;
+  left: .65rem;
+  right: .65rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+}
+
+.summary-source {
+  position: relative;
+  cursor: help;
+}
+
+.cat-card-statuses .tag {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(47, 41, 36, .78);
+  color: #fff;
+}
+
+.summary-source:focus {
+  outline: 2px solid #c08a2f;
+  outline-offset: 2px;
+}
+
 .drawer-image {
   width: calc(100% + 3rem);
   max-height: 300px;
@@ -1215,11 +1242,14 @@ select {
 .tag {
   display: inline-flex;
   align-items: center;
-  min-height: 1.55rem;
+  height: 1.55rem;
   border-radius: 999px;
   padding: .16rem .58rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", sans-serif;
   font-size: .72rem;
   font-weight: 900;
+  line-height: 1;
+  letter-spacing: normal;
   white-space: nowrap;
 }
 
@@ -1293,15 +1323,49 @@ select {
   background: rgba(15, 15, 15, .36);
 }
 
+.drawer-backdrop:not([hidden]) {
+  animation: drawer-backdrop-fade .2s ease both;
+}
+
 .cat-drawer {
   position: fixed;
-  inset: 0 0 0 auto;
+  top: 50%;
+  left: 50%;
   z-index: 30;
-  width: min(100%, 31rem);
+  width: min(92vw, 40rem);
+  max-height: min(86vh, 44rem);
   overflow-y: auto;
   background: var(--surface);
-  box-shadow: -16px 0 40px rgba(0, 0, 0, .18);
+  border-radius: 1rem;
+  box-shadow: 0 20px 55px rgba(0, 0, 0, .22);
   padding: 1.1rem;
+  padding-right: 1.45rem;
+  transform: translate(-50%, -50%) scale(.98);
+}
+
+.cat-drawer {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(120, 102, 84, .5) transparent;
+}
+
+.cat-drawer::-webkit-scrollbar {
+  width: .7rem;
+}
+
+.cat-drawer::-webkit-scrollbar-track {
+  margin: .65rem 0;
+  background: transparent;
+}
+
+.cat-drawer::-webkit-scrollbar-thumb {
+  border: .2rem solid transparent;
+  border-radius: 999px;
+  background: rgba(120, 102, 84, .5);
+  background-clip: padding-box;
+}
+
+.cat-drawer:not([hidden]) {
+  animation: drawer-float-in .22s ease both;
 }
 
 .drawer-header {
@@ -1337,6 +1401,33 @@ select {
 
 .drawer-tags {
   margin-top: 1rem;
+}
+
+.summary-detail {
+  position: fixed;
+  z-index: 100;
+  width: max-content;
+  max-width: min(18rem, 70vw);
+  max-height: calc(100vh - 1rem);
+  overflow: auto;
+  padding: .45rem .6rem;
+  border-radius: 6px;
+  background: var(--dark);
+  color: #fff;
+  font-size: .76rem;
+  font-weight: 600;
+  line-height: 1.45;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(.25rem);
+  transition: opacity .15s, transform .15s;
+}
+
+.summary-detail[role="tooltip"] {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .drawer-tabs {
@@ -1384,8 +1475,14 @@ select {
 
 .photo-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: .6rem;
+}
+
+@media (max-width: 719px) {
+  .photo-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .photo-item {
@@ -1452,6 +1549,7 @@ select {
 
 .detail-list {
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: .9rem;
   margin-top: 1rem;
 }
@@ -1477,8 +1575,50 @@ select {
   font-weight: 650;
 }
 
+.detail-value-notes {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+.detail-value-notes:hover,
+.detail-value-notes:focus {
+  display: block;
+  overflow: visible;
+}
+
+.detail-value-notes:focus-visible {
+  outline: 2px solid #c08a2f;
+  outline-offset: 2px;
+}
+
+@media (max-width: 719px) {
+  .detail-list {
+    grid-template-columns: 1fr;
+  }
+}
+
 body.drawer-open {
   overflow: hidden;
+}
+
+@keyframes drawer-backdrop-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes drawer-float-in {
+  from { opacity: 0; transform: translate(-50%, calc(-50% + 8px)) scale(.98); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer-backdrop:not([hidden]),
+  .cat-drawer:not([hidden]) {
+    animation: none;
+  }
 }
 
 .tab-panel {
@@ -4568,6 +4708,8 @@ body.drawer-open {
     width: auto;
     max-height: none;
     border-radius: 1rem;
+    transform: none;
+    animation: none;
   }
 }
 

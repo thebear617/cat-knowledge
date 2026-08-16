@@ -33,7 +33,7 @@ const state = {
   area: '全部',
   selectedName: null,
   drawerTab: 'profile',
-  activeTab: 'procurement',
+  activeTab: 'home',
   operationsView: 'inventory',
   inventoryCategory: '全部',
   timelineType: '全部',
@@ -61,6 +61,7 @@ let procurementFilterOutsideClickBound = false;
 let procurementFilterEscapeBound = false;
 let procurementSortOutsideClickBound = false;
 let procurementSortEscapeBound = false;
+let activeSummaryTooltip = null;
 
 const app = document.getElementById('app');
 const drawer = document.getElementById('catDrawer');
@@ -238,12 +239,26 @@ function getVaccineBucket(cat) {
   return '零针';
 }
 
+function getVaccineSummary(cat) {
+  return {
+    零针: '零针',
+    一针: '已完成一针',
+    两针: '已完成二针',
+    疫苗毕业: '已完成三针',
+  }[getVaccineBucket(cat)];
+}
+
 function getSterilizedBucket(cat) {
   return isEmptyValue(cat.sterilized) || String(cat.sterilized).includes('未') ? '未绝育' : '已绝育';
 }
 
 function getFriendlinessBucket(cat) {
-  return String(cat.friendliness || '');
+  return String(cat.friendliness || '待观察');
+}
+
+function getSterilizedSummary(cat) {
+  if (isEmptyValue(cat.sterilized)) return '待补充';
+  return String(cat.sterilized).includes('未') ? '未绝育' : '已绝育';
 }
 
 function getSummary() {
@@ -460,8 +475,17 @@ function renderCatCard(cat) {
     <article class="cat-card" data-cat-name="${escapeHtml(cat.name)}" tabindex="0">
       ${firstImage ? `<img class="cat-card-photo" src="${cdnUrl(firstImage)}" alt="${escapeHtml(cat.name)}" loading="lazy">` : `<div class="cat-card-placeholder">🐱</div>`}
       <h2 class="cat-card-name">${escapeHtml(cat.name)}</h2>
+      <div class="cat-card-statuses" aria-label="${escapeHtml(cat.name)}状态">
+        ${renderSummaryTag('抓捕/亲人', getFriendlinessBucket(cat), cat.friendliness)}
+        ${renderSummaryTag('绝育', getSterilizedSummary(cat), cat.sterilized)}
+      </div>
     </article>
   `;
+}
+
+function renderSummaryTag(label, summary, original) {
+  const detail = original || '—';
+  return `<span class="tag summary-source" tabindex="0" aria-label="${escapeHtml(label)}状态：${escapeHtml(summary)}；完整记录：${escapeHtml(detail)}"><span>${escapeHtml(summary)}</span><span class="summary-detail">${escapeHtml(detail)}</span></span>`;
 }
 
 function renderCatGrid(cats) {
@@ -481,13 +505,20 @@ function renderCatGrid(cats) {
   `;
 }
 
-function renderDetailRow(label, value) {
+function renderDetailRow(label, value, className = '') {
+  const displayValue = value || '—';
+  const isNotes = className === 'detail-row-notes';
   return `
-    <div class="detail-row">
+    <div class="detail-row${className ? ` ${className}` : ''}">
       <dt>${label}</dt>
-      <dd>${escapeHtml(value || '—')}</dd>
+      <dd${isNotes ? ` class="detail-value-notes" tabindex="0" title="${escapeHtml(displayValue)}" aria-label="备注：${escapeHtml(displayValue)}"` : ''}>${escapeHtml(displayValue)}</dd>
     </div>
   `;
+}
+
+function renderOptionalSummaryTag(label, value) {
+  if (isEmptyValue(value)) return '';
+  return renderSummaryTag(label, value, value);
 }
 
 function openDrawer(name) {
@@ -500,6 +531,7 @@ function openDrawer(name) {
 }
 
 function renderDrawer(cat) {
+  hideSummaryTooltip();
   drawer.hidden = false;
   drawerBackdrop.hidden = false;
 
@@ -511,17 +543,17 @@ function renderDrawer(cat) {
       ${cat.image ? `<img class="drawer-image" src="${cdnUrl(cat.image)}" alt="${escapeHtml(cat.name)}">` : ''}
       <div class="drawer-tags">
         ${renderStatusTag(cat)}
-        <span class="tag vaccine-${getVaccineBucket(cat)}">${escapeHtml(getVaccineBucket(cat))}</span>
-        <span class="tag">${escapeHtml(getSterilizedBucket(cat))}</span>
-        <span class="tag">${escapeHtml(getFriendlinessBucket(cat))}</span>
+        <span class="tag vaccine-${getVaccineBucket(cat)} summary-source" tabindex="0" aria-label="疫苗状态：${escapeHtml(getVaccineSummary(cat))}；具体记录：${escapeHtml(cat.vaccine || '—')}">
+          <span>${escapeHtml(getVaccineSummary(cat))}</span>
+          <span class="summary-detail">${escapeHtml(cat.vaccine || '—')}</span>
+        </span>
+        ${renderSummaryTag('绝育', getSterilizedSummary(cat), cat.sterilized)}
+        ${renderSummaryTag('抓捕/亲人', getFriendlinessBucket(cat), cat.friendliness)}
+        ${renderOptionalSummaryTag('区域', cat.area)}
+        ${renderOptionalSummaryTag('性别', cat.gender)}
       </div>
       <dl class="detail-list">
-        ${renderDetailRow('抓捕/亲人状态', cat.friendliness)}
-        ${renderDetailRow('疫苗状态', cat.vaccine)}
-        ${renderDetailRow('绝育状态', cat.sterilized)}
-        ${renderDetailRow('区域', cat.area)}
-        ${renderDetailRow('性别', cat.gender)}
-        ${renderDetailRow('备注', cat.notes)}
+        ${renderDetailRow('备注', cat.notes, 'detail-row-notes')}
       </dl>
     `;
   } else if (tab === 'photos') {
@@ -572,9 +604,81 @@ function renderDrawer(cat) {
       renderDrawer(cat);
     });
   });
+
+  bindSummaryTooltips(drawer);
+}
+
+function hideSummaryTooltip() {
+  if (!activeSummaryTooltip) return;
+  const { source, detail } = activeSummaryTooltip;
+  source.classList.remove('is-tooltip-visible');
+  source.removeAttribute('aria-describedby');
+  detail.removeAttribute('role');
+  detail.removeAttribute('id');
+  detail.style.left = '';
+  detail.style.top = '';
+  source.appendChild(detail);
+  activeSummaryTooltip = null;
+}
+
+function positionSummaryTooltip(source, detail) {
+  const gap = 8;
+  const margin = 8;
+  const sourceRect = source.getBoundingClientRect();
+  const detailRect = detail.getBoundingClientRect();
+  const left = Math.min(
+    Math.max(margin, sourceRect.left + sourceRect.width / 2 - detailRect.width / 2),
+    window.innerWidth - detailRect.width - margin
+  );
+  const aboveTop = sourceRect.top - detailRect.height - gap;
+  const top = aboveTop >= margin
+    ? aboveTop
+    : Math.min(window.innerHeight - detailRect.height - margin, sourceRect.bottom + gap);
+  detail.style.left = `${left}px`;
+  detail.style.top = `${Math.max(margin, top)}px`;
+}
+
+function showSummaryTooltip(source) {
+  const detail = source.querySelector('.summary-detail');
+  if (!detail) return;
+  hideSummaryTooltip();
+  detail.id = `summary-detail-${Date.now()}`;
+  detail.setAttribute('role', 'tooltip');
+  source.setAttribute('aria-describedby', detail.id);
+  document.body.appendChild(detail);
+  activeSummaryTooltip = { source, detail };
+  source.classList.add('is-tooltip-visible');
+  positionSummaryTooltip(source, detail);
+}
+
+function bindSummaryTooltips(container) {
+  container.querySelectorAll('.summary-source').forEach(source => {
+    source.addEventListener('pointerenter', () => showSummaryTooltip(source));
+  source.addEventListener('pointerleave', () => {
+    if (!source.matches(':focus')) hideSummaryTooltip();
+  });
+  source.addEventListener('focus', () => showSummaryTooltip(source));
+  source.addEventListener('blur', () => {
+    if (!source.matches(':hover')) hideSummaryTooltip();
+  });
+  source.addEventListener('pointerdown', event => {
+    if (event.pointerType === 'touch') {
+      source.focus({ preventScroll: true });
+      showSummaryTooltip(source);
+    }
+  });
+  source.addEventListener('click', event => event.stopPropagation());
+  });
+  container.addEventListener('scroll', () => {
+    if (activeSummaryTooltip && container.contains(activeSummaryTooltip.source)) positionSummaryTooltip(activeSummaryTooltip.source, activeSummaryTooltip.detail);
+  }, { passive: true });
+  window.addEventListener('resize', () => {
+    if (activeSummaryTooltip && container.contains(activeSummaryTooltip.source)) positionSummaryTooltip(activeSummaryTooltip.source, activeSummaryTooltip.detail);
+  }, { passive: true });
 }
 
 function closeDrawer() {
+  hideSummaryTooltip();
   state.selectedName = null;
   drawer.hidden = true;
   drawerBackdrop.hidden = true;
@@ -1592,6 +1696,7 @@ function bindCatCards() {
       }
     });
   });
+  if (state.activeTab !== 'home') bindSummaryTooltips(app);
 }
 
 function applyHomeFilter(filterKey) {

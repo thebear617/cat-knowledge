@@ -107,7 +107,7 @@ export const catProfiles = [
     notes: '第二针认捐人：刘岛；第三针认捐人：李介清',
     area: '海棠',
     gender: '公',
-    images: ['images/豆介/豆介2.jpg', 'images/豆介/豆介1.jpg']
+    images: ['images/豆介/豆介2.jpg', 'images/豆介/豆介1.jpg', 'images/豆介/豆介3.jpg']
   },
   {
     name: '大面包',
