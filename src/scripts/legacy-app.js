@@ -580,7 +580,7 @@ function renderDrawer(cat, { page = 1 } = {}) {
   drawerBackdrop.hidden = false;
 
   const imgs = cat.images || [];
-  const photoPageSize = 6;
+  const photoPageSize = 4;
   const totalPhotoPages = Math.max(1, Math.ceil(imgs.length / photoPageSize));
   const currentPhotoPage = isMobilePhotoLayout()
     ? Math.min(Math.max(page, 1), totalPhotoPages)
