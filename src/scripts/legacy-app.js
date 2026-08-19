@@ -15,6 +15,13 @@ const OPERATIONS_VIEWS = [
   { id: 'workflows', label: '工作流程', icon: '↗' }
 ];
 const TIMELINE_TYPES = ['全部', '救助', '疫苗', '绝育', '送养'];
+const DIRECTORY_MOBILE_PAGE_SIZE = 6;
+const DIRECTORY_DESKTOP_PAGE_SIZE = 15;
+const DIRECTORY_SORT_OPTIONS = [
+  { value: 'name', label: '名称排序' },
+  { value: 'area', label: '区域排序' },
+  { value: 'recent', label: '最近更新' }
+];
 
 const TABS = [
   { id: 'home', title: '首页', icon: '🏠' },
@@ -33,6 +40,9 @@ const state = {
   area: '全部',
   selectedName: null,
   photoPage: 1,
+  directoryPage: 1,
+  directoryPageSize: null,
+  directorySort: 'name',
   activeTab: 'home',
   operationsView: 'inventory',
   inventoryCategory: '全部',
@@ -57,6 +67,8 @@ const knowledgePosts = window.__catKnowledgePosts || [];
 let knowledgeTocScrollContainer = null;
 let knowledgeTocScrollHandler = null;
 let homeFeaturedRefreshTimer = null;
+let directoryPageSyncFrame = null;
+let directoryResizeBound = false;
 let procurementFilterOutsideClickBound = false;
 let procurementFilterEscapeBound = false;
 let procurementSortOutsideClickBound = false;
@@ -335,7 +347,26 @@ function getFilteredCats() {
       && (state.area === '全部' || cat.area === state.area);
   });
 
-  return filtered.sort((a, b) => a.name.localeCompare(b.name, 'zh-Hans-CN'));
+  return sortDirectoryCats(filtered);
+}
+
+function compareDirectoryCats(a, b) {
+  const nameCompare = a.name.localeCompare(b.name, 'zh-Hans-CN');
+  if (state.directorySort === 'area') {
+    const areaCompare = String(a.area || '待补充').localeCompare(String(b.area || '待补充'), 'zh-Hans-CN');
+    return areaCompare || nameCompare;
+  }
+
+  if (state.directorySort === 'recent') {
+    const recentCompare = String(b.photoUpdatedAt || '').localeCompare(String(a.photoUpdatedAt || ''));
+    return recentCompare || nameCompare;
+  }
+
+  return nameCompare;
+}
+
+function sortDirectoryCats(cats) {
+  return [...cats].sort(compareDirectoryCats);
 }
 
 function cdnUrl(path) {
@@ -365,6 +396,60 @@ function getTimedFeaturedCats(cats, heroCat) {
   const slot = Math.floor(Date.now() / (15 * 60 * 1000));
   const start = slot % candidates.length;
   return Array.from({ length: batchSize }, (_, index) => candidates[(start + index) % candidates.length]);
+}
+
+function isMobileDirectoryLayout() {
+  return window.matchMedia('(max-width: 719px)').matches;
+}
+
+function syncDirectoryPageSize() {
+  if (state.activeTab !== 'home') return;
+  const grid = document.querySelector('.home-directory-grid');
+  if (!grid) return;
+  const pageSize = isMobileDirectoryLayout()
+    ? DIRECTORY_MOBILE_PAGE_SIZE
+    : getComputedStyle(grid).gridTemplateColumns.split(/\s+/).filter(Boolean).length * 3;
+  if (!pageSize || state.directoryPageSize === pageSize) return;
+  state.directoryPageSize = pageSize;
+  state.directoryPage = 1;
+  renderApp();
+}
+
+function scheduleDirectoryPageSizeSync() {
+  if (directoryPageSyncFrame) window.cancelAnimationFrame(directoryPageSyncFrame);
+  directoryPageSyncFrame = window.requestAnimationFrame(() => {
+    directoryPageSyncFrame = null;
+    syncDirectoryPageSize();
+  });
+}
+
+function renderDirectoryPagination(totalItems, page, pageSize) {
+  if (totalItems <= pageSize) return '';
+  const totalPages = Math.ceil(totalItems / pageSize);
+  const pageButtons = Array.from({ length: totalPages }, (_, index) => {
+    const pageNumber = index + 1;
+    return `<button type="button" class="directory-pagination-page${pageNumber === page ? ' is-current' : ''}" data-directory-page="${pageNumber}" aria-label="第 ${pageNumber} 页"${pageNumber === page ? ' aria-current="page"' : ''}>${pageNumber}</button>`;
+  }).join('');
+  return `
+    <nav class="directory-pagination" aria-label="猫咪档案翻页">
+      <div class="directory-pagination-controls">
+        <button type="button" class="directory-pagination-direction" data-directory-page="${page - 1}" aria-label="上一页" title="上一页"${page === 1 ? ' disabled' : ''}>‹</button>
+        ${pageButtons}
+        <button type="button" class="directory-pagination-direction" data-directory-page="${page + 1}" aria-label="下一页" title="下一页"${page === totalPages ? ' disabled' : ''}>›</button>
+      </div>
+    </nav>
+  `;
+}
+
+function renderDirectorySortPopover() {
+  return `
+    <div class="directory-sort-popover" id="sortPopover" hidden>
+      <div class="directory-sort-heading"><strong>排序档案</strong></div>
+      <div class="directory-sort-options">
+        ${DIRECTORY_SORT_OPTIONS.map(option => `<button class="directory-sort-option${state.directorySort === option.value ? ' is-selected' : ''}" type="button" data-directory-sort="${option.value}" aria-pressed="${state.directorySort === option.value}">${option.label}</button>`).join('')}
+      </div>
+    </div>
+  `;
 }
 
 // ============== Tab Navigation ==============
@@ -414,10 +499,18 @@ function renderHomeTab() {
   const catsWithPhotos = catProfiles.filter(cat => cat.images && cat.images.length > 0).sort((a, b) => a.name.localeCompare(b.name, 'zh-Hans-CN'));
   const heroCat = catProfiles.find(cat => cat.name === '大头' && getCatCover(cat)) || catsWithPhotos[0];
   const featuredCats = getTimedFeaturedCats(catsWithPhotos, heroCat);
-  const directoryCats = filtered ? getFilteredCats() : catsWithPhotos;
+  const directoryCats = filtered ? getFilteredCats() : sortDirectoryCats(catsWithPhotos);
+  const directoryPageSize = isMobileDirectoryLayout()
+    ? DIRECTORY_MOBILE_PAGE_SIZE
+    : (state.directoryPageSize || DIRECTORY_DESKTOP_PAGE_SIZE);
+  const totalDirectoryPages = Math.max(1, Math.ceil(directoryCats.length / directoryPageSize));
+  const currentDirectoryPage = Math.min(Math.max(Number(state.directoryPage) || 1, 1), totalDirectoryPages);
+  state.directoryPage = currentDirectoryPage;
+  const visibleDirectoryCats = directoryCats.slice((currentDirectoryPage - 1) * directoryPageSize, currentDirectoryPage * directoryPageSize);
+  const directoryPagination = renderDirectoryPagination(directoryCats.length, currentDirectoryPage, directoryPageSize);
   const homeStats = [summary.find(item => item.filter === 'all'), summary.find(item => item.filter === 'status-就读中'), summary.find(item => item.filter === 'status-已毕业'), summary.find(item => item.filter === 'sterilized-未绝育')].filter(Boolean);
 
-  return `<section class="home-yearbook"><div class="home-cover"><div class="home-cover-copy"><p class="home-edition">⌁ 持续档案</p><h2>猫猫手册</h2><p class="home-cover-title">它们路过校园，也路过我们的生活</p><span>/ 从开始记录的那天起 /</span><i></i><p class="home-cover-note">从镜头和档案中，<br>认识校园里的每一只猫。</p></div>${heroCat ? `<div class="home-cover-photos"><button class="home-cover-photo" data-cat-name="${escapeHtml(heroCat.name)}" type="button"><img src="${cdnUrl(getCatCover(heroCat))}" alt="${escapeHtml(heroCat.name)}"><strong>${escapeHtml(heroCat.name)}</strong></button><div class="home-cover-strip">${featuredCats.slice(0, 3).map(cat => `<button data-cat-name="${escapeHtml(cat.name)}" type="button"><img src="${cdnUrl(getCatCover(cat))}" alt="${escapeHtml(cat.name)}"></button>`).join('')}</div><span>ONGOING ARCHIVE</span></div>` : ''}</div><section class="home-stat-ribbon" aria-label="西电猫猫档案统计">${homeStats.map(item => { const active = item.filter === 'all' ? !filtered : item.filter === activeFilter; return `<button class="${active ? 'is-active' : ''}" data-summary-filter="${escapeHtml(item.filter)}" type="button"><strong>${item.value}</strong><span>${escapeHtml(item.label)}</span></button>`; }).join('')}</section><section class="home-featured"><header><div><p>▣ 精选目录</p><span>点击照片，进入它们的档案</span></div><small>每 15 分钟更新</small></header><div class="home-feature-grid">${featuredCats.map((cat, index) => `<button class="home-feature-card card-${index + 1}" data-cat-name="${escapeHtml(cat.name)}" type="button"><img src="${cdnUrl(getCatCover(cat))}" alt="${escapeHtml(cat.name)}" loading="lazy"><div><h3>${escapeHtml(cat.name)}</h3><p>${escapeHtml(cat.status)} · ${escapeHtml(getSterilizedBucket(cat))}</p><span>📍 ${escapeHtml(cat.area || '地点待补充')}</span></div></button>`).join('')}</div></section><section class="home-directory"><header><div><p>◆ 全部猫咪档案</p><span>已收录 ${catsWithPhotos.length} 只猫咪的照片与档案</span></div><small>CAT DIRECTORY</small></header>${renderCatControls(directoryCats.length)}${directoryCats.length ? `<div class="home-directory-grid">${directoryCats.map(cat => `<button class="home-directory-card" data-cat-name="${escapeHtml(cat.name)}" type="button"><img src="${cdnUrl(getDirectoryCover(cat))}" alt="${escapeHtml(cat.name)}" loading="lazy"><span>${escapeHtml(cat.name)}</span></button>`).join('')}</div>` : '<p class="home-directory-empty">没有匹配的猫咪，可以清空筛选后再试。</p>'}</section><footer class="home-yearbook-footer">谢谢关心它们的你　♡</footer></section>`;
+  return `<section class="home-yearbook"><div class="home-cover"><div class="home-cover-copy"><p class="home-edition">⌁ 持续档案</p><h2>猫猫手册</h2><p class="home-cover-title">它们路过校园，也路过我们的生活</p><span>/ 从开始记录的那天起 /</span><i></i><p class="home-cover-note home-cover-note-desktop">从镜头和档案中，<br>认识校园里的每一只猫。</p><p class="home-cover-note home-cover-note-mobile">让每一次相遇，<br>都被好好记住。</p></div>${heroCat ? `<div class="home-cover-photos"><button class="home-cover-photo" data-cat-name="${escapeHtml(heroCat.name)}" type="button"><img src="${cdnUrl(getCatCover(heroCat))}" alt="${escapeHtml(heroCat.name)}"><strong>${escapeHtml(heroCat.name)}</strong></button><div class="home-cover-strip">${featuredCats.slice(0, 3).map(cat => `<button data-cat-name="${escapeHtml(cat.name)}" type="button"><img src="${cdnUrl(getCatCover(cat))}" alt="${escapeHtml(cat.name)}"></button>`).join('')}</div><span>ONGOING ARCHIVE</span></div>` : ''}</div><section class="home-stat-ribbon" aria-label="西电猫猫档案统计">${homeStats.map(item => { const active = item.filter === 'all' ? !filtered : item.filter === activeFilter; return `<button class="${active ? 'is-active' : ''}" data-summary-filter="${escapeHtml(item.filter)}" type="button"><strong>${item.value}</strong><span>${escapeHtml(item.label)}</span></button>`; }).join('')}</section><section class="home-featured"><header><div><p>▣ 精选目录</p><span>点击照片，进入它们的档案</span></div><small>每 15 分钟更新</small></header><div class="home-feature-grid">${featuredCats.map((cat, index) => `<button class="home-feature-card card-${index + 1}" data-cat-name="${escapeHtml(cat.name)}" type="button"><img src="${cdnUrl(getCatCover(cat))}" alt="${escapeHtml(cat.name)}" loading="lazy"><div><h3>${escapeHtml(cat.name)}</h3><p>${escapeHtml(cat.status)} · ${escapeHtml(getSterilizedBucket(cat))}</p><span>📍 ${escapeHtml(cat.area || '地点待补充')}</span></div></button>`).join('')}</div></section><section class="home-directory"><header><div><p>◆ 全部猫咪档案</p><span>已收录 ${catsWithPhotos.length} 只猫咪的照片与档案</span></div><small>CAT DIRECTORY</small></header>${renderCatControls(directoryCats.length)}${directoryCats.length ? `<div class="home-directory-grid">${visibleDirectoryCats.map(cat => `<button class="home-directory-card" data-cat-name="${escapeHtml(cat.name)}" type="button"><img src="${cdnUrl(getDirectoryCover(cat))}" alt="${escapeHtml(cat.name)}" loading="lazy"><span>${escapeHtml(cat.name)}</span></button>`).join('')}</div>${directoryPagination}` : '<p class="home-directory-empty">没有匹配的猫咪，可以清空筛选后再试。</p>'}</section><footer class="home-yearbook-footer">谢谢关心它们的你 <svg class="home-footer-paw" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.2" cy="9.3" r="2.1"></circle><circle cx="11.1" cy="6.2" r="2.1"></circle><circle cx="16.1" cy="8.1" r="2.1"></circle><circle cx="18.3" cy="13" r="2.1"></circle><path d="M12.1 11.1c-3.1 0-5.3 2.2-5.3 4.8 0 2 1.4 3.2 3.3 3.2.8 0 1.4-.2 2-.6.6.4 1.3.6 2 .6 1.9 0 3.2-1.2 3.2-3.2 0-2.6-2.1-4.8-5.2-4.8Z"></path></svg></footer></section>`;
 }
 
 // ============== Cat Profile Tab ==============
@@ -463,6 +556,12 @@ function renderCatControls(filteredCount) {
         <button id="searchBtn" type="button" aria-label="搜索">
           <svg viewBox="0 0 24 24" aria-hidden="true" class="paw-icon"><circle cx="6.2" cy="9.3" r="2.1"></circle><circle cx="11.1" cy="6.2" r="2.1"></circle><circle cx="16.1" cy="8.1" r="2.1"></circle><circle cx="18.3" cy="13" r="2.1"></circle><path d="M12.1 11.1c-3.1 0-5.3 2.2-5.3 4.8 0 2 1.4 3.2 3.3 3.2.8 0 1.4-.2 2-.6.6.4 1.3.6 2 .6 1.9 0 3.2-1.2 3.2-3.2 0-2.6-2.1-4.8-5.2-4.8Z"></path></svg>
         </button>
+      </div>
+      <div class="directory-sort-wrap">
+        <button class="directory-sort-toggle${state.directorySort !== 'name' ? ' has-sort' : ''}" id="sortToggle" type="button" aria-label="排序猫咪档案" aria-expanded="false" aria-controls="sortPopover">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M5 12h10M5 17h6"></path><path d="M18 13v6m0 0-2-2m2 2 2-2"></path></svg>
+        </button>
+        ${renderDirectorySortPopover()}
       </div>
       <div class="directory-filter-wrap">
         <button class="directory-filter-toggle${hasFilters ? ' has-filter' : ''}" id="filterToggle" type="button" aria-label="筛选猫咪档案" aria-expanded="false" aria-controls="filterPopover">
@@ -1315,6 +1414,10 @@ function renderProcurementTab() {
 // ============== Main Render ==============
 
 function renderApp() {
+  if (directoryPageSyncFrame) {
+    window.cancelAnimationFrame(directoryPageSyncFrame);
+    directoryPageSyncFrame = null;
+  }
   if (homeFeaturedRefreshTimer) {
     window.clearTimeout(homeFeaturedRefreshTimer);
     homeFeaturedRefreshTimer = null;
@@ -1351,6 +1454,15 @@ function renderApp() {
   bindKnowledgeControls();
   bindKnowledgeToc();
 
+  if (!directoryResizeBound) {
+    window.addEventListener('resize', () => {
+      if (state.activeTab === 'home') scheduleDirectoryPageSizeSync();
+    });
+    directoryResizeBound = true;
+  }
+
+  if (state.activeTab === 'home') scheduleDirectoryPageSizeSync();
+
   if (state.activeTab === 'home') {
     const fifteenMinutes = 15 * 60 * 1000;
     const delay = fifteenMinutes - (Date.now() % fifteenMinutes) + 50;
@@ -1374,6 +1486,8 @@ function bindControls() {
         state.sterilized = '全部';
         state.friendliness = '全部';
         state.area = '全部';
+        state.directoryPage = 1;
+        state.directorySort = 'name';
         state.timelineType = '全部';
         state.procurementQuery = '';
         state.procurementSubcategory = '';
@@ -1396,6 +1510,7 @@ function bindControls() {
       const val = searchInput.value.trim();
       if (val !== state.query) {
         state.query = val;
+        state.directoryPage = 1;
         renderApp();
       }
     }
@@ -1419,6 +1534,7 @@ function bindControls() {
   clearSearchButtons.forEach(clearSearch => {
     clearSearch.addEventListener('click', () => {
       state.query = '';
+      state.directoryPage = 1;
       renderApp();
     });
   });
@@ -1426,11 +1542,29 @@ function bindControls() {
   if (state.activeTab === 'home') {
     const filterToggle = document.getElementById('filterToggle');
     const filterPopover = document.getElementById('filterPopover');
+    const sortToggle = document.getElementById('sortToggle');
+    const sortPopover = document.getElementById('sortPopover');
     if (filterToggle && filterPopover) {
       filterToggle.addEventListener('click', () => {
         const isOpen = !filterPopover.hidden;
         filterPopover.hidden = isOpen;
         filterToggle.setAttribute('aria-expanded', String(!isOpen));
+        if (!isOpen && sortPopover && sortToggle) {
+          sortPopover.hidden = true;
+          sortToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    if (sortToggle && sortPopover) {
+      sortToggle.addEventListener('click', () => {
+        const isOpen = !sortPopover.hidden;
+        sortPopover.hidden = isOpen;
+        sortToggle.setAttribute('aria-expanded', String(!isOpen));
+        if (!isOpen && filterPopover && filterToggle) {
+          filterPopover.hidden = true;
+          filterToggle.setAttribute('aria-expanded', 'false');
+        }
       });
     }
 
@@ -1453,6 +1587,17 @@ function bindControls() {
     document.querySelectorAll('[data-select-option]').forEach(option => {
       option.addEventListener('click', () => {
         state[option.dataset.selectFilter] = option.dataset.selectValue;
+        state.directoryPage = 1;
+        renderApp();
+      });
+    });
+
+    document.querySelectorAll('[data-directory-sort]').forEach(option => {
+      option.addEventListener('click', () => {
+        const sort = option.dataset.directorySort;
+        if (!DIRECTORY_SORT_OPTIONS.some(item => item.value === sort)) return;
+        state.directorySort = sort;
+        state.directoryPage = 1;
         renderApp();
       });
     });
@@ -1466,12 +1611,22 @@ function bindControls() {
         state.sterilized = '全部';
         state.friendliness = '全部';
         state.area = '全部';
+        state.directoryPage = 1;
         renderApp();
       });
     }
 
     bindCatCards();
     bindSummaryCards();
+    document.querySelectorAll('[data-directory-page]').forEach(button => {
+      button.addEventListener('click', () => {
+        if (button.disabled) return;
+        const page = Number(button.dataset.directoryPage);
+        if (!Number.isInteger(page) || page < 1 || page === state.directoryPage) return;
+        state.directoryPage = page;
+        renderApp();
+      });
+    });
   }
 
   if (state.activeTab === 'timeline') {
@@ -1764,6 +1919,7 @@ function applyHomeFilter(filterKey) {
   state.sterilized = '全部';
   state.friendliness = '全部';
   state.area = '全部';
+  state.directoryPage = 1;
 
   if (filterKey !== 'all') {
     const [type, value] = filterKey.split('-', 2);

@@ -12,6 +12,7 @@ export const catProfiles = [
   },
   {
     name: '水手',
+    photoUpdatedAt: '2026-08-08',
     status: '就读中',
     friendliness: '亲人',
     vaccine: '一针 2026-05-10；二针 2026-05-31；三针 2026-06-28（紫薇京和）',
@@ -78,6 +79,7 @@ export const catProfiles = [
   },
   {
     name: '黑哥',
+    photoUpdatedAt: '2026-08-14',
     status: '就读中',
     friendliness: '怕人',
     vaccine: '未接种',
@@ -100,6 +102,7 @@ export const catProfiles = [
   },
   {
     name: '豆介',
+    photoUpdatedAt: '2026-08-16',
     status: '就读中',
     friendliness: '非常怕人',
     vaccine: '一针 2026-06-26（紫薇京和）；二针未接种；三针未接种',
@@ -155,6 +158,7 @@ export const catProfiles = [
   },
   {
     name: '赫兹',
+    photoUpdatedAt: '2026-08-18',
     status: '就读中',
     friendliness: '亲人',
     vaccine: '未接种',
@@ -298,6 +302,7 @@ export const catProfiles = [
   },
   {
     name: '大头',
+    photoUpdatedAt: '2026-08-18',
     status: '就读中',
     friendliness: '亲人',
     vaccine: '妙三多·一针 2025-07-27；二针 2025-09-09；三针 2025-10-07（紫薇京和）',
@@ -310,6 +315,7 @@ export const catProfiles = [
   },
   {
     name: '漂亮橘',
+    photoUpdatedAt: '2026-08-19',
     status: '就读中',
     friendliness: '亲人',
     vaccine: '妙三多·一针 2026-05-10；二针 2026-05-31；三针 2026-06-28（紫薇京和）',
