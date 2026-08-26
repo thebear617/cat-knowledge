@@ -20,7 +20,7 @@ export const catProfiles = [
     notes: '第三针认捐人：蔚蓝future',
     area: '丁香',
     gender: '公',
-    images: ['images/水手/水手1.jpg', 'images/水手/水手2.jpg', 'images/水手/水手3.jpg', 'images/水手/水手4.jpg']
+    images: ['images/水手/水手1.jpg', 'images/水手/水手2.jpg', 'images/水手/水手3.jpg', 'images/水手/水手4.jpg', 'images/水手/水手5.jpg']
   },
   {
     name: '虎先锋',
