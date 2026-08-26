@@ -390,7 +390,7 @@ export const catProfiles = [
     notes: '纯白短毛，怕人，已绝育但疫苗未接种。',
     area: '竹园',
     gender: '公',
-    images: ['images/金琥/金琥2.jpg', 'images/金琥/金琥1.jpg']
+    images: ['images/金琥/金琥2.jpg', 'images/金琥/金琥1.jpg', 'images/金琥/金琥3.jpg']
   },
   {
     name: '邪恶奶牛',
