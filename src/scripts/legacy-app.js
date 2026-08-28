@@ -1950,23 +1950,119 @@ function bindSummaryCards() {
 
 // ============== Sidebar Toggle ==============
 
+const DESKTOP_SIDEBAR_BREAKPOINT = 720;
+let desktopSidebarPinned = false;
+let desktopSidebarHovered = false;
+let compactSidebarLayout = window.innerWidth < DESKTOP_SIDEBAR_BREAKPOINT;
+let sidebarHoverCloseTimer = null;
+
+function isCompactSidebarLayout() {
+  return window.innerWidth < DESKTOP_SIDEBAR_BREAKPOINT;
+}
+
+function clearSidebarHoverCloseTimer() {
+  if (sidebarHoverCloseTimer !== null) {
+    window.clearTimeout(sidebarHoverCloseTimer);
+    sidebarHoverCloseTimer = null;
+  }
+}
+
+function updateSidebarToggleState(expanded) {
+  const toggle = document.getElementById('sidebarToggle');
+  if (!toggle) return;
+  toggle.setAttribute('aria-expanded', String(expanded));
+  toggle.setAttribute('aria-label', expanded ? '侧边栏已展开' : '展开侧边栏');
+}
+
+function syncDesktopSidebar() {
+  const expanded = desktopSidebarPinned || desktopSidebarHovered;
+  document.body.classList.toggle('sidebar-expanded', !compactSidebarLayout && expanded);
+  document.body.classList.toggle('sidebar-collapsed', !compactSidebarLayout && !expanded);
+  updateSidebarToggleState(compactSidebarLayout ? document.body.classList.contains('sidebar-open') : expanded);
+}
+
+function setDesktopSidebarHover(value) {
+  clearSidebarHoverCloseTimer();
+  desktopSidebarHovered = value;
+  syncDesktopSidebar();
+}
+
+function scheduleDesktopSidebarClose() {
+  clearSidebarHoverCloseTimer();
+  if (desktopSidebarPinned) return;
+  sidebarHoverCloseTimer = window.setTimeout(() => {
+    desktopSidebarHovered = false;
+    syncDesktopSidebar();
+  }, 120);
+}
+
 function closeSidebar() {
   document.body.classList.remove('sidebar-open');
   document.body.style.overflow = '';
+  desktopSidebarPinned = false;
+  desktopSidebarHovered = false;
+  clearSidebarHoverCloseTimer();
+  syncDesktopSidebar();
 }
 function openSidebar() {
   document.body.classList.add('sidebar-open');
   document.body.style.overflow = 'hidden';
+  updateSidebarToggleState(true);
 }
 
 (function initSidebarToggle() {
   const toggle = document.getElementById('sidebarToggle');
   const backdrop = document.getElementById('sidebarBackdrop');
   const close = document.getElementById('sidebarClose');
+  const collapse = document.getElementById('sidebarCollapse');
+  const sidebar = document.getElementById('sidebar');
 
-  if (toggle) toggle.addEventListener('click', openSidebar);
+  if (toggle) {
+    toggle.addEventListener('mouseenter', () => {
+      if (!compactSidebarLayout) setDesktopSidebarHover(true);
+    });
+    toggle.addEventListener('mouseleave', () => {
+      if (!compactSidebarLayout) scheduleDesktopSidebarClose();
+    });
+    toggle.addEventListener('click', () => {
+      if (compactSidebarLayout) {
+        openSidebar();
+        return;
+      }
+      desktopSidebarPinned = true;
+      setDesktopSidebarHover(true);
+    });
+  }
   if (backdrop) backdrop.addEventListener('click', closeSidebar);
   if (close) close.addEventListener('click', closeSidebar);
+  if (collapse) {
+    collapse.addEventListener('click', () => {
+      desktopSidebarPinned = false;
+      desktopSidebarHovered = false;
+      clearSidebarHoverCloseTimer();
+      syncDesktopSidebar();
+    });
+  }
+  if (sidebar) {
+    sidebar.addEventListener('mouseenter', () => {
+      if (!compactSidebarLayout) setDesktopSidebarHover(true);
+    });
+    sidebar.addEventListener('mouseleave', () => {
+      if (!compactSidebarLayout) scheduleDesktopSidebarClose();
+    });
+  }
+
+  window.addEventListener('resize', () => {
+    const nextCompactLayout = isCompactSidebarLayout();
+    if (nextCompactLayout !== compactSidebarLayout) {
+      compactSidebarLayout = nextCompactLayout;
+      desktopSidebarPinned = false;
+      desktopSidebarHovered = false;
+      clearSidebarHoverCloseTimer();
+      closeSidebar();
+    }
+    syncDesktopSidebar();
+  }, { passive: true });
 
   // Close sidebar on nav item click (mobile)
   const nav = document.getElementById('sidebarNav');
@@ -1977,6 +2073,8 @@ function openSidebar() {
       }
     });
   }
+
+  syncDesktopSidebar();
 })();
 
 // ============== Global Events ==============
