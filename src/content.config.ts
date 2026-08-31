@@ -10,9 +10,9 @@ const science = defineCollection({
     publishedAt: z.coerce.date(),
     category: z.string(),
     subcategory: z.string(),
-    tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
-    slug: z.string().optional(),
+    updated: z.coerce.date(),
+    slug: z.string(),
   }),
 });
 

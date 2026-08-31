@@ -1,0 +1,1858 @@
+---
+import knowledgeCategories from '../data/knowledge-categories.js';
+
+// The local CMS is intentionally available only from Astro's dev server.
+const isDev = import.meta.env.DEV;
+const base = import.meta.env.BASE_URL === '/' ? '/' : import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+
+{isDev ? <>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href={`${base}favicon.png`} />
+  <title>猫猫手册后台</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { min-width: 320px; background: #f7f3ee; }
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      background: #f7f3ee;
+      color: #2b241d;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", sans-serif;
+    }
+    button, input, select, textarea { font: inherit; }
+
+    .admin {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 6px;
+      max-width: 1600px;
+      height: 100vh;
+      min-height: 720px;
+      margin: auto;
+      padding: 9px 16px 16px;
+    }
+    .topbar,
+    .panel {
+      border: 1px solid #e7e0d7;
+      background: rgba(255, 255, 255, .95);
+      box-shadow: 0 3px 12px rgba(96, 72, 45, .06);
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      min-height: 58px;
+      padding: 9px 16px;
+      border-radius: 9px;
+    }
+    .brand-group,
+    .brand-lockup,
+    .topbar-actions,
+    .editor-actions,
+    .status-group,
+    .toolbar,
+    .actions,
+    .search-wrap,
+    .editor-label,
+    .panel-heading,
+    .article-meta,
+    .field-label {
+      display: flex;
+      align-items: center;
+    }
+    .brand-group { gap: 16px; min-width: 0; }
+    .brand-lockup { gap: 13px; min-width: 0; }
+    .brand-mark {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      flex: 0 0 auto;
+      place-items: center;
+      color: #a26136;
+    }
+    .brand-mark svg { width: 30px; height: 30px; fill: currentColor; }
+    .brand-title {
+      margin: 0;
+      overflow: hidden;
+      color: #a26136;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -.035em;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .environment {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 10px;
+      border: 1px solid #e3d3c3;
+      border-radius: 7px;
+      color: #96543a;
+      background: #fdf9f4;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .environment::before {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #c97940;
+      content: "";
+    }
+    .topbar-actions { gap: 10px; }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 12px;
+      border: 1px solid #e2d8cb;
+      border-radius: 8px;
+      color: #3d332b;
+      background: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .back-link:hover { border-color: #a26136; color: #8b4f2c; background: #fdf9f4; }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(300px, 356px) minmax(0, 1fr);
+      gap: 6px;
+      min-height: 0;
+    }
+    .panel { min-width: 0; border-radius: 9px; }
+    .sidebar-panel {
+      display: grid;
+      grid-template-rows: auto auto auto minmax(0, 1fr);
+      min-height: 0;
+      padding: 20px 14px 11px;
+    }
+    .panel-heading {
+      justify-content: space-between;
+      margin: 0 0 15px;
+      padding: 0;
+    }
+    .panel-heading h2,
+    .editor-heading h2 {
+      margin: 0;
+      color: #2f2924;
+      font-weight: 800;
+      letter-spacing: -.025em;
+    }
+    .panel-heading h2 { font-size: 19px; }
+    .count {
+      color: #a39689;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .search-wrap { position: relative; margin-bottom: 10px; }
+    .search-wrap svg { position: absolute; left: 11px; width: 16px; height: 16px; color: #8a7d70; pointer-events: none; }
+    .search-wrap .search-icon-right { right: 10px; left: auto; }
+    .search-wrap input { padding-right: 34px; padding-left: 34px; }
+    .library-controls { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 6px; margin-bottom: 10px; }
+    .library-controls .search-wrap { min-width: 0; margin-bottom: 0; }
+    .library-actions { display: flex; gap: 6px; }
+    .library-action-wrap { position: relative; }
+    .library-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      min-height: 36px;
+      padding: 0 8px;
+      color: #5f5348;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+    .library-action svg { width: 14px; height: 14px; flex: 0 0 auto; }
+    .library-action.active { border-color: #d8a474; color: #8b4f2c; background: #f9efe4; }
+    .library-action[aria-expanded="true"] { border-color: #d8a474; color: #8b4f2c; background: #f9efe4; }
+    .control-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 16px;
+      height: 16px;
+      padding: 0 4px;
+      border-radius: 999px;
+      color: #fff;
+      background: #a26136;
+      font-size: 10px;
+      line-height: 1;
+    }
+    .library-popover {
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      z-index: 8;
+      width: 190px;
+      padding: 10px;
+      border: 1px solid #e7e0d7;
+      border-radius: 9px;
+      background: #fff;
+      box-shadow: 0 8px 22px rgba(96, 72, 45, .14);
+    }
+    .library-popover[hidden] { display: none; }
+    .library-popover-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; color: #2f2924; font-size: 12px; }
+    .library-popover-heading button { padding: 0; border: 0; color: #8b4f2c; background: transparent; font-size: 11px; font-weight: 600; }
+    .library-popover-heading button:hover { border: 0; background: transparent; text-decoration: underline; }
+    .sort-options { display: grid; gap: 4px; }
+    .sort-option { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 32px; padding: 0 8px; border: 1px solid transparent; border-radius: 6px; color: #3d332b; background: transparent; font-size: 11px; text-align: left; }
+    .sort-option small { color: #a39689; font-size: 10px; font-weight: 600; }
+    .sort-option:hover { border-color: #e3c9a9; color: #8b4f2c; background: #fdf9f4; }
+    .sort-option.on { color: #8b4f2c; background: #f9efe4; }
+    .filter-fields { display: grid; gap: 8px; }
+    .filter-field { display: grid; gap: 4px; color: #6f6257; font-size: 10px; font-weight: 700; }
+    .filter-field select { min-height: 32px; padding: 5px 8px; font-size: 11px; }
+    .filter-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      background: rgba(43, 33, 23, .2);
+      backdrop-filter: blur(2px);
+    }
+    .filter-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      z-index: 21;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      width: min(92vw, 440px);
+      max-height: min(92vh, 640px);
+      overflow: visible;
+      transform: translate(-50%, -50%);
+      border: 1px solid #e7e0d7;
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 0 18px 50px rgba(50, 38, 26, .2);
+    }
+    .filter-modal[hidden], .filter-backdrop[hidden] { display: none; }
+    .filter-modal-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 20px 22px 16px; border-bottom: 1px solid #efe7dc; }
+    .filter-modal-header h3 { margin: 0; color: #2f2924; font-size: 17px; letter-spacing: -.02em; }
+    .filter-modal-header p { margin: 5px 0 0; color: #94887c; font-size: 11px; line-height: 1.5; }
+    .filter-modal-close { display: grid; width: 28px; height: 28px; place-items: center; padding: 0; border: 0; border-radius: 50%; color: #8a7d70; background: transparent; font-size: 20px; line-height: 1; }
+    .filter-modal-close:hover { border: 0; color: #8b4f2c; background: #f9efe4; }
+    .filter-modal-body { overflow: visible; padding: 18px 22px 20px; }
+    .filter-modal-body .filter-fields { gap: 14px; }
+    .filter-modal-body .filter-field { gap: 6px; color: #3d332b; font-size: 11px; }
+    .custom-select { position: relative; align-self: start; width: 100%; min-width: 0; }
+    .field-label > .custom-select { align-self: stretch; width: 100%; min-width: 0; }
+    .custom-select-native { position: absolute; width: 1px; height: 1px; min-height: 0 !important; padding: 0 !important; border: 0 !important; opacity: 0; pointer-events: none; }
+    .custom-select-trigger {
+      display: flex; width: 100%; height: 36px; min-height: 36px;
+      align-items: center; justify-content: space-between; gap: 8px;
+      padding: 7px 9px; border: 1px solid #ded2c4; border-radius: 7px;
+      color: #3d332b; background: #fffdfa; font-size: 12px; font-weight: 600; text-align: left;
+    }
+    .custom-select-trigger:hover { border-color: #cf9568; color: #8b4f2c; background: #fff; }
+    .custom-select-trigger:disabled { border-color: #e8e0d5; color: #a89c8e; background: #f7f4ef; cursor: not-allowed; }
+    .custom-select-trigger svg { width: 15px; height: 15px; flex: 0 0 auto; color: #a39689; transition: transform .15s ease, color .15s ease; }
+    .custom-select.open .custom-select-trigger { border-color: #cf9568; box-shadow: inset 0 0 0 1px #cf9568; }
+    .custom-select.open .custom-select-trigger svg { color: #a26136; transform: rotate(180deg); }
+    .custom-select-menu {
+      position: absolute; top: calc(100% + 5px); right: 0; left: 0; z-index: 30;
+      max-height: 220px; overflow-y: auto; padding: 5px;
+      border: 1px solid #e6d9c9; border-radius: 8px; background: #fffdfa;
+      box-shadow: 0 12px 26px rgba(96, 72, 45, .14);
+    }
+    .custom-select-menu[hidden] { display: none; }
+    .custom-select-option {
+      display: flex; width: 100%; min-height: 32px; align-items: center;
+      padding: 0 8px; border: 0; border-radius: 6px;
+      color: #5f5348; background: transparent; font-size: 11px; font-weight: 600; text-align: left;
+    }
+    .custom-select-option::before { width: 16px; flex: 0 0 16px; color: #a26136; content: ""; font-size: 13px; font-weight: 800; }
+    .custom-select-option:hover, .custom-select-option.is-selected { border: 0; color: #8b4f2c; background: #f7ede0; }
+    .custom-select-option.is-selected::before { content: "✓"; }
+    .filter-modal-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 13px 22px; border-top: 1px solid #efe7dc; background: #fffdfa; }
+    .filter-modal-footer .filter-clear-button { padding: 0; border: 0; color: #6f6257; background: transparent; font-size: 12px; font-weight: 600; }
+    .filter-modal-footer .filter-clear-button:hover { border: 0; color: #8b4f2c; background: transparent; text-decoration: underline; }
+    .filter-modal-footer .filter-done-button { min-height: 36px; padding: 0 16px; border-color: #a26136; color: #fff; background: #a26136; }
+    .filter-modal-footer .filter-done-button:hover { border-color: #8b4f2c; color: #fff; background: #8b4f2c; }
+    .toolbar { gap: 8px; margin-bottom: 16px; }
+    .toolbar button:first-child { flex: 1 1 auto; }
+
+    button {
+      cursor: pointer;
+      border: 1px solid #ded2c4;
+      border-radius: 8px;
+      color: #3d332b;
+      background: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      transition: border-color .15s, background .15s, color .15s, box-shadow .15s, opacity .15s;
+    }
+    button:hover { border-color: #a26136; color: #8b4f2c; background: #fdf9f4; }
+    button:focus-visible { outline: 3px solid rgba(162, 97, 54, .16); outline-offset: 1px; }
+    input:focus-visible, select:focus-visible, textarea:focus-visible { outline: none; }
+    button:disabled { cursor: wait; opacity: .65; }
+    button.primary {
+      min-height: 40px;
+      padding: 0 16px;
+      border-color: #a26136;
+      color: #fff;
+      background: #a26136;
+      box-shadow: 0 5px 12px rgba(162, 97, 54, .16);
+    }
+    button.primary:hover { border-color: #8b4f2c; color: #fff; background: #8b4f2c; }
+    .delete-button { min-height: 40px; padding: 0 15px; border-color: #e7b7b2; color: #b42318; background: #fff; white-space: nowrap; }
+    .delete-button:hover { border-color: #d88b82; color: #9f1d1d; background: #fff5f5; }
+    .delete-button:disabled { border-color: #ece7e3; color: #b8b2ad; background: #faf9f7; }
+    .toolbar button { min-height: 38px; padding: 0 12px; }
+    .toolbar button:first-child { color: #fff; border-color: #a26136; background: #a26136; }
+    .toolbar button:first-child:hover { border-color: #8b4f2c; background: #8b4f2c; }
+    .toolbar svg { vertical-align: -3px; margin-right: 5px; }
+    input:not([type="checkbox"]), select, textarea {
+      width: 100%;
+      border: 1px solid #ded2c4;
+      border-radius: 8px;
+      color: #2b241d;
+      background: #fff;
+    }
+    input, select { min-height: 36px; padding: 7px 10px; }
+    textarea { resize: vertical; padding: 9px 10px; line-height: 1.55; }
+    input[type="checkbox"] { width: auto; min-width: 0; accent-color: #a26136; }
+    input:not([type="checkbox"]):focus, select:focus, textarea:focus { border-color: #c98a5b; box-shadow: inset 0 0 0 1px #c98a5b; outline: none; }
+    .article-list {
+      min-height: 0;
+      overflow: auto;
+      margin: 0 -5px;
+      padding: 0 5px 4px;
+      scrollbar-color: #c7bba9 transparent;
+      scrollbar-width: thin;
+    }
+    .article-list::-webkit-scrollbar { width: 8px; }
+    .article-list::-webkit-scrollbar-thumb { border: 2px solid transparent; border-radius: 999px; background: #c7bba9; background-clip: padding-box; }
+    .article {
+      display: block;
+      width: 100%;
+      margin: 0 0 6px;
+      padding: 12px 12px 11px;
+      text-align: left;
+      border-color: #efe7dc;
+      border-radius: 7px;
+    }
+    .article:hover { border-color: #e3c9a9; background: #fdf9f4; }
+    .article.active {
+      position: relative;
+      border-color: #d8a474;
+      background: #f9efe4;
+      box-shadow: inset 3px 0 #a26136;
+    }
+    .article strong,
+    .article small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .article strong { color: #2b241d; font-size: 13px; }
+    .article small { margin-top: 5px; color: #6f6257; font-size: 11px; font-weight: 500; }
+    .article-meta { gap: 7px; margin-top: 7px; overflow: hidden; color: #94887c; font-size: 11px; white-space: nowrap; }
+    .article-meta span { overflow: hidden; text-overflow: ellipsis; }
+    .article-meta span + span::before { margin-right: 7px; color: #c4b7a8; content: "·"; }
+    .draft-badge {
+      display: inline-flex;
+      flex: 0 0 auto;
+      align-items: center;
+      padding: 1px 7px;
+      border: 1px solid #d8a474;
+      border-radius: 999px;
+      color: #96543a;
+      background: #f9efe4;
+      font-size: 10px;
+      font-weight: 700;
+    }
+    .draft-badge::before { margin-right: 4px; color: #c97940; content: "•"; font-size: 12px; line-height: 1; }
+
+    .main-panel {
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr);
+      min-height: 0;
+      padding: 20px 14px 12px;
+    }
+    .editor-heading { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px 20px; margin: 0 0 17px; padding: 0 2px; }
+    .editor-heading > div:first-child { flex: 1 1 260px; min-width: 0; }
+    .editor-heading h2 { font-size: 20px; }
+    .editor-heading p { margin: 5px 0 0; color: #94887c; font-size: 12px; }
+    .editor-actions { flex: 0 1 auto; flex-wrap: wrap; justify-content: flex-end; gap: 8px 14px; min-width: 0; max-width: 100%; }
+    .status-group { flex: 0 1 auto; gap: 9px; min-width: 0; max-width: 100%; color: #8a7d70; font-size: 12px; white-space: nowrap; }
+    .save-state { display: inline-flex; align-items: center; gap: 6px; }
+    .save-state::before { width: 10px; height: 10px; border: 1.5px solid currentColor; border-radius: 50%; content: ""; }
+    .save-state.saved { color: #15803d; font-weight: 700; }
+    .save-state.saved::before { border-width: 2px; }
+    .save-state.saving { color: #b45309; }
+    .save-state.error { color: #b42318; white-space: normal; overflow-wrap: anywhere; }
+    .save-state.neutral { color: #8a7d70; }
+
+    .fields { min-height: 0; margin-bottom: 12px; }
+    .field-grid { display: grid; gap: 10px; }
+    .field-card-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1fr) minmax(0, 1fr); }
+    .field-card {
+      min-width: 0;
+      padding: 14px;
+      border: 1px solid #efe7dc;
+      border-radius: 8px;
+      background: #fffdfa;
+    }
+    .field-card-heading { margin-bottom: 13px; }
+    .field-card-heading h3 { margin: 0; color: #2f2924; font-size: 14px; }
+    .field-card-heading p { margin: 4px 0 0; color: #a39689; font-size: 11px; line-height: 1.45; }
+    .field-stack { display: grid; min-width: 0; gap: 10px; }
+    .field-row { display: grid; min-width: 0; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .field-label { align-items: flex-start; flex-direction: column; gap: 5px; width: 100%; min-width: 0; color: #3d332b; font-size: 11px; font-weight: 700; }
+    .field-label-caption { display: inline-flex; align-items: center; gap: 3px; min-height: 14px; }
+    .field-label > input,
+    .field-label > select,
+    .field-label > textarea { display: block; width: 100%; min-width: 0; max-width: 100%; box-sizing: border-box; }
+    .field-label-check { flex-direction: row; align-items: center; gap: 7px; }
+    .field-label-check input[type="checkbox"] { width: 15px; height: 15px; margin: 0; }
+    .required { color: #a26136; }
+    .metadata-description { min-height: 74px; }
+    .editor-workspace { --editor-content-gap: 28px; --editor-caret-space: 10.5em; position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); min-height: 0; border: 1px solid #efe7dc; border-radius: 8px; overflow: hidden; }
+    .editor-sync-controls { position: absolute; top: 50%; left: 50%; z-index: 3; display: grid; gap: 3px; transform: translate(-50%, -50%); padding: 4px; border: 1px solid #e7e0d7; border-radius: 999px; background: #fff; box-shadow: 0 4px 12px rgba(96, 72, 45, .12); }
+    .editor-sync-button { display: grid; width: 25px; height: 25px; min-width: 25px; place-items: center; padding: 0; border: 0; border-radius: 50%; color: #6f6257; background: transparent; font-size: 16px; line-height: 1; }
+    .editor-sync-button:hover { border: 0; color: #a26136; background: #f7ede0; }
+    .editor-sync-button:focus-visible { outline: 2px solid rgba(162, 97, 54, .28); outline-offset: 1px; }
+    .editor-column { display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; min-width: 0; min-height: 0; }
+    .editor-column:last-child { grid-template-rows: auto minmax(0, 1fr); }
+    .editor-column + .editor-column { border-left: 1px solid #efe7dc; }
+    .editor-label { min-height: 42px; justify-content: space-between; padding: 0 13px; border-bottom: 1px solid #efe7dc; color: #2f2924; font-size: 13px; font-weight: 800; }
+    .editor-label span { color: #94887c; font-size: 11px; font-weight: 600; }
+    .editor-toolbar { display: flex; align-items: center; gap: 2px; min-height: 37px; padding: 4px 8px; overflow-x: auto; border-bottom: 1px solid #efe7dc; background: #fffdfa; }
+    .editor-tool { display: inline-grid; min-width: 27px; height: 27px; flex: 0 0 auto; place-items: center; padding: 0 5px; border: 0; border-radius: 5px; color: #54493e; background: transparent; font-size: 13px; font-weight: 700; }
+    .editor-tool:hover { border: 0; color: #8b4f2c; background: #f7ede0; }
+    .editor-tool-divider { width: 1px; height: 20px; flex: 0 0 auto; margin: 0 5px; background: #e6ddd1; }
+    .editor-pane { position: relative; display: block; min-width: 0; min-height: 0; overflow: hidden; background: #fff; }
+    textarea#body { display: block; width: 100%; max-width: 100%; min-width: 0; min-height: 0; height: 100%; resize: none; border: 0; border-radius: 0; padding: 15px var(--editor-content-gap) calc(15px + var(--editor-caret-space)) 15px; overflow-x: hidden; overflow-y: auto; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; color: #3a2f26; font: 13px/1.75 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .editor-jump-controls { position: absolute; right: 12px; bottom: 12px; z-index: 2; display: grid; gap: 6px; }
+    .editor-jump-button { display: grid; width: 30px; height: 30px; place-items: center; padding: 0; border: 1px solid rgba(127, 90, 55, .24); border-radius: 50%; color: rgba(139, 79, 44, .78); background: rgba(255, 253, 251, .8); box-shadow: 0 3px 10px rgba(96, 72, 45, .12); opacity: .58; transition: opacity .15s, color .15s, background-color .15s, transform .15s; }
+    .editor-jump-button:hover, .editor-jump-button:focus-visible { color: #8b4f2c; background: rgba(249, 239, 228, .94); opacity: .96; }
+    .editor-jump-button:focus-visible { outline: 2px solid rgba(162, 97, 54, .28); outline-offset: 2px; }
+    .editor-jump-button:active { transform: scale(.94); }
+    .editor-jump-button svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.8; }
+    .editor-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 32px; padding: 0 12px; border-top: 1px solid #efe7dc; color: #8a7d70; font-size: 11px; }
+    .editor-footer-left, .editor-footer-right { display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .editor-footer-right { color: #8a7d70; white-space: nowrap; }
+    .auto-save { display: inline-flex; align-items: center; gap: 5px; }
+    .auto-save::before { width: 7px; height: 7px; border-radius: 50%; background: #2f8f3a; content: ""; }
+    .preview { min-height: 0; overflow: auto; padding: 15px var(--editor-content-gap) 15px 15px; background: #fff; color: #2b241d; font-size: .94rem; line-height: 1.8; transition: opacity .15s; }
+    .preview.is-loading { opacity: .62; }
+    .preview-error { color: #b42318; }
+    .preview:empty::before { color: #ab9e90; content: 'Markdown 预览会显示在这里'; }
+    .preview h1, .preview h2, .preview h3 { color: #2f2924; scroll-margin-top: 1rem; }
+    .preview h1 { margin: 1.8rem 0 .7rem; font-size: 1.35rem; }
+    .preview h2 { margin: 1.5rem 0 .6rem; font-size: 1.18rem; }
+    .preview h3 { margin: 1.15rem 0 .45rem; font-size: 1rem; }
+    .preview h1:first-child, .preview h2:first-child, .preview h3:first-child { margin-top: 0; }
+    .preview p { margin: .65rem 0; }
+    .preview ul, .preview ol { margin: .45rem 0; padding-left: 1.35rem; }
+    .preview ol { list-style-type: decimal; }
+    .preview li + li { margin-top: .35rem; }
+    .preview .is-sync-target { border-radius: 4px; background: #f7ede0; box-shadow: 0 0 0 2px rgba(162, 97, 54, .14); }
+    .preview blockquote { margin: .8rem 0; padding: .6rem .9rem; border-left: 3px solid #d8a474; background: #f8efe3; color: #5f5348; }
+    .preview code { padding: .1em .3em; border-radius: 4px; background: #f3eadf; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .88em; }
+
+    .delete-modal { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 24px; }
+    .delete-modal[hidden] { display: none; }
+    .delete-modal-backdrop { position: absolute; inset: 0; background: rgba(43, 33, 23, .28); }
+    .delete-modal-card { position: relative; width: min(100%, 420px); padding: 22px; border: 1px solid #e7e0d7; border-radius: 12px; background: #fff; box-shadow: 0 22px 60px rgba(43, 33, 23, .2); }
+    .delete-modal-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+    .delete-modal-header h3 { margin: 0; color: #2f2924; font-size: 18px; }
+    .delete-modal-message { margin: 10px 0 0; color: #6f6257; font-size: 12px; line-height: 1.7; word-break: break-word; }
+    .delete-modal-close { display: grid; width: 30px; height: 30px; flex: 0 0 auto; place-items: center; padding: 0; border: 0; border-radius: 50%; color: #94887c; background: transparent; font-size: 23px; line-height: 1; }
+    .delete-modal-close:hover { color: #b42318; background: #fff5f5; }
+    .delete-modal-close:focus-visible { outline: 2px solid rgba(162, 97, 54, .24); outline-offset: 2px; }
+    .delete-modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 22px; }
+    .delete-modal-actions button { min-height: 36px; padding: 0 15px; border-radius: 8px; font-size: 12px; font-weight: 700; }
+    .delete-modal-cancel { border: 1px solid #ded2c4; color: #6f6257; background: #fff; }
+    .delete-modal-cancel:hover { border-color: #d6a98e; color: #8b4f2c; background: #fdf9f4; }
+    .delete-modal-confirm { border: 1px solid #b42318; color: #fff; background: #b42318; }
+    .delete-modal-confirm:hover { border-color: #941c14; background: #941c14; }
+    .delete-modal-actions button:disabled { cursor: wait; opacity: .65; }
+
+    @media (max-width: 1120px) {
+      .workspace { grid-template-columns: minmax(260px, 310px) minmax(0, 1fr); }
+      .field-card-grid { grid-template-columns: 1fr; }
+      .field-card { padding: 13px; }
+    }
+    @media (max-width: 820px) {
+      .admin { height: auto; min-height: 100vh; }
+      .workspace { grid-template-columns: 1fr; }
+      .sidebar-panel { min-height: 360px; }
+      .article-list { max-height: 330px; }
+      .main-panel { min-height: 900px; }
+    }
+    @media (max-width: 620px) {
+      .admin { padding: 8px 10px 12px; }
+      .topbar { align-items: flex-start; flex-direction: column; gap: 10px; padding: 10px 12px; }
+      .topbar-actions { width: 100%; justify-content: flex-end; }
+      .brand-title { font-size: 19px; }
+      .editor-heading { align-items: flex-start; flex-direction: column; }
+      .editor-heading > div:first-child { flex: 0 1 auto; }
+      .editor-actions { width: 100%; justify-content: space-between; }
+      .editor-workspace { grid-template-columns: 1fr; min-height: 860px; }
+      .editor-sync-controls { display: none; }
+      .editor-column + .editor-column { border-top: 1px solid #efe7dc; border-left: 0; }
+      .field-row { grid-template-columns: 1fr; }
+      .editor-footer { padding: 0 9px; }
+      .editor-footer-left { gap: 8px; }
+      .editor-footer-right { display: none; }
+      .preview { padding-right: 15px; }
+      .library-controls { grid-template-columns: 1fr; }
+      .library-actions { justify-content: stretch; }
+      .library-action-wrap, .library-action { flex: 1; }
+    }
+
+    .editor-actions .secondary { min-height: 34px; padding: 0 12px; }
+    html:has(body.is-immersive) { overflow: hidden; }
+    body.is-immersive { overflow: hidden; }
+    body.is-immersive .admin {
+      grid-template-rows: minmax(0, 1fr);
+      width: 100%;
+      max-width: none;
+      height: 100vh;
+      min-height: 0;
+      padding: 0;
+      gap: 0;
+    }
+    body.is-immersive .topbar,
+    body.is-immersive .sidebar-panel,
+    body.is-immersive .fields { display: none; }
+    body.is-immersive .workspace {
+      grid-template-columns: minmax(0, 1fr);
+      height: 100%;
+      min-height: 0;
+    }
+    body.is-immersive .main-panel {
+      grid-template-rows: auto minmax(0, 1fr);
+      height: 100%;
+      min-height: 0;
+      padding: 0;
+      border-radius: 0;
+    }
+    body.is-immersive .editor-heading { min-height: 58px; margin: 0; padding: 10px 16px; }
+    body.is-immersive .editor-workspace { height: 100%; min-height: 0; border-radius: 0; }
+    @media (max-width: 620px) {
+      body.is-immersive .editor-workspace {
+        grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+        overflow: visible;
+      }
+    }
+  </style>
+  <div class="admin">
+    <header class="topbar">
+      <div class="brand-group">
+        <div class="brand-lockup">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="6.2" cy="9.3" r="2.1"></circle><circle cx="11.1" cy="6.2" r="2.1"></circle><circle cx="16.1" cy="8.1" r="2.1"></circle><circle cx="18.3" cy="13" r="2.1"></circle><path d="M12.1 11.1c-3.1 0-5.3 2.2-5.3 4.8 0 2 1.4 3.2 3.3 3.2.8 0 1.4-.2 2-.6.6.4 1.3.6 2 .6 1.9 0 3.2-1.2 3.2-3.2 0-2.6-2.1-4.8-5.2-4.8Z"></path></svg>
+          </span>
+          <h1 class="brand-title">猫猫手册后台</h1>
+        </div>
+        <span class="environment">开发环境</span>
+      </div>
+      <div class="topbar-actions"><a class="back-link" href={base}>返回站点 <span aria-hidden="true">↗</span></a></div>
+    </header>
+
+    <div class="workspace">
+      <aside class="panel sidebar-panel">
+        <div class="panel-heading"><h2>科普文章库</h2><span class="count" id="article-count">共 0 篇文章</span></div>
+        <div class="library-controls">
+          <label class="search-wrap" aria-label="搜索文章">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5" stroke-linecap="round"/></svg>
+            <input id="filter" placeholder="筛选标题…" />
+            <svg class="search-icon-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5" stroke-linecap="round"/></svg>
+          </label>
+          <div class="library-actions">
+            <div class="library-action-wrap">
+              <button class="library-action" id="sort-toggle" type="button" aria-expanded="false" aria-controls="sort-menu" title="排序文章">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 5v14M8 5l-3 3M8 5l3 3M16 19V5m0 14 3-3m-3 3-3-3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>排序</span>
+              </button>
+              <div class="library-popover" id="sort-menu" hidden>
+                <div class="library-popover-heading"><strong>排序方式</strong></div>
+                <div class="sort-options" role="menu" aria-label="文章排序方式">
+                  <button class="sort-option" data-sort="title-asc" type="button" role="menuitemradio" aria-checked="false"><span>标题</span><small>A → Z</small></button>
+                  <button class="sort-option" data-sort="title-desc" type="button" role="menuitemradio" aria-checked="false"><span>标题</span><small>Z → A</small></button>
+                  <button class="sort-option on" data-sort="updated-desc" type="button" role="menuitemradio" aria-checked="true"><span>最近更新</span><small>新 → 旧</small></button>
+                  <button class="sort-option" data-sort="date-desc" type="button" role="menuitemradio" aria-checked="false"><span>发布日期</span><small>新 → 旧</small></button>
+                </div>
+              </div>
+            </div>
+            <div class="library-action-wrap">
+              <button class="library-action" id="filter-toggle" type="button" aria-expanded="false" aria-controls="filter-menu" title="筛选文章">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16M7 12h10m-7 6h4" stroke-linecap="round"/></svg>
+                <span>筛选</span><span class="control-badge" id="filter-badge" hidden>0</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="filter-backdrop" id="filter-backdrop" hidden></div>
+        <section class="filter-modal" id="filter-menu" hidden role="dialog" aria-modal="true" aria-labelledby="filter-modal-title">
+          <header class="filter-modal-header">
+            <div><h3 id="filter-modal-title">筛选文章</h3><p>用分类、主题和发布状态缩小文章范围。</p></div>
+            <button class="filter-modal-close" id="filter-close" type="button" aria-label="关闭筛选">×</button>
+          </header>
+          <div class="filter-modal-body">
+            <div class="filter-fields">
+              <div class="filter-field"><span>一级分类</span><div class="custom-select" data-custom-select="filter-category"><select class="custom-select-native" id="filter-category" aria-hidden="true" tabindex="-1"><option value="">全部分类</option></select><button class="custom-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="一级分类"><span class="custom-select-label">全部分类</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="custom-select-menu" role="listbox" hidden></div></div></div>
+              <div class="filter-field"><span>二级主题</span><div class="custom-select" data-custom-select="filter-subcategory"><select class="custom-select-native" id="filter-subcategory" aria-hidden="true" tabindex="-1"><option value="">全部分类下的主题</option></select><button class="custom-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="二级主题"><span class="custom-select-label">全部分类下的主题</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="custom-select-menu" role="listbox" hidden></div></div></div>
+              <div class="filter-field"><span>发布状态</span><div class="custom-select" data-custom-select="filter-draft"><select class="custom-select-native" id="filter-draft" aria-hidden="true" tabindex="-1"><option value="">全部状态</option><option value="published">已发布</option><option value="draft">草稿</option></select><button class="custom-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="发布状态"><span class="custom-select-label">全部状态</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="custom-select-menu" role="listbox" hidden></div></div></div>
+            </div>
+          </div>
+          <footer class="filter-modal-footer">
+            <button class="filter-clear-button" id="clear-library-filters" type="button">清除筛选条件</button>
+            <button class="filter-done-button" id="filter-done" type="button">完成</button>
+          </footer>
+        </section>
+        <div class="toolbar">
+          <button id="new" type="button"><span aria-hidden="true">＋</span> 新建文章</button>
+          <button id="refresh" type="button"><span aria-hidden="true">⟳</span> 刷新</button>
+        </div>
+        <div id="list" class="article-list"></div>
+      </aside>
+
+      <main class="panel main-panel">
+        <div class="editor-heading">
+          <div><h2>编辑科普文章</h2><p>编辑文章信息和 Markdown 内容，修改后自动写入本地文件。</p></div>
+          <div class="editor-actions">
+            <div class="status-group"><span id="status" class="save-state neutral" aria-live="polite">等待编辑</span></div>
+            <button id="immersive-toggle" class="secondary" type="button" aria-pressed="false" aria-label="进入沉浸式编辑" title="进入沉浸式编辑">沉浸式编辑</button>
+            <button id="save" class="primary" type="button">▣&nbsp; 立即保存</button>
+            <button id="delete" class="delete-button" type="button" disabled title="新文章尚未保存">删除文章</button>
+          </div>
+        </div>
+
+        <div class="fields">
+          <div class="field-grid field-card-grid">
+            <section class="field-card">
+              <div class="field-card-heading"><h3>内容核心</h3><p>标题和摘要会展示在科普板块的文章卡片上。</p></div>
+              <div class="field-stack">
+                <label class="field-label"><span class="field-label-caption">标题 <span class="required">*</span></span><input id="title" /></label>
+                <label class="field-label"><span class="field-label-caption">描述 <span class="required">*</span></span><textarea class="metadata-description" id="description" rows="3"></textarea></label>
+              </div>
+            </section>
+            <section class="field-card">
+              <div class="field-card-heading"><h3>内容归类</h3><p>用一级分类、二级主题和标签整理文章。</p></div>
+              <div class="field-stack">
+                <div class="field-row">
+                  <label class="field-label">
+                    <span class="field-label-caption">一级分类 <span class="required">*</span></span>
+                    <div class="custom-select" data-custom-select="category">
+                      <select class="custom-select-native" id="category" aria-hidden="true" tabindex="-1">
+                        <option value="救助与 TNR">救助与 TNR</option>
+                        <option value="健康与安全">健康与安全</option>
+                        <option value="救助运营">救助运营</option>
+                        <option value="维护说明">维护说明</option>
+                      </select>
+                      <button class="custom-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="一级分类">
+                        <span class="custom-select-label">救助与 TNR</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                      </button>
+                      <div class="custom-select-menu" role="listbox" hidden></div>
+                    </div>
+                  </label>
+                  <label class="field-label">
+                    <span class="field-label-caption">二级主题 <span class="required">*</span></span>
+                    <div class="custom-select" data-custom-select="subcategory">
+                      <select class="custom-select-native" id="subcategory" aria-hidden="true" tabindex="-1"><option value="">请先选择分类</option></select>
+                      <button class="custom-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="二级主题">
+                        <span class="custom-select-label">请先选择分类</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                      </button>
+                      <div class="custom-select-menu" role="listbox" hidden></div>
+                    </div>
+                  </label>
+                </div>
+                <label class="field-label field-label-check"><input id="draft" type="checkbox" /><span class="field-label-caption">草稿（勾选后不会出现在前台）</span></label>
+              </div>
+            </section>
+            <section class="field-card">
+              <div class="field-card-heading"><h3>文件与发布</h3><p>文件名由标题自动生成；slug 留空则使用文件名。</p></div>
+              <div class="field-stack">
+                <label class="field-label"><span class="field-label-caption" id="file-label">文件路径</span><input id="folder-path" readonly aria-readonly="true" /></label>
+                <div class="field-row">
+                  <label class="field-label"><span class="field-label-caption">发布日期 <span class="required">*</span></span><input id="publishedAt" type="date" /></label>
+                  <label class="field-label"><span class="field-label-caption">更新日期 <span class="required">*</span>（保存时自动更新）</span><input id="updated" type="date" readonly aria-readonly="true" /></label>
+                </div>
+                <label class="field-label"><span class="field-label-caption">slug <span class="required">*</span></span><input id="slug" placeholder="英文短横线命名，如 rescue-fund-rules" /></label>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <div class="editor-workspace">
+          <div class="editor-column">
+            <div class="editor-label"><strong>▣&nbsp; Markdown 内容</strong><span>实时预览</span></div>
+            <div class="editor-toolbar" role="toolbar" aria-label="Markdown 工具栏">
+              <button class="editor-tool" type="button" data-action="bold" aria-label="加粗" title="加粗"><b>B</b></button>
+              <button class="editor-tool" type="button" data-action="italic" aria-label="斜体" title="斜体"><i>I</i></button>
+              <span class="editor-tool-divider" aria-hidden="true"></span>
+              <button class="editor-tool" type="button" data-action="h1" aria-label="一级标题" title="一级标题">H1</button>
+              <button class="editor-tool" type="button" data-action="h2" aria-label="二级标题" title="二级标题">H2</button>
+              <button class="editor-tool" type="button" data-action="h3" aria-label="三级标题" title="三级标题">H3</button>
+              <span class="editor-tool-divider" aria-hidden="true"></span>
+              <button class="editor-tool" type="button" data-action="bullet" aria-label="无序列表" title="无序列表">☷</button>
+              <button class="editor-tool" type="button" data-action="numbered" aria-label="有序列表" title="有序列表">☷</button>
+              <button class="editor-tool" type="button" data-action="quote" aria-label="引用" title="引用">❝</button>
+              <button class="editor-tool" type="button" data-action="code" aria-label="代码" title="代码">&lt;/&gt;</button>
+              <span class="editor-tool-divider" aria-hidden="true"></span>
+              <button class="editor-tool" type="button" data-action="link" aria-label="链接" title="链接">↗</button>
+              <button class="editor-tool" type="button" data-action="table" aria-label="表格" title="表格">▦</button>
+            </div>
+            <div class="editor-pane">
+              <textarea id="body" wrap="soft" placeholder="在这里编辑 Markdown…" spellcheck="false"></textarea>
+              <div class="editor-jump-controls" aria-label="Markdown 内容定位">
+                <button class="editor-jump-button" id="scroll-to-top" type="button" aria-label="跳转到文章顶部" title="跳转到顶部"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 5.5 8 1.75l5 3.75M8 2.25v12" /></svg></button>
+                <button class="editor-jump-button" id="scroll-to-bottom" type="button" aria-label="跳转到文章底部" title="跳转到底部"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3 10.5 5 3.75 5-3.75M8 13.75v-12" /></svg></button>
+              </div>
+            </div>
+            <div class="editor-footer">
+              <div class="editor-footer-left"><span id="cursor-position">行 1，列 1</span><span id="character-count">0 字符</span><span>Markdown</span></div>
+              <div class="editor-footer-right"><span class="auto-save">自动保存</span></div>
+            </div>
+          </div>
+          <div class="editor-column">
+            <div class="editor-label"><strong>◉&nbsp; 预览</strong><span>与前台渲染一致</span></div>
+            <article id="preview" class="preview"></article>
+          </div>
+          <div class="editor-sync-controls" aria-label="编辑器与预览定位">
+            <button class="editor-sync-button" id="sync-to-preview" type="button" aria-label="定位到预览" title="Markdown → 预览">→</button>
+            <button class="editor-sync-button" id="sync-to-source" type="button" aria-label="定位到 Markdown" title="预览 → Markdown">←</button>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <div class="delete-modal" id="delete-modal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="delete-modal-title" aria-describedby="delete-modal-message">
+    <div class="delete-modal-backdrop" data-delete-close></div>
+    <section class="delete-modal-card">
+      <div class="delete-modal-header">
+        <div><h3 id="delete-modal-title">确认删除文章？</h3><p class="delete-modal-message" id="delete-modal-message"></p></div>
+        <button class="delete-modal-close" id="delete-modal-close" type="button" aria-label="关闭删除确认框" title="关闭">×</button>
+      </div>
+      <div class="delete-modal-actions">
+        <button class="delete-modal-cancel" id="delete-modal-cancel" type="button">取消</button>
+        <button class="delete-modal-confirm" id="delete-modal-confirm" type="button">删除</button>
+      </div>
+    </section>
+  </div>
+  <script define:vars={{ knowledgeCategories }}>
+    const $ = (id) => document.getElementById(id);
+    const KNOWLEDGE_CATEGORIES = knowledgeCategories;
+    function articleFilenameFromTitle(value) {
+      const normalized = String(value || '')
+        .trim()
+        .replaceAll('\0', '')
+        .replaceAll('/', '／')
+        .replaceAll('\\', '＼')
+        .replace(/\.md$/i, '')
+        .trim();
+      return normalized && normalized !== '.' && normalized !== '..' ? `${normalized}.md` : null;
+    }
+    let articles = [];
+    let selectedPath = '';
+    let isDirty = false;
+    let previewRequestId = 0;
+    let editorState = null;
+    let undoStack = [];
+    let redoStack = [];
+    let isProgrammaticEdit = false;
+    let selectedPreviewNode = null;
+    let selectedPreviewSourceRange = null;
+    let deleteReturnFocus = null;
+    let deletePromise = null;
+    let pendingScrollRestore = null;
+    let syncHighlightTimer = null;
+    let sortKey = 'updated-desc';
+    let autoSaveTimer = 0;
+    let savePromise = null;
+    let draftVersion = 0;
+    const EDITOR_SESSION_KEY = 'cats-admin-editor-state-v1';
+    const EDITOR_DRAFT_KEY = 'cats-admin-editor-draft-v1';
+    const IMMERSIVE_SESSION_KEY = 'cats-admin-immersive-v1';
+    const editorHistoryLimit = 100;
+    const AUTO_SAVE_DELAY = 900;
+    const fields = ['title', 'description', 'category', 'subcategory', 'publishedAt', 'updated', 'draft', 'slug'];
+    const sortLabels = {
+      'title-asc': '标题 A → Z',
+      'title-desc': '标题 Z → A',
+      'updated-desc': '最近更新',
+      'date-desc': '发布日期',
+    };
+    const escapeHtml = (text) => String(text ?? '').replace(/[&<>"']/g, (char) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+    const setStatus = (message, kind = 'neutral') => { $('status').textContent = message; $('status').className = `save-state ${kind}`; };
+    function scheduleAutoSave() {
+      window.clearTimeout(autoSaveTimer);
+      autoSaveTimer = 0;
+      if (!isDirty) return;
+      autoSaveTimer = window.setTimeout(() => {
+        autoSaveTimer = 0;
+        void saveArticle();
+      }, AUTO_SAVE_DELAY);
+    }
+    const markDirty = () => {
+      isDirty = true;
+      draftVersion += 1;
+      setStatus('等待自动保存', 'saving');
+      rememberEditorDraft();
+      scheduleAutoSave();
+    };
+    function rememberEditorSession() {
+      if (!selectedPath) return;
+      const body = $('body');
+      const snapshot = {
+        selectedPath,
+        selectionStart: body.selectionStart,
+        selectionEnd: body.selectionEnd,
+        scrollTop: body.scrollTop,
+        previewScrollTop: $('preview').scrollTop,
+        pageScrollTop: window.scrollY,
+      };
+      try { sessionStorage.setItem(EDITOR_SESSION_KEY, JSON.stringify(snapshot)); } catch { /* sessionStorage may be unavailable in a restricted browser context. */ }
+    }
+
+    function rememberEditorDraft() {
+      if (!isDirty) return;
+      const body = $('body');
+      const path = editorArticlePath();
+      if (!path) return;
+      const snapshot = {
+        version: 1,
+        selectedPath: selectedPath || '',
+        path,
+        frontmatter: collectFrontmatter(),
+        body: body.value,
+        selectionStart: body.selectionStart,
+        selectionEnd: body.selectionEnd,
+        scrollTop: body.scrollTop,
+        previewScrollTop: $('preview').scrollTop,
+        pageScrollTop: window.scrollY,
+      };
+      try { localStorage.setItem(EDITOR_DRAFT_KEY, JSON.stringify(snapshot)); } catch { /* localStorage may be unavailable or full. */ }
+    }
+
+    function readEditorDraft() {
+      try {
+        const raw = localStorage.getItem(EDITOR_DRAFT_KEY);
+        if (!raw) return null;
+        const snapshot = JSON.parse(raw);
+        return snapshot && typeof snapshot === 'object' && snapshot.version === 1 ? snapshot : null;
+      } catch { return null; }
+    }
+
+    function clearEditorDraft() {
+      try { localStorage.removeItem(EDITOR_DRAFT_KEY); } catch { /* localStorage may be unavailable. */ }
+    }
+
+    function restoreEditorDraft(snapshot) {
+      if (!snapshot || typeof snapshot.body !== 'string') return false;
+      const path = String(snapshot.path || '').trim();
+      if (!path) return false;
+      const existingPath = snapshot.selectedPath || path;
+      if (snapshot.selectedPath && !articles.some((article) => article.path === existingPath || article.path === path)) return false;
+      selectedPath = snapshot.selectedPath || '';
+      fill({ body: snapshot.body, ...(snapshot.frontmatter || {}) });
+      isDirty = true;
+      renderList();
+      setStatus('已恢复未保存草稿', 'saving');
+      scheduleAutoSave();
+      return true;
+    }
+
+    function readEditorSession() {
+      try {
+        const raw = sessionStorage.getItem(EDITOR_SESSION_KEY);
+        if (!raw) return null;
+        const snapshot = JSON.parse(raw);
+        return snapshot && typeof snapshot === 'object' ? snapshot : null;
+      } catch { return null; }
+    }
+
+    function readImmersiveSession() {
+      try { return sessionStorage.getItem(IMMERSIVE_SESSION_KEY) === 'true'; } catch { return false; }
+    }
+
+    function setImmersiveMode(enabled, { focus = true, persist = true } = {}) {
+      const button = $('immersive-toggle');
+      document.body.classList.toggle('is-immersive', enabled);
+      button.setAttribute('aria-pressed', String(enabled));
+      button.textContent = enabled ? '退出沉浸式编辑' : '沉浸式编辑';
+      button.setAttribute('aria-label', enabled ? '退出沉浸式编辑' : '进入沉浸式编辑');
+      button.title = enabled ? '退出沉浸式编辑（Esc）' : '进入沉浸式编辑';
+      if (persist) {
+        try { sessionStorage.setItem(IMMERSIVE_SESSION_KEY, String(enabled)); } catch { /* sessionStorage may be unavailable. */ }
+      }
+      if (focus) (enabled ? $('body') : button).focus({ preventScroll: true });
+    }
+
+    function closeEscapeLayers() {
+      if (!$('delete-modal').hidden) {
+        if (!deletePromise) closeDeleteModal();
+        return true;
+      }
+      const customSelect = document.querySelector('.custom-select.open');
+      if (customSelect) {
+        closeCustomSelects();
+        return true;
+      }
+      if (!$('filter-menu').hidden) {
+        closeFilterModal();
+        return true;
+      }
+      if (!$('sort-menu').hidden) {
+        closeLibraryMenus();
+        return true;
+      }
+      return false;
+    }
+
+    function restoreEditorPosition(snapshot) {
+      if (!snapshot) return;
+      const body = $('body');
+      const max = body.value.length;
+      const start = Math.min(Math.max(Number(snapshot.selectionStart) || 0, 0), max);
+      const end = Math.min(Math.max(Number(snapshot.selectionEnd) || start, start), max);
+      body.focus({ preventScroll: true });
+      body.setSelectionRange(start, end);
+      body.scrollTop = Math.min(Math.max(Number(snapshot.scrollTop) || 0, 0), body.scrollHeight);
+      if (snapshot.previewScrollTop != null || snapshot.pageScrollTop != null) {
+        pendingScrollRestore = {
+          previewTop: Math.max(Number(snapshot.previewScrollTop) || 0, 0),
+          pageTop: Math.max(Number(snapshot.pageScrollTop) || 0, 0),
+        };
+      }
+    }
+
+    function restoreScrollPositions(previewTop, pageTop) {
+      // Immersive mode scrolls inside #preview; normal mode grows with content and scrolls with the window, so compensate both owners.
+      const preview = $('preview');
+      let settled = false;
+      const settle = () => {
+        settled = true;
+        window.removeEventListener('wheel', settle);
+        window.removeEventListener('touchstart', settle);
+      };
+      const apply = () => {
+        if (settled) return;
+        preview.scrollTop = Math.min(previewTop, preview.scrollHeight);
+        window.scrollTo(0, Math.min(pageTop, document.documentElement.scrollHeight));
+      };
+      window.addEventListener('wheel', settle, { passive: true });
+      window.addEventListener('touchstart', settle, { passive: true });
+      apply();
+      window.setTimeout(settle, 3000);
+    }
+
+    function customSelectRoot(id) {
+      return document.querySelector(`[data-custom-select="${id}"]`);
+    }
+    function closeCustomSelects(except = null) {
+      document.querySelectorAll('.custom-select.open').forEach((root) => {
+        if (root === except) return;
+        root.classList.remove('open');
+        root.querySelector('.custom-select-menu').hidden = true;
+        root.querySelector('.custom-select-trigger').setAttribute('aria-expanded', 'false');
+      });
+    }
+    function syncCustomSelect(id) {
+      const select = $(id);
+      const root = customSelectRoot(id);
+      if (!select || !root) return;
+      const trigger = root.querySelector('.custom-select-trigger');
+      const label = root.querySelector('.custom-select-label');
+      const menu = root.querySelector('.custom-select-menu');
+      const selected = Array.from(select.options).find((option) => option.value === select.value) || select.options[0];
+      label.textContent = selected?.textContent || '';
+      trigger.disabled = select.disabled;
+      if (select.disabled) {
+        root.classList.remove('open');
+        menu.hidden = true;
+        trigger.setAttribute('aria-expanded', 'false');
+      }
+      menu.innerHTML = '';
+      Array.from(select.options).forEach((option) => {
+        const item = document.createElement('button');
+        item.className = `custom-select-option${option.value === select.value ? ' is-selected' : ''}`;
+        item.type = 'button';
+        item.setAttribute('role', 'option');
+        item.setAttribute('aria-selected', String(option.value === select.value));
+        item.textContent = option.textContent;
+        item.onclick = (event) => {
+          event.stopPropagation();
+          if (select.disabled) return;
+          select.value = option.value;
+          syncCustomSelect(id);
+          select.dispatchEvent(new Event('change', { bubbles: true }));
+          closeCustomSelects();
+        };
+        menu.append(item);
+      });
+    }
+    function initializeCustomSelects() {
+      document.querySelectorAll('[data-custom-select]').forEach((root) => {
+        const id = root.dataset.customSelect;
+        const select = $(id);
+        const trigger = root.querySelector('.custom-select-trigger');
+        const menu = root.querySelector('.custom-select-menu');
+        trigger.onclick = (event) => {
+          event.stopPropagation();
+          if (select.disabled) return;
+          const shouldOpen = menu.hidden;
+          closeCustomSelects(root);
+          menu.hidden = !shouldOpen;
+          root.classList.toggle('open', shouldOpen);
+          trigger.setAttribute('aria-expanded', String(shouldOpen));
+        };
+        menu.onclick = (event) => event.stopPropagation();
+        syncCustomSelect(id);
+      });
+    }
+    function updateEditorMeta() {
+      const body = $('body');
+      const beforeCursor = body.value.slice(0, body.selectionStart);
+      const lines = beforeCursor.split('\n');
+      $('cursor-position').textContent = `行 ${lines.length}，列 ${lines.at(-1).length + 1}`;
+      $('character-count').textContent = `${body.value.length} 字符`;
+      if (editorState && !isProgrammaticEdit) editorState = getEditorState();
+    }
+    function getEditorState() {
+      const body = $('body');
+      return { value: body.value, selectionStart: body.selectionStart, selectionEnd: body.selectionEnd };
+    }
+    function sameEditorValue(left, right) {
+      return left?.value === right?.value;
+    }
+    function pushUndo(state) {
+      if (!state || sameEditorValue(undoStack.at(-1), state)) return;
+      undoStack.push(state);
+      if (undoStack.length > editorHistoryLimit) undoStack.shift();
+      redoStack = [];
+    }
+    function resetEditorHistory() {
+      editorState = getEditorState();
+      undoStack = [];
+      redoStack = [];
+    }
+    function runEditorEdit(edit) {
+      const previous = editorState || getEditorState();
+      isProgrammaticEdit = true;
+      try {
+        edit();
+      } finally {
+        isProgrammaticEdit = false;
+      }
+      const next = getEditorState();
+      if (!sameEditorValue(previous, next)) pushUndo(previous);
+      editorState = next;
+      handleBodyChange();
+    }
+    function restoreEditorState(state) {
+      const body = $('body');
+      isProgrammaticEdit = true;
+      body.value = state.value;
+      body.focus();
+      const max = body.value.length;
+      body.setSelectionRange(Math.min(state.selectionStart, max), Math.min(state.selectionEnd, max));
+      isProgrammaticEdit = false;
+      editorState = getEditorState();
+      handleBodyChange();
+    }
+    function undoEditor() {
+      if (!undoStack.length) return;
+      const current = editorState || getEditorState();
+      const previous = undoStack.pop();
+      redoStack.push(current);
+      restoreEditorState(previous);
+    }
+    function redoEditor() {
+      if (!redoStack.length) return;
+      const current = editorState || getEditorState();
+      const next = redoStack.pop();
+      undoStack.push(current);
+      restoreEditorState(next);
+    }
+    function handleHistoryShortcut(event) {
+      const active = document.activeElement;
+      const inMarkdownEditor = active === $('body') || active?.classList.contains('editor-tool');
+      if (!inMarkdownEditor || (!event.metaKey && !event.ctrlKey) || event.altKey) return;
+      const key = event.key.toLowerCase();
+      const undo = key === 'z' && !event.shiftKey;
+      const redo = (key === 'z' && event.shiftKey) || (key === 'y' && !event.shiftKey);
+      if (!undo && !redo) return;
+      event.preventDefault();
+      if (undo) undoEditor();
+      if (redo) redoEditor();
+    }
+    function indentBodySelection() {
+      const body = $('body');
+      const start = body.selectionStart;
+      const end = body.selectionEnd;
+      const indent = '  ';
+      if (start === end) {
+        body.setRangeText(indent, start, end, 'end');
+      } else {
+        const value = body.value;
+        const lineStart = value.lastIndexOf('\n', start - 1) + 1;
+        const selectionEndsAtLineStart = value[end - 1] === '\n';
+        const lineEnd = selectionEndsAtLineStart ? end : (value.indexOf('\n', end) === -1 ? value.length : value.indexOf('\n', end));
+        const lines = value.slice(lineStart, lineEnd).split('\n');
+        body.setRangeText(lines.map((line) => `${indent}${line}`).join('\n'), lineStart, lineEnd, 'select');
+        body.setSelectionRange(start + indent.length, end + indent.length * lines.length);
+      }
+      body.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+
+    function outdentBodySelection() {
+      const body = $('body');
+      const start = body.selectionStart;
+      const end = body.selectionEnd;
+      const value = body.value;
+      const lineStart = value.lastIndexOf('\n', start - 1) + 1;
+      const selectionEndsAtLineStart = value[end - 1] === '\n';
+      const lineEnd = selectionEndsAtLineStart ? end : (value.indexOf('\n', end) === -1 ? value.length : value.indexOf('\n', end));
+      const lines = value.slice(lineStart, lineEnd).split('\n');
+      const removed = lines.map((line) => (line.match(/^(?:\t| {1,2})/) || [''])[0].length);
+      if (!removed.some((count) => count > 0)) return;
+      body.setRangeText(lines.map((line) => line.replace(/^(?:\t| {1,2})/, '')).join('\n'), lineStart, lineEnd, 'select');
+      const totalRemoved = removed.reduce((sum, count) => sum + count, 0);
+      body.setSelectionRange(Math.max(lineStart, start - removed[0]), Math.max(lineStart, end - totalRemoved));
+      body.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+    function handleBodyKeydown(event) {
+      if (event.key === 'Tab') {
+        event.preventDefault();
+        if (event.shiftKey) outdentBodySelection();
+        else indentBodySelection();
+        return;
+      }
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 's') {
+        event.preventDefault();
+        event.stopPropagation();
+        void saveArticle({ force: true });
+      }
+    }
+    async function preview() {
+      const requestId = ++previewRequestId;
+      const source = $('body').value;
+      if (!source.trim()) {
+        $('preview').innerHTML = '';
+        selectedPreviewNode = null;
+        selectedPreviewSourceRange = null;
+        pendingScrollRestore = null;
+        $('preview').classList.remove('is-loading');
+        return;
+      }
+      $('preview').classList.add('is-loading');
+      try {
+        const res = await fetch('/admin/api/preview', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ body: source }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || '预览渲染失败');
+        if (requestId === previewRequestId) {
+          $('preview').innerHTML = data.html || '';
+          selectedPreviewNode = null;
+          selectedPreviewSourceRange = null;
+          if (pendingScrollRestore) {
+            const { previewTop, pageTop } = pendingScrollRestore;
+            pendingScrollRestore = null;
+            restoreScrollPositions(previewTop, pageTop);
+          }
+        }
+      } catch (error) {
+        if (requestId === previewRequestId) {
+          $('preview').innerHTML = `<p class="preview-error">预览渲染失败：${escapeHtml(error.message)}</p>`;
+          selectedPreviewNode = null;
+          selectedPreviewSourceRange = null;
+        }
+      } finally {
+        if (requestId === previewRequestId) $('preview').classList.remove('is-loading');
+      }
+    }
+    const previewBlockSelector = 'h1[data-source-start], h2[data-source-start], h3[data-source-start], h4[data-source-start], h5[data-source-start], h6[data-source-start], p[data-source-start], ul[data-source-start], ol[data-source-start], blockquote[data-source-start]';
+    function findPreviewBlock(node) {
+      const element = node?.nodeType === Node.ELEMENT_NODE ? node : node?.parentElement;
+      const block = element?.closest?.(previewBlockSelector);
+      return block && $('preview').contains(block) ? block : null;
+    }
+    function sourceLineOffset(line, end = false) {
+      const source = $('body').value;
+      if (line <= 1) return end ? (source.indexOf('\n') === -1 ? source.length : source.indexOf('\n')) : 0;
+      let offset = 0;
+      for (let current = 1; current < line; current += 1) {
+        const newline = source.indexOf('\n', offset);
+        if (newline === -1) return source.length;
+        offset = newline + 1;
+      }
+      if (!end) return offset;
+      const newline = source.indexOf('\n', offset);
+      return newline === -1 ? source.length : newline;
+    }
+    function previewRange(node) {
+      const startLine = Number(node?.dataset.sourceStart);
+      const endLine = Number(node?.dataset.sourceEnd);
+      if (!startLine || !endLine) return null;
+      return { start: sourceLineOffset(startLine), end: sourceLineOffset(endLine, true), startLine, endLine };
+    }
+    function capturePreviewSelection() {
+      const preview = $('preview');
+      const selection = window.getSelection();
+      if (!selection?.rangeCount || selection.isCollapsed || !preview.contains(selection.anchorNode) || !preview.contains(selection.focusNode)) return;
+      const nodes = [findPreviewBlock(selection.anchorNode), findPreviewBlock(selection.focusNode)].filter(Boolean);
+      const ranges = nodes.map(previewRange).filter(Boolean);
+      if (!ranges.length) return;
+      selectedPreviewNode = nodes[0];
+      selectedPreviewSourceRange = {
+        start: Math.min(...ranges.map(range => range.start)),
+        end: Math.max(...ranges.map(range => range.end)),
+        startLine: Math.min(...ranges.map(range => range.startLine)),
+        endLine: Math.max(...ranges.map(range => range.endLine)),
+      };
+    }
+    function previewBlocks() {
+      return Array.from($('preview').querySelectorAll(previewBlockSelector));
+    }
+    function previewBlockPosition(node) {
+      const preview = $('preview');
+      const previewRect = preview.getBoundingClientRect();
+      const rect = node.getBoundingClientRect();
+      return {
+        top: rect.top - previewRect.top + preview.scrollTop,
+        bottom: rect.bottom - previewRect.top + preview.scrollTop,
+      };
+    }
+    function findPreviewBlockForScrollPosition() {
+      const preview = $('preview');
+      const targetPosition = preview.scrollTop + Math.min(72, preview.clientHeight * 0.32);
+      const candidates = previewBlocks()
+        .map(node => ({ node, range: previewRange(node), position: previewBlockPosition(node) }))
+        .filter(item => item.range);
+      const containing = candidates
+        .filter(item => item.position.top <= targetPosition && item.position.bottom >= targetPosition)
+        .sort((left, right) => {
+          const lineSpan = item => item.range.endLine - item.range.startLine;
+          return lineSpan(left) - lineSpan(right);
+        });
+      if (containing[0]) return containing[0].node;
+      return candidates
+        .sort((left, right) => Math.abs(left.position.top - targetPosition) - Math.abs(right.position.top - targetPosition))[0]?.node || null;
+    }
+    function findPreviewBlockForLine(line) {
+      const blocks = previewBlocks();
+      const containing = blocks
+        .filter(node => {
+          const range = previewRange(node);
+          return range && range.startLine <= line && range.endLine >= line;
+        })
+        .sort((left, right) => {
+          const leftRange = previewRange(left);
+          const rightRange = previewRange(right);
+          return (leftRange.endLine - leftRange.startLine) - (rightRange.endLine - rightRange.startLine);
+        });
+      if (containing[0]) return containing[0];
+      return blocks
+        .map(node => ({ node, range: previewRange(node) }))
+        .filter(item => item.range)
+        .sort((left, right) => Math.abs(left.range.startLine - line) - Math.abs(right.range.startLine - line))[0]?.node || null;
+    }
+    function highlightPreviewBlock(node) {
+      if (!node) return;
+      $('preview').querySelectorAll('.is-sync-target').forEach(target => target.classList.remove('is-sync-target'));
+      node.classList.add('is-sync-target');
+      selectedPreviewNode = node;
+      node.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      window.clearTimeout(syncHighlightTimer);
+      syncHighlightTimer = window.setTimeout(() => node.classList.remove('is-sync-target'), 1400);
+    }
+    function syncSourceToPreview() {
+      const source = $('body').value;
+      const line = source.slice(0, $('body').selectionStart).split('\n').length;
+      const target = findPreviewBlockForLine(line);
+      if (!target) return setStatus('当前内容没有可定位的预览区域', 'neutral');
+      highlightPreviewBlock(target);
+    }
+    function syncPreviewToSource() {
+      const selection = window.getSelection();
+      const selectionNode = selection?.rangeCount
+        ? [selection.anchorNode, selection.focusNode]
+          .filter(node => $('preview').contains(node))
+          .map(findPreviewBlock)
+          .find(Boolean)
+        : null;
+      const target = [selectionNode, selectedPreviewNode, findPreviewBlockForScrollPosition()]
+        .find(node => previewRange(node));
+      const range = selectionNode ? previewRange(selectionNode) : (selectedPreviewSourceRange || previewRange(target));
+      if (!target || !range) return setStatus('当前预览没有可定位的内容', 'neutral');
+      const body = $('body');
+      body.focus();
+      body.setSelectionRange(range.start, range.end);
+      const lineHeight = Number.parseFloat(getComputedStyle(body).lineHeight) || 22;
+      body.scrollTop = Math.max(0, (range.startLine - 1) * lineHeight - body.clientHeight / 2);
+      updateEditorMeta();
+    }
+
+    function refreshEditorSubcategories(selectedValue) {
+      const category = $('category').value;
+      const subcategorySelect = $('subcategory');
+      const subcategories = KNOWLEDGE_CATEGORIES[category] || [];
+      subcategorySelect.innerHTML = '';
+      if (subcategories.length) {
+        const placeholder = document.createElement('option');
+        placeholder.value = '';
+        placeholder.textContent = '请选择二级主题';
+        subcategorySelect.append(placeholder);
+        subcategories.forEach((sub) => {
+          const option = document.createElement('option');
+          option.value = sub;
+          option.textContent = sub;
+          subcategorySelect.append(option);
+        });
+        subcategorySelect.disabled = false;
+      } else {
+        const placeholder = document.createElement('option');
+        placeholder.value = '';
+        placeholder.textContent = '请先选择一级分类';
+        subcategorySelect.append(placeholder);
+        subcategorySelect.disabled = true;
+      }
+      if (selectedValue && Array.from(subcategorySelect.options).some((option) => option.value === selectedValue)) {
+        subcategorySelect.value = selectedValue;
+      } else {
+        subcategorySelect.value = '';
+      }
+      syncCustomSelect('subcategory');
+    }
+
+    function collectFrontmatter() {
+      return {
+        title: $('title').value,
+        description: $('description').value,
+        category: $('category').value,
+        subcategory: $('subcategory').value,
+        publishedAt: $('publishedAt').value,
+        updated: $('updated').value,
+        slug: $('slug').value,
+        draft: $('draft').checked,
+      };
+    }
+
+    function updateFileLabel() {
+      $('file-label').textContent = '文件路径（由标题自动生成）';
+      $('folder-path').value = editorArticlePath();
+    }
+
+    function editorArticlePath() {
+      return articleFilenameFromTitle($('title').value) || '';
+    }
+
+    function fill(item = {}) {
+      window.clearTimeout(autoSaveTimer);
+      autoSaveTimer = 0;
+      draftVersion += 1;
+      const categorySelect = $('category');
+      if (item.category && Array.from(categorySelect.options).some((option) => option.value === item.category)) {
+        categorySelect.value = item.category;
+      } else {
+        categorySelect.selectedIndex = 0;
+      }
+      syncCustomSelect('category');
+      refreshEditorSubcategories(item.subcategory);
+      fields.forEach((field) => {
+        if (field === 'category' || field === 'subcategory') return;
+        const element = $(field);
+        if (!element) return;
+        if (field === 'draft') {
+          element.checked = item.draft === true;
+          return;
+        }
+        element.value = item[field] ?? '';
+      });
+      updateFileLabel();
+      $('body').value = item.body || '';
+      resetEditorHistory();
+      preview();
+      isDirty = false;
+      updateEditorMeta();
+      updateDeleteButton();
+    }
+
+    function updateDeleteButton() {
+      const button = $('delete');
+      if (!button) return;
+      const canDelete = Boolean(selectedPath);
+      button.disabled = !canDelete || Boolean(deletePromise);
+      button.title = canDelete ? '将当前文章移入废纸篓' : '新文章尚未保存';
+    }
+
+    function setDeleteModalBusy(busy) {
+      $('delete-modal-confirm').disabled = busy;
+      $('delete-modal-cancel').disabled = busy;
+      $('delete-modal-close').disabled = busy;
+      $('delete-modal-confirm').textContent = busy ? '删除中…' : '删除';
+    }
+
+    function openDeleteModal() {
+      if (!selectedPath || deletePromise) return;
+      const title = $('title').value.trim() || selectedPath;
+      $('delete-modal-message').textContent = `确定要将“${title}”移入废纸篓吗？Markdown 文件仍可从废纸篓恢复。`;
+      deleteReturnFocus = document.activeElement;
+      $('delete-modal').hidden = false;
+      $('delete-modal').setAttribute('aria-hidden', 'false');
+      window.requestAnimationFrame(() => $('delete-modal-cancel').focus());
+    }
+
+    function closeDeleteModal({ restoreFocus = true } = {}) {
+      const modal = $('delete-modal');
+      if (modal.hidden) return;
+      modal.hidden = true;
+      modal.setAttribute('aria-hidden', 'true');
+      const returnFocus = deleteReturnFocus;
+      deleteReturnFocus = null;
+      if (restoreFocus && returnFocus instanceof HTMLElement && returnFocus.isConnected) returnFocus.focus({ preventScroll: true });
+    }
+
+    async function deleteCurrentArticle() {
+      if (!selectedPath || deletePromise) return false;
+      setDeleteModalBusy(true);
+      const promise = (async () => {
+        try {
+          if (isDirty && !(await flushAutoSave())) {
+            setStatus('自动保存失败，未删除', 'error');
+            return false;
+          }
+          const articlePath = selectedPath;
+          if (!articlePath) return false;
+          const res = await fetch('/admin/api/article?path=' + encodeURIComponent(articlePath), { method: 'DELETE' });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || '删除失败');
+          selectedPath = '';
+          isDirty = false;
+          try { await loadList(); } catch { /* The file is already in the Trash even if the list refresh fails. */ }
+          fill();
+          setStatus('已移入废纸篓', 'saved');
+          closeDeleteModal({ restoreFocus: false });
+          $('title').focus();
+          return true;
+        } catch (error) {
+          setStatus(error.message, 'error');
+          return false;
+        } finally {
+          setDeleteModalBusy(false);
+        }
+      })();
+      deletePromise = promise;
+      try { return await promise; }
+      finally {
+        if (deletePromise === promise) {
+          deletePromise = null;
+          updateDeleteButton();
+        }
+      }
+    }
+    function replaceSelection(before, after = '', placeholder = '') {
+      const body = $('body');
+      const start = body.selectionStart;
+      const end = body.selectionEnd;
+      const selected = body.value.slice(start, end) || placeholder;
+      runEditorEdit(() => {
+        body.focus();
+        body.setRangeText(before + selected + after, start, end, 'select');
+      });
+    }
+    function isWrapped(value, before, after) {
+      if (value.length < before.length + after.length || !value.startsWith(before) || !value.endsWith(after)) return false;
+      if (before === '*' && after === '*' && (value.startsWith('**') || value.endsWith('**'))) return false;
+      return true;
+    }
+    function toggleWrap(before, after, placeholder = '') {
+      const body = $('body');
+      const start = body.selectionStart;
+      const end = body.selectionEnd;
+      const value = body.value;
+      const selected = value.slice(start, end);
+      const wrappedInside = isWrapped(selected, before, after);
+      const wrappedAround = start >= before.length
+        && value.slice(start - before.length, start) === before
+        && value.slice(end, end + after.length) === after;
+      let rangeStart = start;
+      let rangeEnd = end;
+      let replacement = selected || placeholder;
+      let selectionStart = start;
+      let selectionEnd = start + replacement.length;
+
+      if (wrappedInside) {
+        replacement = selected.slice(before.length, selected.length - after.length);
+        selectionEnd = start + replacement.length;
+      } else if (wrappedAround) {
+        rangeStart = start - before.length;
+        rangeEnd = end + after.length;
+        selectionStart = rangeStart;
+        selectionEnd = rangeStart + selected.length;
+      } else {
+        replacement = before + replacement + after;
+        selectionEnd = start + replacement.length;
+      }
+
+      runEditorEdit(() => {
+        body.focus();
+        body.setRangeText(replacement, rangeStart, rangeEnd, 'end');
+        body.setSelectionRange(selectionStart, selectionEnd);
+      });
+    }
+    function prefixLines(prefix, numbered = false) {
+      const body = $('body');
+      const start = body.selectionStart;
+      const end = body.selectionEnd;
+      const lineStart = body.value.lastIndexOf('\n', Math.max(0, start - 1)) + 1;
+      const nextLine = body.value.indexOf('\n', end);
+      const lineEnd = nextLine === -1 ? body.value.length : nextLine;
+      const selected = body.value.slice(lineStart, lineEnd);
+      const lines = selected.split('\n').map((line, index) => `${numbered ? `${index + 1}. ` : prefix}${line}`);
+      runEditorEdit(() => {
+        body.focus();
+        body.setRangeText(lines.join('\n'), lineStart, lineEnd, 'select');
+      });
+    }
+    function insertTemplate(template) {
+      const body = $('body');
+      runEditorEdit(() => {
+        body.focus();
+        body.setRangeText(template, body.selectionStart, body.selectionEnd, 'end');
+      });
+    }
+    function applyToolbarAction(action) {
+      if (action === 'bold') toggleWrap('**', '**', '加粗文字');
+      if (action === 'italic') toggleWrap('*', '*', '斜体文字');
+      if (action === 'h1') prefixLines('# ');
+      if (action === 'h2') prefixLines('## ');
+      if (action === 'h3') prefixLines('### ');
+      if (action === 'bullet') prefixLines('- ');
+      if (action === 'numbered') prefixLines('', true);
+      if (action === 'quote') prefixLines('> ');
+      if (action === 'code') toggleWrap('`', '`', '代码');
+      if (action === 'link') replaceSelection('[', '](https://example.com)', '链接文字');
+      if (action === 'table') insertTemplate('| 项目 | 说明 |\n| --- | --- |\n| 内容 | 示例 |');
+    }
+    function handleBodyChange() {
+      preview();
+      updateEditorMeta();
+      markDirty();
+    }
+    function handleBodyInput() {
+      if (isProgrammaticEdit) return;
+      const next = getEditorState();
+      if (!sameEditorValue(editorState, next)) pushUndo(editorState);
+      editorState = next;
+      handleBodyChange();
+    }
+    function compareText(left, right) {
+      return String(left || '').localeCompare(String(right || ''), 'zh-CN');
+    }
+    function compareDate(left, right) {
+      return String(left || '').localeCompare(String(right || ''));
+    }
+    function compareArticles(left, right) {
+      if (sortKey === 'title-desc') return compareText(right.title, left.title);
+      if (sortKey === 'updated-desc') {
+        return compareDate(right.updated || right.publishedAt, left.updated || left.publishedAt)
+          || compareDate(right.publishedAt, left.publishedAt)
+          || compareText(left.title, right.title);
+      }
+      if (sortKey === 'date-desc') {
+        return compareDate(right.publishedAt, left.publishedAt)
+          || compareDate(right.updated, left.updated)
+          || compareText(left.title, right.title);
+      }
+      return compareText(left.title, right.title);
+    }
+    function uniqueArticleValues(field, predicate = () => true) {
+      return [...new Set(articles.filter(predicate).map((article) => String(article[field] || '').trim()).filter(Boolean))]
+        .sort((left, right) => compareText(left, right));
+    }
+    function populateFilterSelect(id, emptyLabel, values, { value } = {}) {
+      const select = $(id);
+      const current = value ?? select.value;
+      select.innerHTML = '';
+      const emptyOption = document.createElement('option');
+      emptyOption.value = '';
+      emptyOption.textContent = emptyLabel;
+      select.append(emptyOption);
+      values.forEach((optionValue) => {
+        const option = document.createElement('option');
+        option.value = optionValue;
+        option.textContent = optionValue;
+        select.append(option);
+      });
+      select.value = values.includes(current) ? current : '';
+      syncCustomSelect(id);
+    }
+    function refreshFilterOptions() {
+      const currentCategory = $('filter-category').value;
+      const categoryValues = uniqueArticleValues('category');
+      const category = categoryValues.includes(currentCategory) ? currentCategory : '';
+      populateFilterSelect('filter-category', '全部分类', categoryValues, { value: category });
+
+      const currentSubcategory = $('filter-subcategory').value;
+      const subcategoryValues = uniqueArticleValues('subcategory', (article) => !category || article.category === category);
+      populateFilterSelect('filter-subcategory', category ? '全部二级主题' : '全部分类下的主题', subcategoryValues, { value: currentSubcategory });
+    }
+    function updateFilterBadge() {
+      const count = ['filter-category', 'filter-subcategory', 'filter-draft'].filter((id) => $(id).value).length;
+      $('filter-badge').hidden = count === 0;
+      $('filter-badge').textContent = String(count);
+      $('filter-toggle').classList.toggle('active', count > 0);
+    }
+    async function loadList() {
+      try {
+        const res = await fetch('/admin/api/articles');
+        const data = await res.json();
+        articles = data.articles || [];
+        $('article-count').textContent = `共 ${articles.length} 篇文章`;
+        refreshFilterOptions();
+        updateFilterBadge();
+        renderList();
+      } catch (error) {
+        $('article-count').textContent = '读取失败';
+        $('list').innerHTML = '<p class="count">文章列表暂时无法读取</p>';
+      }
+    }
+    function renderList() {
+      const query = $('filter').value.trim().toLocaleLowerCase('zh-CN');
+      const category = $('filter-category').value;
+      const subcategory = $('filter-subcategory').value;
+      const draftFilter = $('filter-draft').value;
+      const visibleArticles = articles
+        .filter((article) => !query || String(article.title || '').toLocaleLowerCase('zh-CN').includes(query))
+        .filter((article) => !category || article.category === category)
+        .filter((article) => !subcategory || article.subcategory === subcategory)
+        .filter((article) => !draftFilter || (draftFilter === 'draft' ? article.draft === true : article.draft !== true))
+        .sort(compareArticles);
+      $('list').innerHTML = visibleArticles.map((article) => {
+        const meta = [article.category, article.subcategory].filter(Boolean).join(' · ');
+        const draftBadge = article.draft === true ? '<span class="draft-badge">草稿</span>' : '';
+        const active = article.path === selectedPath ? ' active' : '';
+        return `<button class="article${active}" data-path="${encodeURIComponent(article.path)}" aria-pressed="${article.path === selectedPath}"><strong>${escapeHtml(article.title)}</strong><small>${escapeHtml(article.path)}</small><span class="article-meta"><span>${escapeHtml(meta || '未分类')}</span><span>${escapeHtml(article.publishedAt || '未设置日期')}</span>${draftBadge}</span></button>`;
+      }).join('') || '<p class="count">暂无匹配文章</p>';
+      document.querySelectorAll('.article').forEach((button) => { button.onclick = () => loadArticle(decodeURIComponent(button.dataset.path)); });
+    }
+
+    async function flushAutoSave() {
+      while (isDirty) {
+        const saved = await saveArticle();
+        if (!saved) return false;
+      }
+      return true;
+    }
+
+    async function ensureEditorSaved() {
+      if (!isDirty) return true;
+      if (await flushAutoSave()) return true;
+      return window.confirm('自动保存失败，仍要切换吗？');
+    }
+
+    async function loadArticle(articlePath) {
+      if (!(await ensureEditorSaved())) return;
+      try {
+        const res = await fetch('/admin/api/article?path=' + encodeURIComponent(articlePath));
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || '读取失败');
+        selectedPath = articlePath;
+        fill({ body: data.body, ...data.frontmatter });
+        renderList();
+        setStatus('已读取', 'neutral');
+      } catch (error) { setStatus(error.message, 'error'); }
+    }
+    async function saveArticle({ force = false } = {}) {
+      if (savePromise) return savePromise;
+      if (!isDirty && !force) return true;
+      window.clearTimeout(autoSaveTimer);
+      autoSaveTimer = 0;
+      rememberEditorSession();
+      const path = editorArticlePath();
+      const previousPath = selectedPath;
+      const frontmatter = collectFrontmatter();
+      const body = $('body').value;
+      const currentDraftVersion = draftVersion;
+      $('save').disabled = true;
+      setStatus('自动保存中…', 'saving');
+      const promise = (async () => {
+        try {
+          const res = await fetch('/admin/api/article', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ path, previousPath, frontmatter, body }) });
+          const data = await res.json();
+          if (!res.ok) throw new Error((data.errors || [data.error]).join('；'));
+          const isCurrentDraft = draftVersion === currentDraftVersion;
+          if (isCurrentDraft) {
+            selectedPath = data.path;
+            isDirty = false;
+            if (data.frontmatter?.updated) $('updated').value = data.frontmatter.updated;
+            clearEditorDraft();
+            updateDeleteButton();
+            setStatus('已自动保存 · 刚刚', 'saved');
+          }
+          await loadList();
+          if (!isCurrentDraft) {
+            setStatus('等待自动保存', 'saving');
+            scheduleAutoSave();
+          }
+          return true;
+        } catch (error) {
+          setStatus(error.message, 'error');
+          return false;
+        } finally { $('save').disabled = false; }
+      })();
+      savePromise = promise;
+      try { return await promise; }
+      finally { if (savePromise === promise) savePromise = null; }
+    }
+    $('save').onclick = () => { void saveArticle({ force: true }); };
+    $('delete').onclick = openDeleteModal;
+    $('delete-modal-close').onclick = () => closeDeleteModal();
+    $('delete-modal-cancel').onclick = () => closeDeleteModal();
+    $('delete-modal-confirm').onclick = () => { void deleteCurrentArticle(); };
+    $('delete-modal').onclick = (event) => { if (!deletePromise && (event.target === event.currentTarget || (event.target instanceof Element && event.target.matches('[data-delete-close]')))) closeDeleteModal(); };
+    $('immersive-toggle').onclick = () => setImmersiveMode(!document.body.classList.contains('is-immersive'));
+    $('new').onclick = async () => {
+      if (!(await ensureEditorSaved())) return;
+      selectedPath = '';
+      fill();
+      renderList();
+      setStatus('新建模式', 'neutral');
+      $('title').focus();
+    };
+    $('refresh').onclick = loadList;
+    $('filter').oninput = renderList;
+    document.querySelectorAll('.sort-option').forEach((button) => {
+      button.onclick = () => {
+        sortKey = button.dataset.sort;
+        document.querySelectorAll('.sort-option').forEach((option) => {
+          const selected = option === button;
+          option.classList.toggle('on', selected);
+          option.setAttribute('aria-checked', String(selected));
+        });
+        $('sort-toggle').title = `当前排序：${sortLabels[sortKey]}`;
+        renderList();
+        closeLibraryMenus();
+      };
+    });
+    $('filter-category').onchange = () => {
+      $('filter-subcategory').value = '';
+      refreshFilterOptions();
+      updateFilterBadge();
+      renderList();
+    };
+    $('filter-subcategory').onchange = () => {
+      updateFilterBadge();
+      renderList();
+    };
+    $('filter-draft').onchange = () => {
+      updateFilterBadge();
+      renderList();
+    };
+    $('category').onchange = () => { refreshEditorSubcategories(); markDirty(); };
+    $('subcategory').onchange = markDirty;
+    $('clear-library-filters').onclick = () => {
+      $('filter-category').value = '';
+      refreshFilterOptions();
+      updateFilterBadge();
+      renderList();
+    };
+    const libraryMenus = [
+      { trigger: $('sort-toggle'), menu: $('sort-menu') },
+    ];
+    function closeLibraryMenus() {
+      libraryMenus.forEach(({ trigger, menu }) => {
+        menu.hidden = true;
+        trigger.setAttribute('aria-expanded', 'false');
+      });
+    }
+    libraryMenus.forEach(({ trigger, menu }) => {
+      trigger.onclick = (event) => {
+        event.stopPropagation();
+        const shouldOpen = menu.hidden;
+        closeLibraryMenus();
+        menu.hidden = !shouldOpen;
+        trigger.setAttribute('aria-expanded', String(shouldOpen));
+      };
+      menu.onclick = (event) => event.stopPropagation();
+    });
+    function closeFilterModal() {
+      closeCustomSelects();
+      $('filter-menu').hidden = true;
+      $('filter-backdrop').hidden = true;
+      $('filter-toggle').setAttribute('aria-expanded', 'false');
+    }
+    function openFilterModal() {
+      closeLibraryMenus();
+      $('filter-menu').hidden = false;
+      $('filter-backdrop').hidden = false;
+      $('filter-toggle').setAttribute('aria-expanded', 'true');
+      customSelectRoot('filter-category')?.querySelector('.custom-select-trigger')?.focus();
+    }
+    $('filter-toggle').onclick = openFilterModal;
+    $('filter-close').onclick = closeFilterModal;
+    $('filter-done').onclick = closeFilterModal;
+    $('filter-backdrop').onclick = closeFilterModal;
+    document.addEventListener('click', closeLibraryMenus);
+    document.addEventListener('click', () => closeCustomSelects());
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape') return;
+      if (closeEscapeLayers()) return;
+      if (document.body.classList.contains('is-immersive')) {
+        event.preventDefault();
+        setImmersiveMode(false);
+      }
+    });
+    document.querySelectorAll('.editor-tool').forEach((button) => { button.onclick = () => applyToolbarAction(button.dataset.action); });
+    $('sync-to-preview').onclick = syncSourceToPreview;
+    $('sync-to-source').onclick = syncPreviewToSource;
+    $('preview').addEventListener('click', (event) => {
+      const block = findPreviewBlock(event.target);
+      if (block) {
+        selectedPreviewNode = block;
+        if (window.getSelection()?.isCollapsed !== false) selectedPreviewSourceRange = null;
+      }
+    });
+    $('preview').addEventListener('mouseup', capturePreviewSelection);
+    document.addEventListener('selectionchange', capturePreviewSelection);
+    fields.forEach((field) => {
+      const element = $(field);
+      if (!element) return;
+      element.addEventListener('input', markDirty);
+      if (element.matches('select')) element.addEventListener('change', markDirty);
+    });
+    $('title').addEventListener('input', updateFileLabel);
+    $('body').oninput = handleBodyInput;
+    $('body').addEventListener('keydown', handleBodyKeydown);
+    function scrollBodyToEdge(edge) {
+      const body = $('body');
+      body.focus({ preventScroll: true });
+      body.scrollTo({ top: edge === 'top' ? 0 : body.scrollHeight, behavior: 'smooth' });
+    }
+    $('scroll-to-top').onclick = () => scrollBodyToEdge('top');
+    $('scroll-to-bottom').onclick = () => scrollBodyToEdge('bottom');
+    document.addEventListener('keydown', handleHistoryShortcut);
+    window.addEventListener('pagehide', () => { rememberEditorSession(); rememberEditorDraft(); });
+    ['click', 'keyup', 'select'].forEach((eventName) => { $('body').addEventListener(eventName, updateEditorMeta); });
+    initializeCustomSelects();
+    fill();
+    setImmersiveMode(readImmersiveSession(), { focus: false, persist: false });
+    const savedSession = readEditorSession();
+    loadList().then(async () => {
+      const savedDraft = readEditorDraft();
+      if (restoreEditorDraft(savedDraft)) {
+        restoreEditorPosition(savedDraft);
+        return;
+      }
+      const savedArticle = savedSession?.selectedPath && articles.find((article) => article.path === savedSession.selectedPath);
+      if (!savedArticle) return;
+      await loadArticle(savedArticle.path);
+      restoreEditorPosition(savedSession);
+    });
+  </script>
+</> : <p>本地 CMS 仅在 Astro 开发服务器中可用。</p>}
