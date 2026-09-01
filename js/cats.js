@@ -166,7 +166,7 @@ export const catProfiles = [
     notes: '曾用名「渣男」；2026-05-31 诊断牙龈炎，治疗中。疫苗需等病后评估。',
     area: '丁香',
     gender: '公',
-    images: ['images/赫兹/赫兹3.jpg', 'images/赫兹/赫兹2.jpg', 'images/赫兹/赫兹1.jpg', 'images/赫兹/赫兹4.jpg', 'images/赫兹/赫兹5.jpg', 'images/赫兹/赫兹6.jpg', 'images/赫兹/赫兹7.jpg', 'images/赫兹/赫兹8.jpg', 'images/赫兹/赫兹9.jpg']
+    images: ['images/赫兹/赫兹3.jpg', 'images/赫兹/赫兹2.jpg', 'images/赫兹/赫兹1.jpg', 'images/赫兹/赫兹4.jpg', 'images/赫兹/赫兹5.jpg', 'images/赫兹/赫兹6.jpg', 'images/赫兹/赫兹7.jpg', 'images/赫兹/赫兹8.jpg', 'images/赫兹/赫兹9.jpg', 'images/赫兹/赫兹10.jpg']
   },
   {
     name: '豆腐脑',
