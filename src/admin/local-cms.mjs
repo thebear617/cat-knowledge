@@ -364,8 +364,9 @@ export default function localCms() {
 
       // Astro's dev HTML response currently omits the charset parameter. Keep
       // the CMS page explicitly UTF-8 even when Vite later sets its own type.
+      // (Dev server runs at base "/", so the admin page lives at /admin.)
       const base = String(server.config.base || '/').replace(/\/?$/, '/');
-      const adminPaths = new Set([`${base}admin`, `${base}admin/`, '/admin', '/admin/']);
+      const adminPaths = new Set([`${base}admin`, `${base}admin/`]);
       server.middlewares.use((request, response, next) => {
         const pathname = new URL(request.url || '/', 'http://localhost').pathname;
         if (!adminPaths.has(pathname)) return next();
