@@ -87,7 +87,7 @@ export const catProfiles = [
     notes: '第二针认捐人：鲨人不wink',
     area: '竹园',
     gender: '公',
-    images: ['images/黑哥/黑哥2.jpg', 'images/黑哥/黑哥1.jpg', 'images/黑哥/黑哥3.jpg']
+    images: ['images/黑哥/黑哥2.jpg', 'images/黑哥/黑哥1.jpg']
   },
   {
     name: '彪哥',
