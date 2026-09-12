@@ -1,0 +1,885 @@
+{
+  "dataset": "xiaoxiao-meowzart-cat-alignment",
+  "version": 1,
+  "source": {
+    "name": "小小喵扎特",
+    "type": "user-screenshot",
+    "shareCode": "#小程序://小小喵扎特/KjrZcTm6EDsxEQi",
+    "capturedAt": "2026-09-10",
+    "note": "截图收集稿：先保存原始信息与对齐线索，暂不直接写入正式 cats.js。"
+  },
+  "records": [
+    {
+      "sourceName": "大面包",
+      "canonicalName": "大面包",
+      "matchStatus": "matched",
+      "websiteRecord": {
+        "exists": true,
+        "status": "已毕业",
+        "area": "竹园",
+        "gender": "公",
+        "friendliness": "亲人",
+        "vaccine": "一针 2025-08-01；二针 2025-09-01；三针 2026-04-29",
+        "sterilized": "已绝育（日期待补充）"
+      },
+      "sourceFields": {
+        "gender": "公",
+        "sterilized": true,
+        "sterilizedAt": "2025-02-25",
+        "enteredAt": "2024-11-11",
+        "personality": [
+          "软萌好盘",
+          "聪明机灵",
+          "热衷挑事"
+        ],
+        "transferStatus": "暂不中转",
+        "description": "24年秋末出现在宿舍楼下，因橘白配色和憨厚老实在人堆搔首弄姿的外表（其实一点也不憨厚老实）被命名为大面包，也是后续很多猫以烘焙物命名的开始。",
+        "relationships": [
+          {
+            "catName": "喵勒特",
+            "relation": "好友"
+          },
+          {
+            "catName": "盼盼/小……",
+            "relation": "好友",
+            "needsReview": true
+          }
+        ]
+      },
+      "qualityFlags": [
+        "第二个好友名称在截图中被截断，不能据此确定完整猫名。"
+      ]
+    },
+    {
+      "sourceName": "黄豆",
+      "canonicalName": null,
+      "matchStatus": "new-source-record",
+      "websiteRecord": {
+        "exists": false
+      },
+      "sourceFields": {
+        "gender": "公",
+        "sterilized": true,
+        "sterilizedAt": null,
+        "personality": [
+          "软萌好盘",
+          "撒娇求撸",
+          "见人就蹭"
+        ],
+        "adoptionStatusHint": "已找到领养",
+        "description": "e楼豆家族中最独特的一只，和家族其他成员不同，黄豆极其亲人，因此也很快找到了领养，走上了荣华富贵的生活。",
+        "relationships": [
+          {
+            "catName": "蓝豆",
+            "relation": "兄弟姐妹"
+          },
+          {
+            "catName": "豆花",
+            "relation": "兄弟姐妹"
+          },
+          {
+            "catName": "豆腐脑",
+            "relation": "妈妈"
+          },
+          {
+            "catName": "绿豆",
+            "relation": "兄弟姐妹"
+          }
+        ]
+      },
+      "qualityFlags": [
+        "领养状态来自简介语义，尚未映射到网站固定状态枚举。"
+      ]
+    },
+    {
+      "sourceName": "蓝豆",
+      "canonicalName": "蓝豆",
+      "matchStatus": "matched",
+      "websiteRecord": {
+        "exists": true,
+        "status": "就读中",
+        "area": "教学区",
+        "gender": "母",
+        "friendliness": "怕人",
+        "vaccine": "未接种",
+        "sterilized": "已绝育（日期待补充）"
+      },
+      "sourceFields": {
+        "gender": "母",
+        "sterilized": true,
+        "sterilizedAt": "2026-05",
+        "updateText": "2026.05更新：已落网绝育",
+        "personality": [
+          "生人勿近",
+          "喵拳攻击",
+          "超级校霸"
+        ],
+        "description": "e楼传说级猫，非常貌美但是胆小怕人又凶狠，靠人畜无害的外表抓伤了许多同学，至今未落网，2025年夏诞下一窝小猫。",
+        "relationships": [
+          {
+            "catName": "豆花",
+            "relation": "兄弟姐妹"
+          },
+          {
+            "catName": "豆腐脑",
+            "relation": "妈妈"
+          },
+          {
+            "catName": "黄豆",
+            "relation": "兄弟姐妹"
+          },
+          {
+            "catName": "绿豆",
+            "relation": "兄弟姐妹"
+          }
+        ]
+      },
+      "qualityFlags": [
+        "顶部更新写着已落网绝育，但正文仍写至今未落网，状态存在文案冲突。"
+      ]
+    },
+    {
+      "sourceName": "二橙",
+      "canonicalName": "二橙",
+      "matchStatus": "matched",
+      "websiteRecord": {
+        "exists": true,
+        "status": "已毕业",
+        "area": "丁香",
+        "gender": "公",
+        "friendliness": "亲人",
+        "vaccine": "一针 2026-03-01；二针 2026-03-01；三针 2026-04-01",
+        "sterilized": "已绝育（日期待补充）"
+      },
+      "sourceFields": {
+        "gender": "公",
+        "sterilized": true,
+        "sterilizedAt": "2025-09-16",
+        "personality": [
+          "撒娇求撸",
+          "喜欢贴贴",
+          "聪明机灵"
+        ],
+        "transferStatus": "暂不中转",
+        "statusHint": "已失踪",
+        "description": "二X家族的一只橘白，在学校快递站生活着三只橘猫，根据个头大小（也可能是出现时间早晚）分别取名为二橙二橙二柑，二橙已经失踪。",
+        "relationships": []
+      },
+      "qualityFlags": [
+        "截图正文明确写二橙已经失踪，与网站当前状态已毕业不一致。",
+        "截图显示三只橘猫的命名串为二橙二橙二柑，但缺少明确分隔符，中间名称仍需核对。"
+      ]
+    },
+    {
+      "sourceName": "二柑",
+      "canonicalName": "二柑",
+      "matchStatus": "matched",
+      "websiteRecord": {
+        "exists": true,
+        "status": "已毕业",
+        "area": "丁香",
+        "gender": "公",
+        "friendliness": "亲人",
+        "vaccine": "一针 2026-03-01；二针 2026-03-01；三针 2026-04-01",
+        "sterilized": "已绝育（日期待补充）"
+      },
+      "sourceFields": {
+        "gender": "公",
+        "sterilized": true,
+        "sterilizedAt": "2025-09-16",
+        "personality": [
+          "不冷不热"
+        ],
+        "statusHint": "二橙已经失踪",
+        "description": "二X家族的一只橘白，在学校快递站生活着三只橘猫，根据个头大小（也可能是出现时间早晚）分别取名为二橙二橙二柑，二橙已经失踪。",
+        "relationships": [
+          {
+            "catName": "二橙",
+            "relation": "同事"
+          }
+        ]
+      },
+      "qualityFlags": [
+        "截图显示三只橘猫的命名串为二橙二橙二柑，但缺少明确分隔符，中间名称仍需核对。",
+        "正文明确写二橙已经失踪，与网站当前二橙状态已毕业不一致。"
+      ]
+    },
+    {
+      "sourceName": "豆介",
+      "canonicalName": "豆介",
+      "matchStatus": "matched",
+      "websiteRecord": {
+        "exists": true,
+        "status": "就读中",
+        "area": "海棠",
+        "gender": "公",
+        "friendliness": "非常怕人",
+        "vaccine": "一针 2026-06-26（紫薇京和）；二针未接种；三针未接种",
+        "sterilized": "已绝育（日期待补充）"
+      },
+      "sourceFields": {
+        "gender": "公",
+        "sterilized": true,
+        "sterilizedAt": null,
+        "personality": [
+          "喜欢贴贴",
+          "碰瓷讨粮",
+          "胆小心怂"
+        ],
+        "transferStatus": "暂不中转",
+        "description": "25年夏天出现，长的有点苦大仇深的异瞳白猫，据说智商不是很高（？）最近跟白介混而得名。有时亲人，但胆子不大",
+        "relationships": [
+          {
+            "catName": "白介",
+            "relation": "情侣"
+          }
+        ]
+      },
+      "qualityFlags": []
+    },
+    {
+      "sourceName": "水手",
+      "canonicalName": "水手",
+      "matchStatus": "matched",
+      "websiteRecord": {
+        "exists": true,
+        "status": "就读中",
+        "area": "丁香",
+        "gender": "公",
+        "friendliness": "亲人",
+        "vaccine": "一针 2026-05-10；二针 2026-05-31；三针 2026-06-28（紫薇京和）",
+        "sterilized": "已绝育（日期待补充）"
+      },
+      "sourceFields": {
+        "gender": "公",
+        "sterilized": true,
+        "sterilizedAt": null,
+        "personality": [
+          "聪明机灵",
+          "喜欢贴贴",
+          "撒娇求撸"
+        ],
+        "transferStatus": "暂不中转",
+        "description": "水手应该是从家属区流浪来的一只长毛奶牛，性格非常好，亲人，有点不亲猫。之所以叫水手并不是因为会开船，而是因为喝水会用手蘸水喝，水的手（）",
+        "relationships": []
+      },
+      "qualityFlags": [
+        "简介结尾保留了原文未完成片段“水的手（）”，需要后续修正文案。"
+      ]
+    },
+    {
+      "sourceName": "豆花",
+      "canonicalName": "豆花",
+      "matchStatus": "matched",
+      "websiteRecord": {
+        "exists": true,
+        "status": "已毕业",
+        "area": "教学区",
+        "gender": "母",
+        "friendliness": "亲人",
+        "vaccine": "品牌待追溯·一针 2026-04-29（紫薇京和）；二针待追溯；三针约 2026-05-24",
+        "sterilized": "已绝育（日期待补充）"
+      },
+      "sourceFields": {
+        "gender": "母",
+        "ageText": "2岁8个月",
+        "sterilized": true,
+        "sterilizedAt": null,
+        "personality": [
+          "撒娇求撸",
+          "见人就蹭",
+          "软萌好盘"
+        ],
+        "updateText": "2026.6编：好咪豆花已经被优秀毕业生潇洒哥的领养人带回家，成为广东大小姐，和潇洒一起过上好日子啦。",
+        "adoptionStatus": "已领养",
+        "description": "是e楼猫一家的成员，豆腐脑之女，黄豆蓝豆同胎姊妹。原来比较怕人，绝育后可能认识到人类的友善，现在变得非常亲人，喜欢贴贴。",
+        "relationships": [
+          {
+            "catName": "蓝豆",
+            "relation": "兄弟姐妹"
+          },
+          {
+            "catName": "豆腐脑",
+            "relation": "妈妈"
+          },
+          {
+            "catName": "黄豆",
+            "relation": "兄弟姐妹"
+          },
+          {
+            "catName": "绿豆",
+            "relation": "兄弟姐妹"
+          }
+        ]
+      },
+      "qualityFlags": [
+        "年龄按截图保存为动态文本，未换算为出生日期。"
+      ]
+    },
+    {
+      "sourceName": "二头",
+      "canonicalName": "二头",
+      "matchStatus": "matched",
+      "websiteRecord": {
+        "exists": true,
+        "status": "已毕业",
+        "area": "丁香",
+        "gender": "公",
+        "friendliness": "亲人",
+        "vaccine": "妙三多·一针 2025-07-27；二针 2025-09-06；三针 2025-09-27（紫薇京和）",
+        "sterilized": "2023-03-02 已绝育"
+      },
+      "sourceFields": {
+        "gender": "公",
+        "sterilized": true,
+        "sterilizedAt": "2023-02-01",
+        "personality": [
+          "撒娇求撸",
+          "旋饭狂魔"
+        ],
+        "transferStatus": "暂不中转",
+        "description": "小时候跟着大头在丁香长大，摇猫粮大法百分百命中的大卡车一辆，拥有和体型严重不符的夹子音，喜欢被拍皮鼓（轻一点），冬天是一款全自动上腿机",
+        "relationships": [
+          {
+            "catName": "胖墩/琥珀",
+            "relation": "好友",
+            "needsReview": true
+          },
+          {
+            "catName": "黑介",
+            "relation": "宿敌"
+          }
+        ]
+      },
+      "qualityFlags": [
+        "来源截图绝育日期为2023-02-01，网站当前档案为2023-03-02，两处日期不一致。",
+        "好友名称“胖墩/琥珀”按截图原样保留，是否为别名或两只猫待确认。"
+      ]
+    },
+    {
+      "sourceName": "芸豆",
+      "canonicalName": "芸豆",
+      "matchStatus": "matched",
+      "websiteRecord": {
+        "exists": true,
+        "status": "就读中",
+        "area": "竹园",
+        "gender": "母",
+        "friendliness": "亲人",
+        "vaccine": "一针 2025-11-01；二针 2026-04-01；三针 2026-05-18",
+        "sterilized": "已绝育（日期待补充）"
+      },
+      "sourceFields": {
+        "gender": "母",
+        "sterilized": true,
+        "sterilizedAt": null,
+        "personality": [
+          "软萌好盘",
+          "胆小怂包"
+        ],
+        "transferStatus": "暂不中转",
+        "background": "疑似被毕业学生遗弃在学校里的小猫（外貌对得上，年龄有出入，不确定）",
+        "description": "是头顶有一抹黑的多多奶少牛奶牛猫，有一点点怕人，总体来说比较亲人，和小煤球是好朋友。喜欢进楼，希望看到的uu把她带出来。",
+        "relationships": [
+          {
+            "catName": "小煤球",
+            "relation": "好友"
+          }
+        ]
+      },
+      "qualityFlags": [
+        "来源方明确标注疑似弃养，且年龄有出入，相关背景待进一步核对。"
+      ]
+    },
+    {
+      "sourceName": "橙留香",
+      "canonicalName": "橙留香",
+      "matchStatus": "matched",
+      "websiteRecord": {
+        "exists": true,
+        "status": "已毕业",
+        "area": "海棠",
+        "gender": "公",
+        "friendliness": "亲人",
+        "vaccine": "喵倍护·三针已完成（具体日期待追溯）",
+        "sterilized": "已绝育（日期待补充）"
+      },
+      "sourceFields": {
+        "gender": "公",
+        "enteredAt": "2024-06-01",
+        "sterilized": true,
+        "sterilizedAt": null,
+        "personality": [
+          "软萌好盘",
+          "喜欢贴贴",
+          "聪明机灵"
+        ],
+        "transferStatus": "暂不中转",
+        "adoptionEvents": [
+          {
+            "date": "2026-01",
+            "event": "爵士好猫橙留香终于在冬天等到了温暖的家，已经开启了新的冒险之旅~"
+          },
+          {
+            "date": "2026-03",
+            "event": "这个橙留香在领养人家里跑出去两次，现已经缉拿归校"
+          }
+        ],
+        "background": "24年6月半大小猫刷新在网安，疑似被弃养，亲人，有修剪指甲痕迹，带到了丁香又跑去海棠",
+        "description": "性格自信开朗，初来乍到就快乐探索每个宿舍。非常非常非常亲人亲猫的一只小猫，和人和猫关系都很[截图遮挡]。除误伤外无攻击记录，性格软萌，超级无敌善良的小猫。（留香的意思是留在丁香，不是古龙小说那个留香（）",
+        "relationships": [
+          {
+            "catName": "焦黄/教皇",
+            "relation": "好友",
+            "needsReview": true
+          },
+          {
+            "catName": "裤裤",
+            "relation": "好友"
+          },
+          {
+            "catName": "深情哥",
+            "relation": "好友"
+          },
+          {
+            "catName": "白介/香蕉",
+            "relation": "好友",
+            "needsReview": true
+          }
+        ]
+      },
+      "qualityFlags": [
+        "简介中“和人和猫关系都很”之后的文字被页面浮层遮挡。",
+        "来源时间线显示2026年3月已缉拿归校，与网站当前已毕业状态存在待核对关系。",
+        "好友名称“焦黄/教皇”和“白介/香蕉”按截图原样保留，是否为别名待确认。"
+      ]
+    },
+    {
+      "sourceName": "瓜皮头",
+      "canonicalName": null,
+      "matchStatus": "new-source-record",
+      "websiteRecord": {
+        "exists": false
+      },
+      "sourceFields": {
+        "gender": "公",
+        "sterilizationStatusText": "未绝育",
+        "sterilized": false,
+        "sterilizedAt": null,
+        "personality": [
+          "生人勿近",
+          "超级校霸"
+        ],
+        "description": "总是偷吃/抢麻薯的饭，让投喂组同学一度误以为麻薯是超级大胃王，结果看监控发现了这只奶牛，因为和麻薯的孩子有很相似的花纹，且麻薯活动范围都是已绝育公猫但仍然怀孕，所以猜测是麻薯的前夫（麻薯已断情绝爱），当然因为一模一样的小胡子，也不排除是麻薯的兄弟。",
+        "relationships": [
+          {
+            "catName": "麻薯",
+            "relationCandidates": [
+              "前夫",
+              "兄弟"
+            ],
+            "confirmed": false,
+            "evidence": "来源简介明确写为“猜测是麻薯的前夫”，并补充“也不排除是麻薯的兄弟”。"
+          }
+        ]
+      },
+      "qualityFlags": [
+        "瓜皮头当前未出现在网站 cats.js，需要确认是否纳入正式档案。",
+        "与麻薯的关系仅为来源方推测，不能直接写成前夫或兄弟。",
+        "简介中的“麻薯活动范围都是已绝育公猫但仍然怀孕”为截图原文，语义待复核。"
+      ]
+    },
+    {
+      "sourceName": "毛橘子",
+      "canonicalName": null,
+      "matchStatus": "new-source-record",
+      "websiteRecord": {
+        "exists": false
+      },
+      "sourceFields": {
+        "gender": "公",
+        "sterilizationStatusText": "已绝育",
+        "sterilized": true,
+        "sterilizedAt": null,
+        "personality": [
+          "软萌好盘",
+          "泡图书馆",
+          "喵拳攻击"
+        ],
+        "adoptionUpdate": {
+          "date": "2026-01",
+          "event": "毛橘子已经找到了爱他的家庭，接下来十余年都有了一个屋檐❤️"
+        },
+        "description": "初次刷新在网安大楼时是亲人的半大小猫，喜欢贴贴，后定居图书馆。定居在图书馆的一只长毛橘白，被戏称为图书馆馆长，脾气大部分时候很好，不过被人摸烦了就会重拳出击。[截图右侧浮层遮挡]人流量大，馆长天天被摸，可能这就是热度高的烦恼。",
+        "relationships": [
+          {
+            "catName": "毛柿子/…",
+            "relation": "好友",
+            "needsReview": true
+          },
+          {
+            "catName": "小满",
+            "relation": "好友"
+          }
+        ]
+      },
+      "qualityFlags": [
+        "毛橘子当前未出现在网站 cats.js，需要确认是否纳入正式档案。",
+        "简介中“重拳出击”之后的部分被右侧浮层遮挡，暂未补写。",
+        "关系名称“毛柿子/…”在截图中被截断，需后续补全。"
+      ]
+    },
+    {
+      "sourceName": "麻薯",
+      "canonicalName": "麻薯",
+      "matchStatus": "matched",
+      "websiteRecord": {
+        "exists": true,
+        "status": "已毕业",
+        "area": "海棠",
+        "gender": "母",
+        "friendliness": "亲人",
+        "vaccine": "未接种（受伤期评估后未补种）",
+        "sterilized": "已绝育（日期待补充）"
+      },
+      "sourceFields": {
+        "gender": "母",
+        "sterilizationStatusText": "已绝育",
+        "sterilized": true,
+        "sterilizedAt": "2025-09-17",
+        "personality": [
+          "生人勿近",
+          "胆小心包"
+        ],
+        "description": "2026.6编：猫德逐渐成长的麻薯在26年也迎来了毕业季，不再在学校东躲西藏，可以在家里的飘窗安全的翻肚皮啦。一只在学校和校外反复横跳的猫，大耳朵圆眼睛小尖脸八嘎胡，身上色块均匀，胆小的笨蛋美少女一枚。性格有点内向正逐渐变得亲人，带娃技术非常差，没有技巧全是母[右侧浮层遮挡]娃带的一塌糊涂，自己也累成猫干。现今已经送去绝育，断情绝爱拥有幸福猫生。",
+        "relationships": [
+          {
+            "catName": "芝麻",
+            "relation": "儿子"
+          },
+          {
+            "catName": "袜袜",
+            "relation": "儿子"
+          },
+          {
+            "catName": "Miko",
+            "relation": "儿子"
+          },
+          {
+            "catName": "棉花糖",
+            "relation": "女儿"
+          }
+        ]
+      },
+      "qualityFlags": [
+        "来源记录已补充2025-09-17绝育日期，网站当前记录仍标注日期待补充。",
+        "简介中“没有技巧全是母”之后的文字被右侧浮层遮挡，暂未补写。",
+        "4条亲子关系按来源截图记录，需与正式猫咪档案逐一对齐。"
+      ]
+    },
+    {
+      "sourceName": "立夏",
+      "canonicalName": null,
+      "matchStatus": "new-source-record",
+      "websiteRecord": {
+        "exists": false
+      },
+      "sourceFields": {
+        "gender": "母",
+        "sterilizationStatusText": "已绝育",
+        "sterilized": true,
+        "sterilizedAt": "2025-12-01",
+        "personality": [
+          "撒娇求撸",
+          "喜欢贴贴"
+        ],
+        "adoptionUpdate": {
+          "date": "2025-12-11",
+          "event": "*25.12.11已被群小猫@拉吉塔尼的鹦鹉会笑 自提回家，开启荣华富贵十五年的咪生~"
+        },
+        "description": "2025年下半年出现在教学区远望谷附近，黄色圆眼、白下巴的纯橘，看起来总是不高兴的表情，但其实是萌妹一枚。2025.11出现时为能独立生存的半大小母猫，性格亲人，喜欢蹭蹭贴贴。",
+        "relationships": []
+      },
+      "qualityFlags": [
+        "立夏当前未出现在网站 cats.js，需要确认是否纳入正式档案。",
+        "截图未显示关系区，暂未记录关系。"
+      ]
+    },
+    {
+      "sourceName": "斜眼狼",
+      "canonicalName": null,
+      "matchStatus": "new-source-record",
+      "websiteRecord": {
+        "exists": false
+      },
+      "sourceFields": {
+        "gender": "母",
+        "sterilizationStatusText": "已绝育",
+        "sterilized": true,
+        "sterilizedAt": "2025-06-20",
+        "memorialStatusText": "已去喵星 171天",
+        "personality": [
+          "生人勿近"
+        ],
+        "adoptionUpdate": {
+          "date": "2026-03",
+          "event": "斜眼狼被发现于竹园，确认被流浪狗攻击致死。"
+        },
+        "description": "因为很凶很怕人，脑袋上有一撮斜着的黑毛，所以叫斜眼狼，但其实脸短短圆圆的很萌。竹园另一个传说，超生大队队长，在校内校外反复横跳，疑似和黑哥是夫妻，留下了一个庞大的奶牛家族。",
+        "relationships": [
+          {
+            "catName": "黑哥",
+            "relation": "夫妻",
+            "confirmed": false,
+            "evidence": "简介写“疑似和黑哥是夫妻”，关系卡片显示“夫妻”。"
+          }
+        ]
+      },
+      "qualityFlags": [
+        "斜眼狼当前未出现在网站 cats.js，需要确认是否纳入正式档案。",
+        "来源记录标注已去喵星并记录被流浪狗攻击致死，网站当前未见对应档案。",
+        "与黑哥的关系简介使用“疑似”，但关系卡片显示“夫妻”，暂按待确认关系保存。"
+      ]
+    },
+    {
+      "sourceName": "太君",
+      "canonicalName": null,
+      "matchStatus": "new-source-record",
+      "websiteRecord": {
+        "exists": false
+      },
+      "sourceFields": {
+        "gender": "公",
+        "sterilizationStatusText": "已绝育",
+        "sterilized": true,
+        "sterilizedAt": null,
+        "memorialStatusText": "已去喵星 1502天",
+        "personality": [
+          "见人就蹭",
+          "聪明机灵",
+          "校园暖男"
+        ],
+        "description": "初代人气王，标志性的烟嗓和八嘎胡，可爱稳重又聪明。街溜子猫，从海棠到教学区到丁香都住过，信任每一个人类，喜欢被拍皮鼓，喜欢咩咩叫撒娇，喜欢随地大小睡。22年暑假疑似因为急症去世。",
+        "relationships": [
+          {
+            "catName": "黑子",
+            "relation": "情侣"
+          },
+          {
+            "catName": "太子",
+            "relation": "情侣"
+          },
+          {
+            "catName": "小八嘎",
+            "relation": "儿子"
+          }
+        ]
+      },
+      "qualityFlags": [
+        "太君当前未出现在网站 cats.js，需要确认是否纳入正式档案。",
+        "来源只标注“已绝育”和去世天数，未提供具体绝育日期。",
+        "去世原因按来源的“疑似因为急症”保存，未视为确定病因。"
+      ]
+    },
+    {
+      "sourceName": "脏白",
+      "canonicalName": "脏白",
+      "matchStatus": "matched",
+      "websiteRecord": {
+        "exists": true,
+        "status": "就读中",
+        "area": "教学区",
+        "gender": "公",
+        "friendliness": "怕人",
+        "vaccine": "未接种",
+        "sterilized": "未绝育"
+      },
+      "sourceFields": {
+        "gender": "公",
+        "sterilizationStatusText": "未绝育",
+        "sterilized": false,
+        "sterilizedAt": null,
+        "personality": [
+          "生人勿近",
+          "喵拳攻击",
+          "胆小心包"
+        ],
+        "description": "一只脏兮兮的白猫，很怕人，似乎是为了保护自己（因为白猫在猫界地位很低）把自己弄得脏兮兮的，还天天打架。抓绝育抓了很久还没抓到，希望能早日上交作案工具。",
+        "relationships": [
+          {
+            "catName": "潇洒哥",
+            "relation": "宿敌"
+          }
+        ]
+      },
+      "qualityFlags": [
+        "来源记录已与网站当前脏白档案对齐，状态、性别、区域和绝育状态一致。",
+        "关系中的“潇洒哥”当前未在网站 cats.js 中找到，需要确认是否为正式档案或别名。"
+      ]
+    },
+    {
+      "sourceName": "天水",
+      "canonicalName": "天水",
+      "matchStatus": "matched",
+      "websiteRecord": {
+        "exists": true,
+        "status": "喵星或失踪",
+        "area": "教学区",
+        "gender": "公",
+        "friendliness": "怕人",
+        "vaccine": "未接种",
+        "sterilized": "已绝育（日期待补充）"
+      },
+      "sourceFields": {
+        "gender": "公",
+        "sterilizationStatusText": "已绝育",
+        "sterilized": true,
+        "sterilizedAt": "2025-12-31",
+        "personality": [
+          "生人勿近",
+          "胆小心包"
+        ],
+        "description": "25年年初出现在图书馆的独眼狸白，怕人，花纹是狸花加白的脑袋+虎斑加白的身体。",
+        "relationships": []
+      },
+      "qualityFlags": [
+        "来源记录已与网站当前天水档案对齐，性别、亲人程度、疫苗和绝育状态一致。",
+        "来源补充绝育日期为2025-12-31，网站当前记录仍标注日期待补充。",
+        "截图未显示关系区，暂未记录关系。"
+      ]
+    },
+    {
+      "sourceName": "裤裤",
+      "canonicalName": "裤裤",
+      "matchStatus": "matched",
+      "websiteRecord": {
+        "exists": true,
+        "status": "已毕业",
+        "area": "海棠",
+        "gender": "母",
+        "friendliness": "亲人",
+        "vaccine": "喵倍护·三针已完成（具体日期待追溯）",
+        "sterilized": "已绝育（日期待补充）"
+      },
+      "sourceFields": {
+        "gender": "母",
+        "ageText": "2岁4个月",
+        "sterilizationStatusText": "已绝育",
+        "sterilized": true,
+        "sterilizedAt": "2025-02-01",
+        "transferStatus": "暂不中转",
+        "personality": [
+          "喵拳攻击",
+          "软萌好盘",
+          "聪明机灵"
+        ],
+        "description": "大约24年春夏出生于丁香，黄眼睛狸白，出现时未观测到猫妈，是一只对人类很好奇又胆子很小的儿童猫。小时候会远远的跟着人类走，但是不能靠近会被抓，好像也不太会社交，去了好几个地方都被大猫驱赶。因为后腿白白的像没穿裤子一样，所以叫裤裤（缺什么叫什么这一块）手有点欠欠的，偶尔会抓人，比较高冷。",
+        "relationships": [
+          {
+            "catName": "橙留香",
+            "relation": "好友"
+          },
+          {
+            "catName": "深情哥",
+            "relation": "好友"
+          },
+          {
+            "catName": "粤利粤",
+            "relation": "宿敌",
+            "needsReview": true
+          }
+        ]
+      },
+      "qualityFlags": [
+        "来源记录已与网站当前裤裤档案对齐，性别、状态、区域和亲人程度一致。",
+        "来源补充绝育日期为2025-02-01，网站当前记录仍标注日期待补充。",
+        "关系中的“粤利粤”当前未在网站 cats.js 中找到，需要确认是否为正式档案或别名。"
+      ]
+    },
+    {
+      "sourceName": "虎先锋",
+      "canonicalName": "虎先锋",
+      "matchStatus": "matched",
+      "websiteRecord": {
+        "exists": true,
+        "status": "就读中",
+        "area": "海棠",
+        "gender": "公",
+        "friendliness": "非常怕人",
+        "vaccine": "一针 2026-05-11；二针 2026-06-26（紫薇京和）；三针未接种",
+        "sterilized": "已绝育（日期待补充）"
+      },
+      "sourceFields": {
+        "gender": "公",
+        "sterilizationStatusText": "已绝育",
+        "sterilized": true,
+        "sterilizedAt": null,
+        "personality": [
+          "生人勿近",
+          "喵拳攻击",
+          "胆小心包"
+        ],
+        "description": "生活在学校里很久的一只橘猫，猫中一点黑，非常怕人，看起来很凶不过战斗力很弱，经常在海棠偷偷蹭饭。绝育放归的时候在袋子里突然静静的不动了，差点把绝育组同学吓晕，后来发现其实是睡如死了，胆小但心大。",
+        "relationships": [
+          {
+            "catName": "三四",
+            "relation": "好友",
+            "needsReview": true
+          }
+        ]
+      },
+      "qualityFlags": [
+        "来源记录已与网站当前虎先锋档案对齐，性别、区域、亲人程度和绝育状态一致。",
+        "来源未提供具体绝育日期，网站当前也标注日期待补充。",
+        "关系中的“三四”当前未在网站 cats.js 中找到，需要确认是否为正式档案或别名。"
+      ]
+    },
+    {
+      "sourceName": "大头",
+      "canonicalName": "大头",
+      "matchStatus": "matched",
+      "websiteRecord": {
+        "exists": true,
+        "status": "就读中",
+        "area": "丁香",
+        "gender": "公",
+        "friendliness": "亲人",
+        "vaccine": "妙三多·一针 2025-07-27；二针 2025-09-09；三针 2025-10-07（紫薇京和）",
+        "sterilized": "已绝育（日期待补充）"
+      },
+      "sourceFields": {
+        "gender": "公",
+        "sterilizationStatusText": "已绝育",
+        "sterilized": true,
+        "sterilizedAt": "2023-04-01",
+        "transferStatus": "暂不中转",
+        "personality": [
+          "聪明机灵",
+          "霸道总裁",
+          "校园暖男"
+        ],
+        "description": "丁香“老猫王”，猫群群头像。据传2020年之前就生活在丁香的原住民，非常聪明的绿眼狸花，对人对猫都很温柔，听得懂自己的名字。爱喝水，爱吃冻干，是少有的对猫条不感兴趣的猫猫，养生这一块👍",
+        "relationships": [
+          {
+            "catName": "一头",
+            "relation": "疑似兄弟",
+            "confirmed": false
+          },
+          {
+            "catName": "黑姐",
+            "relation": "好友"
+          },
+          {
+            "catName": "漂亮橘/plj",
+            "relation": "好友"
+          }
+        ]
+      },
+      "qualityFlags": [
+        "来源记录已与网站当前大头档案对齐，性别、状态、区域、亲人程度和绝育状态一致。",
+        "来源补充绝育日期为2023-04-01，网站当前记录仍标注日期待补充。",
+        "与一头的关系来源标注为“疑似兄弟”，暂未视为确定亲属关系。"
+      ]
+    }
+  ]
+}

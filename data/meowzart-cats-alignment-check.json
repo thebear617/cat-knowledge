@@ -1,0 +1,1856 @@
+{
+  "schema": "meowzart-cats-candidate",
+  "version": 1,
+  "generatedAt": "2026-09-12T07:35:36.092Z",
+  "input": "data/meowzart-api-export.json",
+  "imageManifest": "data/meowzart-local-image-manifest.json",
+  "target": {
+    "source": "小小喵扎特 API",
+    "societyId": "649",
+    "targetCount": 99,
+    "retainedWebsiteOnlyCount": 7,
+    "targetRule": "以 API 列表返回的 99 条记录为候选目标名单；不自动删除当前 cats.js 旧档案。"
+  },
+  "currentWebsite": {
+    "count": 106,
+    "fields": [
+      "name",
+      "status",
+      "vaccine",
+      "sterilized",
+      "notes",
+      "area",
+      "gender",
+      "images"
+    ],
+    "optionalFieldsObserved": [
+      "photoUpdatedAt",
+      "cover"
+    ]
+  },
+  "manualDecisions": {
+    "currentNameRenames": {
+      "胆小橘": "邪恶橘白"
+    },
+    "currentStatusOverrides": {
+      "邪恶橘白": "就读中"
+    },
+    "apiCurrentNameAliases": {
+      "丁香奶牛": "邪恶奶牛"
+    },
+    "apiStatusOverrides": {
+      "二柑": "已毕业",
+      "焦炭馒头": "喵星或失踪"
+    },
+    "apiCanonicalNames": {
+      "胖琥/琥珀": "胖琥",
+      "毛柿子/枣糕": "毛柿子",
+      "牛奶/中分头": "牛奶",
+      "盼盼/小面包": "盼盼",
+      "焦黄/教皇": "焦黄",
+      "香香/郁金香": "香香",
+      "小刀疤/小刀": "小刀",
+      "牛牛/楼长": "楼长",
+      "茶叶/咪咪": "茶叶"
+    },
+    "apiSterilizationOverrides": {
+      "粤利粤": "待补充",
+      "奶泡": "未绝育",
+      "三橘": "待补充",
+      "竹园小老大": "待补充",
+      "来财": "待补充",
+      "绿豆": "待补充",
+      "潇洒哥": "已绝育"
+    },
+    "apiGenderOverrides": {
+      "三橘": null,
+      "潇洒哥": "公",
+      "奶咖": "公",
+      "丁香奶牛": "公"
+    },
+    "aliasPolicy": "现有网站名为正式名；API 斜杠名称的其他部分作为 aliases。",
+    "relationshipOverrides": [
+      {
+        "sourceName": "瓜皮头",
+        "relatedCatName": "麻薯",
+        "relation": "夫妻"
+      },
+      {
+        "sourceName": "斜眼狼",
+        "relatedCatName": "黑哥",
+        "relation": "夫妻"
+      },
+      {
+        "sourceName": "大头",
+        "relatedCatName": "一头",
+        "remove": true
+      }
+    ],
+    "retainedWebsiteOnlyNames": [
+      "警长",
+      "茶叶大蛋",
+      "彪哥",
+      "小小黑",
+      "咖啡",
+      "邪恶橘白",
+      "金琥"
+    ]
+  },
+  "expandedCandidateFields": [
+    "personality",
+    "description",
+    "relationships",
+    "relationshipHints",
+    "updates",
+    "aliases",
+    "sourceId",
+    "sourceImages"
+  ],
+  "summary": {
+    "apiCount": 99,
+    "exactMatchCount": 85,
+    "aliasMatchCount": 13,
+    "newCandidateCount": 1,
+    "legacyCurrentNamesNotInApiCount": 7,
+    "statusConflictCount": 0,
+    "genderConflictCount": 0,
+    "relationshipCount": 41,
+    "relationshipReviewCount": 0,
+    "relationshipMultiLabelPairCount": 0,
+    "apiAdoptionStatusCounts": {
+      "die": 10,
+      "disappear": 21,
+      "finish": 39,
+      "school": 15,
+      "wait": 14
+    },
+    "apiGenderCounts": {
+      "female": 43,
+      "male": 52,
+      "unknown": 4
+    },
+    "apiSterilizationCounts": {
+      "no": 28,
+      "unclear": 7,
+      "yes": 64
+    },
+    "candidatesNeedingReviewCount": 1
+  },
+  "legacyCurrentNamesNotInApi": [
+    "警长",
+    "茶叶大蛋",
+    "彪哥",
+    "小小黑",
+    "咖啡",
+    "邪恶橘白",
+    "金琥"
+  ],
+  "retainedWebsiteOnly": [
+    {
+      "name": "警长",
+      "status": "就读中",
+      "vaccine": "一针 2025-11-01；二针未接种；三针未接种",
+      "sterilized": "已绝育（日期待补充）",
+      "notes": "—",
+      "area": "竹园",
+      "gender": "公",
+      "images": [
+        "images/警长/警长1.jpg"
+      ],
+      "personality": [],
+      "description": null,
+      "relationships": [],
+      "relationshipHints": [],
+      "updates": [],
+      "aliases": [],
+      "sourceId": null,
+      "sourceImages": []
+    },
+    {
+      "name": "茶叶大蛋",
+      "status": "就读中",
+      "vaccine": "未接种",
+      "sterilized": "未绝育",
+      "notes": "第二/三针认捐人：毛橘妈",
+      "area": "海棠",
+      "gender": "公",
+      "images": [
+        "images/茶叶大蛋/茶叶大蛋1.jpg"
+      ],
+      "personality": [],
+      "description": null,
+      "relationships": [],
+      "relationshipHints": [],
+      "updates": [],
+      "aliases": [],
+      "sourceId": null,
+      "sourceImages": []
+    },
+    {
+      "name": "彪哥",
+      "status": "就读中",
+      "vaccine": "一针 2026-05-20；二针未接种；三针未接种",
+      "sterilized": "已绝育（日期待补充）",
+      "notes": "斜眼狼儿子；第二针认捐人：鲨人不wink",
+      "area": "竹园",
+      "gender": "公",
+      "images": [
+        "images/彪哥/彪哥4.jpg",
+        "images/彪哥/彪哥3.jpg",
+        "images/彪哥/彪哥2.jpg",
+        "images/彪哥/彪哥1.jpg"
+      ],
+      "personality": [],
+      "description": null,
+      "relationships": [],
+      "relationshipHints": [],
+      "updates": [],
+      "aliases": [],
+      "sourceId": null,
+      "sourceImages": []
+    },
+    {
+      "name": "小小黑",
+      "status": "就读中",
+      "vaccine": "未接种",
+      "sterilized": "2026-05-17 已绝育",
+      "notes": "2026-05-17 在缘愈绝育/治疗，术后恢复待跟进。",
+      "area": "海棠",
+      "gender": "母",
+      "images": [
+        "images/小小黑/小小黑2.jpg",
+        "images/小小黑/小小黑1.jpg"
+      ],
+      "personality": [],
+      "description": null,
+      "relationships": [],
+      "relationshipHints": [],
+      "updates": [],
+      "aliases": [],
+      "sourceId": null,
+      "sourceImages": []
+    },
+    {
+      "name": "咖啡",
+      "status": "喵星或失踪",
+      "vaccine": "—",
+      "sterilized": "已绝育（日期待补充）",
+      "notes": "约 2026-04-30 因猫瘟去世，具体日期待补充。",
+      "area": "丁香",
+      "gender": "公",
+      "images": [
+        "images/咖啡/咖啡1.jpg",
+        "images/咖啡/咖啡2.jpg"
+      ],
+      "personality": [],
+      "description": null,
+      "relationships": [],
+      "relationshipHints": [],
+      "updates": [],
+      "aliases": [],
+      "sourceId": null,
+      "sourceImages": []
+    },
+    {
+      "name": "邪恶橘白",
+      "status": "就读中",
+      "vaccine": "未接种",
+      "sterilized": "2026-07-04 已绝育",
+      "notes": "橘白双色，怕人，已绝育但疫苗未接种。",
+      "area": "丁香",
+      "gender": "公",
+      "images": [
+        "images/胆小橘/胆小橘1.jpg"
+      ],
+      "personality": [],
+      "description": null,
+      "relationships": [],
+      "relationshipHints": [],
+      "updates": [],
+      "aliases": [],
+      "sourceId": null,
+      "sourceImages": []
+    },
+    {
+      "name": "金琥",
+      "status": "就读中",
+      "vaccine": "未接种",
+      "sterilized": "2026-06-28 已绝育",
+      "notes": "纯白短毛，怕人，已绝育但疫苗未接种。",
+      "area": "竹园",
+      "gender": "公",
+      "images": [
+        "images/金琥/金琥2.jpg",
+        "images/金琥/金琥1.jpg",
+        "images/金琥/金琥3.jpg"
+      ],
+      "personality": [],
+      "description": null,
+      "relationships": [],
+      "relationshipHints": [],
+      "updates": [],
+      "aliases": [],
+      "sourceId": null,
+      "sourceImages": []
+    }
+  ],
+  "policy": {
+    "status": "school→就读中；finish→已毕业；die/disappear→喵星或失踪；已确认的二柑、焦炭馒头使用人工状态覆盖；wait 不作为正式网站状态，匹配记录沿用现有网站状态。",
+    "name": "现有网站名保持为正式名；API 斜杠名称的其他部分作为 aliases。",
+    "rename": "现有网站“胆小橘”改为“邪恶橘白”；API 的“胆小橘”作为另一只猫处理。",
+    "merge": "API“丁香奶牛”与现有网站“邪恶奶牛”合并，保留“邪恶奶牛”为正式名，“丁香奶牛”为别名。",
+    "retainedWebsiteOnly": "保留当前网站中未匹配 API 99 条名单的记录，不自动删除。",
+    "gender": "male→公；female→母；unknown 留空。",
+    "sterilized": "由 jueyuStatus 和 jueyuTime 映射。",
+    "unavailableFields": "新记录的 vaccine 和 notes 统一为待补充；area 优先从 story 推断，无法判断时为待补充。",
+    "images": "已有本地 images 原样保留；没有本地图片的记录由 image manifest 写入最多两张 API 图片的本地路径，原始 URL 仍保留在 sourceImages。",
+    "richFields": "personality、description、updates 直接来自 API；relationships 只收录截图暂存中的明确关系；故事文本线索仅放在 relationshipHints，不作为正式关系。"
+  },
+  "checks": {
+    "nameChecks": {
+      "exactMatches": [
+        {
+          "sourceId": "44674",
+          "apiName": "大面包",
+          "currentName": "大面包"
+        },
+        {
+          "sourceId": "45275",
+          "apiName": "黄豆",
+          "currentName": "黄豆"
+        },
+        {
+          "sourceId": "45274",
+          "apiName": "蓝豆",
+          "currentName": "蓝豆"
+        },
+        {
+          "sourceId": "45261",
+          "apiName": "二橙",
+          "currentName": "二橙"
+        },
+        {
+          "sourceId": "45262",
+          "apiName": "二柑",
+          "currentName": "二柑"
+        },
+        {
+          "sourceId": "45314",
+          "apiName": "豆介",
+          "currentName": "豆介"
+        },
+        {
+          "sourceId": "44695",
+          "apiName": "水手",
+          "currentName": "水手"
+        },
+        {
+          "sourceId": "44687",
+          "apiName": "豆花",
+          "currentName": "豆花"
+        },
+        {
+          "sourceId": "44689",
+          "apiName": "二头",
+          "currentName": "二头"
+        },
+        {
+          "sourceId": "44691",
+          "apiName": "芸豆",
+          "currentName": "芸豆"
+        },
+        {
+          "sourceId": "44696",
+          "apiName": "橙留香",
+          "currentName": "橙留香"
+        },
+        {
+          "sourceId": "46036",
+          "apiName": "瓜皮头",
+          "currentName": "瓜皮头"
+        },
+        {
+          "sourceId": "44677",
+          "apiName": "毛橘子",
+          "currentName": "毛橘子"
+        },
+        {
+          "sourceId": "45153",
+          "apiName": "麻薯",
+          "currentName": "麻薯"
+        },
+        {
+          "sourceId": "49451",
+          "apiName": "立夏",
+          "currentName": "立夏"
+        },
+        {
+          "sourceId": "45264",
+          "apiName": "斜眼狼",
+          "currentName": "斜眼狼"
+        },
+        {
+          "sourceId": "45278",
+          "apiName": "太君",
+          "currentName": "太君"
+        },
+        {
+          "sourceId": "45151",
+          "apiName": "脏白",
+          "currentName": "脏白"
+        },
+        {
+          "sourceId": "46034",
+          "apiName": "天水",
+          "currentName": "天水"
+        },
+        {
+          "sourceId": "45155",
+          "apiName": "裤裤",
+          "currentName": "裤裤"
+        },
+        {
+          "sourceId": "45269",
+          "apiName": "虎先锋",
+          "currentName": "虎先锋"
+        },
+        {
+          "sourceId": "44681",
+          "apiName": "大头",
+          "currentName": "大头"
+        },
+        {
+          "sourceId": "50641",
+          "apiName": "奶酪",
+          "currentName": "奶酪"
+        },
+        {
+          "sourceId": "44676",
+          "apiName": "喵勒特",
+          "currentName": "喵勒特"
+        },
+        {
+          "sourceId": "45276",
+          "apiName": "袜袜",
+          "currentName": "袜袜"
+        },
+        {
+          "sourceId": "49490",
+          "apiName": "粤利粤",
+          "currentName": "粤利粤"
+        },
+        {
+          "sourceId": "49489",
+          "apiName": "奶泡",
+          "currentName": "奶泡"
+        },
+        {
+          "sourceId": "49486",
+          "apiName": "暹罗",
+          "currentName": "暹罗"
+        },
+        {
+          "sourceId": "49485",
+          "apiName": "大倒霉蛋",
+          "currentName": "大倒霉蛋"
+        },
+        {
+          "sourceId": "49484",
+          "apiName": "胆小橘",
+          "currentName": "胆小橘"
+        },
+        {
+          "sourceId": "49483",
+          "apiName": "啃啃",
+          "currentName": "啃啃"
+        },
+        {
+          "sourceId": "49482",
+          "apiName": "emo",
+          "currentName": "emo"
+        },
+        {
+          "sourceId": "49481",
+          "apiName": "三花",
+          "currentName": "三花"
+        },
+        {
+          "sourceId": "45284",
+          "apiName": "加白",
+          "currentName": "加白"
+        },
+        {
+          "sourceId": "44875",
+          "apiName": "黑姐",
+          "currentName": "黑姐"
+        },
+        {
+          "sourceId": "49178",
+          "apiName": "小满",
+          "currentName": "小满"
+        },
+        {
+          "sourceId": "49146",
+          "apiName": "奶霜",
+          "currentName": "奶霜"
+        },
+        {
+          "sourceId": "49145",
+          "apiName": "银杏",
+          "currentName": "银杏"
+        },
+        {
+          "sourceId": "45173",
+          "apiName": "深情哥",
+          "currentName": "深情哥"
+        },
+        {
+          "sourceId": "45201",
+          "apiName": "小花",
+          "currentName": "小花"
+        },
+        {
+          "sourceId": "45465",
+          "apiName": "三橘",
+          "currentName": "三橘"
+        },
+        {
+          "sourceId": "45464",
+          "apiName": "竹园小老大",
+          "currentName": "竹园小老大"
+        },
+        {
+          "sourceId": "45463",
+          "apiName": "来财",
+          "currentName": "来财"
+        },
+        {
+          "sourceId": "44690",
+          "apiName": "小煤球",
+          "currentName": "小煤球"
+        },
+        {
+          "sourceId": "45436",
+          "apiName": "小尾巴",
+          "currentName": "小尾巴"
+        },
+        {
+          "sourceId": "45434",
+          "apiName": "绿豆",
+          "currentName": "绿豆"
+        },
+        {
+          "sourceId": "45433",
+          "apiName": "棉花糖",
+          "currentName": "棉花糖"
+        },
+        {
+          "sourceId": "45184",
+          "apiName": "潇洒哥",
+          "currentName": "潇洒哥"
+        },
+        {
+          "sourceId": "45359",
+          "apiName": "CC",
+          "currentName": "CC"
+        },
+        {
+          "sourceId": "45357",
+          "apiName": "项圈小黑",
+          "currentName": "项圈小黑"
+        },
+        {
+          "sourceId": "45325",
+          "apiName": "喵特勒老妈",
+          "currentName": "喵特勒老妈"
+        },
+        {
+          "sourceId": "45324",
+          "apiName": "中分头",
+          "currentName": "中分头"
+        },
+        {
+          "sourceId": "45323",
+          "apiName": "喵特勒",
+          "currentName": "喵特勒"
+        },
+        {
+          "sourceId": "45321",
+          "apiName": "罗小黑",
+          "currentName": "罗小黑"
+        },
+        {
+          "sourceId": "45318",
+          "apiName": "橘桑",
+          "currentName": "橘桑"
+        },
+        {
+          "sourceId": "45317",
+          "apiName": "小八嘎",
+          "currentName": "小八嘎"
+        },
+        {
+          "sourceId": "45316",
+          "apiName": "朱迪",
+          "currentName": "朱迪"
+        },
+        {
+          "sourceId": "45315",
+          "apiName": "奶咖",
+          "currentName": "奶咖"
+        },
+        {
+          "sourceId": "45306",
+          "apiName": "煤炭",
+          "currentName": "煤炭"
+        },
+        {
+          "sourceId": "45302",
+          "apiName": "三四",
+          "currentName": "三四"
+        },
+        {
+          "sourceId": "45301",
+          "apiName": "栗子",
+          "currentName": "栗子"
+        },
+        {
+          "sourceId": "45293",
+          "apiName": "大嗓门",
+          "currentName": "大嗓门"
+        },
+        {
+          "sourceId": "45292",
+          "apiName": "黑介",
+          "currentName": "黑介"
+        },
+        {
+          "sourceId": "45291",
+          "apiName": "宗介",
+          "currentName": "宗介"
+        },
+        {
+          "sourceId": "45289",
+          "apiName": "三三",
+          "currentName": "三三"
+        },
+        {
+          "sourceId": "45288",
+          "apiName": "奥利奥",
+          "currentName": "奥利奥"
+        },
+        {
+          "sourceId": "45287",
+          "apiName": "苏菲",
+          "currentName": "苏菲"
+        },
+        {
+          "sourceId": "45286",
+          "apiName": "太子",
+          "currentName": "太子"
+        },
+        {
+          "sourceId": "45282",
+          "apiName": "丁香小奶牛",
+          "currentName": "丁香小奶牛"
+        },
+        {
+          "sourceId": "45281",
+          "apiName": "橘白",
+          "currentName": "橘白"
+        },
+        {
+          "sourceId": "45279",
+          "apiName": "黑子",
+          "currentName": "黑子"
+        },
+        {
+          "sourceId": "45277",
+          "apiName": "Miko",
+          "currentName": "Miko"
+        },
+        {
+          "sourceId": "45273",
+          "apiName": "豆腐脑",
+          "currentName": "豆腐脑"
+        },
+        {
+          "sourceId": "45272",
+          "apiName": "阿猪",
+          "currentName": "阿猪"
+        },
+        {
+          "sourceId": "45271",
+          "apiName": "蛋挞",
+          "currentName": "蛋挞"
+        },
+        {
+          "sourceId": "45270",
+          "apiName": "曲奇",
+          "currentName": "曲奇"
+        },
+        {
+          "sourceId": "45266",
+          "apiName": "竹园奶牛一号",
+          "currentName": "竹园奶牛一号"
+        },
+        {
+          "sourceId": "45265",
+          "apiName": "竹园大橘",
+          "currentName": "竹园大橘"
+        },
+        {
+          "sourceId": "45263",
+          "apiName": "黑哥",
+          "currentName": "黑哥"
+        },
+        {
+          "sourceId": "45247",
+          "apiName": "焦炭馒头",
+          "currentName": "焦炭馒头"
+        },
+        {
+          "sourceId": "45246",
+          "apiName": "竹园警长",
+          "currentName": "竹园警长"
+        },
+        {
+          "sourceId": "45245",
+          "apiName": "来才",
+          "currentName": "来才"
+        },
+        {
+          "sourceId": "45188",
+          "apiName": "奶茶",
+          "currentName": "奶茶"
+        },
+        {
+          "sourceId": "45174",
+          "apiName": "福福",
+          "currentName": "福福"
+        },
+        {
+          "sourceId": "45152",
+          "apiName": "芝麻",
+          "currentName": "芝麻"
+        }
+      ],
+      "aliasMatches": [
+        {
+          "sourceId": "45226",
+          "apiName": "漂亮橘/plj",
+          "currentName": "漂亮橘",
+          "aliases": [
+            "plj"
+          ]
+        },
+        {
+          "sourceId": "45280",
+          "apiName": "胖琥/琥珀",
+          "currentName": "胖琥",
+          "aliases": [
+            "琥珀"
+          ]
+        },
+        {
+          "sourceId": "48407",
+          "apiName": "渣男/赫兹",
+          "currentName": "赫兹",
+          "aliases": [
+            "渣男"
+          ]
+        },
+        {
+          "sourceId": "45309",
+          "apiName": "白介/香蕉",
+          "currentName": "白介",
+          "aliases": [
+            "香蕉"
+          ]
+        },
+        {
+          "sourceId": "45285",
+          "apiName": "毛柿子/枣糕",
+          "currentName": "毛柿子",
+          "aliases": [
+            "枣糕"
+          ]
+        },
+        {
+          "sourceId": "44688",
+          "apiName": "盼盼/小面包",
+          "currentName": "盼盼",
+          "aliases": [
+            "小面包"
+          ]
+        },
+        {
+          "sourceId": "45154",
+          "apiName": "焦黄/教皇",
+          "currentName": "焦黄",
+          "aliases": [
+            "教皇"
+          ]
+        },
+        {
+          "sourceId": "45202",
+          "apiName": "香香/郁金香",
+          "currentName": "香香",
+          "aliases": [
+            "郁金香"
+          ]
+        },
+        {
+          "sourceId": "45320",
+          "apiName": "小刀疤/小刀",
+          "currentName": "小刀",
+          "aliases": [
+            "小刀疤"
+          ]
+        },
+        {
+          "sourceId": "45290",
+          "apiName": "丁香奶牛",
+          "currentName": "邪恶奶牛",
+          "aliases": [
+            "丁香奶牛"
+          ]
+        },
+        {
+          "sourceId": "45283",
+          "apiName": "牛牛/楼长",
+          "currentName": "楼长",
+          "aliases": [
+            "牛牛"
+          ]
+        },
+        {
+          "sourceId": "45267",
+          "apiName": "茶叶/咪咪",
+          "currentName": "茶叶",
+          "aliases": [
+            "咪咪"
+          ]
+        },
+        {
+          "sourceId": "44692",
+          "apiName": "小黑/黑小虎",
+          "currentName": "黑小虎",
+          "aliases": [
+            "小黑"
+          ]
+        }
+      ],
+      "newNames": [
+        {
+          "sourceId": "45268",
+          "apiName": "牛奶/中分头",
+          "canonicalName": "牛奶",
+          "aliases": [
+            "中分头"
+          ],
+          "compositeName": true,
+          "manuallyResolved": true
+        }
+      ],
+      "duplicateSourceIds": [],
+      "legacyCurrentNamesNotInApi": [
+        "警长",
+        "茶叶大蛋",
+        "彪哥",
+        "小小黑",
+        "咖啡",
+        "邪恶橘白",
+        "金琥"
+      ]
+    },
+    "statusChecks": {
+      "codeMapping": {
+        "school": "就读中",
+        "finish": "已毕业",
+        "die": "喵星或失踪",
+        "disappear": "喵星或失踪"
+      },
+      "overrides": {
+        "二柑": "已毕业",
+        "焦炭馒头": "喵星或失踪"
+      },
+      "conflicts": []
+    },
+    "relationshipChecks": {
+      "totalRelationships": 41,
+      "confirmedCount": 41,
+      "suspectedCount": 0,
+      "inferredCount": 0,
+      "ambiguousCount": 0,
+      "unresolvedRelatedNames": [],
+      "multiLabelPairs": [],
+      "rows": [
+        {
+          "sourceId": "44674",
+          "sourceName": "大面包",
+          "relatedCatName": "喵勒特",
+          "relation": "好友",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "44674",
+          "sourceName": "大面包",
+          "relatedCatName": "盼盼",
+          "relation": "好友",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "45275",
+          "sourceName": "黄豆",
+          "relatedCatName": "蓝豆",
+          "relation": "兄弟姐妹",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "45275",
+          "sourceName": "黄豆",
+          "relatedCatName": "豆花",
+          "relation": "兄弟姐妹",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "45275",
+          "sourceName": "黄豆",
+          "relatedCatName": "豆腐脑",
+          "relation": "妈妈",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "45275",
+          "sourceName": "黄豆",
+          "relatedCatName": "绿豆",
+          "relation": "兄弟姐妹",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "45274",
+          "sourceName": "蓝豆",
+          "relatedCatName": "豆花",
+          "relation": "兄弟姐妹",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "45274",
+          "sourceName": "蓝豆",
+          "relatedCatName": "豆腐脑",
+          "relation": "妈妈",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "45274",
+          "sourceName": "蓝豆",
+          "relatedCatName": "黄豆",
+          "relation": "兄弟姐妹",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "45274",
+          "sourceName": "蓝豆",
+          "relatedCatName": "绿豆",
+          "relation": "兄弟姐妹",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "45262",
+          "sourceName": "二柑",
+          "relatedCatName": "二橙",
+          "relation": "同事",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "45314",
+          "sourceName": "豆介",
+          "relatedCatName": "白介",
+          "relation": "情侣",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "44687",
+          "sourceName": "豆花",
+          "relatedCatName": "蓝豆",
+          "relation": "兄弟姐妹",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "44687",
+          "sourceName": "豆花",
+          "relatedCatName": "豆腐脑",
+          "relation": "妈妈",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "44687",
+          "sourceName": "豆花",
+          "relatedCatName": "黄豆",
+          "relation": "兄弟姐妹",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "44687",
+          "sourceName": "豆花",
+          "relatedCatName": "绿豆",
+          "relation": "兄弟姐妹",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "44689",
+          "sourceName": "二头",
+          "relatedCatName": "胖琥",
+          "relation": "好友",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "44689",
+          "sourceName": "二头",
+          "relatedCatName": "黑介",
+          "relation": "宿敌",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "44691",
+          "sourceName": "芸豆",
+          "relatedCatName": "小煤球",
+          "relation": "好友",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "44696",
+          "sourceName": "橙留香",
+          "relatedCatName": "焦黄",
+          "relation": "好友",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "44696",
+          "sourceName": "橙留香",
+          "relatedCatName": "裤裤",
+          "relation": "好友",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "44696",
+          "sourceName": "橙留香",
+          "relatedCatName": "深情哥",
+          "relation": "好友",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "44696",
+          "sourceName": "橙留香",
+          "relatedCatName": "白介",
+          "relation": "好友",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "46036",
+          "sourceName": "瓜皮头",
+          "relatedCatName": "麻薯",
+          "relation": "夫妻",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "manual-confirmation"
+        },
+        {
+          "sourceId": "44677",
+          "sourceName": "毛橘子",
+          "relatedCatName": "毛柿子",
+          "relation": "好友",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "44677",
+          "sourceName": "毛橘子",
+          "relatedCatName": "小满",
+          "relation": "好友",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "45153",
+          "sourceName": "麻薯",
+          "relatedCatName": "芝麻",
+          "relation": "儿子",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "45153",
+          "sourceName": "麻薯",
+          "relatedCatName": "袜袜",
+          "relation": "儿子",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "45153",
+          "sourceName": "麻薯",
+          "relatedCatName": "Miko",
+          "relation": "儿子",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "45153",
+          "sourceName": "麻薯",
+          "relatedCatName": "棉花糖",
+          "relation": "女儿",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "45264",
+          "sourceName": "斜眼狼",
+          "relatedCatName": "黑哥",
+          "relation": "夫妻",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "manual-confirmation"
+        },
+        {
+          "sourceId": "45278",
+          "sourceName": "太君",
+          "relatedCatName": "黑子",
+          "relation": "情侣",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "45278",
+          "sourceName": "太君",
+          "relatedCatName": "太子",
+          "relation": "情侣",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "45278",
+          "sourceName": "太君",
+          "relatedCatName": "小八嘎",
+          "relation": "儿子",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "45151",
+          "sourceName": "脏白",
+          "relatedCatName": "潇洒哥",
+          "relation": "宿敌",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "45155",
+          "sourceName": "裤裤",
+          "relatedCatName": "橙留香",
+          "relation": "好友",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "45155",
+          "sourceName": "裤裤",
+          "relatedCatName": "深情哥",
+          "relation": "好友",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "45155",
+          "sourceName": "裤裤",
+          "relatedCatName": "粤利粤",
+          "relation": "宿敌",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "45269",
+          "sourceName": "虎先锋",
+          "relatedCatName": "三四",
+          "relation": "好友",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "44681",
+          "sourceName": "大头",
+          "relatedCatName": "黑姐",
+          "relation": "好友",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        },
+        {
+          "sourceId": "44681",
+          "sourceName": "大头",
+          "relatedCatName": "漂亮橘",
+          "relation": "好友",
+          "relationCandidates": [],
+          "confidence": "confirmed",
+          "source": "screenshot-staging"
+        }
+      ],
+      "hintCount": 55,
+      "hintAmbiguousCount": 24,
+      "hints": [
+        {
+          "sourceId": "45261",
+          "sourceName": "二橙",
+          "relatedCatName": "二柑",
+          "relationCandidates": [
+            "家族"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45261",
+          "sourceName": "二橙",
+          "relatedCatName": "橘白",
+          "relationCandidates": [
+            "家族"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45262",
+          "sourceName": "二柑",
+          "relatedCatName": "二橙",
+          "relationCandidates": [
+            "家族"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45262",
+          "sourceName": "二柑",
+          "relatedCatName": "橘白",
+          "relationCandidates": [
+            "家族"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "44687",
+          "sourceName": "豆花",
+          "relatedCatName": "潇洒哥",
+          "relationCandidates": [
+            "同胎"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "44687",
+          "sourceName": "豆花",
+          "relatedCatName": "豆腐脑",
+          "relationCandidates": [
+            "同胎"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "44687",
+          "sourceName": "豆花",
+          "relatedCatName": "黄豆",
+          "relationCandidates": [
+            "同胎"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "44687",
+          "sourceName": "豆花",
+          "relatedCatName": "蓝豆",
+          "relationCandidates": [
+            "同胎"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "44691",
+          "sourceName": "芸豆",
+          "relatedCatName": "小煤球",
+          "relationCandidates": [
+            "好友",
+            "朋友"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "44691",
+          "sourceName": "芸豆",
+          "relatedCatName": "牛奶",
+          "relationCandidates": [
+            "好友",
+            "朋友"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "46036",
+          "sourceName": "瓜皮头",
+          "relatedCatName": "麻薯",
+          "relationCandidates": [
+            "孩子",
+            "前夫",
+            "兄弟"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45264",
+          "sourceName": "斜眼狼",
+          "relatedCatName": "黑哥",
+          "relationCandidates": [
+            "夫妻",
+            "家族"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45226",
+          "sourceName": "漂亮橘/plj",
+          "relatedCatName": "小刀",
+          "relationCandidates": [
+            "好友",
+            "前夫",
+            "儿子"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45226",
+          "sourceName": "漂亮橘/plj",
+          "relatedCatName": "大头",
+          "relationCandidates": [
+            "好友",
+            "前夫",
+            "儿子"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45226",
+          "sourceName": "漂亮橘/plj",
+          "relatedCatName": "胖琥",
+          "relationCandidates": [
+            "好友",
+            "前夫",
+            "儿子"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45276",
+          "sourceName": "袜袜",
+          "relatedCatName": "麻薯",
+          "relationCandidates": [
+            "孩子"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45276",
+          "sourceName": "袜袜",
+          "relatedCatName": "黑小虎",
+          "relationCandidates": [
+            "孩子"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "49484",
+          "sourceName": "胆小橘",
+          "relatedCatName": "漂亮橘",
+          "relationCandidates": [
+            "兄弟"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "49484",
+          "sourceName": "胆小橘",
+          "relatedCatName": "胖琥",
+          "relationCandidates": [
+            "兄弟"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45280",
+          "sourceName": "胖琥/琥珀",
+          "relatedCatName": "二头",
+          "relationCandidates": [
+            "孩子"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "49146",
+          "sourceName": "奶霜",
+          "relatedCatName": "银杏",
+          "relationCandidates": [
+            "兄弟",
+            "儿子"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "49145",
+          "sourceName": "银杏",
+          "relatedCatName": "奶霜",
+          "relationCandidates": [
+            "姐妹",
+            "女儿"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45268",
+          "sourceName": "牛奶/中分头",
+          "relatedCatName": "牛奶",
+          "relationCandidates": [
+            "儿子",
+            "母亲"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45268",
+          "sourceName": "牛奶/中分头",
+          "relatedCatName": "茶叶",
+          "relationCandidates": [
+            "儿子",
+            "母亲"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "44690",
+          "sourceName": "小煤球",
+          "relatedCatName": "芸豆",
+          "relationCandidates": [
+            "好友",
+            "朋友"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45433",
+          "sourceName": "棉花糖",
+          "relatedCatName": "麻薯",
+          "relationCandidates": [
+            "女儿"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45359",
+          "sourceName": "CC",
+          "relatedCatName": "三三",
+          "relationCandidates": [
+            "女儿"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45359",
+          "sourceName": "CC",
+          "relatedCatName": "黑小虎",
+          "relationCandidates": [
+            "女儿"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45323",
+          "sourceName": "喵特勒",
+          "relatedCatName": "深情哥",
+          "relationCandidates": [
+            "兄弟",
+            "孩子"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45323",
+          "sourceName": "喵特勒",
+          "relatedCatName": "中分头",
+          "relationCandidates": [
+            "兄弟",
+            "孩子"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45323",
+          "sourceName": "喵特勒",
+          "relatedCatName": "牛奶",
+          "relationCandidates": [
+            "兄弟",
+            "孩子"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45323",
+          "sourceName": "喵特勒",
+          "relatedCatName": "茶叶",
+          "relationCandidates": [
+            "兄弟",
+            "孩子"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45317",
+          "sourceName": "小八嘎",
+          "relatedCatName": "太君",
+          "relationCandidates": [
+            "独苗苗",
+            "妈妈",
+            "父亲"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45317",
+          "sourceName": "小八嘎",
+          "relatedCatName": "黑子",
+          "relationCandidates": [
+            "独苗苗",
+            "妈妈",
+            "父亲"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45301",
+          "sourceName": "栗子",
+          "relatedCatName": "漂亮橘",
+          "relationCandidates": [
+            "妈妈"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45301",
+          "sourceName": "栗子",
+          "relatedCatName": "橘白",
+          "relationCandidates": [
+            "妈妈"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45292",
+          "sourceName": "黑介",
+          "relatedCatName": "二头",
+          "relationCandidates": [
+            "好友"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45292",
+          "sourceName": "黑介",
+          "relatedCatName": "宗介",
+          "relationCandidates": [
+            "好友"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45292",
+          "sourceName": "黑介",
+          "relatedCatName": "奶茶",
+          "relationCandidates": [
+            "好友"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45289",
+          "sourceName": "三三",
+          "relatedCatName": "项圈小黑",
+          "relationCandidates": [
+            "女儿",
+            "同胎"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45289",
+          "sourceName": "三三",
+          "relatedCatName": "茶叶",
+          "relationCandidates": [
+            "女儿",
+            "同胎"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45289",
+          "sourceName": "三三",
+          "relatedCatName": "黑小虎",
+          "relationCandidates": [
+            "女儿",
+            "同胎"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45279",
+          "sourceName": "黑子",
+          "relatedCatName": "胖琥",
+          "relationCandidates": [
+            "女儿"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45277",
+          "sourceName": "Miko",
+          "relatedCatName": "麻薯",
+          "relationCandidates": [
+            "孩子"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45277",
+          "sourceName": "Miko",
+          "relatedCatName": "福福",
+          "relationCandidates": [
+            "孩子"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45273",
+          "sourceName": "豆腐脑",
+          "relatedCatName": "黄豆",
+          "relationCandidates": [
+            "妈妈"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45273",
+          "sourceName": "豆腐脑",
+          "relatedCatName": "蓝豆",
+          "relationCandidates": [
+            "妈妈"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45273",
+          "sourceName": "豆腐脑",
+          "relatedCatName": "豆花",
+          "relationCandidates": [
+            "妈妈"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45270",
+          "sourceName": "曲奇",
+          "relatedCatName": "大面包",
+          "relationCandidates": [
+            "孩子"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45270",
+          "sourceName": "曲奇",
+          "relatedCatName": "来才",
+          "relationCandidates": [
+            "孩子"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45267",
+          "sourceName": "茶叶/咪咪",
+          "relatedCatName": "项圈小黑",
+          "relationCandidates": [
+            "妈妈",
+            "孩子"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45267",
+          "sourceName": "茶叶/咪咪",
+          "relatedCatName": "三三",
+          "relationCandidates": [
+            "妈妈",
+            "孩子"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45267",
+          "sourceName": "茶叶/咪咪",
+          "relatedCatName": "黑小虎",
+          "relationCandidates": [
+            "妈妈",
+            "孩子"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45245",
+          "sourceName": "来才",
+          "relatedCatName": "胆小橘",
+          "relationCandidates": [
+            "孩子"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        },
+        {
+          "sourceId": "45152",
+          "sourceName": "芝麻",
+          "relatedCatName": "麻薯",
+          "relationCandidates": [
+            "妈妈"
+          ],
+          "confidence": "inferred",
+          "source": "api-story-inference"
+        }
+      ]
+    },
+    "summary": {
+      "nameConflictCount": 7,
+      "confirmedAliasCount": 13,
+      "statusConflictCount": 0,
+      "relationshipReviewCount": 0,
+      "relationshipMultiLabelPairCount": 0,
+      "unresolvedRelatedNameCount": 0,
+      "relationshipHintCount": 55,
+      "relationshipHintAmbiguousCount": 24,
+      "duplicateSourceIdCount": 0
+    }
+  }
+}

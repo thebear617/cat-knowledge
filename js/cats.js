@@ -1,406 +1,8667 @@
+// 猫只档案主数据：由 data/meowzart-cats-candidate.json 迁移生成。
 export const catProfiles = [
   {
-    name: '奶霜',
-    status: '就读中',
-    friendliness: '非常怕人',
-    vaccine: '一针 2026-04-29；二针 2026-07-01（紫薇京和）；三针未接种',
-    sterilized: '已绝育（日期待补充）',
-    notes: '原第二针窗口 5.20~5.27；因抓不到暂未接种，抓到后咨询医生补种方案。',
-    area: '竹园',
-    gender: '公',
-    images: ['images/奶霜/奶霜1.jpg']
+    "name": "大面包",
+    "status": "已毕业",
+    "vaccine": "一针 2025-08-01；二针 2025-09-01；三针 2026-04-29",
+    "sterilized": "已绝育（2025-02-25）",
+    "notes": "第三针由大面包car协助",
+    "area": "竹园",
+    "gender": "公",
+    "images": [
+      "images/大面包/大面包2.jpg",
+      "images/大面包/大面包1.jpg"
+    ],
+    "personality": [
+      "软萌好盘",
+      "聪明机灵",
+      "热衷挑事"
+    ],
+    "description": "24年秋末出现在宿舍楼下，因橘白配色和憨厚老实任人捏圆搓扁的外表（其实一点也不憨厚老实）被命名为大面包，也是后续很多猫以烘焙物命名的开始",
+    "relationships": [
+      {
+        "relatedCatName": "喵勒特",
+        "relation": "好友",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      },
+      {
+        "relatedCatName": "盼盼",
+        "relation": "好友",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      }
+    ],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "356998",
+        "date": "2026-06-09 00:00:00",
+        "type": "cat-line",
+        "title": "",
+        "content": "5月底的时候，群小猫发现大面包定位器步数异常，几乎无活动，但是寻找未果。两天后在实验室发现了状态不好、腹部鼓胀、呼吸困难的面包并及时带他就医。\n经诊断，面包不幸确诊了隔疝（胸腔、腹腔间的隔膜破裂，导致腹腔脏器涌至胸腔，无法自愈，会导致肺部挤压、内脏黏连等问题），需要立刻手术且手术风险很大。后查证，系被车辆碾压导致。\n还好面包是福大命大的小猫，非常坚强的挺过了危险的手术和术后恢复期，但是因为术后已经不适合在野外环境生存，目前正在喝老师家里养伤。",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0911/17/e8b8cca1c-4c3aa24dffb0dfb666c2d85dc94b4023.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      },
+      {
+        "sourceId": "339984",
+        "date": "2026-04-25 16:31:04",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0425/16/6a39f7853-6ab758e9eaf9b1c920df37dd5712d596.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0425/16/6a39f7853-ac95738011b77a5b266c0c5edbe79a12.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0425/16/6a39f7853-3343b54d82b58528b0e85cac63a5b8dd.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0425/16/6a39f7853-b53ddb2ab668427a18f99f8f0c172201.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "332282",
+        "date": "2026-03-31 18:48:16",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-0f60d72e69f7bc598e561d74f03a8e48.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-a2ee916e9137be7b6b105d144f97f340.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-5f0e339768d78b9b99187f569a3381c1.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-ad62aef9b632faf7d25079ad615d8aaf.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-39cf3449f61ec606d515a5337754397c.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-fd3ae8f65c19b504de7be7376f1c346c.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-5cecc9e9ef140023b85d0fbae502e404.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-e81b72e9b3fe856d7594ecac3528b45d.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "320399",
+        "date": "2026-02-03 23:50:01",
+        "type": "article",
+        "title": "",
+        "content": "嘿嘿",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0203/23/e65b50fcf-ea6ecf1cf2e0d05cd53c060a08d6c0e3.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0203/23/e65b50fcf-9bd5c1e37cc2c0281e2e6e8b18310b8f.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0203/23/e65b50fcf-c5d7392739cdc68b1105260bbc1f39d4.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0203/23/e65b50fcf-1bdc37537900eb4a708c4e716abc9cf8.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0203/23/e65b50fcf-01fe3d09b245c574ba872a38fe995478.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0203/23/e65b50fcf-d828c1553376b0005c18ef265c1ca2f5.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0203/23/e65b50fcf-3fa26b723e1f08ac6b86f9dff80e52c0.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_5.jpg"
+        ]
+      },
+      {
+        "sourceId": "318353",
+        "date": "2026-01-21 18:59:59",
+        "type": "article",
+        "title": "",
+        "content": "咪的自拍",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/7b7d01eab-4dbe28ec057e484bcb01014b56247515_s_mp4_poster.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_6.jpg"
+        ]
+      },
+      {
+        "sourceId": "315705",
+        "date": "2026-01-11 09:03:36",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0111/09/bf2956d60-9e04b54dfca1dbd8d200475f77e71bee.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "315704",
+        "date": "2026-01-11 09:03:00",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0111/09/bf2956d60-ceba2f4c88963a1c3266eb74f2c47ce9.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "315703",
+        "date": "2026-01-11 09:00:38",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0111/09/bf2956d60-2b3040e75d808982f7b6e398589489fd.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "315697",
+        "date": "2026-01-11 08:57:03",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0111/08/bf2956d60-5b66d0719e528f77fff12fc8dd13189b.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "275002",
+        "date": "2025-10-15 08:15:55",
+        "type": "article",
+        "title": "大面包袭人时候",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1015/08/e8b8cca1c-9a04ec47ded8779471116b54fc915ae4.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      },
+      {
+        "sourceId": "270119",
+        "date": "2025-09-29 19:30:20",
+        "type": "article",
+        "title": "面包脏脏包时候",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0929/19/e8b8cca1c-02e25d10f1b5568f60b12b6ceeb777bc.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      },
+      {
+        "sourceId": "269287",
+        "date": "2025-09-26 23:12:25",
+        "type": "article",
+        "title": "",
+        "content": "鱼眼睛中的大面包",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0926/23/a3545ed03-ac7f68f1c3e9d3d25d3254c6d4cc99bb.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/23/a3545ed03-0ade9c8f413ec583c4438027d81e7000.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/23/a3545ed03-cde68f77149c0d684ed9bf3c2b36a2df.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/23/a3545ed03-75937cb2bf00b39e4cea8b9c6aac7a1b.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/23/a3545ed03-7ffe49acf2cb39faa6cdcc4fbe2659bd.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/23/a3545ed03-9231e9629502d5da2fd42aa60d82e7eb.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/23/a3545ed03-73630ef6090df242c8b8961d23318c91.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/23/a3545ed03-53287a60ec69c230e9031b6206019a16_s_mp4_poster.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "269223",
+        "date": "2025-09-26 20:04:20",
+        "type": "article",
+        "title": "大面包气呼呼",
+        "content": "面包洗完耳朵后就这样气呼呼，把脸盘子塞起来生闷气",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0926/20/de82b2c85-64cd94e9737ac921d96631a1f5f896b7.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/20/de82b2c85-b4ea38b6888fb10d2168a5ea5585ebd3.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/20/de82b2c85-a91c87ef9c8f0a954b305c88466a584a.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/20/de82b2c85-d3872c4a0696bbbecf8abce15815e5bb.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_4.jpg"
+        ]
+      },
+      {
+        "sourceId": "269220",
+        "date": "2025-09-26 20:00:09",
+        "type": "article",
+        "title": "为何无人发大面包😡😡😡",
+        "content": "发一些大面包日常照",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0926/20/e8b8cca1c-dd6aa94fb3fa79e1232e782aedab7ca3.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/20/e8b8cca1c-c728f1fa530dcae91fcee759f5f128c9.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/20/e8b8cca1c-4fa35f81074f68690eb659d5997d3481.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/20/e8b8cca1c-0328bd2f99b222e4756e8e73ac5d4157.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/20/e8b8cca1c-f3330e1e9230ae05fd08edc1e23c2040.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      },
+      {
+        "sourceId": "269218",
+        "date": "2025-09-26 19:59:22",
+        "type": "article",
+        "title": "中秋快乐",
+        "content": "一起看月亮爬上来~",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0926/19/de82b2c85-90c8be47d011ceb008cfcab88dba617d.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_4.jpg"
+        ]
+      },
+      {
+        "sourceId": "264911",
+        "date": "2025-09-11 17:22:35",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0911/17/e8b8cca1c-4c3aa24dffb0dfb666c2d85dc94b4023.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "44674",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0911/17/e8b8cca1c-4c3aa24dffb0dfb666c2d85dc94b4023.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0911/20/e8b8cca1c-5d56ca66b92a07da2dd264a97e516eba.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0911/20/e8b8cca1c-d03ba26e67afaefb98a1137fc7251f5c.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0911/20/e8b8cca1c-084b881634a45faa46667c966ac72d5b.jpg"
+    ]
   },
   {
-    name: '水手',
-    photoUpdatedAt: '2026-08-08',
-    status: '就读中',
-    friendliness: '亲人',
-    vaccine: '一针 2026-05-10；二针 2026-05-31；三针 2026-06-28（紫薇京和）',
-    sterilized: '已绝育（日期待补充）',
-    notes: '第三针认捐人：蔚蓝future',
-    area: '丁香',
-    gender: '公',
-    images: ['images/水手/水手1.jpg', 'images/水手/水手2.jpg', 'images/水手/水手3.jpg', 'images/水手/水手4.jpg', 'images/水手/水手5.jpg']
+    "name": "黄豆",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（日期待补充）",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "公",
+    "images": [
+      "images/黄豆/api-45275-1.jpg"
+    ],
+    "personality": [
+      "软萌好盘",
+      "撒娇求撸",
+      "见人就蹭"
+    ],
+    "description": "e楼豆家族中最独特的一只，和家族其他成员不同，黄豆极其亲人，因此也很快找到领养过上了荣华富贵的生活。",
+    "relationships": [
+      {
+        "relatedCatName": "蓝豆",
+        "relation": "兄弟姐妹",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      },
+      {
+        "relatedCatName": "豆花",
+        "relation": "兄弟姐妹",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      },
+      {
+        "relatedCatName": "豆腐脑",
+        "relation": "妈妈",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      },
+      {
+        "relatedCatName": "绿豆",
+        "relation": "兄弟姐妹",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      }
+    ],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "354037",
+        "date": "2026-06-03 22:01:28",
+        "type": "article",
+        "title": "两小只",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0603/22/f55e9e956-aee04aa851c12cecd904f506923fa3de.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0603/22/f55e9e956-ada53acc324ab6c218e0caefe9d92d72.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_3.jpg"
+        ]
+      },
+      {
+        "sourceId": "268464",
+        "date": "2025-09-24 04:48:49",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-14d5cdafee00a56aa9a9c51c4555414c.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45275",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-14d5cdafee00a56aa9a9c51c4555414c.jpg"
+    ]
   },
   {
-    name: '虎先锋',
-    status: '就读中',
-    friendliness: '非常怕人',
-    vaccine: '一针 2026-05-11；二针 2026-06-26（紫薇京和）；三针未接种',
-    sterilized: '已绝育（日期待补充）',
-    notes: '—',
-    area: '海棠',
-    gender: '公',
-    images: ['images/虎先锋/虎先锋5.jpg', 'images/虎先锋/虎先锋4.jpg', 'images/虎先锋/虎先锋3.jpg', 'images/虎先锋/虎先锋2.jpg', 'images/虎先锋/虎先锋1.jpg']
+    "name": "蓝豆",
+    "status": "就读中",
+    "vaccine": "未接种",
+    "sterilized": "已绝育（日期待补充）",
+    "notes": "—",
+    "area": "教学区",
+    "gender": "母",
+    "images": [
+      "images/蓝豆/蓝豆1.jpg"
+    ],
+    "personality": [
+      "生人勿近",
+      "喵拳攻击",
+      "超级校霸"
+    ],
+    "description": "2026.05更新：已落网绝育\ne楼传说级猫，非常貌美但是胆小怕人又凶狠，靠人畜无害的外表抓伤了许多同学，至今未落网，2025年夏诞下一窝小猫。",
+    "relationships": [
+      {
+        "relatedCatName": "豆花",
+        "relation": "兄弟姐妹",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      },
+      {
+        "relatedCatName": "豆腐脑",
+        "relation": "妈妈",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      },
+      {
+        "relatedCatName": "黄豆",
+        "relation": "兄弟姐妹",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      },
+      {
+        "relatedCatName": "绿豆",
+        "relation": "兄弟姐妹",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      }
+    ],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "354037",
+        "date": "2026-06-03 22:01:28",
+        "type": "article",
+        "title": "两小只",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0603/22/f55e9e956-aee04aa851c12cecd904f506923fa3de.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0603/22/f55e9e956-ada53acc324ab6c218e0caefe9d92d72.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_3.jpg"
+        ]
+      },
+      {
+        "sourceId": "320517",
+        "date": "2026-02-04 15:29:31",
+        "type": "article",
+        "title": "摸摸蓝豆",
+        "content": "超亲人的蓝豆！（或许是因为碗空了…）",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0204/15/a18179b03-ac4cc4a5692d7498996653ac5e2958a1.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0204/15/a18179b03-0ea1faf45308fc23f3fb3c72341aedb3.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_4.jpg"
+        ]
+      },
+      {
+        "sourceId": "318530",
+        "date": "2026-01-22 13:51:47",
+        "type": "article",
+        "title": "",
+        "content": "下一秒就伸爪子了😂",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0122/13/ae36516fc-33f832870624d159fc0b0a11da7ad3bf.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0122/13/ae36516fc-155a5cd7c7de4d8efd996c35d2edd4ec.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0122/13/ae36516fc-1ef1fb369ec539a13d2dc7cbf7b9e922.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0122/13/ae36516fc-dd7f20baed19c1fc4c112d7107299428.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_4.jpg"
+        ]
+      },
+      {
+        "sourceId": "269255",
+        "date": "2025-09-26 21:47:22",
+        "type": "article",
+        "title": "",
+        "content": "偶遇蓝豆",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0926/21/fb6a58580-9023b537b38bc7e3d21c592ec1786023.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/21/fb6a58580-17b28fa481f64de3b4e39091b61a743c.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/21/fb6a58580-a0a8d2d600da97b9b1a9ce88a3c7809f.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_5.jpg"
+        ]
+      },
+      {
+        "sourceId": "268463",
+        "date": "2025-09-24 04:46:33",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-02d335d90f3529d021fb31ad330e0f33.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45274",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-02d335d90f3529d021fb31ad330e0f33.jpg"
+    ]
   },
   {
-    name: '警长',
-    status: '就读中',
-    friendliness: '怕人',
-    vaccine: '一针 2025-11-01；二针未接种；三针未接种',
-    sterilized: '已绝育（日期待补充）',
-    notes: '—',
-    area: '竹园',
-    gender: '公',
-    images: ['images/警长/警长1.jpg']
+    "name": "二橙",
+    "status": "已毕业",
+    "vaccine": "一针 2026-03-01；二针 2026-03-01；三针 2026-04-01",
+    "sterilized": "已绝育（2025-09-16）",
+    "notes": "—",
+    "area": "丁香",
+    "gender": "公",
+    "images": [
+      "images/二橙/二橙3.jpg",
+      "images/二橙/二橙2.jpg",
+      "images/二橙/二橙1.jpg"
+    ],
+    "personality": [
+      "撒娇求撸",
+      "喜欢贴贴",
+      "聪明机灵"
+    ],
+    "description": "二x家族的一只橘白，在学校快递站生活着三只橘猫，根据个头大小（也可能是出现时间早晚）分别取名为二橘二橙二柑，二橘已经失踪。",
+    "relationships": [],
+    "relationshipHints": [
+      {
+        "relatedCatName": "二柑",
+        "relation": null,
+        "relationCandidates": [
+          "家族"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "二x家族的一只橘白，在学校快递站生活着三只橘猫，根据个头大小（也可能是出现时间早晚）分别取名为二橘二橙二柑，二橘已经失踪。"
+        ],
+        "source": "api-story-inference"
+      },
+      {
+        "relatedCatName": "橘白",
+        "relation": null,
+        "relationCandidates": [
+          "家族"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "二x家族的一只橘白，在学校快递站生活着三只橘猫，根据个头大小（也可能是出现时间早晚）分别取名为二橘二橙二柑，二橘已经失踪。"
+        ],
+        "source": "api-story-inference"
+      }
+    ],
+    "updates": [
+      {
+        "sourceId": "354039",
+        "date": "2026-06-03 22:07:38",
+        "type": "article",
+        "title": "人来和咪一起听晚风了",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0603/22/f55e9e956-5621fff1a671cf87aa0522f5b24248a4.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0603/22/f55e9e956-c0dba44e5c63fac6aaa7791d238a7041.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0603/22/f55e9e956-c94af46711f5ade28f1852278cccca96.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_3.jpg"
+        ]
+      },
+      {
+        "sourceId": "349450",
+        "date": "2026-05-27 17:43:46",
+        "type": "article",
+        "title": "逗猫(=^o^=)",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0527/17/f55e9e956-ff5da8143590bd2f04859e4e6b138185.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0527/17/f55e9e956-aa68bca1a34131033fa991d77b7d3c96.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0527/17/f55e9e956-9c21206f73337d930be3d8f8096a2523.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_3.jpg"
+        ]
+      },
+      {
+        "sourceId": "340965",
+        "date": "2026-04-28 18:12:46",
+        "type": "article",
+        "title": "",
+        "content": "高冷小猫休息中 不想搭理两脚兽～",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0428/18/f55e9e956-5dfb928b4b95433ef936b6feb5041beb.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0428/18/f55e9e956-5e7f1d60939f605f9c81ff4ebdab6bdf.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0428/18/f55e9e956-d9a29d40250d9f45635699fab0ae14c3.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_3.jpg"
+        ]
+      },
+      {
+        "sourceId": "333420",
+        "date": "2026-04-05 18:56:25",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0405/18/bf2956d60-a51f61f396755b3039c6c3cf09f8651c.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0405/18/bf2956d60-c401e70deb4ec63024d7898c388e976f.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0405/18/bf2956d60-bc5e163d4bb9daf1d86ac8dc5f63b101.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0405/18/bf2956d60-37a998ba947946f72f75afe40994bcfb.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0405/18/bf2956d60-fc894a88539a4b054accf125071f84ce.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0405/18/bf2956d60-3d18d957eac125a301457ab3dd77ed13.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0405/18/bf2956d60-0674a20fc63aec26ea9daa24f8ef7d45.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "332976",
+        "date": "2026-04-03 17:28:14",
+        "type": "article",
+        "title": "小蛋和二橙是好朋友",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0403/17/bf2956d60-d3d8ca1e9c66013db048e06d8574e8e1.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "332373",
+        "date": "2026-04-01 09:03:38",
+        "type": "article",
+        "title": "拍个自拍",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0401/09/bf2956d60-30b82bb2c54a214cdaa3de8e216bf2c5.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "332372",
+        "date": "2026-04-01 09:02:53",
+        "type": "article",
+        "title": "春日",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0401/09/bf2956d60-3fafa20612accc5a76b2afb08f039e54.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "332279",
+        "date": "2026-03-31 18:44:41",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-e5acb903b68029aa9407dafb2850e6d0.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-b073b1f215148d9f5eb7b3a17ae6e459.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-578836a5c3ea71291fd4375263333daf.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-2977478ea6d9f9eaa8c294bd9125cee5.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-c9d21b50f1f15a01401df789f8b5cc1a.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-a50962f5f767a326298d2b8cc1c94b4b.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-87f19bca8c1346fea3adb6db80d8c0e3.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "331022",
+        "date": "2026-03-27 19:33:11",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0327/19/bf2956d60-6c29c24b01127e6b6798625491142842.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "331020",
+        "date": "2026-03-27 19:32:47",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0327/19/bf2956d60-59887badfa94c3538e51ad74bd996622.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "331018",
+        "date": "2026-03-27 19:32:13",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0327/19/bf2956d60-db529a1ccc971c5f2ed20bf4e1e7a4a6.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "331017",
+        "date": "2026-03-27 19:31:53",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0327/19/bf2956d60-9699c33ecfed0cce05fbd614f01be7b9.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "331016",
+        "date": "2026-03-27 19:31:23",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0327/19/bf2956d60-d14039f2755f0b212e4837e1d5e4dd78.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "331014",
+        "date": "2026-03-27 19:30:54",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0327/19/bf2956d60-4975e2c1abf3806380584000b939b97b.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0327/19/bf2956d60-958e55ab8f9c845ca3073f5a8b1ff05b.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "331010",
+        "date": "2026-03-27 19:28:37",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0327/19/bf2956d60-ce0c10812c201473b625f1c47f05be07.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "331008",
+        "date": "2026-03-27 19:27:58",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0327/19/bf2956d60-09544f82a459502c5a086ff7edf6988e.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "331026",
+        "date": "2026-03-12 00:00:00",
+        "type": "cat-line",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/03/e8b8cca1c-40181aee94ac07964d28118923e30fa1.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0327/19/bf2956d60-3160b99d0f36e15f382f759499d76406.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "315260",
+        "date": "2026-01-09 18:19:55",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0109/18/bf2956d60-c69804d8532f203b0a5f85a6fc372b6e.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0109/18/bf2956d60-c07a4e5e577691941f508aa5b1718e0c.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0109/18/bf2956d60-399b8a1d43f98d707815a758952660a9.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "315259",
+        "date": "2026-01-09 18:19:10",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0109/18/bf2956d60-c16c3da9aaaeb117d6fd7d82c72e5390.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0109/18/bf2956d60-549652ed30e4742dd857ffd731fe71ac.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0109/18/bf2956d60-3cbb2651a36a21328c106c1360e9003a.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0109/18/bf2956d60-8f1d106fa1660620647c74e5c07b8a9d.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "315258",
+        "date": "2026-01-09 18:18:47",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0109/18/bf2956d60-302caffc11e983d6302ccec4750a3232.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "315257",
+        "date": "2026-01-09 18:18:31",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0109/18/bf2956d60-ba8310012dc9d8e55ba9ec74d7a737d9.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0109/18/bf2956d60-ceadbf53c4ab337de2039a3e00fbf511.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0109/18/bf2956d60-3247393c73ad11a1a5c9902a65baa186.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0109/18/bf2956d60-6df634044dc993682e045b3a693b7d73.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "315256",
+        "date": "2026-01-09 18:18:05",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0109/18/bf2956d60-6afdd9c3d8197761c6f94e328366e60f.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0109/18/bf2956d60-728e55c55cf1dff19d57bc303137c67f.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314727",
+        "date": "2026-01-08 08:26:17",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0108/08/bf2956d60-e6bf68664a500e19607a7a57d36a52db.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0108/08/bf2956d60-b966742a36bb21d44fc761aac53ee0ee.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314726",
+        "date": "2026-01-08 08:25:55",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0108/08/bf2956d60-3147581f5bd2629d19d0cbbf59ac44c8.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314725",
+        "date": "2026-01-08 08:23:40",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0108/08/bf2956d60-eb49937e4ce0658261fec61a6b1b48f8.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0108/08/bf2956d60-9faacf94a76d58a925689212e21b5aad.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0108/08/bf2956d60-d0742f12a8126c6389f2d58250027774.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0108/08/bf2956d60-477dc1c80ad0ab6dd205ff5266b8fea5.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0108/08/bf2956d60-0639c17c11f38625b31e6ed04c724d48.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0108/08/bf2956d60-0764ec96c7b09d6e7ef21c3af7c21d62.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314723",
+        "date": "2026-01-08 08:22:43",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0108/08/bf2956d60-471ac90a668ffee22c42a324ed978635.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314722",
+        "date": "2026-01-08 08:22:20",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0108/08/bf2956d60-0cf29f970df68b123852386935276f53.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314720",
+        "date": "2026-01-08 08:21:01",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0108/08/bf2956d60-52a21ee4fe1535e089b6115c1dbb91d9.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314719",
+        "date": "2026-01-08 08:20:22",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0108/08/bf2956d60-e6ef83f08f85f41723a16f009b3dd9a1.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314718",
+        "date": "2026-01-08 08:19:59",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0108/08/bf2956d60-4f18f606e1f4995e547d61d528763489.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314447",
+        "date": "2026-01-07 08:46:26",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0107/08/bf2956d60-4a017428f350653892249f67d0f91dae.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314446",
+        "date": "2026-01-07 08:46:01",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0107/08/bf2956d60-35e41ed50a730129caac09fea6d56807.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314444",
+        "date": "2026-01-07 08:44:56",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0107/08/bf2956d60-88e3aadf0a65101c9dfd2176b75fb17f.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314443",
+        "date": "2026-01-07 08:44:31",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0107/08/bf2956d60-3e98b66f6c8ac7141827e0fb380f8c34.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314194",
+        "date": "2026-01-06 09:40:35",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0106/09/bf2956d60-da5edcf9514609fe585ca0df676a03a1.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314192",
+        "date": "2026-01-06 09:39:52",
+        "type": "article",
+        "title": "要加就加二橙  第一口冻干给你吃",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0106/09/bf2956d60-9dbf52018c66fb4064548977fc049e16.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314183",
+        "date": "2026-01-06 09:26:05",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0106/09/bf2956d60-0beaaf09945fe24e5e0e531593a86d87.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "313901",
+        "date": "2026-01-05 09:21:29",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0105/09/bf2956d60-c3ddba29078ecf2f3a95bcc74e98ad68.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0105/09/bf2956d60-3a6c1a5b218ec335818f54763b926abe.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0105/09/bf2956d60-ff52f907402dc2fa0de092600ecda7cc.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "313900",
+        "date": "2026-01-05 09:20:38",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0105/09/bf2956d60-98fb54cbd7480bf3b494076e6891c9a7.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0105/09/bf2956d60-4ce571c4630f1714f7f47c1b3f121dbe.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0105/09/bf2956d60-7c6322098ae096e2cebbf6ec88074ec1.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0105/09/bf2956d60-73ddb707aeedbdeaf198cba071dc57d6.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0105/09/bf2956d60-4c5f59e0b3df16b31d2375859fdc3176.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "313676",
+        "date": "2026-01-04 11:43:09",
+        "type": "article",
+        "title": "散伙饭",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0104/11/bf2956d60-91e98ea39012a210c549f9d5322d3f0a.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "313675",
+        "date": "2026-01-04 11:42:27",
+        "type": "article",
+        "title": "撒娇怪",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0104/11/bf2956d60-0ea7e5cb58620767dd3a8a9f703c97c4.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "313439",
+        "date": "2026-01-03 09:38:31",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0103/09/bf2956d60-bd33b3a483d3cd9e8f0f117c7847ae84.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "313315",
+        "date": "2026-01-02 18:20:51",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0102/18/bf2956d60-ca64489c8005311a74d54b6ea5629bff.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "313314",
+        "date": "2026-01-02 18:20:34",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0102/18/bf2956d60-2dcce636d808a71e7ad1d0393254c871.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "313213",
+        "date": "2026-01-02 09:58:25",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0102/09/bf2956d60-46ecc23715cc0789d5383d847072ea66.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0102/09/bf2956d60-213a1efcad42ff3ef08f7e996530f992.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "313105",
+        "date": "2026-01-01 17:40:11",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0101/17/bf2956d60-3402865df90f3bf7db5516515ece08f0.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "313049",
+        "date": "2026-01-01 12:14:52",
+        "type": "article",
+        "title": "雪后撒欢",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0101/12/bf2956d60-6ca086cdf8086735109fa88c405da7b6_s_mp4_poster.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "313028",
+        "date": "2026-01-01 10:15:03",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0101/10/bf2956d60-ef17c06a17ac85ab2bfeb1a3cfeb85e9.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "313027",
+        "date": "2026-01-01 10:14:30",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0101/10/bf2956d60-62ef70ff8121d71eb653eff5aed566c7_s_mp4_poster.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "312523",
+        "date": "2025-12-31 10:09:57",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1231/10/bf2956d60-13b51bf1ecdb29b8510dafb85d94b23d.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "311548",
+        "date": "2025-12-29 07:46:17",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1229/07/bf2956d60-1deeaa568a14d70da97499085d74372c.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "311547",
+        "date": "2025-12-29 07:46:00",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1229/07/bf2956d60-964b40ae3050acb3bd4f7df2ae065c11.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "311303",
+        "date": "2025-12-28 18:48:55",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1228/18/bf2956d60-7d0176d7bbf6405c2c2f0c79a3bee664_s_mp4_poster.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "310678",
+        "date": "2025-12-27 12:31:25",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1227/12/bf2956d60-b0faba5117d7ed803c45aac406d7b8fc.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "310614",
+        "date": "2025-12-27 00:16:56",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1227/00/bf2956d60-b56d38be5fb87c57223d93e61173e32e.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "310268",
+        "date": "2025-12-26 14:11:19",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1226/14/bf2956d60-ae066532e9fb5766ef839c2e5e8e1f4b_s_mp4_poster.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "310267",
+        "date": "2025-12-26 14:10:33",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1226/14/bf2956d60-4211008acd4ed6f4eb60819db8ceb961.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "310023",
+        "date": "2025-12-25 19:08:01",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1225/19/bf2956d60-7ad67b44c2dd3196110449d59d0f3f25.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "309370",
+        "date": "2025-12-24 00:35:47",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1224/00/bf2956d60-d9fc6c0249f02f575e7d165c9cc7d4f0.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "308776",
+        "date": "2025-12-22 19:07:44",
+        "type": "article",
+        "title": "二橙和麻薯相亲",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1222/19/bf2956d60-0eb0c6c54b3148a69bb16406f8bd5416.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1222/19/bf2956d60-d9f5cc68b3b6b262a45cb2b97c3f656f.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1222/19/bf2956d60-23ca9860a5ff85d048a0913768e1ebe5_s_mp4_poster.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "308072",
+        "date": "2025-12-21 10:24:33",
+        "type": "article",
+        "title": "丫头，不要迷恋哥",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1221/10/bf2956d60-c81681397ebd897c4be6bcae17c6702f.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "297859",
+        "date": "2025-11-29 11:42:36",
+        "type": "article",
+        "title": "",
+        "content": "人猫情未了",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1129/11/bf2956d60-b49b06a1bbb01f100929d7a92f4376f1.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1129/11/bf2956d60-59b20d19c63f8d9211329c4e4be0be25.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1129/11/bf2956d60-4ae1bb2e24c36e53ce21daced5ef2a64.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "290490",
+        "date": "2025-11-13 18:58:43",
+        "type": "article",
+        "title": "",
+        "content": "香辣大鸡腿",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1113/18/bf2956d60-6bfea7804c9e302182e9205af417d7bf.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "290487",
+        "date": "2025-11-13 18:58:18",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1113/18/bf2956d60-26353ed5305b7fac5cbe3c695e142fd2.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "276444",
+        "date": "2025-10-17 21:08:54",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1017/21/bf2956d60-7212fc41a9c4ab7ef96933a451e65ee5.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1017/21/bf2956d60-4874ec7043030a1e254ccb9db47a8296.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "274999",
+        "date": "2025-10-15 08:11:48",
+        "type": "article",
+        "title": "霸气二橙当模特了",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1015/08/bf2956d60-7ba4fb37cd7fbdb21020c8e73c291694.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1015/08/bf2956d60-3a1a24ee19f36308c4bceabf32e31d60.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "274998",
+        "date": "2025-10-15 08:11:17",
+        "type": "article",
+        "title": "",
+        "content": "呜呜好喜欢二橙",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1015/08/bf2956d60-b4b3618c673b7ee3434d18f8f85f1f64.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "273790",
+        "date": "2025-10-12 18:51:18",
+        "type": "article",
+        "title": "把鹌鹑冻干当成玩具😤",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1012/18/bf2956d60-233ea33fbbbfca46498adb15a3ba7b23_s_mp4_poster.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "273789",
+        "date": "2025-10-12 18:50:01",
+        "type": "article",
+        "title": "",
+        "content": "偷感十足的二橙",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1012/18/bf2956d60-fa5c5336fc2a5212667709dac5edb92e_s_mp4_poster.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "273509",
+        "date": "2025-10-11 22:08:45",
+        "type": "article",
+        "title": "",
+        "content": "站立猫  猫和老鼠诚不欺我",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1011/22/bf2956d60-c00b486ebc01537a5a40d531bf62239f.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1011/22/bf2956d60-4707bcdcf4c5bb85cadd7501ec3dbdb2.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "272360",
+        "date": "2025-10-08 21:04:06",
+        "type": "article",
+        "title": "",
+        "content": "日渐粘人",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1008/21/bf2956d60-ceb7cce8b68dcfc17f3e914649df2d8e.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1008/21/bf2956d60-ea0fc80894fc17100bb46d35043063f1.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1008/21/bf2956d60-7c93ed366e66a7d26361e00e4eb743ee.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1008/21/bf2956d60-65d1999df2af779a868af1ac48f93b20.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "270223",
+        "date": "2025-09-29 21:07:36",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0929/21/bf2956d60-0767eba72e5224838dd62476aacc8225_s_mp4_poster.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "269518",
+        "date": "2025-09-27 00:00:00",
+        "type": "cat-line",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/03/e8b8cca1c-40181aee94ac07964d28118923e30fa1.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0927/20/bf2956d60-32419dc767ed3294c8659130d172fd14.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0927/20/bf2956d60-5f3a9d8734d561710eb2b51feff37034.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0927/20/bf2956d60-29e5d20445b6534deb03cb60e0cc77ce.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0927/20/bf2956d60-8606b9e4fdbcd7e69074e5bd957ee971.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0927/20/bf2956d60-75e65c3ebc490724e7ca0feb401cfef8.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "268450",
+        "date": "2025-09-24 03:52:24",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/03/e8b8cca1c-40181aee94ac07964d28118923e30fa1.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45261",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/03/e8b8cca1c-40181aee94ac07964d28118923e30fa1.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0924/03/e8b8cca1c-9a0168eabd151f82617c657193d6df63.jpg"
+    ]
   },
   {
-    name: '银杏',
-    status: '就读中',
-    friendliness: '亲人',
-    vaccine: '一针 2025-11-30；二针未接种；三针未接种',
-    sterilized: '已绝育（日期待补充）',
-    notes: '第二/三针认捐人：毛橘妈',
-    area: '竹园',
-    gender: '母',
-    images: ['images/银杏/银杏1.jpg', 'images/银杏/银杏2.jpg', 'images/银杏/银杏3.jpg', 'images/银杏/银杏4.jpg', 'images/银杏/银杏5.jpg']
+    "name": "二柑",
+    "status": "已毕业",
+    "vaccine": "一针 2026-03-01；二针 2026-03-01；三针 2026-04-01",
+    "sterilized": "已绝育（2025-09-16）",
+    "notes": "—",
+    "area": "丁香",
+    "gender": "公",
+    "images": [
+      "images/二柑/二柑6.jpg",
+      "images/二柑/二柑5.jpg",
+      "images/二柑/二柑4.jpg",
+      "images/二柑/二柑3.jpg",
+      "images/二柑/二柑2.jpg",
+      "images/二柑/二柑1.jpg"
+    ],
+    "personality": [
+      "不冷不热"
+    ],
+    "description": "二x家族的一只橘白，在学校快递站生活着三只橘猫，根据个头大小（也可能是出现时间早晚）分别取名为二橘二橙二柑，二橘已经失踪。",
+    "relationships": [
+      {
+        "relatedCatName": "二橙",
+        "relation": "同事",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      }
+    ],
+    "relationshipHints": [
+      {
+        "relatedCatName": "二橙",
+        "relation": null,
+        "relationCandidates": [
+          "家族"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "二x家族的一只橘白，在学校快递站生活着三只橘猫，根据个头大小（也可能是出现时间早晚）分别取名为二橘二橙二柑，二橘已经失踪。"
+        ],
+        "source": "api-story-inference"
+      },
+      {
+        "relatedCatName": "橘白",
+        "relation": null,
+        "relationCandidates": [
+          "家族"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "二x家族的一只橘白，在学校快递站生活着三只橘猫，根据个头大小（也可能是出现时间早晚）分别取名为二橘二橙二柑，二橘已经失踪。"
+        ],
+        "source": "api-story-inference"
+      }
+    ],
+    "updates": [
+      {
+        "sourceId": "354422",
+        "date": "2026-06-04 14:20:42",
+        "type": "article",
+        "title": "",
+        "content": "睡觉咪 思考咪 拦路咪 瑜伽咪",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0604/14/0245c8b57-ca38188e32aee54450d9e1397f229235.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0604/14/0245c8b57-bd73cd94da111a5782c1e253400edbdc.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0604/14/0245c8b57-2c5fa3e8477cdb0c48233734d609ae3e.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0604/14/0245c8b57-86bcadc068a3845febae9d98ad564c14.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_3.jpg"
+        ]
+      },
+      {
+        "sourceId": "342759",
+        "date": "2026-05-06 20:08:39",
+        "type": "article",
+        "title": "嘿嘿二柑好可爱",
+        "content": "才发现的这个小程序，发点可爱照片",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0506/20/3289aea8f-45b6b31273bf50621f2d78c0821c0051.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0506/20/3289aea8f-db5ee45ac1b420cf13d98f3b3d827f47.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0506/20/3289aea8f-a17f886cccd9c5d75bff4acadf0dc03f.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0506/20/3289aea8f-afb719ff2ac01fbfb6f404203148055e.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0506/20/3289aea8f-fbbff9572040b3abebff4fcde7432d9e.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0506/20/3289aea8f-4746e0f51e8db9b28dabc67fe16b6de2.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_6.jpg"
+        ]
+      },
+      {
+        "sourceId": "332977",
+        "date": "2026-04-03 17:29:33",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0403/17/bf2956d60-28297410f9e860c0314d080532132917.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0403/17/bf2956d60-b7be4c803d8742216790f5ee26f16f8a.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0403/17/bf2956d60-e1fa81678cf326f7b9f55c490dff9210.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0403/17/bf2956d60-5628adc1ac96c2591084e0299142ed77.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0403/17/bf2956d60-3f02d82ea8b6cb54a9510adfe3e92949.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0403/17/bf2956d60-dbcb014911fb695d26056d2c5eb6dc8a.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "332374",
+        "date": "2026-04-01 09:05:31",
+        "type": "article",
+        "title": "想要亲亲，被拒绝后生气",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0401/09/bf2956d60-770d85a09c23459a56e2eea883c72e32.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0401/09/bf2956d60-23d0759915005596bc3144b3adbdcd6b.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0401/09/bf2956d60-2f28f6046fed7a530515b3b9654fb15c.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "332281",
+        "date": "2026-03-31 18:47:10",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-c2384220a8ad27446cc418eb9f1615a2.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-ad379b4b120f49a1e261e6f165627dc9.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-51415d31fe8cfc2361700533a1ed64b0.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-ab8c8f1d0f47df627ce49dd0f51d87aa.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-43c8315ddf85968447c5f9a5d9403923.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "332278",
+        "date": "2026-03-31 18:40:49",
+        "type": "article",
+        "title": "",
+        "content": "可爱的二柑是我的心尖宠",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/49bf00a71-63ad635da9946d5d5ccd30db818e88b4.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/49bf00a71-9ba04b0789be723be0c035cb5d47110a.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/49bf00a71-f656d922e7e0512f3f5c1d44b05680de.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/49bf00a71-88b79ae963ce25fe6bdd3a99400c1503.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/49bf00a71-7cd636331df6a068f52b082e4934dee5.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/49bf00a71-4440a769fe41bd32c3d899a317281061.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/49bf00a71-bdaef7131955134800fc08ee86026b03.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/49bf00a71-4d26c899bb804f125690a6e1b55dd7c4.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/49bf00a71-0c0b90459a0e16427a9da15f54991007.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_3.jpg"
+        ]
+      },
+      {
+        "sourceId": "331029",
+        "date": "2026-03-27 19:36:10",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0327/19/bf2956d60-c4d7b5d1173eeda30e8ebbd9a21ae77a.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0327/19/bf2956d60-bb9ad8a03327dbb88f4f24946d07402d.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "331014",
+        "date": "2026-03-27 19:30:54",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0327/19/bf2956d60-4975e2c1abf3806380584000b939b97b.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0327/19/bf2956d60-958e55ab8f9c845ca3073f5a8b1ff05b.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "331012",
+        "date": "2026-03-27 19:29:44",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0327/19/bf2956d60-23d9c83d82b2febcda8197b79edd653e.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "328126",
+        "date": "2026-03-20 20:29:14",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0320/20/01a44ba7c-c7ab5c9e7485a49bce1feb7969370644.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0320/20/01a44ba7c-7f72aea832958b650fba49fd41908af3.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0320/20/01a44ba7c-2cf000bb7f5f8a489d550ca557ce5a7b.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_6.jpg"
+        ]
+      },
+      {
+        "sourceId": "315439",
+        "date": "2026-01-10 09:22:13",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0110/09/bf2956d60-a2fcb933d37622e4de019e506f7ade6f.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "315266",
+        "date": "2026-01-09 18:22:41",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0109/18/bf2956d60-66d103d0955509a01aaaa6c798da3c8a.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314456",
+        "date": "2026-01-07 09:28:46",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0107/09/bf2956d60-62730b45a01b5ecf6b00b7937f4dbeac.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314448",
+        "date": "2026-01-07 08:46:57",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0107/08/bf2956d60-3494be8e80746b921fd104fa2ece109a.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314445",
+        "date": "2026-01-07 08:45:23",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0107/08/bf2956d60-b69dafb347b6405535b2f591c6c54bc5.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314196",
+        "date": "2026-01-06 09:41:18",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0106/09/bf2956d60-301b9c0809ee70ac26eacafb24cc14cf.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314193",
+        "date": "2026-01-06 09:40:13",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0106/09/bf2956d60-743202b32f2e0c56e5103df14756861b.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314187",
+        "date": "2026-01-06 09:28:11",
+        "type": "article",
+        "title": "🐷🐷🐷",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0106/09/bf2956d60-c355cd6642ba9983d251146d0a6bf6d2.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0106/09/bf2956d60-88bd9353958308ce9c13954b6112a85d.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314186",
+        "date": "2026-01-06 09:27:34",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0106/09/bf2956d60-c123b17ccfacb3a7cddb8bf1fd5588e6.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "313899",
+        "date": "2026-01-05 09:19:55",
+        "type": "article",
+        "title": "各睡各的",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0105/09/bf2956d60-2e38ded163ffd3141bcfd74e47d79003.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0105/09/bf2956d60-9298ee701cea038034a8b7ce8cc70ed7.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "313441",
+        "date": "2026-01-03 10:20:22",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0103/10/bf2956d60-8c70a0421bace0bbe8c5544d7bf467b3.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "313438",
+        "date": "2026-01-03 09:38:02",
+        "type": "article",
+        "title": "手要被压断了",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0103/09/bf2956d60-aa145f2361f73d18144609ba073c0ec5.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "313317",
+        "date": "2026-01-02 18:21:40",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0102/18/bf2956d60-88d54e9d63f9b3ec643821bb88ebff24.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "311304",
+        "date": "2025-12-28 18:49:29",
+        "type": "article",
+        "title": "肚肚DuangDuang",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1228/18/bf2956d60-11ecbc1a1efcbe5b9b738df4c934deb9_s_mp4_poster.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "310695",
+        "date": "2025-12-27 13:54:34",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1227/13/bf2956d60-beb704cbe55920cc8240a2c93d2fc726.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "310266",
+        "date": "2025-12-26 14:10:06",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1226/14/bf2956d60-dd7c861ae5435106010d82691b65cc0d.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1226/14/bf2956d60-31fbb52402f5057e812d6011c200b8e7.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "309511",
+        "date": "2025-12-24 16:37:40",
+        "type": "article",
+        "title": "二柑这个呆",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1224/16/bf2956d60-63c8f78c2ef1c300373740b897f47f55.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1224/16/bf2956d60-0ce178a3199e851cad8c6f69a2fc44b0.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "309280",
+        "date": "2025-12-23 20:41:02",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1223/20/bf2956d60-f816552f88997544230d4ee80beabad6_s_mp4_poster.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "308071",
+        "date": "2025-12-21 10:23:48",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1221/10/bf2956d60-c0df1ea6ffd465a41e39b11846d4e5a8.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "306429",
+        "date": "2025-12-17 12:34:29",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1217/12/bf2956d60-b2473a358ab8599da7ad2d4e92aea60f.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "301073",
+        "date": "2025-12-05 06:50:50",
+        "type": "article",
+        "title": "玉玉症",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1205/06/bf2956d60-53a309604672930a0b19a6074999414b.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "275001",
+        "date": "2025-10-15 08:13:09",
+        "type": "article",
+        "title": "二柑这个可爱",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1015/08/bf2956d60-9fb9ce27825d4645917981f2002df9de.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "275000",
+        "date": "2025-10-15 08:12:41",
+        "type": "article",
+        "title": "二柑这个嫌弃",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1015/08/bf2956d60-027e46e7b30a78443daebe10e4926274.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1015/08/bf2956d60-9952d24d3b8bb344828e49f002f0cd38.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "269551",
+        "date": "2025-09-27 22:07:43",
+        "type": "article",
+        "title": "很萌很萌的圆脸小猫",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0927/22/e75be226f-0a5af230a43d6bccc8b189a5eb897f38.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0927/22/e75be226f-bcc982dc388c292a3ecb7c0bdd3c85d2.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0927/22/e75be226f-ef01ff4d1b285a2428eb611b95cee542.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_3.jpg"
+        ]
+      },
+      {
+        "sourceId": "268451",
+        "date": "2025-09-24 03:54:58",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/03/e8b8cca1c-67774dc031f4afbecea4cb2025889adc.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45262",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/03/e8b8cca1c-67774dc031f4afbecea4cb2025889adc.jpg"
+    ]
   },
   {
-    name: '黑小虎',
-    status: '就读中',
-    friendliness: '怕人',
-    vaccine: '一针 2025-11-30；二针未接种；三针未接种',
-    sterilized: '已绝育（日期待补充）',
-    notes: '第二/三针认捐人：长乐',
-    area: '竹园',
-    gender: '公',
-    images: ['images/黑小虎/黑小虎1.jpg']
+    "name": "豆介",
+    "status": "就读中",
+    "vaccine": "一针 2026-06-26（紫薇京和）；二针未接种；三针未接种",
+    "sterilized": "已绝育（日期待补充）",
+    "notes": "第二针认捐人：刘岛；第三针认捐人：李介清",
+    "area": "海棠",
+    "gender": "公",
+    "images": [
+      "images/豆介/豆介2.jpg",
+      "images/豆介/豆介1.jpg",
+      "images/豆介/豆介3.jpg"
+    ],
+    "personality": [
+      "喜欢贴贴",
+      "碰瓷讨粮",
+      "胆小怂包"
+    ],
+    "description": "25年夏天出现，长的有点苦大仇深的异瞳白猫，据说智商不是很高（？）最近跟白介混而得名。有时亲人，但胆子不大",
+    "relationships": [
+      {
+        "relatedCatName": "白介",
+        "relation": "情侣",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      }
+    ],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "352096",
+        "date": "2026-05-31 22:37:40",
+        "type": "article",
+        "title": "",
+        "content": "瞌睡的豆介",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0531/22/f87297803-9d18af49ec8f133a786db50a46e34ebf.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_2.jpg"
+        ]
+      },
+      {
+        "sourceId": "318324",
+        "date": "2026-01-21 17:58:47",
+        "type": "article",
+        "title": "",
+        "content": "豆介丑时候和美时候",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0121/17/ca7f8ff30-65f7688dbd36cb3315b97449bb0584c6.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/17/ca7f8ff30-d8e4db777de9f528af48a702a57098c9.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/17/ca7f8ff30-f5266ff0850406ad8532024048de86d8.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/17/ca7f8ff30-bd38155641304b2b5bba3fef24ef9ba2.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-47035276bbdf52d3bb99e6d3fd0afadf.jpg"
+        ]
+      },
+      {
+        "sourceId": "315700",
+        "date": "2026-01-11 08:58:31",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0111/08/bf2956d60-aa976946408e60978fdccf0272059099.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "271667",
+        "date": "2025-10-05 15:43:50",
+        "type": "article",
+        "title": "世界孤立我任他奚落",
+        "content": "豆介太好笑了",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1005/15/2d166bbf8-8d433d13adf260cb3a57774a53380dd6.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1005/15/2d166bbf8-0826f2b477f2a09e9a600cd8751fb4ea.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1005/15/2d166bbf8-7ecd75651d7dfc4713032e252133edfa.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_4.jpg"
+        ]
+      },
+      {
+        "sourceId": "269326",
+        "date": "2025-09-27 00:36:51",
+        "type": "article",
+        "title": "与深情哥背对背拥抱",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0927/00/3e8b3117d-6705260ea772f3f9c308addacb423b71.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_4.jpg"
+        ]
+      },
+      {
+        "sourceId": "268567",
+        "date": "2025-09-24 14:46:16",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/14/e8b8cca1c-dc3427b0321e688c707f981adbe9318e.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45314",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-4336cb52d240db7ae231f1eaa265aa57.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0924/14/e8b8cca1c-dc3427b0321e688c707f981adbe9318e.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-d39199a602714e540bd76487cfff8b19.jpg"
+    ],
+    "photoUpdatedAt": "2026-08-16"
   },
   {
-    name: '茶叶大蛋',
-    status: '就读中',
-    friendliness: '非常怕人',
-    vaccine: '未接种',
-    sterilized: '未绝育',
-    notes: '第二/三针认捐人：毛橘妈',
-    area: '海棠',
-    gender: '公',
-    images: ['images/茶叶大蛋/茶叶大蛋1.jpg']
+    "name": "水手",
+    "status": "就读中",
+    "vaccine": "一针 2026-05-10；二针 2026-05-31；三针 2026-06-28（紫薇京和）",
+    "sterilized": "已绝育（日期待补充）",
+    "notes": "第三针认捐人：蔚蓝future",
+    "area": "丁香",
+    "gender": "公",
+    "images": [
+      "images/水手/水手1.jpg",
+      "images/水手/水手2.jpg",
+      "images/水手/水手3.jpg",
+      "images/水手/水手4.jpg",
+      "images/水手/水手5.jpg"
+    ],
+    "personality": [
+      "聪明机灵",
+      "喜欢贴贴",
+      "撒娇求撸"
+    ],
+    "description": "水手应该是从家属区流浪来的一只长毛奶牛，性格非常好，亲人，有点不亲猫。之所以叫水手并不是因为会开船，而是因为喝水会用手蘸水喝，水的手（）",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "349150",
+        "date": "2026-05-26 18:45:37",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0526/18/52ddb688e-639af5386d07b5b8993fc4289fd3f607.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_6.jpg"
+        ]
+      },
+      {
+        "sourceId": "265001",
+        "date": "2025-09-11 21:39:53",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0911/21/e8b8cca1c-5ff9d84e2c1f93c333bea80fefc2a340.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "44695",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0911/21/e8b8cca1c-5ff9d84e2c1f93c333bea80fefc2a340.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0911/21/e8b8cca1c-c04db4d8c1706c255f9681c45b850739.jpg"
+    ],
+    "photoUpdatedAt": "2026-08-08"
   },
   {
-    name: '黑哥',
-    photoUpdatedAt: '2026-08-14',
-    status: '就读中',
-    friendliness: '怕人',
-    vaccine: '未接种',
-    sterilized: '未绝育',
-    notes: '第二针认捐人：鲨人不wink',
-    area: '竹园',
-    gender: '公',
-    images: ['images/黑哥/黑哥2.jpg', 'images/黑哥/黑哥1.jpg']
+    "name": "豆花",
+    "status": "已毕业",
+    "vaccine": "品牌待追溯·一针 2026-04-29（紫薇京和）；二针待追溯；三针约 2026-05-24",
+    "sterilized": "已绝育（日期待补充）",
+    "notes": "三针医院或品牌待追溯",
+    "area": "教学区",
+    "gender": "母",
+    "images": [
+      "images/豆花/豆花2.jpg",
+      "images/豆花/豆花1.jpg"
+    ],
+    "personality": [
+      "撒娇求撸",
+      "见人就蹭",
+      "软萌好盘"
+    ],
+    "description": "2026.6编：好咪豆花已经被优秀毕业生潇洒哥的领养人带回家，成为广东大小姐，和潇洒一起过上好日子啦。\n是e楼猫一家的成员，豆腐脑之女，黄豆蓝豆同胎姊妹。原来比较怕人，绝育后可能认识到人类的友善，现在变得非常黏人，喜欢贴贴。",
+    "relationships": [
+      {
+        "relatedCatName": "蓝豆",
+        "relation": "兄弟姐妹",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      },
+      {
+        "relatedCatName": "豆腐脑",
+        "relation": "妈妈",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      },
+      {
+        "relatedCatName": "黄豆",
+        "relation": "兄弟姐妹",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      },
+      {
+        "relatedCatName": "绿豆",
+        "relation": "兄弟姐妹",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      }
+    ],
+    "relationshipHints": [
+      {
+        "relatedCatName": "潇洒哥",
+        "relation": null,
+        "relationCandidates": [
+          "同胎"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "2026.6编：好咪豆花已经被优秀毕业生潇洒哥的领养人带回家，成为广东大小姐，和潇洒一起过上好日子啦。 是e楼猫一家的成员，豆腐脑之女，黄豆蓝豆同胎姊妹。原来比较怕人，绝育后可能认识到人"
+        ],
+        "source": "api-story-inference"
+      },
+      {
+        "relatedCatName": "豆腐脑",
+        "relation": null,
+        "relationCandidates": [
+          "同胎"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "2026.6编：好咪豆花已经被优秀毕业生潇洒哥的领养人带回家，成为广东大小姐，和潇洒一起过上好日子啦。 是e楼猫一家的成员，豆腐脑之女，黄豆蓝豆同胎姊妹。原来比较怕人，绝育后可能认识到人类的友善，现在变得非常黏人，喜欢贴贴。"
+        ],
+        "source": "api-story-inference"
+      },
+      {
+        "relatedCatName": "黄豆",
+        "relation": null,
+        "relationCandidates": [
+          "同胎"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "2026.6编：好咪豆花已经被优秀毕业生潇洒哥的领养人带回家，成为广东大小姐，和潇洒一起过上好日子啦。 是e楼猫一家的成员，豆腐脑之女，黄豆蓝豆同胎姊妹。原来比较怕人，绝育后可能认识到人类的友善，现在变得非常黏人，喜欢贴贴。"
+        ],
+        "source": "api-story-inference"
+      },
+      {
+        "relatedCatName": "蓝豆",
+        "relation": null,
+        "relationCandidates": [
+          "同胎"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "2026.6编：好咪豆花已经被优秀毕业生潇洒哥的领养人带回家，成为广东大小姐，和潇洒一起过上好日子啦。 是e楼猫一家的成员，豆腐脑之女，黄豆蓝豆同胎姊妹。原来比较怕人，绝育后可能认识到人类的友善，现在变得非常黏人，喜欢贴贴。"
+        ],
+        "source": "api-story-inference"
+      }
+    ],
+    "updates": [
+      {
+        "sourceId": "348772",
+        "date": "2026-05-25 17:43:30",
+        "type": "article",
+        "title": "乖巧豆花 (˘͈ᵕ ˘͈❀)",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0525/17/f55e9e956-2edc6067dac1a8afc51ee71ec9650113.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0525/17/f55e9e956-2d6ee7a6b9e76914d0b0de5e114ce40b.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0525/17/f55e9e956-0c831796f4f13bd399fbcb1f85f35010.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_3.jpg"
+        ]
+      },
+      {
+        "sourceId": "330374",
+        "date": "2026-03-26 14:05:26",
+        "type": "article",
+        "title": "",
+        "content": "咪宝宝",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0326/14/121a885ea-1773af056f182d5fbb94080291b521f6.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0326/14/121a885ea-9f92823885be35a0c64a209f7e60e37b.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0326/14/121a885ea-cfae979806539d9680ed979fa695efce.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_4.jpg"
+        ]
+      },
+      {
+        "sourceId": "328127",
+        "date": "2026-03-20 20:36:33",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0320/20/01a44ba7c-6ba3cfec38cb5057118939cd305d9bc8.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0320/20/01a44ba7c-e7d355e3415fbdeb9c3a661db1d2ce67.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0320/20/01a44ba7c-213d1cb6026ca9692928ff115e4bfdfe.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_6.jpg"
+        ]
+      },
+      {
+        "sourceId": "318528",
+        "date": "2026-01-22 13:46:59",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0122/13/ae36516fc-583e5f7fd32e143567dca9041b4517b8.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0122/13/ae36516fc-eae457edcac2a60338cb7b2f9072ceab.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0122/13/ae36516fc-bf4d958a35b54e51fe0423ffa019c7a8.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0122/13/ae36516fc-1adeb43581cd2486b0c7c8bf336491e7.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0122/13/ae36516fc-1be9eb44d29a2ef47617ca5037b9b958.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_4.jpg"
+        ]
+      },
+      {
+        "sourceId": "264976",
+        "date": "2025-09-11 21:03:23",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0911/21/e8b8cca1c-ea9fe9cff45c09d27ad1e416528b71ee.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "44687",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0911/21/e8b8cca1c-ea9fe9cff45c09d27ad1e416528b71ee.jpg"
+    ]
   },
   {
-    name: '彪哥',
-    status: '就读中',
-    friendliness: '非常怕人',
-    vaccine: '一针 2026-05-20；二针未接种；三针未接种',
-    sterilized: '已绝育（日期待补充）',
-    notes: '斜眼狼儿子；第二针认捐人：鲨人不wink',
-    area: '竹园',
-    gender: '公',
-    images: ['images/彪哥/彪哥4.jpg', 'images/彪哥/彪哥3.jpg', 'images/彪哥/彪哥2.jpg', 'images/彪哥/彪哥1.jpg']
+    "name": "二头",
+    "status": "已毕业",
+    "vaccine": "妙三多·一针 2025-07-27；二针 2025-09-06；三针 2025-09-27（紫薇京和）",
+    "sterilized": "已绝育（2023-02-01）",
+    "notes": "2026-06-01 领养前体检总体健康，轻微膀胱炎。",
+    "area": "丁香",
+    "gender": "公",
+    "images": [
+      "images/二头/二头3.jpg",
+      "images/二头/二头2.jpg",
+      "images/二头/二头1.jpg"
+    ],
+    "personality": [
+      "撒娇求撸",
+      "旋饭狂魔"
+    ],
+    "description": "小时候跟着大头在丁香长大，摇猫粮大法百分百命中的大卡车一辆，拥有和体型严重不符的夹子音，喜欢被拍皮鼓（轻一点），冬天是一款全自动上腿机",
+    "relationships": [
+      {
+        "relatedCatName": "胖琥",
+        "relation": "好友",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      },
+      {
+        "relatedCatName": "黑介",
+        "relation": "宿敌",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      }
+    ],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "342477",
+        "date": "2026-05-05 13:04:02",
+        "type": "article",
+        "title": "",
+        "content": "你挠我的那一下我记住你了…",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0505/13/c8314b1d5-6f94181a498a7fce6c3e046ec2da5e29.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0505/13/c8314b1d5-e3bbde266cb5b3c9435fd4690cb98d37.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0505/13/c8314b1d5-1b7f9e2a695e368e631dfb183fa51611.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0505/13/c8314b1d5-5efe6ce6c83ea3c04be4d009b515a32d.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0505/13/c8314b1d5-609f336cae36e4cd580dee47d1382c14.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0505/13/c8314b1d5-33103a5e6a2148da9d7098b14bdecdff.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0505/13/c8314b1d5-abcd986f578e58653fe6664e1cf6498d.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_5.jpg"
+        ]
+      },
+      {
+        "sourceId": "332283",
+        "date": "2026-03-31 18:49:46",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-6a9cbd7b0f993ba852dfa6201a6f78f9.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-f750d003d0a1c14b5c3e9b244a987642.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-892786fcf318cbfbdcfb7fe309d25449.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-17fd754a8b58f5e57a418888bddd0a00.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-63c386afa5f241b6dbc81583699f2f08.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-112c1fe052fe717ec0f70d17ab5e9ede.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-50594156904ef4e6c2ac1602d18174e4.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-3a662dfeb57f939c8234090c97748349.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-dcf5e04f58fa418dd01c47dfbea38411.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "318821",
+        "date": "2026-01-23 18:53:52",
+        "type": "article",
+        "title": "摇猫粮百发百命中",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0123/18/750ea0daf-d80a106e5f807943c420783cfeb8a16c_s_mp4_poster.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_5.jpg"
+        ]
+      },
+      {
+        "sourceId": "318327",
+        "date": "2026-01-21 18:03:32",
+        "type": "article",
+        "title": "",
+        "content": "酷boy～",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-7af8b6956d44cc88ac27bf8be57b1108.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-6572567a641e7ab56cb63f9056c926c7.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-47035276bbdf52d3bb99e6d3fd0afadf.jpg"
+        ]
+      },
+      {
+        "sourceId": "318326",
+        "date": "2026-01-21 18:02:16",
+        "type": "article",
+        "title": "",
+        "content": "冻干自助",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-23dd459af91c587a9da8335f10714b8d.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-2d16c4857cc3d08066bab2df2ed82573.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-47035276bbdf52d3bb99e6d3fd0afadf.jpg"
+        ]
+      },
+      {
+        "sourceId": "313046",
+        "date": "2026-01-01 11:39:08",
+        "type": "article",
+        "title": "也曾瘦过（相对）（时间较短）",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-6b41b203f066ef7030d2783c6bb677ee.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-9414dcb09398d3cbebaddec875a84842.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0911/17/88bf98842-df8d0fc61e93a7d1ac01a1e7466cfba7.jpg"
+        ]
+      },
+      {
+        "sourceId": "313031",
+        "date": "2026-01-01 10:53:27",
+        "type": "article",
+        "title": "雪中送猪",
+        "content": "其实是偷的前年的图，据最新消息，2026年的二头已经膨胀为14斤巨物",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0101/10/88bf98842-3acb239049d6ea174815aeafc1fe98df.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/10/88bf98842-95b1236fcd5d3a73346e6e78f5c98411.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/10/88bf98842-f70f7fddb4a255c8ee3cf191dd3d4e27.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0911/17/88bf98842-df8d0fc61e93a7d1ac01a1e7466cfba7.jpg"
+        ]
+      },
+      {
+        "sourceId": "269211",
+        "date": "2025-09-26 19:51:39",
+        "type": "article",
+        "title": "二头日常🌸",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0926/19/7b7babe74-afc15f88ef05ec415bd5f3e786aee10d.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/19/7b7babe74-b533ec08648083a3c3a88a7f5d5fca8e.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_3.jpg"
+        ]
+      },
+      {
+        "sourceId": "264982",
+        "date": "2025-09-11 21:15:38",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0911/21/e8b8cca1c-ffc38528755ef4ffb32c2b4fe3ea8aea.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "44689",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0911/21/e8b8cca1c-ffc38528755ef4ffb32c2b4fe3ea8aea.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0911/21/e8b8cca1c-7265d0bd1ea665a99875f841ec89c78a.jpg"
+    ]
   },
   {
-    name: '豆介',
-    photoUpdatedAt: '2026-08-16',
-    status: '就读中',
-    friendliness: '非常怕人',
-    vaccine: '一针 2026-06-26（紫薇京和）；二针未接种；三针未接种',
-    sterilized: '已绝育（日期待补充）',
-    notes: '第二针认捐人：刘岛；第三针认捐人：李介清',
-    area: '海棠',
-    gender: '公',
-    images: ['images/豆介/豆介2.jpg', 'images/豆介/豆介1.jpg', 'images/豆介/豆介3.jpg']
+    "name": "芸豆",
+    "status": "就读中",
+    "vaccine": "一针 2025-11-01；二针 2026-04-01；三针 2026-05-18",
+    "sterilized": "已绝育（日期待补充）",
+    "notes": "—",
+    "area": "竹园",
+    "gender": "母",
+    "images": [
+      "images/芸豆/芸豆1.jpg"
+    ],
+    "personality": [
+      "软萌好盘",
+      "胆小怂包"
+    ],
+    "description": "疑似被毕业学生遗弃在学校里的小猫（外貌对得上，年龄有出入，不确定），是头顶有一抹黑的多多奶少少牛奶牛猫，有一点点怕人，总体来说比较亲人，和小煤球是好朋友。\n喜欢进楼，希望看到的uu把她带出来。",
+    "relationships": [
+      {
+        "relatedCatName": "小煤球",
+        "relation": "好友",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      }
+    ],
+    "relationshipHints": [
+      {
+        "relatedCatName": "小煤球",
+        "relation": null,
+        "relationCandidates": [
+          "好友",
+          "朋友"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "疑似被毕业学生遗弃在学校里的小猫（外貌对得上，年龄有出入，不确定），是头顶有一抹黑的多多奶少少牛奶牛猫，有一点点怕人，总体来说比较亲人，和小煤球是好朋友。 喜欢进楼，希望看到的uu把她带出来。"
+        ],
+        "source": "api-story-inference"
+      },
+      {
+        "relatedCatName": "牛奶",
+        "relation": null,
+        "relationCandidates": [
+          "好友",
+          "朋友"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "疑似被毕业学生遗弃在学校里的小猫（外貌对得上，年龄有出入，不确定），是头顶有一抹黑的多多奶少少牛奶牛猫，有一点点怕人，总体来说比较亲人，和小煤球是好朋友。 喜欢进楼，希望看到的uu把她带出来。"
+        ],
+        "source": "api-story-inference"
+      }
+    ],
+    "updates": [
+      {
+        "sourceId": "342475",
+        "date": "2026-05-05 12:53:18",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0505/12/c8314b1d5-2a371ed1dcebf21dfe1a0ba57d92fb8a.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0505/12/c8314b1d5-b0c3dd36e3d07a976263cfc2ffea0922.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0505/12/c8314b1d5-48b616774cdad4ba1aa96060313fb4c2.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0505/12/c8314b1d5-6798de74376959bcff6e93b3af92898c.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0505/12/c8314b1d5-97be3748fc2e15a6ce33a0615ddec2e4.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_5.jpg"
+        ]
+      },
+      {
+        "sourceId": "331802",
+        "date": "2026-03-30 11:04:43",
+        "type": "article",
+        "title": "",
+        "content": "瑟瑟发抖小芸豆在线竹园躲雨",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0330/11/6a7faee74-692402e0458c65abd222ad5d3f8084ff.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0330/11/6a7faee74-a12519d7e3d5b9b949d9349801e7698f.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0330/11/6a7faee74-799e9acb75228860eabf7783f3672b51.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_6.jpg"
+        ]
+      },
+      {
+        "sourceId": "313087",
+        "date": "2026-01-01 16:15:57",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0101/16/06b438c56-1cf126846f3bddc9ceded2ba229fcd17.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/16/06b438c56-367ec4d0da23c9efb60d6091a771961c.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_3.jpg"
+        ]
+      },
+      {
+        "sourceId": "295626",
+        "date": "2025-11-25 13:52:00",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1125/13/3be638110-3486cd88207e0236b5480f39813d0365.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_6.jpg"
+        ]
+      },
+      {
+        "sourceId": "264984",
+        "date": "2025-09-11 21:23:51",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0911/21/e8b8cca1c-6440670de9fcf40003d8ed96e8b2715a.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "44691",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0911/21/e8b8cca1c-6440670de9fcf40003d8ed96e8b2715a.jpg"
+    ]
   },
   {
-    name: '大面包',
-    status: '已毕业',
-    friendliness: '亲人',
-    vaccine: '一针 2025-08-01；二针 2025-09-01；三针 2026-04-29',
-    sterilized: '已绝育（日期待补充）',
-    notes: '第三针由大面包car协助',
-    area: '竹园',
-    gender: '公',
-    images: ['images/大面包/大面包2.jpg', 'images/大面包/大面包1.jpg']
+    "name": "橙留香",
+    "status": "已毕业",
+    "vaccine": "喵倍护·三针已完成（具体日期待追溯）",
+    "sterilized": "已绝育（日期待补充）",
+    "notes": "预计领养，具体日期待补充",
+    "area": "海棠",
+    "gender": "公",
+    "images": [
+      "images/橙留香/橙留香3.jpg",
+      "images/橙留香/橙留香2.jpg",
+      "images/橙留香/橙留香1.jpg"
+    ],
+    "personality": [
+      "软萌好盘",
+      "喜欢贴贴",
+      "聪明机灵"
+    ],
+    "description": "2026.3更新：这个橙留香在领养人家里跑出去两次，现已缉拿归校\n2026.1更新：爵士好猫橙留香终于在冬天等到了温暖的家，已经开启了新的冒险之旅~\n24年6月半大小猫刷新在网安，疑似被弃养，亲人、有修剪指甲痕迹，带到丁香又跑去海棠\n性格自信开朗，初来乍到就快乐探索每个宿舍\n非常非常非常亲人亲猫的一只小猫，和人和猫关系都很好，除误伤外无攻击记录，性格软萌，超级无敌善良的小猫。（留香的意思是留在丁香，不是古龙小说那个留香（）",
+    "relationships": [
+      {
+        "relatedCatName": "焦黄",
+        "relation": "好友",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      },
+      {
+        "relatedCatName": "裤裤",
+        "relation": "好友",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      },
+      {
+        "relatedCatName": "深情哥",
+        "relation": "好友",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      },
+      {
+        "relatedCatName": "白介",
+        "relation": "好友",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      }
+    ],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "339987",
+        "date": "2026-04-25 16:33:21",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0425/16/6a39f7853-6bc99ce1de509051393e7c1f0e9cb83f.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0425/16/6a39f7853-0379fb42a4a5837e51bcd439f5fb40eb.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0425/16/6a39f7853-818e69701b12fff252ebebe66af2a68c.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "328260",
+        "date": "2026-03-21 12:13:06",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0321/12/807ebb4ff-648c8a88604beea6b0c7c03038819ee2.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0321/12/807ebb4ff-b57348460cc22a1bd27064ce626430c8.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0321/12/807ebb4ff-b92e5b65e9f4081c60ff9dd812b769ba.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0321/12/807ebb4ff-c1445bce772b7387fa3c989eae94526d.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_6.jpg"
+        ]
+      },
+      {
+        "sourceId": "315702",
+        "date": "2026-01-11 09:00:00",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0111/09/bf2956d60-fb98daa138c0cc1be28cdad18cacc0d2.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314451",
+        "date": "2026-01-07 08:51:56",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0107/08/bf2956d60-58f938d9ea3b99ffed0284625309892e.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "295619",
+        "date": "2025-11-25 13:03:54",
+        "type": "article",
+        "title": "",
+        "content": "香是最可爱的宝宝，性格真的好好",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1125/13/c19a9b0f6-a5435346257218458469080784b8485a.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1125/13/c19a9b0f6-39b35440f462a7aeb668e501d6208fa1.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1125/13/c19a9b0f6-11fe6a70ea2eb152bfd37b5b848a68e0.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1125/13/c19a9b0f6-5911be8c6caf792fe6d7985dc2870f8f.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1125/13/c19a9b0f6-ec317ff3178d2b0b75ccae5642338c7e.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1125/13/c19a9b0f6-60ec4b5f9fba5bc5663dc58bf4eb8570.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_3.jpg"
+        ]
+      },
+      {
+        "sourceId": "295593",
+        "date": "2025-11-25 10:51:22",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1125/10/1bcad00d1-4b5d4c4a75ee59e1a853f0c03beea8ed.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1125/10/1bcad00d1-6ae14ba040313759c44fb0ddf47b5b25.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1125/10/1bcad00d1-3e22b24304d685b99c68d7a0f99d6c80.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1125/10/1bcad00d1-be94751ecdff706372bf7ae742654c1f.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1125/10/1bcad00d1-db0749c1f399a2d2b5c16aa9fbd2ea76.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1125/10/1bcad00d1-d62df4b67e4fa931c3e6e1885408915f.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_2.jpg"
+        ]
+      },
+      {
+        "sourceId": "274118",
+        "date": "2025-10-13 15:07:25",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1013/15/41f79c8d0-47d09d40f4f33e994eeba4ff423f1a13.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1013/15/41f79c8d0-126fbe67e988552e4559c3db1a57cfd1.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1013/15/41f79c8d0-1eacb224bca607ae6f38655b067503d4.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1013/15/41f79c8d0-22c457e8d4d61d4de3ce02e0a7a5a9b4.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_3.jpg"
+        ]
+      },
+      {
+        "sourceId": "269301",
+        "date": "2025-09-26 23:56:56",
+        "type": "article",
+        "title": "留香和他的好朋友深情哥",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0926/23/98d780637-a640e698f5a46bf99c2f3e8ddae93fdc.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/23/98d780637-15b373edee7c69217deb837275279d5f.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/23/98d780637-6e610ea81640bd354eea4babff76874a.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_5.jpg"
+        ]
+      },
+      {
+        "sourceId": "269284",
+        "date": "2025-09-26 23:03:04",
+        "type": "article",
+        "title": "",
+        "content": "留香猫meme",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0926/23/25501d120-07571499892075590d2abad397347df5.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_4.jpg"
+        ]
+      },
+      {
+        "sourceId": "266011",
+        "date": "2025-09-15 11:20:51",
+        "type": "article",
+        "title": "",
+        "content": "橙留香是猫猫警察",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0915/11/c9e62edac-66d7491d045d1df94e40a0a152556491.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0915/11/c9e62edac-f989553de59b0050743cbce2e0d383ff.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0915/11/c9e62edac-5257926bf2d5c0f709b374b30b0e3c7e.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0915/11/c9e62edac-f680af7d86956067e707ed155992091f.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "265002",
+        "date": "2025-09-11 21:42:21",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0911/21/e8b8cca1c-9e3ecd308c66de66fbddedda054779fb.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "44696",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0911/21/e8b8cca1c-9e3ecd308c66de66fbddedda054779fb.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0924/15/e8b8cca1c-1dea67e2fa22c0929a6e9a3934c36af2.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-882e3e482f9ff19fcf0cc36b0d99c175.jpg"
+    ]
   },
   {
-    name: '芸豆',
-    status: '就读中',
-    friendliness: '亲人',
-    vaccine: '一针 2025-11-01；二针 2026-04-01；三针 2026-05-18',
-    sterilized: '已绝育（日期待补充）',
-    notes: '—',
-    area: '竹园',
-    gender: '母',
-    images: ['images/芸豆/芸豆1.jpg']
+    "name": "瓜皮头",
+    "status": "就读中",
+    "vaccine": "待补充",
+    "sterilized": "未绝育",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "公",
+    "images": [
+      "images/瓜皮头/api-46036-1.jpg"
+    ],
+    "personality": [
+      "生人勿近",
+      "超级校霸"
+    ],
+    "description": "总是偷吃/抢麻薯的饭，让投喂组同学一度误以为麻薯是超级大胃王，结果看监控发现了这只奶牛，因为和麻薯的孩子有很相似的花纹，且麻薯活动范围都是已绝育公猫但仍然怀孕，所以猜测是麻薯的前夫（麻薯已断情绝爱），当然因为一模一样的小胡子，也不排除是麻薯的兄弟。",
+    "relationships": [
+      {
+        "relatedCatName": "麻薯",
+        "relation": "夫妻",
+        "confidence": "confirmed",
+        "evidence": "来源简介明确写为“猜测是麻薯的前夫”，并补充“也不排除是麻薯的兄弟”。",
+        "source": "manual-confirmation",
+        "relationCandidates": []
+      }
+    ],
+    "relationshipHints": [
+      {
+        "relatedCatName": "麻薯",
+        "relation": null,
+        "relationCandidates": [
+          "孩子",
+          "前夫",
+          "兄弟"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "总是偷吃/抢麻薯的饭，让投喂组同学一度误以为麻薯是超级大胃王，结果看监控发现了这只奶牛，因为和麻薯的孩子有很相似的花纹，且麻薯活动范围都是已绝育公猫但仍然怀",
+          "总是偷吃/抢麻薯的饭，让投喂组同学一度误以为麻薯是超级大胃王，结果看监控发现了这只奶牛，因为和麻薯的孩子有很相似的花纹，且麻薯活动范围都是已绝育公猫但仍然怀孕，所以猜测是麻薯的前夫（麻薯已",
+          "总是偷吃/抢麻薯的饭，让投喂组同学一度误以为麻薯是超级大胃王，结果看监控发现了这只奶牛，因为和麻薯的孩子有很相似的花纹，且麻薯活动范围都是已绝育公猫但仍然怀孕，所以猜测是麻薯的前夫（麻薯已断情绝爱），当然因为一模一样的小胡子，也不排除是麻",
+          "总是偷吃/抢麻薯的饭，让投喂组同学一度误以为麻薯是超级大胃王，结果看监控发现了这只奶牛，因为和麻薯的孩子有很相似的花纹，且麻薯活动范围都是已绝育公猫但仍然怀孕，所以猜测是麻薯的前夫（麻薯已断情绝爱），当然因为一模一样的小胡子，也不排除是麻薯的兄弟。",
+          "同学一度误以为麻薯是超级大胃王，结果看监控发现了这只奶牛，因为和麻薯的孩子有很相似的花纹，且麻薯活动范围都是已绝育公猫但仍然怀孕，所以猜测是麻薯的前夫（麻薯已断情绝爱），当然因为一模一样的小胡子，也不排除是麻薯的兄弟。",
+          "为麻薯是超级大胃王，结果看监控发现了这只奶牛，因为和麻薯的孩子有很相似的花纹，且麻薯活动范围都是已绝育公猫但仍然怀孕，所以猜测是麻薯的前夫（麻薯已断情绝爱），当然因为一模一样的小胡子，也不排除是麻薯的兄弟。",
+          "薯的孩子有很相似的花纹，且麻薯活动范围都是已绝育公猫但仍然怀孕，所以猜测是麻薯的前夫（麻薯已断情绝爱），当然因为一模一样的小胡子，也不排除是麻薯的兄弟。"
+        ],
+        "source": "api-story-inference"
+      }
+    ],
+    "updates": [
+      {
+        "sourceId": "337631",
+        "date": "2026-04-18 00:31:42",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0418/00/ca7f8ff30-0ceb71982151739df3372681c2aefdd4.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-47035276bbdf52d3bb99e6d3fd0afadf.jpg"
+        ]
+      },
+      {
+        "sourceId": "273010",
+        "date": "2025-10-10 16:25:06",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1010/16/e8b8cca1c-07196b2776d7ea98a5e4ba003f971ac4.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "46036",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/1010/16/e8b8cca1c-07196b2776d7ea98a5e4ba003f971ac4.jpg"
+    ]
   },
   {
-    name: '二橙',
-    status: '已毕业',
-    friendliness: '亲人',
-    vaccine: '一针 2026-03-01；二针 2026-03-01；三针 2026-04-01',
-    sterilized: '已绝育（日期待补充）',
-    notes: '—',
-    area: '丁香',
-    gender: '公',
-    images: ['images/二橙/二橙3.jpg', 'images/二橙/二橙2.jpg', 'images/二橙/二橙1.jpg']
+    "name": "毛橘子",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（日期待补充）",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "公",
+    "images": [
+      "images/毛橘子/api-44677-1.jpg",
+      "images/毛橘子/api-44677-2.jpg"
+    ],
+    "personality": [
+      "软萌好盘",
+      "泡图书馆",
+      "喵拳攻击"
+    ],
+    "description": "26年1月更新：毛橘子已经找到了爱他的家庭，接下来十余年都有了一个屋檐❤️\n初次刷新在网安大楼时是亲人的半大小猫，喜欢贴贴，后定居图书馆。\n定居在图书馆的一只长毛橘白，被戏称为图书馆馆长，脾气大部分时候很好，不过被人摸烦了就会重拳出击。（图书馆人流量太大，馆长天天被摸，可能这就是热度高的烦恼）",
+    "relationships": [
+      {
+        "relatedCatName": "毛柿子",
+        "relation": "好友",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      },
+      {
+        "relatedCatName": "小满",
+        "relation": "好友",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      }
+    ],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "334509",
+        "date": "2026-04-09 11:56:53",
+        "type": "article",
+        "title": "",
+        "content": "我在西电想馆长",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0409/11/6a39f7853-1b26f6e1d7623fe40d86a0952905d507.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0409/11/6a39f7853-8d4e55a21915c67bae8a3437d81d1aff.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0409/11/6a39f7853-856e15c0924f51c1318be521337ba2b8.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0409/11/6a39f7853-9fdad79fb277c486add3d76fe2a6b405.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0409/11/6a39f7853-09bb77b5fc7177b174cb53f5376ed7d5.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0409/11/6a39f7853-a4c57389b112aa0cb2314a68319bff12.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0409/11/6a39f7853-d9d610f0168c0ee859d6ac25654c74d7.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0409/11/6a39f7853-ee21acd7148268bc322c99d2db2d6ef2.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "300308",
+        "date": "2025-12-03 10:33:23",
+        "type": "article",
+        "title": "",
+        "content": "馆长大人这叫一个貌美",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1203/10/807ebb4ff-7a57d855e049195f3a283bb0653d22e6.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1203/10/807ebb4ff-4c3aed5e32ff7c64f52faa6be80c2350.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1203/10/807ebb4ff-8db3277b2f4dec3e229ff9258951bdca.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1203/10/807ebb4ff-8a01e5783dbff17af5ec450bdf92b3c4.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_6.jpg"
+        ]
+      },
+      {
+        "sourceId": "264934",
+        "date": "2025-09-11 18:22:25",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0911/18/e8b8cca1c-fcd3f7e6043c439c8943a58d28b71bdb.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "44677",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-e439a2203047ebaeced08fbf68bb625d.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-285ef83728ee06e81dfc29c3d2460b6f.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-cd4a11e9f75da4c5552dd9f5ca4b22a7.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-b5c72988c0d1b50d6f1f59a788673e06.jpg"
+    ]
   },
   {
-    name: '二柑',
-    status: '已毕业',
-    friendliness: '亲人',
-    vaccine: '一针 2026-03-01；二针 2026-03-01；三针 2026-04-01',
-    sterilized: '已绝育（日期待补充）',
-    notes: '—',
-    area: '丁香',
-    gender: '公',
-    images: ['images/二柑/二柑6.jpg', 'images/二柑/二柑5.jpg', 'images/二柑/二柑4.jpg', 'images/二柑/二柑3.jpg', 'images/二柑/二柑2.jpg', 'images/二柑/二柑1.jpg']
+    "name": "麻薯",
+    "status": "已毕业",
+    "vaccine": "未接种（受伤期评估后未补种）",
+    "sterilized": "已绝育（2025-09-17）",
+    "notes": "曾受伤，仍有猫传腹风险；领养时未补种疫苗。",
+    "area": "海棠",
+    "gender": "母",
+    "images": [
+      "images/麻薯/麻薯2.jpg",
+      "images/麻薯/麻薯1.jpg"
+    ],
+    "personality": [
+      "生人勿近",
+      "胆小怂包"
+    ],
+    "description": "2026.6编：猫德逐渐成长的麻薯在26年也迎来了毕业季，不再在学校东躲西藏，可以在家里的飘窗安全的翻肚皮啦。\n一只在学校和校外反复横跳的猫，大耳朵圆眼睛小尖脸八嘎胡，身上色块均匀，胆小的笨蛋美女一枚。性格有点内向，正逐渐变得亲人，带娃技术非常差，没有技巧全是母爱，把娃带的一塌糊涂，自己也累成猫干。现今已经送去绝育，望断情绝爱拥有幸福猫生。\n",
+    "relationships": [
+      {
+        "relatedCatName": "芝麻",
+        "relation": "儿子",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      },
+      {
+        "relatedCatName": "袜袜",
+        "relation": "儿子",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      },
+      {
+        "relatedCatName": "Miko",
+        "relation": "儿子",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      },
+      {
+        "relatedCatName": "棉花糖",
+        "relation": "女儿",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      }
+    ],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "332280",
+        "date": "2026-03-31 18:46:32",
+        "type": "article",
+        "title": "",
+        "content": "特别萌啊",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-c1dc44c25088d66dc5af3f2ccf350c65.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-d979f9632c65d8d77f42b4b2392ab88b.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-8ec9813c1acee28c4f515a0fd29a30ab.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-2b218790c3b0724163811af3365e3206.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-91357c645b865c03b29265c3649b37db.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-70b87d8ebbe323880b5ef47763ab98eb.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-d0089a43a4434f97b11205c2f98fbb53.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/18/e0be736fb-3a6ae6156c81dbccbc6c7537a40643de.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "332175",
+        "date": "2026-03-31 14:15:46",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0331/14/e0be736fb-1f2616e3f57d9c2daf0d82c28644612d.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/14/e0be736fb-e6fe43e5a9fda1cddb79def76d1fda06.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/14/e0be736fb-c6832145156810b49f52e4ae167317c8.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/14/e0be736fb-6293740ca8c0e3bf8f7b9d1095f1ccb9.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/14/e0be736fb-a6fb84bfaa1bb4cc4424d26e7cd4974f.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/14/e0be736fb-e1af29d4db7634dec8954f7d54599d4b.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0331/14/e0be736fb-072af158c7916f055785a064d7e5fbed.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "331010",
+        "date": "2026-03-27 19:28:37",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0327/19/bf2956d60-ce0c10812c201473b625f1c47f05be07.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "331008",
+        "date": "2026-03-27 19:27:58",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0327/19/bf2956d60-09544f82a459502c5a086ff7edf6988e.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "321265",
+        "date": "2026-02-12 00:25:41",
+        "type": "article",
+        "title": "",
+        "content": "萌",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0212/00/9532e6c8a-492a8074705526eb96fe21e6e1579e81.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0212/00/9532e6c8a-95ab45586510f3fbd24831821629d0b1.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_3.jpg"
+        ]
+      },
+      {
+        "sourceId": "315695",
+        "date": "2026-01-11 08:54:24",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0111/08/bf2956d60-96464281a5664e8904836fe496257c9e.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0111/08/bf2956d60-f2bcd8346412a5d73c41d4977d2ec14e.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314192",
+        "date": "2026-01-06 09:39:52",
+        "type": "article",
+        "title": "要加就加二橙  第一口冻干给你吃",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0106/09/bf2956d60-9dbf52018c66fb4064548977fc049e16.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314191",
+        "date": "2026-01-06 09:39:14",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0106/09/bf2956d60-a136714bc5c747267b175c7803c05673.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314188",
+        "date": "2026-01-06 09:28:37",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0106/09/bf2956d60-9316b8bb35ed1f61ba5d2c258169f104.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "309273",
+        "date": "2025-12-23 20:36:58",
+        "type": "article",
+        "title": "母子重逢",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1223/20/bf2956d60-1f46a1a238022deef946a949edc7a7b2.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "308778",
+        "date": "2025-12-22 19:09:27",
+        "type": "article",
+        "title": "回来吧",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1222/19/bf2956d60-63bd9a4decc01b7e5f5e4913d1ac8299.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "267754",
+        "date": "2025-09-21 18:28:59",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0921/18/e8b8cca1c-34f6aa5cd1353d2156a00afa9d3a4cdd.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45153",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/1212/14/e8b8cca1c-fe2d3c7833b8347aa155b3c0584a01aa.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0921/18/e8b8cca1c-9995d60669f40548a9ad9fe940b9f403.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0921/18/e8b8cca1c-34f6aa5cd1353d2156a00afa9d3a4cdd.jpg"
+    ]
   },
   {
-    name: '赫兹',
-    photoUpdatedAt: '2026-08-18',
-    status: '就读中',
-    friendliness: '亲人',
-    vaccine: '未接种',
-    sterilized: '已绝育（日期待补充）',
-    notes: '曾用名「渣男」；2026-05-31 诊断牙龈炎，治疗中。疫苗需等病后评估。',
-    area: '丁香',
-    gender: '公',
-    images: ['images/赫兹/赫兹3.jpg', 'images/赫兹/赫兹2.jpg', 'images/赫兹/赫兹1.jpg', 'images/赫兹/赫兹4.jpg', 'images/赫兹/赫兹5.jpg', 'images/赫兹/赫兹6.jpg', 'images/赫兹/赫兹7.jpg', 'images/赫兹/赫兹8.jpg', 'images/赫兹/赫兹9.jpg', 'images/赫兹/赫兹10.jpg']
+    "name": "立夏",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（2025-12-01）",
+    "notes": "待补充",
+    "area": "教学区",
+    "gender": "母",
+    "images": [
+      "images/立夏/api-49451-1.jpg",
+      "images/立夏/api-49451-2.jpg"
+    ],
+    "personality": [
+      "撒娇求撸",
+      "喜欢贴贴"
+    ],
+    "description": "*25.12.11已被群小猫@拉吉塔尼的鹦鹉会笑 自提回家，开启荣华富贵十五年的咪生~\n2025年下半年出现于教学区远望谷附近，黄色圆眼、白下巴的纯橘，看起来总是不高兴的表情，但其实是萌妹一枚。2025.11出现时为能独立生存的半大小母猫，性格亲人，喜欢蹭蹭贴贴。",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "329615",
+        "date": "2026-03-24 16:40:21",
+        "type": "article",
+        "title": "",
+        "content": "更新一下近期的小猪咪立夏",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0324/16/76f6b0fc8-c859689c9ca24469a8a911b3e4ccbd7c.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0324/16/76f6b0fc8-119cf7e3d64b186e68f6ece2ae6a81b5.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0324/16/76f6b0fc8-154e5d4328ef946a89567c9f5447095a.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_4.jpg"
+        ]
+      },
+      {
+        "sourceId": "303956",
+        "date": "2025-12-11 14:28:37",
+        "type": "article",
+        "title": "",
+        "content": "前几天录的立夏，可爱捏☺",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1211/14/12984dfbb-df6f8a67afec338ac06fd2f695bf6a71_s_mp4_poster.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "300459",
+        "date": "2025-12-03 15:40:17",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1203/15/e8b8cca1c-ca7918a9f251718fd8e9b9a6b4e4808c.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "49451",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/1203/15/e8b8cca1c-ca7918a9f251718fd8e9b9a6b4e4808c.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/1209/11/e8b8cca1c-bd614694490a8d963d3fb368a53d397c.jpg"
+    ]
   },
   {
-    name: '豆腐脑',
-    status: '就读中',
-    friendliness: '怕人',
-    vaccine: '未接种',
-    sterilized: '2026-05-10 已绝育',
-    notes: '—',
-    area: '教学区',
-    gender: '母',
-    images: ['images/豆腐脑/豆腐脑1.jpg']
+    "name": "斜眼狼",
+    "status": "喵星或失踪",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（2025-06-20）",
+    "notes": "待补充",
+    "area": "竹园",
+    "gender": "母",
+    "images": [
+      "images/斜眼狼/api-45264-1.jpg"
+    ],
+    "personality": [
+      "生人勿近"
+    ],
+    "description": "*2026.03更新：斜眼狼被发现于竹园，确认被流浪狗攻击致死。\n因为很凶很怕人，脑袋上有一撇斜着的黑毛，所以叫斜眼狼，但其实脸短短圆圆的很萌。竹园另一个传说，超生大队队长，在校内校外反复横跳，疑似和黑哥是夫妻，留下了一个庞大的奶牛家族。",
+    "relationships": [
+      {
+        "relatedCatName": "黑哥",
+        "relation": "夫妻",
+        "confidence": "confirmed",
+        "evidence": "简介写“疑似和黑哥是夫妻”，关系卡片显示“夫妻”。",
+        "source": "manual-confirmation",
+        "relationCandidates": []
+      }
+    ],
+    "relationshipHints": [
+      {
+        "relatedCatName": "黑哥",
+        "relation": null,
+        "relationCandidates": [
+          "夫妻",
+          "家族"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "死。 因为很凶很怕人，脑袋上有一撇斜着的黑毛，所以叫斜眼狼，但其实脸短短圆圆的很萌。竹园另一个传说，超生大队队长，在校内校外反复横跳，疑似和黑哥是夫妻，留下了一个庞大的奶牛家族。"
+        ],
+        "source": "api-story-inference"
+      }
+    ],
+    "updates": [
+      {
+        "sourceId": "329544",
+        "date": "2026-03-24 12:53:56",
+        "type": "article",
+        "title": "宝宝晚安",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0324/12/18d01c2cc-5a8a111adf7fb69e34321f6f8f2de8f4.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0324/12/18d01c2cc-1e2be259a3264ada17cf68fb48592f1c.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_6.jpg"
+        ]
+      },
+      {
+        "sourceId": "268453",
+        "date": "2025-09-24 04:02:52",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-139b018d90e36afe7f21c06a82ba6d19.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45264",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-139b018d90e36afe7f21c06a82ba6d19.jpg"
+    ]
   },
   {
-    name: '脏白',
-    status: '就读中',
-    friendliness: '怕人',
-    vaccine: '未接种',
-    sterilized: '未绝育',
-    notes: '—',
-    area: '教学区',
-    gender: '公',
-    images: ['images/脏白/脏白2.jpg', 'images/脏白/脏白1.jpg']
+    "name": "太君",
+    "status": "喵星或失踪",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（日期待补充）",
+    "notes": "待补充",
+    "area": "丁香",
+    "gender": "公",
+    "images": [
+      "images/太君/api-45278-1.jpg",
+      "images/太君/api-45278-2.jpg"
+    ],
+    "personality": [
+      "见人就蹭",
+      "聪明机灵",
+      "校园暖男"
+    ],
+    "description": "初代人气王，标志性的烟嗓和八嘎胡，可爱稳重又聪明。街溜子猫，从海棠到教学区到丁香都住过，信任每一个人类，喜欢被拍皮鼓，喜欢咩咩叫撒娇，喜欢随地大小睡。22年暑假疑似因为急症去世。",
+    "relationships": [
+      {
+        "relatedCatName": "黑子",
+        "relation": "情侣",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      },
+      {
+        "relatedCatName": "太子",
+        "relation": "情侣",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      },
+      {
+        "relatedCatName": "小八嘎",
+        "relation": "儿子",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      }
+    ],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "319308",
+        "date": "2026-01-26 17:39:51",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0126/17/18d01c2cc-34b28ed7923a945192b84fbe6aabea48.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_6.jpg"
+        ]
+      },
+      {
+        "sourceId": "300562",
+        "date": "2025-12-03 21:03:10",
+        "type": "article",
+        "title": "君君😭😭",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1203/21/98d780637-32c7a83423c29a67e427a885ffd2cd53.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_5.jpg"
+        ]
+      },
+      {
+        "sourceId": "268470",
+        "date": "2025-09-24 09:10:20",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/09/e8b8cca1c-7b2980708f6d60944336ec0a8eaec8cc.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45278",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/09/e8b8cca1c-7b2980708f6d60944336ec0a8eaec8cc.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0924/09/e8b8cca1c-80469404b875eae9f04d7f2358955b8d.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0924/09/e8b8cca1c-4403cbf41cccf0bf01ef48281801c19a.jpg"
+    ]
   },
   {
-    name: '蓝豆',
-    status: '就读中',
-    friendliness: '怕人',
-    vaccine: '未接种',
-    sterilized: '已绝育（日期待补充）',
-    notes: '—',
-    area: '教学区',
-    gender: '母',
-    images: ['images/蓝豆/蓝豆1.jpg']
+    "name": "脏白",
+    "status": "就读中",
+    "vaccine": "未接种",
+    "sterilized": "未绝育",
+    "notes": "—",
+    "area": "教学区",
+    "gender": "公",
+    "images": [
+      "images/脏白/脏白2.jpg",
+      "images/脏白/脏白1.jpg"
+    ],
+    "personality": [
+      "生人勿近",
+      "喵拳攻击",
+      "胆小怂包"
+    ],
+    "description": "一只脏兮兮的白猫，很怕人，似乎是为了保护自己（因为白猫在猫界地位很低）把自己弄得脏乎乎的，还天天打架。抓绝育抓了很久还没抓到，希望能早日上交作案工具。",
+    "relationships": [
+      {
+        "relatedCatName": "潇洒哥",
+        "relation": "宿敌",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      }
+    ],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "318534",
+        "date": "2026-01-22 14:09:36",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0122/14/ae36516fc-f134b7161e6ba6381c8dc131c8405b99.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0122/14/ae36516fc-ac08240fba30cc68a5df6ec7393125ea.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0122/14/ae36516fc-0c266c45741eaa01daed0acee0cb16e1.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_4.jpg"
+        ]
+      },
+      {
+        "sourceId": "318524",
+        "date": "2026-01-22 13:33:01",
+        "type": "article",
+        "title": "",
+        "content": "每次见面都埋头吃饭的小猫咪",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0122/13/ae36516fc-3125ebb8a3e15ae6e9f631f0c0dd337d.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0122/13/ae36516fc-40c69a547a53a6193f29456d0425e273.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_4.jpg"
+        ]
+      },
+      {
+        "sourceId": "318522",
+        "date": "2026-01-22 13:28:02",
+        "type": "article",
+        "title": "",
+        "content": "吃饭的时候可以摸摸大脑袋",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0122/13/ae36516fc-52c282dfdea1e4cfcca969cce48a737b.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0122/13/ae36516fc-1890546a88f95c8bb3a43868f19a5f02.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0122/13/ae36516fc-1c5592554fafa5549538eca7107dd53e.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_4.jpg"
+        ]
+      },
+      {
+        "sourceId": "318082",
+        "date": "2026-01-20 16:11:11",
+        "type": "article",
+        "title": "",
+        "content": "萌萌萌萌萌，大嗓门爱吃饭的一只小猫咪",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0120/16/ae36516fc-bb0d646792859154e7af3bb610615286.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0120/16/ae36516fc-7e5c08c870eae251f974d2d0efa2f99f.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0120/16/ae36516fc-3e347e370e3a0e404de18e09e49b1ea9.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_4.jpg"
+        ]
+      },
+      {
+        "sourceId": "269214",
+        "date": "2025-09-26 19:53:51",
+        "type": "article",
+        "title": "回忆一下脏老师小时候",
+        "content": "超级超级萌的嘴筒子短腿小白猫呀🥺🥺🥺",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0926/19/3d61b7041-9a410de4361c71f33ab69c962f069ace.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/19/3d61b7041-4180105e403cc7585c118987cd94be9a.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_2.jpg"
+        ]
+      },
+      {
+        "sourceId": "269208",
+        "date": "2025-09-26 19:42:37",
+        "type": "article",
+        "title": "",
+        "content": "萌呐",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0926/19/de82b2c85-54fef39b7da5c57d05393935918cd2b0.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_4.jpg"
+        ]
+      },
+      {
+        "sourceId": "267751",
+        "date": "2025-09-21 18:18:41",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0921/18/e8b8cca1c-2f682945ec4d2b5e083e3dcf4c4957c4.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45151",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0921/18/e8b8cca1c-2f682945ec4d2b5e083e3dcf4c4957c4.jpg"
+    ]
   },
   {
-    name: '天水',
-    status: '喵星或失踪',
-    friendliness: '怕人',
-    vaccine: '未接种',
-    sterilized: '已绝育（日期待补充）',
-    notes: '—',
-    area: '教学区',
-    gender: '公',
-    images: ['images/天水/天水1.jpg']
+    "name": "天水",
+    "status": "喵星或失踪",
+    "vaccine": "未接种",
+    "sterilized": "已绝育（2025-12-31）",
+    "notes": "—",
+    "area": "教学区",
+    "gender": "公",
+    "images": [
+      "images/天水/天水1.jpg"
+    ],
+    "personality": [
+      "生人勿近",
+      "胆小怂包"
+    ],
+    "description": "25年年初出现在图书馆的独眼狸白，怕人，花纹是狸花加白的脑袋➕虎斑加白的身体。",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "318525",
+        "date": "2026-01-22 13:37:16",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0122/13/ae36516fc-72896066386f4b93bf62a982192c3041.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_4.jpg"
+        ]
+      },
+      {
+        "sourceId": "313029",
+        "date": "2026-01-01 00:00:00",
+        "type": "cat-line",
+        "title": "元旦前夜失蛋",
+        "content": "在笼子里骂的很难听，但绝育时医生说它眼睛下眼睑内翻并非没有眼珠的诊断，300r喜获眼珠子，后期也许可以恢复眼球功能",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1010/16/e8b8cca1c-2f3c411ef77d8d8145b2ff8478ddb7d6.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/10/88bf98842-aa813724bfc0da14d5afd2f382e2d6b8.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0911/17/88bf98842-df8d0fc61e93a7d1ac01a1e7466cfba7.jpg"
+        ]
+      },
+      {
+        "sourceId": "273008",
+        "date": "2025-10-10 16:22:44",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1010/16/e8b8cca1c-2f3c411ef77d8d8145b2ff8478ddb7d6.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "46034",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/1010/16/e8b8cca1c-2f3c411ef77d8d8145b2ff8478ddb7d6.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/1010/16/e8b8cca1c-2e1bdb58937d20356908bbf44a0121db.jpg"
+    ]
   },
   {
-    name: '来才',
-    status: '就读中',
-    friendliness: '怕人',
-    vaccine: '未接种',
-    sterilized: '未绝育',
-    notes: '—',
-    area: '竹园',
-    gender: '母',
-    images: ['images/来才/来才1.jpg']
+    "name": "裤裤",
+    "status": "已毕业",
+    "vaccine": "喵倍护·三针已完成（具体日期待追溯）",
+    "sterilized": "已绝育（2025-02-01）",
+    "notes": "预计领养，具体日期待补充",
+    "area": "海棠",
+    "gender": "母",
+    "images": [
+      "images/裤裤/裤裤3.jpg",
+      "images/裤裤/裤裤2.jpg",
+      "images/裤裤/裤裤1.jpg"
+    ],
+    "personality": [
+      "喵拳攻击",
+      "软萌好盘",
+      "聪明机灵"
+    ],
+    "description": "大约24年春夏出生于丁香，黄眼睛狸白，出现时未观测到猫妈，是一只对人类很好奇又胆子很小的儿童猫。\n小时候会远远的跟着人类走，但是不能靠近会被抓，好像也不太会社交，去了好几个地方都被大猫驱赶。\n因为后腿白白的像没穿裤子一样，所以叫裤裤（缺什么叫什么这一块）手有点欠欠的，偶尔会抓人，比较高冷。",
+    "relationships": [
+      {
+        "relatedCatName": "橙留香",
+        "relation": "好友",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      },
+      {
+        "relatedCatName": "深情哥",
+        "relation": "好友",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      },
+      {
+        "relatedCatName": "粤利粤",
+        "relation": "宿敌",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      }
+    ],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "318526",
+        "date": "2026-01-22 13:39:59",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0122/13/ae36516fc-3898c7eb77509bcd91c67e3845937b19.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_4.jpg"
+        ]
+      },
+      {
+        "sourceId": "318337",
+        "date": "2026-01-21 18:11:46",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-dc8c6a28e0d3b87f1d2059e651066dd8.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-2e7d7d684e31d1cf547f00a276b7e792.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-b2105f651618bd92272c3ce6cfc1cbab.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-773e0648447ce8091ded32adbc15c3e4.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-57f55ce8dbdad18601e902acbe36dac5.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-6e998723cc996bf7e4f4ecb124997698.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-47035276bbdf52d3bb99e6d3fd0afadf.jpg"
+        ]
+      },
+      {
+        "sourceId": "318336",
+        "date": "2026-01-21 18:10:39",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-d6acdba0b04d349f426b4a2227bf6729.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-b0814cde15c460bb37bf45b2e345e342.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-5a7b625c2d1020c2dc6254628ee2b221.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-871c566a2bf49f23e76e46e05deba107.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-56ede91c3693f9414a83f6157dcfa76d.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-f71feced60ec4d38a0a5760fe3eb9169.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-47035276bbdf52d3bb99e6d3fd0afadf.jpg"
+        ]
+      },
+      {
+        "sourceId": "318334",
+        "date": "2026-01-21 18:09:14",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-e38e198cca4db0f94ce3c9c7ceef769c.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-cf1ae6023237883bdfc957653ce23e8a.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-3e5ede0984d349b146a8964c5fa4dbb6.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-86f08090e1409d6aa004b1cd6c8e7ac6.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-8cdf5e227cb3036c57457e84a9c0323c.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-0ceae1fd37e3a01a27b6170e0123ce3d.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-47035276bbdf52d3bb99e6d3fd0afadf.jpg"
+        ]
+      },
+      {
+        "sourceId": "318328",
+        "date": "2026-01-21 18:05:43",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-8d1ccbe55e876739041e05d375bc4b43.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-12dafc78a16d715d0878a8e75f4ce344.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-3f6077b324832a4c8daec4fd91eaa1ca.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-4dd84b57590ad9508097c7ed3791040d.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-eb2fffbbeff7b2f00b62f5537512f470.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-0398923f9f36e34585e0da1b3a86ccfb.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-47035276bbdf52d3bb99e6d3fd0afadf.jpg"
+        ]
+      },
+      {
+        "sourceId": "311546",
+        "date": "2025-12-29 07:45:28",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1229/07/bf2956d60-790ca84a459df03e9efe84ab91d8e304.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1229/07/bf2956d60-3f2495507ad001c8efbc2b49611abaac.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "269857",
+        "date": "2025-09-28 22:38:02",
+        "type": "article",
+        "title": "",
+        "content": "帅照",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0928/22/5da478016-56151cb1ee449a055b6e6d38817f6d59.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "269541",
+        "date": "2025-09-27 21:44:06",
+        "type": "article",
+        "title": "",
+        "content": "裤裤在迎新晚会后陪玩😋",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0927/21/b264cef3a-72ec0e1341a98f7531a075d699f7e2b1.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0927/21/b264cef3a-bda6eb436bb3da45bd0fee4da52c435f.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0927/21/b264cef3a-71f084a8baa468d15b65466a2e9f2905.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0927/21/b264cef3a-33a91f3678e2bd215e1ce7772e8b86b8_s_mp4_poster.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0927/21/b264cef3a-4c1a94902ac8b3e5e81c5be92bd712b5.jpg"
+        ]
+      },
+      {
+        "sourceId": "267758",
+        "date": "2025-09-21 18:38:40",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0921/18/e8b8cca1c-56fcf79b9c5f3de9c43cec3e0d8f4726.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45155",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0921/18/e8b8cca1c-56fcf79b9c5f3de9c43cec3e0d8f4726.jpg"
+    ]
   },
   {
-    name: '焦炭馒头',
-    status: '就读中',
-    friendliness: '怕人',
-    vaccine: '未接种',
-    sterilized: '未绝育',
-    notes: '—',
-    area: '竹园',
-    gender: '母',
-    images: ['images/焦炭馒头/焦炭馒头1.jpg']
+    "name": "虎先锋",
+    "status": "就读中",
+    "vaccine": "一针 2026-05-11；二针 2026-06-26（紫薇京和）；三针未接种",
+    "sterilized": "已绝育（日期待补充）",
+    "notes": "—",
+    "area": "海棠",
+    "gender": "公",
+    "images": [
+      "images/虎先锋/虎先锋5.jpg",
+      "images/虎先锋/虎先锋4.jpg",
+      "images/虎先锋/虎先锋3.jpg",
+      "images/虎先锋/虎先锋2.jpg",
+      "images/虎先锋/虎先锋1.jpg"
+    ],
+    "personality": [
+      "生人勿近",
+      "喵拳攻击",
+      "胆小怂包"
+    ],
+    "description": "生活在学校里很久的一只橘猫，猫中一点黑，非常怕人，看起来很凶不过战斗力很弱，经常在海棠偷偷蹭饭。绝育放归的时候在袋子里突然静静的不动了，差点把绝育组同学吓晕，后来发现其实是睡如死了，胆小但心大。",
+    "relationships": [
+      {
+        "relatedCatName": "三四",
+        "relation": "好友",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      }
+    ],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "318339",
+        "date": "2026-01-21 18:18:05",
+        "type": "article",
+        "title": "",
+        "content": "虎先锋真的如果性格好一点的话就是一个香香软软的小面包🍞",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-addda0c461a300695b69771fc002cb53.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-d1d12b0fcd865cf2a4a1f4d167f9e7d3.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-028b92d37d137617e455aedef8c87cea.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-22702246b6d59771fa83069eed59e6b2.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-0948f5ed5b452c381945e2952d05b956.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-78df22a545947fc3ebfa6df25932011a.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-4eff6d42e2f572e90f109785b65fc4be.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-4e6d7b15b323fc60dbbe59788dd002ba.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-177f11d8a582e3a067e14f2dfd3fe1ac.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-47035276bbdf52d3bb99e6d3fd0afadf.jpg"
+        ]
+      },
+      {
+        "sourceId": "304201",
+        "date": "2025-12-11 22:42:39",
+        "type": "article",
+        "title": "",
+        "content": "是这个嘛 他嗓子哑了好久了不知道怎么了😭",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1211/22/7734c40eb-d8ebc3cbdcac8ec6573b316753d90182.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1211/22/7734c40eb-0d39825de98747389fb83a3a4e5f3cc1.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_4.jpg"
+        ]
+      },
+      {
+        "sourceId": "268458",
+        "date": "2025-09-24 04:29:20",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-a2ffdb02cbe0793ef1baf0613f47828f.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45269",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-a2ffdb02cbe0793ef1baf0613f47828f.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-8dcad435d255a31b06c64a8d3e3c81cf.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-9395ffeb7e58b89ac0584a5922341ab5.jpg"
+    ]
   },
   {
-    name: '小小黑',
-    status: '就读中',
-    friendliness: '怕人',
-    vaccine: '未接种',
-    sterilized: '2026-05-17 已绝育',
-    notes: '2026-05-17 在缘愈绝育/治疗，术后恢复待跟进。',
-    area: '海棠',
-    gender: '母',
-    images: ['images/小小黑/小小黑2.jpg', 'images/小小黑/小小黑1.jpg']
+    "name": "大头",
+    "status": "就读中",
+    "vaccine": "妙三多·一针 2025-07-27；二针 2025-09-09；三针 2025-10-07（紫薇京和）",
+    "sterilized": "已绝育（2023-04-01）",
+    "notes": "—",
+    "area": "丁香",
+    "gender": "公",
+    "images": [
+      "images/大头/datou11.jpg",
+      "images/大头/datou10.jpg",
+      "images/大头/datou9.jpg",
+      "images/大头/datou8.jpg",
+      "images/大头/datou7.jpg",
+      "images/大头/datou6.jpg",
+      "images/大头/datou5.jpg",
+      "images/大头/datou4.jpg",
+      "images/大头/datou1.jpg",
+      "images/大头/datou2.jpg",
+      "images/大头/datou3.jpg",
+      "images/大头/大头12.jpg",
+      "images/大头/大头13.jpg",
+      "images/大头/大头14.jpg",
+      "images/大头/大头15.jpg",
+      "images/大头/大头16.jpg",
+      "images/大头/大头17.jpg",
+      "images/大头/大头18.jpg",
+      "images/大头/大头19.jpg",
+      "images/大头/大头20.jpg"
+    ],
+    "personality": [
+      "聪明机灵",
+      "霸道总裁",
+      "校园暖男"
+    ],
+    "description": "丁香“老猫王”，猫群群头像。据传2020年之前就生活在丁香的原住民，非常聪明的绿眼狸花，对人对猫都很温柔，听得懂自己的名字。爱喝水，爱吃冻干，是少有的对猫条不感兴趣的猫猫，养生这一块👍🏻",
+    "relationships": [
+      {
+        "relatedCatName": "黑姐",
+        "relation": "好友",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      },
+      {
+        "relatedCatName": "漂亮橘",
+        "relation": "好友",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "screenshot-staging"
+      }
+    ],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "318325",
+        "date": "2026-01-21 18:01:25",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-295be8e48c8a6f1ab9a02527f9b6a04f.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-7ccde2b3141f2f045ed11c9803e226e3.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-2843a8ef3279336970fed18286e3350a.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-807d3e72fca9719d658c9f5ca42ee5e4.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-6111c771ebfbaed9ae27a3f0866afd4f.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-6a29aaf8fba4522d0a9af301861bfb98.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-47035276bbdf52d3bb99e6d3fd0afadf.jpg"
+        ]
+      },
+      {
+        "sourceId": "314449",
+        "date": "2026-01-07 08:50:38",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0107/08/bf2956d60-a182f35e9a24702e9d433447d4f37572.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "313040",
+        "date": "2026-01-01 11:16:43",
+        "type": "article",
+        "title": "记录大头的一些小爱好📝",
+        "content": "智商很高：听得懂名字，天冷会进窝（？）\n挚爱摩托车，睡觉捂眼睛🙈\n喜欢吨吨水，喜欢吃冻干，不爱吃猫条\n原《我爱西电》代言咪",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-45a5b5292dc61a01f53db4561f8dbe1c.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-8175e434559093e7330caaf862f1ef0d.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-ef9c4338154019828127501caf8bf5dc.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-8f3430b411a07ff918365e24b060d0b5.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-d858032fcbad3356602e7d480fa83c2e.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0911/17/88bf98842-df8d0fc61e93a7d1ac01a1e7466cfba7.jpg"
+        ]
+      },
+      {
+        "sourceId": "313037",
+        "date": "2026-01-01 11:05:10",
+        "type": "article",
+        "title": "脾气好好小脸短短身子肥肥 我们大头🤗",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-34f87929a46b43aa1828841679376493.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-2315e78ee9cf044d6ac16f053882428b.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-fdaa5c5ff2d5c25aade3d67dad49f8e4.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-b2b9a224f14c3270980364e5d29f2bb3.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-bf42767994fd1490c41ade373085b846.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-2b39fc6118043e81b3e831471badb3d7.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-3dd16339fcb3d7b03bb0eaf6d2225d6e.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0911/17/88bf98842-df8d0fc61e93a7d1ac01a1e7466cfba7.jpg"
+        ]
+      },
+      {
+        "sourceId": "313036",
+        "date": "2026-01-01 11:03:12",
+        "type": "article",
+        "title": "补充一波新收的好朋咪😽😽大p99",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-59a0f85e31c4a2aa87091550f756639d.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-90f1a684784177753b2641880191fb80.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-3dccf51a0076b6c96e1206eab0efee33.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-cf75b36b142e4fac9f813d7a584b3049.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-73ef00f875859f09aad97f5d1aaad943.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-35eb5c3255ae21204e146e780ddc3a2c.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-1dd2af08839a60926ed2484e53fadaa9.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-13cd403ea854efdbffb58605aba70952.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0911/17/88bf98842-df8d0fc61e93a7d1ac01a1e7466cfba7.jpg"
+        ]
+      },
+      {
+        "sourceId": "313030",
+        "date": "2026-01-01 10:50:52",
+        "type": "article",
+        "title": "就这样萌萌的看着你🥺",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0101/10/88bf98842-a66e783e948b1f34fd0df17c5a08feae.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/10/88bf98842-8163392cec7378613ee895b4cb041dc0.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0911/17/88bf98842-df8d0fc61e93a7d1ac01a1e7466cfba7.jpg"
+        ]
+      },
+      {
+        "sourceId": "300558",
+        "date": "2025-12-03 20:54:14",
+        "type": "article",
+        "title": "这么漂亮的大头怎么还没有被领养😭",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1203/20/98d780637-6101ebd16e114e8afcd76198a1e0cbef.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1203/20/98d780637-7a0a9e4bdefd9960c13a7590a61e6908.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1203/20/98d780637-92f34088e20631f3f62ea3c68b313b22.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_5.jpg"
+        ]
+      },
+      {
+        "sourceId": "268969",
+        "date": "2025-09-25 22:42:18",
+        "type": "article",
+        "title": "做一辈子的好朋咪！",
+        "content": "和我一起说：大p99",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0925/22/88bf98842-dbc7a958e0f9831c85ffdee66dc6d0d8.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0925/22/88bf98842-91f4ee7ebca09117c61a4e6520f0f776.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0925/22/88bf98842-ecd8938ce53c302474ba90b73fd01c8b.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0925/22/88bf98842-8f842f142caca52fbab0bf094dadc053.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0925/22/88bf98842-0a747bde8767848af6096c8d0e7ec658.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0911/17/88bf98842-df8d0fc61e93a7d1ac01a1e7466cfba7.jpg"
+        ]
+      },
+      {
+        "sourceId": "264945",
+        "date": "2025-09-11 19:39:53",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0911/19/e8b8cca1c-2d7a1e05ec5b239cfb1d867a91edcc9d.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "44681",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0911/19/e8b8cca1c-2d7a1e05ec5b239cfb1d867a91edcc9d.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0911/19/e8b8cca1c-0617a71b7f47a7d59d291ec175ae62c4.jpg"
+    ],
+    "photoUpdatedAt": "2026-08-18",
+    "cover": "images/大头/datou10.jpg"
   },
   {
-    name: '麻薯',
-    status: '已毕业',
-    friendliness: '亲人',
-    vaccine: '未接种（受伤期评估后未补种）',
-    sterilized: '已绝育（日期待补充）',
-    notes: '曾受伤，仍有猫传腹风险；领养时未补种疫苗。',
-    area: '海棠',
-    gender: '母',
-    images: ['images/麻薯/麻薯2.jpg', 'images/麻薯/麻薯1.jpg']
+    "name": "漂亮橘",
+    "status": "就读中",
+    "vaccine": "妙三多·一针 2026-05-10；二针 2026-05-31；三针 2026-06-28（紫薇京和）",
+    "sterilized": "已绝育（2023-10-01）",
+    "notes": "—",
+    "area": "丁香",
+    "gender": "公",
+    "images": [
+      "images/漂亮橘/漂亮橘5.jpg",
+      "images/漂亮橘/漂亮橘4.jpg",
+      "images/漂亮橘/漂亮橘3.jpg",
+      "images/漂亮橘/漂亮橘2.jpg",
+      "images/漂亮橘/漂亮橘1.jpg",
+      "images/漂亮橘/漂亮橘6.jpg",
+      "images/漂亮橘/漂亮橘7.jpg",
+      "images/漂亮橘/漂亮橘8.jpg",
+      "images/漂亮橘/漂亮橘9.jpg",
+      "images/漂亮橘/漂亮橘10.jpg",
+      "images/漂亮橘/漂亮橘11.jpg",
+      "images/漂亮橘/漂亮橘12.jpg",
+      "images/漂亮橘/漂亮橘13.jpg",
+      "images/漂亮橘/漂亮橘14.jpg",
+      "images/漂亮橘/漂亮橘15.jpg"
+    ],
+    "personality": [
+      "胆小怂包",
+      "喜欢贴贴",
+      "软萌好盘"
+    ],
+    "description": "温顺胆小 薛定谔的亲人\n毛色鲜艳的虎斑橘猫\n20年秋出生，胖琥一胎儿子 大头的好朋咪 小刀疤前夫\n因为小时候长相、毛色都非常漂亮得名\n喜欢被拍屁股（大家记得轻一点）\n时而亲人时而怂，命里无时莫强求",
+    "relationships": [],
+    "relationshipHints": [
+      {
+        "relatedCatName": "小刀",
+        "relation": null,
+        "relationCandidates": [
+          "好友",
+          "前夫",
+          "儿子"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "温顺胆小 薛定谔的亲人 毛色鲜艳的虎斑橘猫 20年秋出生，胖琥一胎儿子 大头的好朋咪 小刀疤前夫 因为小时候长相、毛色都非常漂亮得名 喜欢被拍屁股（大家记得轻一点） 时而亲人时而怂，命里无时莫强求"
+        ],
+        "source": "api-story-inference"
+      },
+      {
+        "relatedCatName": "大头",
+        "relation": null,
+        "relationCandidates": [
+          "好友",
+          "前夫",
+          "儿子"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "温顺胆小 薛定谔的亲人 毛色鲜艳的虎斑橘猫 20年秋出生，胖琥一胎儿子 大头的好朋咪 小刀疤前夫 因为小时候长相、毛色都非常漂亮得名 喜欢被拍屁股（大家记得轻一点） 时而亲人时而怂，命里无时莫强求"
+        ],
+        "source": "api-story-inference"
+      },
+      {
+        "relatedCatName": "胖琥",
+        "relation": null,
+        "relationCandidates": [
+          "好友",
+          "前夫",
+          "儿子"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "温顺胆小 薛定谔的亲人 毛色鲜艳的虎斑橘猫 20年秋出生，胖琥一胎儿子 大头的好朋咪 小刀疤前夫 因为小时候长相、毛色都非常漂亮得名 喜欢被拍屁股（大家记得轻一点） 时而亲人时而怂，命里无时莫强求"
+        ],
+        "source": "api-story-inference"
+      }
+    ],
+    "updates": [
+      {
+        "sourceId": "318322",
+        "date": "2026-01-21 17:53:26",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0121/17/ca7f8ff30-0ddf31f810777562d0da5cb4e9ad7342.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/17/ca7f8ff30-74cd49ba91a3ec3a221146fe4ba7cb15.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/17/ca7f8ff30-f4e5252c5a461893333c25908ed8c969.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/17/ca7f8ff30-a8dfb314742089894e106badc5b62c7d.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/17/ca7f8ff30-ae4f9b301d6e5bb44b01c3acd09db3f3.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/17/ca7f8ff30-4c53d4e111783aa7a9152c26ebe61e20.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-47035276bbdf52d3bb99e6d3fd0afadf.jpg"
+        ]
+      },
+      {
+        "sourceId": "318013",
+        "date": "2026-01-20 00:00:00",
+        "type": "cat-line",
+        "title": "Plj身价又又又增加之旅",
+        "content": "26年1月，有群友偶然发现plj精神不济，匍匐地面且流口水，带往医院检查。整体拍片显示除了胃袋太大并无异样，怀疑胃太大把腿压麻了（？）但随后的检查发现plj有轻微尿闭、轻微胆囊炎、肝脏水肿，且严重贫血，肾脏、肝脏都有不同程度的初步问题，且需要导尿，遂住院。\n次日plj已经恢复自主嘘嘘，出院后需要多给它喝水，吃湿粮🥺",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0923/09/e8b8cca1c-04b77bb7d8da588a54b32950bce778ca.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0120/14/e8b8cca1c-d3a5f090866f4157ac16a4b358ad71e3.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      },
+      {
+        "sourceId": "315701",
+        "date": "2026-01-11 08:59:19",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0111/08/bf2956d60-a8b39d1614605ac9f8914b1ef995547a.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314449",
+        "date": "2026-01-07 08:50:38",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0107/08/bf2956d60-a182f35e9a24702e9d433447d4f37572.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "313036",
+        "date": "2026-01-01 11:03:12",
+        "type": "article",
+        "title": "补充一波新收的好朋咪😽😽大p99",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-59a0f85e31c4a2aa87091550f756639d.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-90f1a684784177753b2641880191fb80.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-3dccf51a0076b6c96e1206eab0efee33.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-cf75b36b142e4fac9f813d7a584b3049.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-73ef00f875859f09aad97f5d1aaad943.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-35eb5c3255ae21204e146e780ddc3a2c.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-1dd2af08839a60926ed2484e53fadaa9.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-13cd403ea854efdbffb58605aba70952.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0911/17/88bf98842-df8d0fc61e93a7d1ac01a1e7466cfba7.jpg"
+        ]
+      },
+      {
+        "sourceId": "313035",
+        "date": "2026-01-01 11:01:23",
+        "type": "article",
+        "title": "阳光下火红的大虎斑",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-a297250e3d0a4fc69109c430605f4e71.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-18ad05bb8ee52905104acdd6169290a7.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-6cbe574c6d47f027a95dabe5ef965fc4.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-eae0999134b7efb5e346a3282ac4001a.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/11/88bf98842-89cc53f623a2c7a4f723e7d17f69c944.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0911/17/88bf98842-df8d0fc61e93a7d1ac01a1e7466cfba7.jpg"
+        ]
+      },
+      {
+        "sourceId": "313033",
+        "date": "2026-01-01 10:59:45",
+        "type": "article",
+        "title": "小plj时候",
+        "content": "因为长的太漂亮而得名的小朋友一枚🥰",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0101/10/88bf98842-959bd4280c4016ed7433fdf940986b65.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/10/88bf98842-2cf53209ac36f222e1d0fe485275d845.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/10/88bf98842-b81ec79863dbffd7e5ca80a8e0b390f6.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0101/10/88bf98842-59a9278520256e1a194e1289ae744223.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0911/17/88bf98842-df8d0fc61e93a7d1ac01a1e7466cfba7.jpg"
+        ]
+      },
+      {
+        "sourceId": "300557",
+        "date": "2025-12-03 20:52:19",
+        "type": "article",
+        "title": "白天睡觉没睡醒，夜晚会颜值回春",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1203/20/98d780637-7107006a659b6f95e59843ec3ffdf7eb.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1203/20/98d780637-7b4846c30222efb7ee71a2fb5e1bf95d.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1203/20/98d780637-5556f0885e29ddf79d41a0f212c84e62_s_mp4_poster.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_5.jpg"
+        ]
+      },
+      {
+        "sourceId": "268969",
+        "date": "2025-09-25 22:42:18",
+        "type": "article",
+        "title": "做一辈子的好朋咪！",
+        "content": "和我一起说：大p99",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0925/22/88bf98842-dbc7a958e0f9831c85ffdee66dc6d0d8.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0925/22/88bf98842-91f4ee7ebca09117c61a4e6520f0f776.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0925/22/88bf98842-ecd8938ce53c302474ba90b73fd01c8b.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0925/22/88bf98842-8f842f142caca52fbab0bf094dadc053.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0925/22/88bf98842-0a747bde8767848af6096c8d0e7ec658.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0911/17/88bf98842-df8d0fc61e93a7d1ac01a1e7466cfba7.jpg"
+        ]
+      },
+      {
+        "sourceId": "268970",
+        "date": "2025-09-25 22:38:58",
+        "type": "article",
+        "title": "Plj和小刀之女",
+        "content": "生了毛蓬蓬一只糊栗子，萌的很超过，可惜和妈妈一起失踪了。",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0925/22/88bf98842-c5297efc58b0e678bbba310d3589cba5.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0925/22/88bf98842-d32389655c83c0f2040ab81ffe46181e.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0925/22/88bf98842-d31453d1b4b090022ab1302567ffade2.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0925/22/88bf98842-b5e6f486f62bf8567a8af49f8056681b.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0911/17/88bf98842-df8d0fc61e93a7d1ac01a1e7466cfba7.jpg"
+        ]
+      },
+      {
+        "sourceId": "268225",
+        "date": "2025-09-23 09:27:46",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0923/09/e8b8cca1c-04b77bb7d8da588a54b32950bce778ca.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [
+      "plj"
+    ],
+    "sourceId": "45226",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0923/09/e8b8cca1c-04b77bb7d8da588a54b32950bce778ca.jpg"
+    ],
+    "photoUpdatedAt": "2026-08-19",
+    "cover": "images/漂亮橘/漂亮橘7.jpg"
   },
   {
-    name: '豆花',
-    status: '已毕业',
-    friendliness: '亲人',
-    vaccine: '品牌待追溯·一针 2026-04-29（紫薇京和）；二针待追溯；三针约 2026-05-24',
-    sterilized: '已绝育（日期待补充）',
-    notes: '三针医院或品牌待追溯',
-    area: '教学区',
-    gender: '母',
-    images: ['images/豆花/豆花2.jpg', 'images/豆花/豆花1.jpg']
+    "name": "奶酪",
+    "status": "喵星或失踪",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（2025-12-01）",
+    "notes": "待补充",
+    "area": "海棠",
+    "gender": "母",
+    "images": [
+      "images/奶酪/api-50641-1.jpg",
+      "images/奶酪/api-50641-2.jpg"
+    ],
+    "personality": [
+      "软萌好盘",
+      "撒娇求撸"
+    ],
+    "description": "奶多牛少，黄绿眼睛的小女孩，背上有两块黑色。以前常驻丁香快递站，因为有狗的原因，绝育后迁到海棠生活。性格非常好，温柔亲人。",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "318323",
+        "date": "2026-01-21 17:56:05",
+        "type": "article",
+        "title": "",
+        "content": "奶酪咪圆滚滚的",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0121/17/ca7f8ff30-0d4fdf38fc57f32ecd74003babfa2b31.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/17/ca7f8ff30-f21f4158d5601cc980874b8b29f7deff.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/17/ca7f8ff30-0ceab0c37ba02f72a87a9bf387e9faac.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/17/ca7f8ff30-95065b2649738b4b122e7f5baf115ddf.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/17/ca7f8ff30-48f9c97a022411c725b7957f1ed1425f.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/17/ca7f8ff30-a362377999bc7854ca66dfae493b5778.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/17/ca7f8ff30-40e23c46ba344063d30a3a0b5a9cff98.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-47035276bbdf52d3bb99e6d3fd0afadf.jpg"
+        ]
+      },
+      {
+        "sourceId": "315264",
+        "date": "2026-01-09 18:22:22",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0109/18/bf2956d60-8d5e496798bd6b09513c2f178c33036f.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "315263",
+        "date": "2026-01-09 18:22:04",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0109/18/bf2956d60-85155addb2f2addec7f55785b9e378e4.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0109/18/bf2956d60-4d3687435d73145b5aa27f4ddb0f3797.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0109/18/bf2956d60-e35ec7d125bc8d4ff835bb8e8360c502.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "315262",
+        "date": "2026-01-09 18:21:29",
+        "type": "article",
+        "title": "遭遇⭐骚扰",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0109/18/bf2956d60-4afaa60e416d612d112f75f0d2da3967.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0109/18/bf2956d60-4c575f57171c082d03df57523b7678bf.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0109/18/bf2956d60-b9b426e0312b0d9fc8adea36013b0018.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0109/18/bf2956d60-51ad277fb5fa354038e81b3246c6bbdd.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "315261",
+        "date": "2026-01-09 18:20:51",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0109/18/bf2956d60-a7fd27c11905567e82b2a6af91365fbf.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0109/18/bf2956d60-acd40f826b5f55e6d5f1ba66a5fc5263.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314456",
+        "date": "2026-01-07 09:28:46",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0107/09/bf2956d60-62730b45a01b5ecf6b00b7937f4dbeac.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314195",
+        "date": "2026-01-06 09:40:56",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0106/09/bf2956d60-4fc3929934b3e9aaee8538feda4c94fc.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314185",
+        "date": "2026-01-06 09:27:06",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0106/09/bf2956d60-fc9500db7ce1f12205c9c6cdda9470cf.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314184",
+        "date": "2026-01-06 09:26:49",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0106/09/bf2956d60-47a7cae71ad3d7dfaf40795abba5f151.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "313899",
+        "date": "2026-01-05 09:19:55",
+        "type": "article",
+        "title": "各睡各的",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0105/09/bf2956d60-2e38ded163ffd3141bcfd74e47d79003.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0105/09/bf2956d60-9298ee701cea038034a8b7ce8cc70ed7.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "312524",
+        "date": "2025-12-31 10:10:30",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1231/10/bf2956d60-feba6bd6908fb6974d1ae644e48e3b04.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "310584",
+        "date": "2025-12-26 22:29:08",
+        "type": "article",
+        "title": "猪儿虫",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1226/22/bf2956d60-343aafe98f39776faea73182bcb12e3b.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "310022",
+        "date": "2025-12-25 19:07:37",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1225/19/bf2956d60-d0fdcf46502a2ae95b92d7d58adc576d.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "309146",
+        "date": "2025-12-23 14:25:49",
+        "type": "article",
+        "title": "乖乖奶酪",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1223/14/bf2956d60-7a717b8465eaf1078249ce8cc7e64f96.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "309139",
+        "date": "2025-12-23 13:44:18",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1223/13/e8b8cca1c-0b11577d272cf19865d3fcc986da00a6.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "50641",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/1223/13/e8b8cca1c-0b11577d272cf19865d3fcc986da00a6.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/1223/13/e8b8cca1c-b1985ddf4920842491b387d9a1fa0803.jpg"
+    ]
   },
   {
-    name: '二头',
-    status: '已毕业',
-    friendliness: '亲人',
-    vaccine: '妙三多·一针 2025-07-27；二针 2025-09-06；三针 2025-09-27（紫薇京和）',
-    sterilized: '2023-03-02 已绝育',
-    notes: '2026-06-01 领养前体检总体健康，轻微膀胱炎。',
-    area: '丁香',
-    gender: '公',
-    images: ['images/二头/二头3.jpg', 'images/二头/二头2.jpg', 'images/二头/二头1.jpg']
+    "name": "喵勒特",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（2025-04-04）",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "公",
+    "images": [
+      "images/喵勒特/api-44676-1.jpg",
+      "images/喵勒特/api-44676-2.jpg"
+    ],
+    "personality": [
+      "该溜子",
+      "最爱逛"
+    ],
+    "description": "之前还有一只猫，刘海和胡子方向和它相反，名字叫喵特勒（已经因病去世），所以给他取名叫喵勒特，最爱逛街，满校园游荡，随机刷新。",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "318321",
+        "date": "2026-01-21 17:51:29",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0121/17/ca7f8ff30-75d592944bb5d90b16785f8e5cb4d4b2.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/17/ca7f8ff30-7ad54d3ea470d6f45ba01cbb89187469.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/17/ca7f8ff30-7f266cf4daa1aed6b805fe0b3bcd6c79.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/17/ca7f8ff30-d9cfae6682aab339eefe35a48bbc48f4.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/17/ca7f8ff30-7cf895f8cac02b4d41c44a353b463398.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/17/ca7f8ff30-84f58d55d8af36917a7e76480fd0361f.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-47035276bbdf52d3bb99e6d3fd0afadf.jpg"
+        ]
+      },
+      {
+        "sourceId": "318319",
+        "date": "2026-01-21 17:49:31",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0121/17/ca7f8ff30-762d59083601b3e1cd32e2aff944e56b.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/17/ca7f8ff30-fa18d4e1d2a3dfaca2f9b1b4abe9584c.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/17/ca7f8ff30-d5e42124eba8b5b920514afe66c08307.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/17/ca7f8ff30-a242fc3f8e7e1c491311ba85f2ad111f.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0121/18/ca7f8ff30-47035276bbdf52d3bb99e6d3fd0afadf.jpg"
+        ]
+      },
+      {
+        "sourceId": "318080",
+        "date": "2026-01-20 16:08:03",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0120/16/ae36516fc-55e2d4dab518ae2ad1897320ac633207.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0120/16/ae36516fc-3cd9bb04f5d6ec7112ee113b86724459.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_4.jpg"
+        ]
+      },
+      {
+        "sourceId": "316447",
+        "date": "2026-01-13 16:35:24",
+        "type": "article",
+        "title": "",
+        "content": "侧脸绝了",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0113/16/401f8ad48-3bae5075e2029ab37e226f060d08c388.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0113/16/401f8ad48-73a8c5725ef8f5f65de39da21e442746.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0113/16/401f8ad48-4a4cd5b896ee6d9c90e903aacdee9684.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0113/16/401f8ad48-d1994d4b11ff62a6f3ead1c9a1cf7972.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "315699",
+        "date": "2026-01-11 08:57:52",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0111/08/bf2956d60-ab745b6f35481238f5fdab8555ae370d.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "315698",
+        "date": "2026-01-11 08:57:36",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0111/08/bf2956d60-a8d73cedba939a899357577a409cb68a.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314722",
+        "date": "2026-01-08 08:22:20",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0108/08/bf2956d60-0cf29f970df68b123852386935276f53.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314721",
+        "date": "2026-01-08 08:21:54",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0108/08/bf2956d60-2ef5efe01ae28d85cfabc26749284635.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314720",
+        "date": "2026-01-08 08:21:01",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0108/08/bf2956d60-52a21ee4fe1535e089b6115c1dbb91d9.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314719",
+        "date": "2026-01-08 08:20:22",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0108/08/bf2956d60-e6ef83f08f85f41723a16f009b3dd9a1.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314718",
+        "date": "2026-01-08 08:19:59",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0108/08/bf2956d60-4f18f606e1f4995e547d61d528763489.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314452",
+        "date": "2026-01-07 08:52:14",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0107/08/bf2956d60-050061da9d3d8842493f61b28ef76664.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314447",
+        "date": "2026-01-07 08:46:26",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0107/08/bf2956d60-4a017428f350653892249f67d0f91dae.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314446",
+        "date": "2026-01-07 08:46:01",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0107/08/bf2956d60-35e41ed50a730129caac09fea6d56807.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314206",
+        "date": "2026-01-06 11:00:06",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0106/11/bf2956d60-b78eb31fc120a09107c846e0db193b42.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314190",
+        "date": "2026-01-06 09:38:55",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0106/09/bf2956d60-fa397f8c72fa42ee359d95748694600b.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "314189",
+        "date": "2026-01-06 09:38:36",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0106/09/bf2956d60-5547263f82c8d718274fb4c0fbe05c0f.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "313900",
+        "date": "2026-01-05 09:20:38",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0105/09/bf2956d60-98fb54cbd7480bf3b494076e6891c9a7.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0105/09/bf2956d60-4ce571c4630f1714f7f47c1b3f121dbe.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0105/09/bf2956d60-7c6322098ae096e2cebbf6ec88074ec1.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0105/09/bf2956d60-73ddb707aeedbdeaf198cba071dc57d6.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0105/09/bf2956d60-4c5f59e0b3df16b31d2375859fdc3176.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "312524",
+        "date": "2025-12-31 10:10:30",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1231/10/bf2956d60-feba6bd6908fb6974d1ae644e48e3b04.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "308070",
+        "date": "2025-12-21 10:23:27",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1221/10/bf2956d60-6353dd5a3070d3dda13584fbeb195cbb.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "306428",
+        "date": "2025-12-17 12:34:00",
+        "type": "article",
+        "title": "",
+        "content": "好兄弟一辈子",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1217/12/bf2956d60-a3d940dc8ba0adc531c692d40a0235b3.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "295627",
+        "date": "2025-11-25 13:56:16",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1125/13/3be638110-4bb6ccc5cdaaa7c4a9058135bcf7cb0f.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1125/13/3be638110-63b85e0b79abfe0b334588503159c53f.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1125/13/3be638110-fd833bb30040585673a9a24be393fe68.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1125/13/3be638110-0f7eef8dd288793c6d7bf4ac3b37c466.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1125/13/3be638110-98176bc6a5f47783a2ead957daadef49.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_6.jpg"
+        ]
+      },
+      {
+        "sourceId": "264923",
+        "date": "2025-09-11 17:46:03",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0911/17/e8b8cca1c-3c44c7b2c559e691e6668b685e966b9f.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "44676",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0911/17/e8b8cca1c-3c44c7b2c559e691e6668b685e966b9f.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-0e12c10dbe73876e8ff2af861ff7b0c1.jpg"
+    ]
   },
   {
-    name: '白介',
-    status: '已毕业',
-    friendliness: '亲人',
-    vaccine: '品牌待追溯·一针待追溯；二针待追溯；三针窗口 5.26~6.2（紫薇京和）',
-    sterilized: '已绝育（日期待补充）',
-    notes: '预计 2026-06-15 领养',
-    area: '海棠',
-    gender: '公',
-    images: ['images/白介/白介2.jpg', 'images/白介/白介1.jpg']
+    "name": "袜袜",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "未绝育",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "公",
+    "images": [
+      "images/袜袜/api-45276-1.jpg"
+    ],
+    "personality": [
+      "软萌好盘",
+      "见人就蹭",
+      "喜欢贴贴"
+    ],
+    "description": "2026.1更新：这个冬天袜袜已经找到了温暖的家，更名为默默，开启荣华富贵十五年咪生\n麻薯的孩子，大耳朵豆豆眉小黑猫。因为一只脚沾满沥青且受伤，医生说今后可能会不长毛（后来长出来了），冬天要穿袜子而得名。",
+    "relationships": [],
+    "relationshipHints": [
+      {
+        "relatedCatName": "麻薯",
+        "relation": null,
+        "relationCandidates": [
+          "孩子"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "2026.1更新：这个冬天袜袜已经找到了温暖的家，更名为默默，开启荣华富贵十五年咪生 麻薯的孩子，大耳朵豆豆眉小黑猫。因为一只脚沾满沥青且受伤，医生说今后可能会不长毛（后来长出来了），冬天要穿袜子而得名。"
+        ],
+        "source": "api-story-inference"
+      },
+      {
+        "relatedCatName": "黑小虎",
+        "relation": null,
+        "relationCandidates": [
+          "孩子"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "2026.1更新：这个冬天袜袜已经找到了温暖的家，更名为默默，开启荣华富贵十五年咪生 麻薯的孩子，大耳朵豆豆眉小黑猫。因为一只脚沾满沥青且受伤，医生说今后可能会不长毛（后来长出来了），冬天要穿袜子而得名。"
+        ],
+        "source": "api-story-inference"
+      }
+    ],
+    "updates": [
+      {
+        "sourceId": "313676",
+        "date": "2026-01-04 11:43:09",
+        "type": "article",
+        "title": "散伙饭",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0104/11/bf2956d60-91e98ea39012a210c549f9d5322d3f0a.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "313213",
+        "date": "2026-01-02 09:58:25",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0102/09/bf2956d60-46ecc23715cc0789d5383d847072ea66.jpg",
+          "https://static.nordri.co/rms/public/193079755/2026/0102/09/bf2956d60-213a1efcad42ff3ef08f7e996530f992.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "313049",
+        "date": "2026-01-01 12:14:52",
+        "type": "article",
+        "title": "雪后撒欢",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2026/0101/12/bf2956d60-6ca086cdf8086735109fa88c405da7b6_s_mp4_poster.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "311303",
+        "date": "2025-12-28 18:48:55",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1228/18/bf2956d60-7d0176d7bbf6405c2c2f0c79a3bee664_s_mp4_poster.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "310613",
+        "date": "2025-12-27 00:16:34",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1227/00/bf2956d60-9ec550fa5b4024a94dd008e2feee7e89.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "309043",
+        "date": "2025-12-23 08:26:51",
+        "type": "article",
+        "title": "魔丸变灵珠",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1223/08/bf2956d60-d528bf6578bf7a5e6623d980b99e1435.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "308779",
+        "date": "2025-12-22 19:11:00",
+        "type": "article",
+        "title": "参见灰太狼大王",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1222/19/bf2956d60-fc9e4b9712dffbab57420f2c1f0601f2.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "274997",
+        "date": "2025-10-15 08:10:14",
+        "type": "article",
+        "title": "",
+        "content": "袜袜舌头也太可爱了吧",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1015/08/bf2956d60-c45ba8635d93c8e713b0d6bdaf3e543f.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1015/08/bf2956d60-09dd9b454e05a9a2c47500bb437c0fec.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "273029",
+        "date": "2025-10-10 17:09:41",
+        "type": "article",
+        "title": "",
+        "content": "10.7号被袜袜尿了一身🌝🌝🌝",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1010/17/bf2956d60-5574d7c64c28af1983088f6b53ba2ccd.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1010/17/bf2956d60-df758c064f6f4de22911c38c8bdbb7a5.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "269242",
+        "date": "2025-09-26 20:55:41",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0926/20/b9a1e6dab-5e3aef361cee699c621a9299efb2b6b2.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_5.jpg"
+        ]
+      },
+      {
+        "sourceId": "268467",
+        "date": "2025-09-24 08:55:45",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/08/e8b8cca1c-369e971e020b2ed1b807395960163de3.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45276",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/1022/01/e8b8cca1c-87ab3a6b56a424436ef23b9e431d3edd.jpg"
+    ]
   },
   {
-    name: '小花',
-    status: '已毕业',
-    friendliness: '亲人',
-    vaccine: '妙三多·三针已完成（具体日期待追溯）',
-    sterilized: '已绝育（日期待补充）',
-    notes: '预计 2026-06，具体日期待补充',
-    area: '海棠',
-    gender: '母',
-    images: ['images/小花/小花4.jpg', 'images/小花/小花3.jpg', 'images/小花/小花2.jpg', 'images/小花/小花1.jpg']
+    "name": "粤利粤",
+    "status": "喵星或失踪",
+    "vaccine": "待补充",
+    "sterilized": "待补充",
+    "notes": "待补充",
+    "area": "海棠",
+    "gender": "母",
+    "images": [
+      "images/粤利粤/api-49490-1.jpg"
+    ],
+    "personality": [
+      "生人勿近",
+      "胆小怂包"
+    ],
+    "description": "海棠五号楼蹭饭的奶牛\n后失踪",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "300587",
+        "date": "2025-12-03 22:20:39",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1203/22/e8b8cca1c-f8c7bc99279742dd38700a87d95c46ab.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "49490",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/1203/22/e8b8cca1c-f8c7bc99279742dd38700a87d95c46ab.jpg"
+    ]
   },
   {
-    name: '大头',
-    photoUpdatedAt: '2026-08-18',
-    status: '就读中',
-    friendliness: '亲人',
-    vaccine: '妙三多·一针 2025-07-27；二针 2025-09-09；三针 2025-10-07（紫薇京和）',
-    sterilized: '已绝育（日期待补充）',
-    notes: '—',
-    area: '丁香',
-    gender: '公',
-    cover: 'images/大头/datou10.jpg',
-    images: ['images/大头/datou11.jpg', 'images/大头/datou10.jpg', 'images/大头/datou9.jpg', 'images/大头/datou8.jpg', 'images/大头/datou7.jpg', 'images/大头/datou6.jpg', 'images/大头/datou5.jpg', 'images/大头/datou4.jpg', 'images/大头/datou1.jpg', 'images/大头/datou2.jpg', 'images/大头/datou3.jpg', 'images/大头/大头12.jpg', 'images/大头/大头13.jpg', 'images/大头/大头14.jpg', 'images/大头/大头15.jpg', 'images/大头/大头16.jpg', 'images/大头/大头17.jpg', 'images/大头/大头18.jpg', 'images/大头/大头19.jpg', 'images/大头/大头20.jpg']
+    "name": "奶泡",
+    "status": "喵星或失踪",
+    "vaccine": "待补充",
+    "sterilized": "未绝育",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "母",
+    "images": [
+      "images/奶泡/api-49489-1.jpg"
+    ],
+    "personality": [
+      "胆小怂包",
+      "是个话痨"
+    ],
+    "description": "综合楼受伤的小三花\n饿的只有皮包骨，后腿被咬大洞感染\n大家全力救治，最终多器官衰竭去世",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "300584",
+        "date": "2025-12-03 22:17:46",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1203/22/e8b8cca1c-2bc48a8f018fa3d3029bd696d5977c71.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "49489",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/1203/22/e8b8cca1c-2bc48a8f018fa3d3029bd696d5977c71.jpg"
+    ]
   },
   {
-    name: '漂亮橘',
-    photoUpdatedAt: '2026-08-19',
-    status: '就读中',
-    friendliness: '亲人',
-    vaccine: '妙三多·一针 2026-05-10；二针 2026-05-31；三针 2026-06-28（紫薇京和）',
-    sterilized: '已绝育（日期待补充）',
-    notes: '—',
-    area: '丁香',
-    gender: '公',
-    cover: 'images/漂亮橘/漂亮橘7.jpg',
-    images: ['images/漂亮橘/漂亮橘5.jpg', 'images/漂亮橘/漂亮橘4.jpg', 'images/漂亮橘/漂亮橘3.jpg', 'images/漂亮橘/漂亮橘2.jpg', 'images/漂亮橘/漂亮橘1.jpg', 'images/漂亮橘/漂亮橘6.jpg', 'images/漂亮橘/漂亮橘7.jpg', 'images/漂亮橘/漂亮橘8.jpg', 'images/漂亮橘/漂亮橘9.jpg', 'images/漂亮橘/漂亮橘10.jpg', 'images/漂亮橘/漂亮橘11.jpg', 'images/漂亮橘/漂亮橘12.jpg', 'images/漂亮橘/漂亮橘13.jpg', 'images/漂亮橘/漂亮橘14.jpg', 'images/漂亮橘/漂亮橘15.jpg']
+    "name": "暹罗",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（日期待补充）",
+    "notes": "待补充",
+    "area": "海棠",
+    "gender": "公",
+    "images": [
+      "images/暹罗/api-49486-1.jpg",
+      "images/暹罗/api-49486-2.jpg"
+    ],
+    "personality": [
+      "胆小怂包",
+      "喵拳攻击"
+    ],
+    "description": "从海棠五号楼附近流浪出来的大猫\n亲人但是害怕其他猫咪\n已被西电毕业学姐领养\n（仙电猫猫守护现已不接受任何形式的弃养猫，发现即带离校园）",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "300580",
+        "date": "2025-12-03 22:07:21",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1203/22/e8b8cca1c-416f2b83609a19b5b294e73e07544eac.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "49486",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/1203/22/e8b8cca1c-416f2b83609a19b5b294e73e07544eac.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/1203/22/e8b8cca1c-7e590058326670a6b8f215eb53412de2.jpg"
+    ]
   },
   {
-    name: '橙留香',
-    status: '已毕业',
-    friendliness: '亲人',
-    vaccine: '喵倍护·三针已完成（具体日期待追溯）',
-    sterilized: '已绝育（日期待补充）',
-    notes: '预计领养，具体日期待补充',
-    area: '海棠',
-    gender: '公',
-    images: ['images/橙留香/橙留香3.jpg', 'images/橙留香/橙留香2.jpg', 'images/橙留香/橙留香1.jpg']
+    "name": "大倒霉蛋",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（日期待补充）",
+    "notes": "待补充",
+    "area": "海棠",
+    "gender": "母",
+    "images": [
+      "images/大倒霉蛋/api-49485-1.jpg",
+      "images/大倒霉蛋/api-49485-2.jpg"
+    ],
+    "personality": [
+      "喜欢贴贴",
+      "软萌好盘"
+    ],
+    "description": "暑假在海棠遗弃的小猫，和哥哥朱迪一起\n有点呆呆傻傻\n已经被西安校友领养走啦\n（仙电猫猫守护现已不接受任何形式的弃养猫，发现即带离校园）",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "300579",
+        "date": "2025-12-03 22:02:08",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1203/22/e8b8cca1c-f1c3ace42eb67c5db60e4594e8e883a8.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "49485",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/1203/22/e8b8cca1c-f1c3ace42eb67c5db60e4594e8e883a8.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/1203/22/e8b8cca1c-d84eb2b42da398ab6623e88eac8ca544.jpg"
+    ]
   },
   {
-    name: '裤裤',
-    status: '已毕业',
-    friendliness: '亲人',
-    vaccine: '喵倍护·三针已完成（具体日期待追溯）',
-    sterilized: '已绝育（日期待补充）',
-    notes: '预计领养，具体日期待补充',
-    area: '海棠',
-    gender: '母',
-    images: ['images/裤裤/裤裤3.jpg', 'images/裤裤/裤裤2.jpg', 'images/裤裤/裤裤1.jpg']
+    "name": "胆小橘",
+    "status": "喵星或失踪",
+    "vaccine": "待补充",
+    "sterilized": "未绝育",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "公",
+    "images": [
+      "images/胆小橘/api-49484-1.jpg",
+      "images/胆小橘/api-49484-2.jpg"
+    ],
+    "personality": [
+      "生人勿近"
+    ],
+    "description": "胖琥的第一胎，漂亮橘的孪生兄弟，胆小怕人。发生过“迎男而上”的行为——骑plj。22年腿上受伤，由于不让人接近故无法医治，伤情恶化后失踪。",
+    "relationships": [],
+    "relationshipHints": [
+      {
+        "relatedCatName": "漂亮橘",
+        "relation": null,
+        "relationCandidates": [
+          "兄弟"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "胖琥的第一胎，漂亮橘的孪生兄弟，胆小怕人。发生过“迎男而上”的行为——骑plj。22年腿上受伤，由于不让人接近故无法医治，伤情恶化后失踪。"
+        ],
+        "source": "api-story-inference"
+      },
+      {
+        "relatedCatName": "胖琥",
+        "relation": null,
+        "relationCandidates": [
+          "兄弟"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "胖琥的第一胎，漂亮橘的孪生兄弟，胆小怕人。发生过“迎男而上”的行为——骑plj。22年腿上受伤，由于不让人接近故无法医治，伤情恶化后失踪。"
+        ],
+        "source": "api-story-inference"
+      }
+    ],
+    "updates": [
+      {
+        "sourceId": "300574",
+        "date": "2025-12-03 21:58:24",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-698edb7f2d4a29f0d35d1050cab7d646.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "49484",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-698edb7f2d4a29f0d35d1050cab7d646.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-45c3b85a1f1fea1bb11b3d49e930e1a5.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-a2cdcdd84e2b4ddb9dc31740c6c3b41a.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-ca92676d29a792e84c5cc18518bb6a4a.jpg"
+    ]
   },
   {
-    name: '深情哥',
-    status: '已毕业',
-    friendliness: '亲人',
-    vaccine: '喵倍护·三针已完成（具体日期待追溯）；加强针 2026-05-11',
-    sterilized: '已绝育（日期待补充）',
-    notes: '预计领养，具体日期待补充',
-    area: '海棠',
-    gender: '公',
-    images: ['images/深情哥/深情哥2.jpg', 'images/深情哥/深情哥1.jpg']
+    "name": "啃啃",
+    "status": "喵星或失踪",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（日期待补充）",
+    "notes": "待补充",
+    "area": "丁香",
+    "gender": "公",
+    "images": [
+      "images/啃啃/api-49483-1.jpg",
+      "images/啃啃/api-49483-2.jpg"
+    ],
+    "personality": [
+      "撒娇求撸",
+      "碰瓷讨粮",
+      "校园暖男"
+    ],
+    "description": "常驻丁香15，接受女生摸，男生摸它就跳起来打。22年在逐日工程被发现尸体",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "300573",
+        "date": "2025-12-03 21:53:35",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-9d26ba81b2282991495bde27201081c7.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "49483",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-9d26ba81b2282991495bde27201081c7.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-7c3f91469b7bdba701590b668156de8c.jpg"
+    ]
   },
   {
-    name: '咖啡',
-    status: '喵星或失踪',
-    friendliness: '亲人',
-    vaccine: '—',
-    sterilized: '已绝育（日期待补充）',
-    notes: '约 2026-04-30 因猫瘟去世，具体日期待补充。',
-    area: '丁香',
-    gender: '公',
-    images: ['images/咖啡/咖啡1.jpg', 'images/咖啡/咖啡2.jpg']
+    "name": "emo",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "未绝育",
+    "notes": "待补充",
+    "area": "丁香",
+    "gender": "公",
+    "images": [
+      "images/emo/api-49482-1.jpg",
+      "images/emo/api-49482-2.jpg"
+    ],
+    "personality": [
+      "喜欢贴贴",
+      "聪明机灵"
+    ],
+    "description": "猫群里的“理不直气也壮.jpg”表情包~22年突然出现在丁香15，有两双大长腿，苗条机灵，隐睾，22年被领养。",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "300570",
+        "date": "2025-12-03 21:50:55",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-d9ed38185da7ea3e664b523d2382ed45.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "49482",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-d9ed38185da7ea3e664b523d2382ed45.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-a1f904a9cf62d2292eac8071dfe1f0d2.jpg"
+    ]
   },
   {
-    name: '胆小橘',
-    status: '就读中',
-    friendliness: '怕人',
-    vaccine: '未接种',
-    sterilized: '2026-07-04 已绝育',
-    notes: '橘白双色，怕人，已绝育但疫苗未接种。',
-    area: '丁香',
-    gender: '公',
-    images: ['images/胆小橘/胆小橘1.jpg']
+    "name": "三花",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（日期待补充）",
+    "notes": "待补充",
+    "area": "丁香",
+    "gender": "母",
+    "images": [
+      "images/三花/api-49481-1.jpg",
+      "images/三花/api-49481-2.jpg"
+    ],
+    "personality": [
+      "聪明机灵",
+      "软萌好盘"
+    ],
+    "description": "丁香大姐头，和plj、加白是同时期小猫，温柔聪明，22年被毕业学姐领养（和太子）。",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "300568",
+        "date": "2025-12-03 21:46:42",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-f242bb3f00b4d14e2303c77f8385bf3b.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "49481",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-f242bb3f00b4d14e2303c77f8385bf3b.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-d05cc4552bc47d1f805b1a1a0c33cf67.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-399417cd3276735e9f922ab357ac1bdd.jpg"
+    ]
   },
   {
-    name: '金琥',
-    status: '就读中',
-    friendliness: '怕人',
-    vaccine: '未接种',
-    sterilized: '2026-06-28 已绝育',
-    notes: '纯白短毛，怕人，已绝育但疫苗未接种。',
-    area: '竹园',
-    gender: '公',
-    images: ['images/金琥/金琥2.jpg', 'images/金琥/金琥1.jpg', 'images/金琥/金琥3.jpg']
+    "name": "加白",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（日期待补充）",
+    "notes": "待补充",
+    "area": "丁香",
+    "gender": "公",
+    "images": [
+      "images/加白/api-45284-1.jpg",
+      "images/加白/api-45284-2.jpg"
+    ],
+    "personality": [
+      "软萌好盘",
+      "见人就蹭",
+      "撒娇求撸"
+    ],
+    "description": "特别粘人的焦黄嘴，和plj关系不错，最喜欢躺在丁香14后院井盖。2023.7已被@加白狗狗猫（b站同名）毕业自提，开启幸福喵生~",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "300560",
+        "date": "2025-12-03 20:57:44",
+        "type": "article",
+        "title": "加白已经变网红啦（小红书ID加白呱呱咪）",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1203/20/98d780637-fbd67898860c2bdfc6f9ba18cd6f1f42.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1203/20/98d780637-45f6afbd50ad43d60826a72e0130aa98.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1203/20/98d780637-da85c4fa19574d4b6397700a657dfa28.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_5.jpg"
+        ]
+      },
+      {
+        "sourceId": "268493",
+        "date": "2025-09-24 10:22:18",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/10/e8b8cca1c-b8e7e643d0c33d06f4a414fcda4fcef2.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45284",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/10/e8b8cca1c-b8e7e643d0c33d06f4a414fcda4fcef2.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0924/10/e8b8cca1c-4e36c8a175c4b63e7e4924026c2215c1.jpg"
+    ]
   },
   {
-    name: '邪恶奶牛',
-    status: '就读中',
-    friendliness: '非常怕人',
-    vaccine: '未接种',
-    sterilized: '未绝育',
-    notes: '—',
-    area: '丁香',
-    gender: '公',
-    images: ['images/邪恶奶牛/邪恶奶牛1.jpg', 'images/邪恶奶牛/邪恶奶牛2.jpg', 'images/邪恶奶牛/邪恶奶牛3.jpg']
+    "name": "胖琥",
+    "status": "喵星或失踪",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（日期待补充）",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "母",
+    "images": [
+      "images/胖琥/api-45280-1.jpg",
+      "images/胖琥/api-45280-2.jpg"
+    ],
+    "personality": [
+      "软萌好盘",
+      "喜欢贴贴",
+      "泡图书馆"
+    ],
+    "description": "阴阳圆脸玳瑁，胖乎乎很松软，手感特别好，非常慈祥且稳重的lady咪，对人类很包容。曾经在图书馆抚养长大了两批孩子，绝育后在逐日工程和二头过上了一段姐弟和睦的时光。2024年五月失踪。",
+    "relationships": [],
+    "relationshipHints": [
+      {
+        "relatedCatName": "二头",
+        "relation": null,
+        "relationCandidates": [
+          "孩子"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "阴阳圆脸玳瑁，胖乎乎很松软，手感特别好，非常慈祥且稳重的lady咪，对人类很包容。曾经在图书馆抚养长大了两批孩子，绝育后在逐日工程和二头过上了一段姐弟和睦的时光。2024年五月失踪。"
+        ],
+        "source": "api-story-inference"
+      }
+    ],
+    "updates": [
+      {
+        "sourceId": "300561",
+        "date": "2025-12-03 21:02:18",
+        "type": "article",
+        "title": "",
+        "content": "推测应该是2020年出生，2020年八月怀的plj",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1203/21/98d780637-227ffc84ff7a1612734bf73ccf04336f.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_5.jpg"
+        ]
+      },
+      {
+        "sourceId": "268472",
+        "date": "2025-09-24 09:22:46",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/09/e8b8cca1c-2166815eb8de3e164a3d3f19e5d981d3.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [
+      "琥珀"
+    ],
+    "sourceId": "45280",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/09/e8b8cca1c-2166815eb8de3e164a3d3f19e5d981d3.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0924/09/e8b8cca1c-14328f7db77dabd2476d59bb538df23a.jpg"
+    ]
+  },
+  {
+    "name": "黑姐",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（2024-12-01）",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "母",
+    "images": [
+      "images/黑姐/api-44875-1.jpg"
+    ],
+    "personality": [
+      "见人就蹭",
+      "撒娇求撸",
+      "喜欢贴贴"
+    ],
+    "description": "*26.3更新：黑姐已经在家属区有了一个温暖的家，过上了每天吸人的快乐生活🥰\n24年9月出现时是半大小猫\n虽然叫黑姐但实则笨蛋甜妹\n长的秀气瘦小其实相当能吃\n人瘾很大的e猫，喜欢顶手，看到航空箱和诱捕笼会高高兴兴的自己进去",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "300563",
+        "date": "2025-12-03 21:07:25",
+        "type": "article",
+        "title": "香香软软的小猫，蹭人的劲很大",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1203/21/98d780637-b89c9986b214e8c4866168f46b41d445.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_5.jpg"
+        ]
+      },
+      {
+        "sourceId": "269212",
+        "date": "2025-09-26 19:52:19",
+        "type": "article",
+        "title": "",
+        "content": "黑姐打疫苗的珍贵影像（混入一只大面包?）",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0926/19/de82b2c85-d5934f27f59e618677e2e3cb0aedaca9.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/19/de82b2c85-6a100f46f2ca264f7ca91d7d7a4ca69b.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/19/de82b2c85-dc40ef88aafc4ab1c2745bf8e75d9ec9.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/19/de82b2c85-d872d2e8e6119d05b92a9bc927d5d7af.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_4.jpg"
+        ]
+      },
+      {
+        "sourceId": "266047",
+        "date": "2025-09-15 12:40:17",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0915/12/e8b8cca1c-0eee012bd988a11e395858427b12797e.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "44875",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0915/12/e8b8cca1c-0eee012bd988a11e395858427b12797e.jpg"
+    ]
+  },
+  {
+    "name": "小满",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "未绝育",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "母",
+    "images": [
+      "images/小满/api-49178-1.jpg",
+      "images/小满/api-49178-2.jpg"
+    ],
+    "personality": [
+      "泡图书馆",
+      "软萌好盘",
+      "见人就蹭"
+    ],
+    "description": "2026.01已经被校友领养，更名为福福，荣华富贵十五年啦~\n10.29初次出现于图书馆时，约为3-5月龄幼猫。黄眼玳瑁，黑脸黄下巴，鼻梁有一道月牙高光，性格亲人亲猫，活泼开朗，顺利分享了毛橘子的领地，接棒胖琥和毛柿子（糕糕，已领养），成为图书馆新一代小玳瑁。",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "297850",
+        "date": "2025-11-29 11:20:05",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1129/11/e8b8cca1c-b7e7ca4a7e968f3542f7d65dca826915.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "49178",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/1129/11/e8b8cca1c-b7e7ca4a7e968f3542f7d65dca826915.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/1129/11/e8b8cca1c-df5cefe5f5335ae3d23eb27d6b69a321.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/1129/11/e8b8cca1c-648230a93063c146ecb6873fa61b9c63.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-830fd0376a32957cee5de280f7be42d3.jpg"
+    ]
+  },
+  {
+    "name": "奶霜",
+    "status": "就读中",
+    "vaccine": "一针 2026-04-29；二针 2026-07-01（紫薇京和）；三针未接种",
+    "sterilized": "已绝育（2025-11-01）",
+    "notes": "原第二针窗口 5.20~5.27；因抓不到暂未接种，抓到后咨询医生补种方案。",
+    "area": "竹园",
+    "gender": "公",
+    "images": [
+      "images/奶霜/奶霜1.jpg"
+    ],
+    "personality": [
+      "胆小怂包",
+      "生人勿近"
+    ],
+    "description": "黄眼睛白面馒头一只，焦糖的儿子，银杏的兄弟，2025年春天出生，2025年11月绝育",
+    "relationships": [],
+    "relationshipHints": [
+      {
+        "relatedCatName": "银杏",
+        "relation": null,
+        "relationCandidates": [
+          "兄弟",
+          "儿子"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "黄眼睛白面馒头一只，焦糖的儿子，银杏的兄弟，2025年春天出生，2025年11月绝育"
+        ],
+        "source": "api-story-inference"
+      }
+    ],
+    "updates": [
+      {
+        "sourceId": "297206",
+        "date": "2025-11-28 11:29:57",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1128/11/e8b8cca1c-ddd97a1c409c98ffef51c6fe54de447a.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "49146",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/1128/11/e8b8cca1c-ddd97a1c409c98ffef51c6fe54de447a.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/1128/11/e8b8cca1c-a27672ea63fb03fbc8ed381bfb2e267b.jpg"
+    ]
+  },
+  {
+    "name": "银杏",
+    "status": "就读中",
+    "vaccine": "一针 2025-11-30；二针未接种；三针未接种",
+    "sterilized": "已绝育（2025-11-28）",
+    "notes": "第二/三针认捐人：毛橘妈",
+    "area": "竹园",
+    "gender": "母",
+    "images": [
+      "images/银杏/银杏1.jpg",
+      "images/银杏/银杏2.jpg",
+      "images/银杏/银杏3.jpg",
+      "images/银杏/银杏4.jpg",
+      "images/银杏/银杏5.jpg"
+    ],
+    "personality": [
+      "胆小怂包",
+      "生人勿近"
+    ],
+    "description": "焦糖的女儿，奶霜的姐妹，亮橙色眼睛的纯橘，微亲人，偶尔可摸。2025年春天生于竹园，2025年11月绝育",
+    "relationships": [],
+    "relationshipHints": [
+      {
+        "relatedCatName": "奶霜",
+        "relation": null,
+        "relationCandidates": [
+          "姐妹",
+          "女儿"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "焦糖的女儿，奶霜的姐妹，亮橙色眼睛的纯橘，微亲人，偶尔可摸。2025年春天生于竹园，2025年11月绝育"
+        ],
+        "source": "api-story-inference"
+      }
+    ],
+    "updates": [
+      {
+        "sourceId": "297205",
+        "date": "2025-11-28 11:27:43",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1128/11/e8b8cca1c-e3e29e679c23c01f465ab15621d94781.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "49145",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/1128/11/e8b8cca1c-e3e29e679c23c01f465ab15621d94781.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/1128/11/e8b8cca1c-2e2bd3f3723d8fc9395cc173c04b4a8c.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/1128/11/e8b8cca1c-ad657b2764509807acfa5badcf2cd30c.jpg"
+    ]
+  },
+  {
+    "name": "赫兹",
+    "status": "就读中",
+    "vaccine": "未接种",
+    "sterilized": "已绝育（日期待补充）",
+    "notes": "曾用名「渣男」；2026-05-31 诊断牙龈炎，治疗中。疫苗需等病后评估。",
+    "area": "丁香",
+    "gender": "公",
+    "images": [
+      "images/赫兹/赫兹3.jpg",
+      "images/赫兹/赫兹2.jpg",
+      "images/赫兹/赫兹1.jpg",
+      "images/赫兹/赫兹4.jpg",
+      "images/赫兹/赫兹5.jpg",
+      "images/赫兹/赫兹6.jpg",
+      "images/赫兹/赫兹7.jpg",
+      "images/赫兹/赫兹8.jpg",
+      "images/赫兹/赫兹9.jpg",
+      "images/赫兹/赫兹10.jpg"
+    ],
+    "personality": [
+      "胆小怂包",
+      "是个话痨"
+    ],
+    "description": "因为据说在家属区打老婆孩子而得名\n后流浪到丁香宿舍区，和其他猫没有成为朋友，经常在宿舍走廊游荡（见到请带离宿舍楼）\n长脸瘦狸白，性格有点胆小，但并不凶悍\n疑似有口炎等多种大小病，吃饭的时候会发出怪叫，但拒绝吃药\n2025年抓去医院绝育，被医生发现已经绝育过了",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "291601",
+        "date": "2025-11-16 08:36:06",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1116/08/e8b8cca1c-155f05688a6a6b5fe6abbe177b2e2340.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [
+      "渣男"
+    ],
+    "sourceId": "48407",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/1116/08/e8b8cca1c-155f05688a6a6b5fe6abbe177b2e2340.jpg"
+    ],
+    "photoUpdatedAt": "2026-08-18"
+  },
+  {
+    "name": "白介",
+    "status": "已毕业",
+    "vaccine": "品牌待追溯·一针待追溯；二针待追溯；三针窗口 5.26~6.2（紫薇京和）",
+    "sterilized": "已绝育（2024-06-01）",
+    "notes": "预计 2026-06-15 领养",
+    "area": "海棠",
+    "gender": "公",
+    "images": [
+      "images/白介/白介2.jpg",
+      "images/白介/白介1.jpg"
+    ],
+    "personality": [
+      "见人就蹭",
+      "撒娇求撸",
+      "喜欢贴贴"
+    ],
+    "description": "26.6编：白介已经被毕业生自提，可以一直窝在这几年最熟悉的怀抱中啦。领养人叫它香蕉，祝贺这个香蕉宝宝。\n24年三月出现时是半大小猫\n因为发情后骚扰公猫搞男铜而送去绝育\n小时候亲人活泼给撸给抱，猫德充沛\n现在顺利长成了懒洋洋的黄斑大白猪\n胆子很大的自信宝宝，曾探索宿舍楼、上课的教室、女厕所等地",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "278922",
+        "date": "2025-10-22 13:48:13",
+        "type": "article",
+        "title": "",
+        "content": "可爱的白介宝宝",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1022/13/401f8ad48-09e8154633fbd8222610c9ef2978821d.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1022/13/401f8ad48-3079c9e5e7798af2f773f727e7d24b74.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1022/13/401f8ad48-b1af3dd573971fc4e1d2ee3406e590e8.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "269645",
+        "date": "2025-09-28 08:25:25",
+        "type": "article",
+        "title": "白介可爱可爱呦~",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0928/08/2d166bbf8-707c5fe7e2b382278f15f11e714ba423.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0928/08/2d166bbf8-eacb20896afccdcee4a14ecd05e02ec8.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0928/08/2d166bbf8-1b25e94cb8485b51645270962a1581a9.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0928/08/2d166bbf8-2541ba54e2c6caeecccd0c800065b911.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0928/08/2d166bbf8-1e9b422d731c88021f3162a592ca1895.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_4.jpg"
+        ]
+      },
+      {
+        "sourceId": "269546",
+        "date": "2025-09-27 21:49:14",
+        "type": "article",
+        "title": "",
+        "content": "下课路上碰到白介宝宝～",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0927/21/b264cef3a-dfc2dc0385b6c27af0816e3b98722467.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0927/21/b264cef3a-4e11ff5e48fd3ca7c7116506e07efa08.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0927/21/b264cef3a-42d3c20537358fc25723bcb785cc5a33.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0927/21/b264cef3a-4c1a94902ac8b3e5e81c5be92bd712b5.jpg"
+        ]
+      },
+      {
+        "sourceId": "268558",
+        "date": "2025-09-24 14:30:00",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/14/e8b8cca1c-9d077037591fa00995d96ab01dc173c8.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [
+      "香蕉"
+    ],
+    "sourceId": "45309",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/14/e8b8cca1c-9d077037591fa00995d96ab01dc173c8.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0924/14/e8b8cca1c-3a5fa2d47e505614b583f7245c30c34a.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-c8050f1d7894698b4cf5f40491b6a66f.jpg"
+    ]
+  },
+  {
+    "name": "深情哥",
+    "status": "已毕业",
+    "vaccine": "喵倍护·三针已完成（具体日期待追溯）；加强针 2026-05-11",
+    "sterilized": "已绝育（日期待补充）",
+    "notes": "预计领养，具体日期待补充",
+    "area": "海棠",
+    "gender": "公",
+    "images": [
+      "images/深情哥/深情哥2.jpg",
+      "images/深情哥/深情哥1.jpg"
+    ],
+    "personality": [
+      "聪明机灵",
+      "校园暖男",
+      "生人勿近"
+    ],
+    "description": "绝育前是奶茶的追求者而得名\n熟睡时可以随意摸的大黑团子\n警惕的黑咪，害怕大动静，俯冲可能会吓到他\n爱玩逗猫棒，弹跳力惊人\n",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "274118",
+        "date": "2025-10-13 15:07:25",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1013/15/41f79c8d0-47d09d40f4f33e994eeba4ff423f1a13.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1013/15/41f79c8d0-126fbe67e988552e4559c3db1a57cfd1.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1013/15/41f79c8d0-1eacb224bca607ae6f38655b067503d4.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1013/15/41f79c8d0-22c457e8d4d61d4de3ce02e0a7a5a9b4.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_3.jpg"
+        ]
+      },
+      {
+        "sourceId": "267876",
+        "date": "2025-09-22 09:09:32",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0922/09/e8b8cca1c-2a1ab0edd150406b7fb32d37184c194d.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45173",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-8fa5fd61ddc353dbb38e4b29b778362a.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-8d8d91bae363fe8d73319a3c90a0d8da.jpg"
+    ]
+  },
+  {
+    "name": "毛柿子",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（2023-12-01）",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "母",
+    "images": [
+      "images/毛柿子/api-45285-1.jpg"
+    ],
+    "personality": [
+      "软萌好盘",
+      "碰瓷讨粮",
+      "泡图书馆"
+    ],
+    "description": "图书馆前任馆长，长毛玳瑁萌妹一枚。娇滴滴的，有点挑食，25年4月被糕妈自提，开启幸福喵生。",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "273031",
+        "date": "2025-10-10 17:24:14",
+        "type": "article",
+        "title": "",
+        "content": "不知道说啥请看vcr",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1010/17/69e85cc8e-9367573e096a867b7e8a99dbd8fe7bf5.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/1010/17/69e85cc8e-e6391a28437bb6b643b339f604daad8f_s_mp4_poster.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/23/69e85cc8e-e10b41b23a6e76d9653236f187e245e4.jpg"
+        ]
+      },
+      {
+        "sourceId": "269368",
+        "date": "2025-09-27 11:32:25",
+        "type": "article",
+        "title": "",
+        "content": "就这样日更（。）",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0927/11/69e85cc8e-393d3f3c11ba45c7dbf6242cfabba066.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0927/11/69e85cc8e-b33b72f2d0a4192fef6a84737cce91eb_s_mp4_poster.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/23/69e85cc8e-e10b41b23a6e76d9653236f187e245e4.jpg"
+        ]
+      },
+      {
+        "sourceId": "269298",
+        "date": "2025-09-26 23:55:53",
+        "type": "article",
+        "title": "",
+        "content": "我系糕妈。发点近期的小猫捏～",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0926/20/69e85cc8e-6d40e924305f4effa2a976a80f34d179.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/20/69e85cc8e-2008028ea39a26bd31f87f5af0480f7e.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/20/69e85cc8e-c06fb099c4860cbdb2ff359d02d6c390.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/20/69e85cc8e-1aa03f2d8988834c38f31d013afe7eb3.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/20/69e85cc8e-217016df0f36ff01968560f03aa171f6.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/20/69e85cc8e-e61bac524dd39a55737b46669eb07e36_s_mp4_poster.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/23/69e85cc8e-e10b41b23a6e76d9653236f187e245e4.jpg"
+        ]
+      },
+      {
+        "sourceId": "268495",
+        "date": "2025-09-24 10:33:19",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/10/e8b8cca1c-5ada92354a907df098adbd1f0480c748.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [
+      "枣糕"
+    ],
+    "sourceId": "45285",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/10/e8b8cca1c-5ada92354a907df098adbd1f0480c748.jpg"
+    ]
+  },
+  {
+    "name": "小花",
+    "status": "已毕业",
+    "vaccine": "妙三多·三针已完成（具体日期待追溯）",
+    "sterilized": "已绝育（日期待补充）",
+    "notes": "预计 2026-06，具体日期待补充",
+    "area": "海棠",
+    "gender": "母",
+    "images": [
+      "images/小花/小花4.jpg",
+      "images/小花/小花3.jpg",
+      "images/小花/小花2.jpg",
+      "images/小花/小花1.jpg"
+    ],
+    "personality": [
+      "撒娇求撸",
+      "软萌好盘",
+      "公认妈宝"
+    ],
+    "description": "常出没在海棠八号楼，西电女明星，大眼尖脸松鼠尾巴\n挑食，唯爱冻干与猫条（尽量喂主食猫条和主食冻干）\n喜欢被轻轻拍屁股，要注意分寸防止被打\n可爱的小夹子猫，会撒娇会蹭人，胆子小小\n世界上没有一个坏人但没有一只好猫，战斗力几乎为0但爱和猫吵架，边吵边露肚皮",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "271668",
+        "date": "2025-10-05 15:45:18",
+        "type": "article",
+        "title": "可怜兮兮的小花",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/1005/15/2d166bbf8-57bd9482c88250f87411b4923bb26f4d.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_4.jpg"
+        ]
+      },
+      {
+        "sourceId": "269276",
+        "date": "2025-09-26 22:51:38",
+        "type": "article",
+        "title": "海八守护者",
+        "content": "雄赳赳，气昂昂地巡视领地，保卫海八安全",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0926/22/3e8b3117d-1556597a5805bd3932c01fe00ff33909.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_4.jpg"
+        ]
+      },
+      {
+        "sourceId": "269250",
+        "date": "2025-09-26 21:12:48",
+        "type": "article",
+        "title": "小花已被花妈预定领养",
+        "content": "努力攒钱养小花",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0926/21/a77d71b3a-0f4ebe524584ae05fc5f7a3ad051cdb4.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/21/a77d71b3a-605435dcdc8847cac0599fc333f1005f.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/21/a77d71b3a-4e853697a4b3a137cb21acca4f5265f4.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_2.jpg"
+        ]
+      },
+      {
+        "sourceId": "268008",
+        "date": "2025-09-22 17:15:26",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0922/17/e8b8cca1c-5f0e910ca862f4cbb77a97e0ee5f6ccb.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45201",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-b04d9d4eae7309bb7c10e5a397313fde.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-8dd38eda320ccdf3906fd5be0eeab32c.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0922/17/e8b8cca1c-5f0e910ca862f4cbb77a97e0ee5f6ccb.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-437ca9258cd1a312cec8a23a42bd0e70.jpg"
+    ]
+  },
+  {
+    "name": "牛奶",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（2025-09-16）",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "公",
+    "images": [
+      "images/牛奶/api-45268-1.jpg",
+      "images/牛奶/api-45268-2.jpg"
+    ],
+    "personality": [
+      "软萌好盘",
+      "见人就蹭",
+      "撒娇求撸"
+    ],
+    "description": "更新：2025.12.6已被领养，恭喜牛奶🥰\n2025.6出生，茶叶的儿子之一，因母亲人间蒸发而绝育名额还不够，遂被抓来凑数（已达到可绝育重量未发情，但是那一次本来没轮到给他绝育），性格非常好，猫德满分，软萌亲人",
+    "relationships": [],
+    "relationshipHints": [
+      {
+        "relatedCatName": "牛奶",
+        "relation": null,
+        "relationCandidates": [
+          "儿子",
+          "母亲"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "更新：2025.12.6已被领养，恭喜牛奶🥰 2025.6出生，茶叶的儿子之一，因母亲人间蒸发而绝育名额还不够，遂被抓来凑数（已达到可绝育重量未发情，但是那一次本来没轮到给他绝育）"
+        ],
+        "source": "api-story-inference"
+      },
+      {
+        "relatedCatName": "茶叶",
+        "relation": null,
+        "relationCandidates": [
+          "儿子",
+          "母亲"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "更新：2025.12.6已被领养，恭喜牛奶🥰 2025.6出生，茶叶的儿子之一，因母亲人间蒸发而绝育名额还不够，遂被抓来凑数（已达到可绝育重量未发情，但是那一次本来没轮到给他绝育），性格非常好，猫德满分，软萌"
+        ],
+        "source": "api-story-inference"
+      }
+    ],
+    "updates": [
+      {
+        "sourceId": "270123",
+        "date": "2025-09-29 19:32:05",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0929/19/e8b8cca1c-e822693c6592b7f3a9adb0a7bede4f0d.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      },
+      {
+        "sourceId": "269770",
+        "date": "2025-09-28 18:33:08",
+        "type": "article",
+        "title": "",
+        "content": "吃饭的小牛奶",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0928/18/fb6a58580-2c7362422f7f23ca725055d2a66efbeb.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_5.jpg"
+        ]
+      },
+      {
+        "sourceId": "268457",
+        "date": "2025-09-24 04:23:52",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-d2b611183d24f7609bfa816d68bd8d3e.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [
+      "中分头"
+    ],
+    "sourceId": "45268",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-d2b611183d24f7609bfa816d68bd8d3e.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-2a09877e2c3d554fb4926de6c5aa16de.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-f30f6b4c4fa1fadb8f82b015064513a6.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-c6ce5284c59bd326189b56b8943bfeae.jpg"
+    ]
+  },
+  {
+    "name": "盼盼",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（2025-04-23）",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "母",
+    "images": [
+      "images/盼盼/api-44688-1.jpg"
+    ],
+    "personality": [
+      "软萌好盘",
+      "有点胆小",
+      "偶尔打人"
+    ],
+    "description": "25年11月更新：已被领养，喵生幸福🥰\n25年三月底被发现，发现时胡子眉毛都被剪掉，耳朵里被订了订书钉，经同学救助后恢复健康，现在已经吃成大卡车",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "269956",
+        "date": "2025-09-29 10:43:31",
+        "type": "article",
+        "title": "一枚米很多的梅干饭团",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0929/10/e8b8cca1c-d3d9bb2f50bba68adb8acc5ad7c16c54.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0929/10/e8b8cca1c-b2f7f44f2222a26db4f952cdffb90069.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      },
+      {
+        "sourceId": "269286",
+        "date": "2025-09-26 23:10:47",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0926/23/a3545ed03-3323f2550f91a2f6296ff82ed921ae01.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/23/a3545ed03-f3fa1487313abf31547fa68a1a6839df.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/23/a3545ed03-14bc1eb3d02b49e83c9667ba803e8302.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/23/a3545ed03-848fc636b655a870df116ee2ed012c33.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/23/a3545ed03-01c28a5bc3e593bca2844154fd6e7b31.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "269210",
+        "date": "2025-09-26 19:48:42",
+        "type": "article",
+        "title": "就是现在!",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0926/19/de82b2c85-5073b8416d75d77f2d4b7c599b1c753d.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/19/de82b2c85-29c6d345e48f6dca118780e47c03aece.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/19/de82b2c85-18f5fe2e7c3ac6a74bf3ae0a35348379.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/19/de82b2c85-37164a7a0110814415e9065e2c452e7e.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/19/de82b2c85-78e4255e417fe9ab4f7afa2c0dd43ac9.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_4.jpg"
+        ]
+      },
+      {
+        "sourceId": "269209",
+        "date": "2025-09-26 19:44:42",
+        "type": "article",
+        "title": "盼盼晒太阳🌞",
+        "content": "疯狂打滚",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0926/19/de82b2c85-890a797fe0cf2f6ef646de4c2f6210fd.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/19/de82b2c85-4ee837975081ab1e1f644c9f4aeafc33.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/19/de82b2c85-a72e3005cf560a2482ea72cb8b10da3d.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/19/de82b2c85-e44f950fc2ea50d59d37a9f4450dc970.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_4.jpg"
+        ]
+      },
+      {
+        "sourceId": "264980",
+        "date": "2025-09-11 21:12:55",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0911/21/e8b8cca1c-2be24db9089768141bc5d2ebf9534f98.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [
+      "小面包"
+    ],
+    "sourceId": "44688",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0911/21/e8b8cca1c-2be24db9089768141bc5d2ebf9534f98.jpg"
+    ]
+  },
+  {
+    "name": "焦黄",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（日期待补充）",
+    "notes": "待补充",
+    "area": "教学区",
+    "gender": "公",
+    "images": [
+      "images/焦黄/api-45154-1.jpg",
+      "images/焦黄/api-45154-2.jpg"
+    ],
+    "personality": [
+      "喵拳攻击",
+      "软萌好盘",
+      "旋饭狂魔"
+    ],
+    "description": "*202511更新：焦黄已经找到了爱他的家庭，顺利领养\n因为在家属区天天挨揍，从家属区流浪到教学区。眼睛应该是先天性的，医生说无法治好了，不过不影响他猛猛吃饭吃成大卡车。叫焦黄是因为焦黄的毛色，教皇是因为谐音，并且焦黄真的很肥大威猛（）\n非常恨嫁，因为眼伤在宿舍过度一段时间，表现十分出色，痊愈被放归后又眼巴巴的找回了住过的宿舍楼",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "269288",
+        "date": "2025-09-26 23:15:05",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0926/23/a64eb3c9b-eca73dd472fab9484224e2b7f6f434ad.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/23/a64eb3c9b-e96fab586e8b9c1b86d0b871833c72bc.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/23/a64eb3c9b-7f48d539778ec1ca002283e56c8d4e4e.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/23/a64eb3c9b-5f12a92ebf6b71a699f8a91fd109bdcb.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/23/a64eb3c9b-db1659ab532eecec4059cb371e123c98.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_1.jpg"
+        ]
+      },
+      {
+        "sourceId": "267757",
+        "date": "2025-09-21 18:35:26",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0921/18/e8b8cca1c-3d233293fe5464d9b273e5313fcbbdb5.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [
+      "教皇"
+    ],
+    "sourceId": "45154",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-b5d1ca65150721893d3d415c8bca210b.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/1203/21/e8b8cca1c-176a70a731d2fb15a2d98ad28deb713e.jpg"
+    ]
+  },
+  {
+    "name": "香香",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（2024-09-01）",
+    "notes": "待补充",
+    "area": "丁香",
+    "gender": "母",
+    "images": [
+      "images/香香/api-45202-1.jpg"
+    ],
+    "personality": [
+      "喜欢贴贴",
+      "碰瓷讨粮",
+      "聪明机灵"
+    ],
+    "description": "狸花加白，焦黄嘴套，小脸大眼，背后图案像郁金香而得名（现在长胖变形了），小烟嗓\n亲人、聪明，小暴脾气，外号丁香女王，打跑所有外猫\n怀孕期间自行入住宿舍，喜欢站在丁香二层台子上睥睨\n大部分时候亲人，天冷主动上腿，但女王不高兴时撸猫后果自负\n领地意识强，不喜欢别的猫，尤其是公猫，但是对母猫很好，教福福在领地讨食\n2025.06已被c老师自提，开启幸福喵生",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "269238",
+        "date": "2025-09-26 20:52:24",
+        "type": "article",
+        "title": "",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0926/20/b9a1e6dab-533b2947ade7369702241931173d4d95.jpg",
+          "https://static.nordri.co/manual/miaomiao-sapp/catmozart/images/avatar_5.jpg"
+        ]
+      },
+      {
+        "sourceId": "268019",
+        "date": "2025-09-22 17:28:22",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0922/17/e8b8cca1c-dce7ecdf0146a0c16efaf73273c7770a.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [
+      "郁金香"
+    ],
+    "sourceId": "45202",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0922/17/e8b8cca1c-dce7ecdf0146a0c16efaf73273c7770a.jpg"
+    ]
+  },
+  {
+    "name": "三橘",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "待补充",
+    "notes": "待补充",
+    "area": "竹园",
+    "gender": null,
+    "images": [
+      "images/三橘/api-45465-1.jpg"
+    ],
+    "personality": [
+      "胆小怂包",
+      "软萌好盘"
+    ],
+    "description": "竹园五只一窝的老四，因为大哥曲奇早早被领走，所以后边四只排了1234，和这一窝里最小的玳瑁一起被领养。",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "269228",
+        "date": "2025-09-26 20:34:23",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0926/20/e8b8cca1c-fbf917ab56347ea4b4d164e53ae86920.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45465",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0926/20/e8b8cca1c-fbf917ab56347ea4b4d164e53ae86920.jpg"
+    ]
+  },
+  {
+    "name": "竹园小老大",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "待补充",
+    "notes": "待补充",
+    "area": "竹园",
+    "gender": "母",
+    "images": [
+      "images/竹园小老大/api-45464-1.jpg",
+      "images/竹园小老大/api-45464-2.jpg"
+    ],
+    "personality": [
+      "软萌好盘",
+      "撒娇求撸",
+      "喜欢贴贴"
+    ],
+    "description": "竹园五只一窝里的老二，但是因为大哥曲奇早早被领走，所以就用一二三四来称呼了剩下的四只。小老大也早早被领养过上了幸福生活。",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "269227",
+        "date": "2025-09-26 20:29:29",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0926/20/e8b8cca1c-8afceb2233cff24759a63d0996a576a8.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45464",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0926/20/e8b8cca1c-8afceb2233cff24759a63d0996a576a8.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0926/20/e8b8cca1c-9865e79b16e4d9408b594b59232fdb0a.jpg"
+    ]
+  },
+  {
+    "name": "来财",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "待补充",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "公",
+    "images": [
+      "images/来财/api-45463-1.jpg",
+      "images/来财/api-45463-2.jpg"
+    ],
+    "personality": [
+      "软萌好盘",
+      "撒娇求撸",
+      "喜欢贴贴"
+    ],
+    "description": "原本住在下水道里，是一只挺过了肠胃炎和猫瘟的坚强小猫，经历了许多波折，最后被救助了他的一位阿姨收养，过上了幸福美满的生活。",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "269226",
+        "date": "2025-09-26 20:26:33",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0926/20/e8b8cca1c-ab07475a479a255f5b943ba00ced1f60.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45463",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0926/20/e8b8cca1c-ab07475a479a255f5b943ba00ced1f60.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0926/20/e8b8cca1c-eede8703178a8065197d3ec7cab55873.jpg"
+    ]
+  },
+  {
+    "name": "小煤球",
+    "status": "就读中",
+    "vaccine": "待补充",
+    "sterilized": "未绝育",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "公",
+    "images": [
+      "images/小煤球/api-44690-1.jpg",
+      "images/小煤球/api-44690-2.jpg"
+    ],
+    "personality": [
+      "生人勿近"
+    ],
+    "description": "比较胆小怕人的一只小奶牛猫，和芸豆是好朋友，比较亲近猫，但是害怕人。",
+    "relationships": [],
+    "relationshipHints": [
+      {
+        "relatedCatName": "芸豆",
+        "relation": null,
+        "relationCandidates": [
+          "好友",
+          "朋友"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "比较胆小怕人的一只小奶牛猫，和芸豆是好朋友，比较亲近猫，但是害怕人。"
+        ],
+        "source": "api-story-inference"
+      }
+    ],
+    "updates": [
+      {
+        "sourceId": "269217",
+        "date": "2025-09-26 19:57:16",
+        "type": "article",
+        "title": "特别萌的小煤球萌照",
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0926/19/e8b8cca1c-6d4695c21a2866831a950fead5e57c95.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/19/e8b8cca1c-9c4fb7073757854bbf14266cdd3b9755.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/19/e8b8cca1c-3defa95bd6bcd448670385608fd63db7.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0926/19/e8b8cca1c-c510c456bdf9ba0b0f8a49aa29817490.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      },
+      {
+        "sourceId": "264983",
+        "date": "2025-09-11 21:19:43",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0911/21/e8b8cca1c-14c53c38cb1dacf6136488eae904df81.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "44690",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0911/21/e8b8cca1c-14c53c38cb1dacf6136488eae904df81.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0911/21/e8b8cca1c-4209f580ad0b5bf69258683fe0db41fd.jpg"
+    ]
+  },
+  {
+    "name": "小尾巴",
+    "status": "喵星或失踪",
+    "vaccine": "待补充",
+    "sterilized": "未绝育",
+    "notes": "待补充",
+    "area": "竹园",
+    "gender": "公",
+    "images": [
+      "images/小尾巴/api-45436-1.jpg"
+    ],
+    "personality": [
+      "软萌好盘",
+      "聪明机灵",
+      "喜欢贴贴"
+    ],
+    "description": "因受伤而截断了尾巴，在竹园养伤后成为竹园小猫，也成为一部分竹园人进入仙电猫猫守护的引路猫。非常聪明机灵，亲人，乖巧可爱，在25年年初寒假期间失踪。",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "269152",
+        "date": "2025-09-26 16:31:15",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0926/16/e8b8cca1c-31a643a63e2775fc9f33a7c6a97f467c.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45436",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0926/16/e8b8cca1c-31a643a63e2775fc9f33a7c6a97f467c.jpg"
+    ]
+  },
+  {
+    "name": "绿豆",
+    "status": "喵星或失踪",
+    "vaccine": "待补充",
+    "sterilized": "待补充",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "公",
+    "images": [
+      "images/绿豆/api-45434-1.jpg"
+    ],
+    "personality": [
+      "生人勿近",
+      "胆小怂包"
+    ],
+    "description": "e楼豆一家的成员，大约在25年三四月份失踪",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "269149",
+        "date": "2025-09-26 16:28:02",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0926/16/e8b8cca1c-a8259753b15e45a8145c32a379f8e356.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45434",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0926/16/e8b8cca1c-a8259753b15e45a8145c32a379f8e356.jpg"
+    ]
+  },
+  {
+    "name": "棉花糖",
+    "status": "喵星或失踪",
+    "vaccine": "待补充",
+    "sterilized": "未绝育",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "母",
+    "images": [
+      "images/棉花糖/api-45433-1.jpg"
+    ],
+    "personality": [
+      "生人勿近",
+      "喵拳攻击",
+      "胆小怂包"
+    ],
+    "description": "麻薯最后一窝的女儿，性格胆小怕人，不过实在貌美",
+    "relationships": [],
+    "relationshipHints": [
+      {
+        "relatedCatName": "麻薯",
+        "relation": null,
+        "relationCandidates": [
+          "女儿"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "麻薯最后一窝的女儿，性格胆小怕人，不过实在貌美"
+        ],
+        "source": "api-story-inference"
+      }
+    ],
+    "updates": [
+      {
+        "sourceId": "269146",
+        "date": "2025-09-26 16:23:09",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0926/16/e8b8cca1c-1219854884a28cae177f388c134f135d.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45433",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/1022/02/e8b8cca1c-c40089c9c95f8761466b488d829bcf6f.jpg"
+    ]
+  },
+  {
+    "name": "潇洒哥",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "已绝育",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "公",
+    "images": [
+      "images/潇洒哥/api-45184-1.jpg"
+    ],
+    "personality": [
+      "见人就蹭",
+      "喜欢贴贴",
+      "碰瓷讨粮"
+    ],
+    "description": "西电知名大网红，下垂眼包子脸，又懒又大只\n丧萌赛道一骑绝尘，喜欢贴贴两脚兽\n战斗力成谜，被脏白打的全身划痕\n高敏感猫格，打架打不过气的把肚皮毛舔秃\n疑似毕业季被弃养的小倒霉蛋（仙电猫猫守护现已不接收任何形式弃养猫）\n2025.5已被@潇洒不玉玉（小红书同名）毕业自提，成功上岸，开启幸福喵生！",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "268966",
+        "date": "2025-09-25 22:30:57",
+        "type": "article",
+        "title": "此猫如机 一拍屁股就舔毛",
+        "content": "摄于被脏白揍得一身伤，大冷天被剔掉毛在好心群友宿舍养伤期间。",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0925/22/88bf98842-01369ef652d9123ab8e45a5897588e54_s_mp4_poster.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0911/17/88bf98842-df8d0fc61e93a7d1ac01a1e7466cfba7.jpg"
+        ]
+      },
+      {
+        "sourceId": "267954",
+        "date": "2025-09-22 14:31:31",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0922/14/e8b8cca1c-7bb54f4cb0685121386ed9a842f5554d.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45184",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0922/14/e8b8cca1c-7bb54f4cb0685121386ed9a842f5554d.jpg"
+    ]
+  },
+  {
+    "name": "小刀",
+    "status": "喵星或失踪",
+    "vaccine": "待补充",
+    "sterilized": "未绝育",
+    "notes": "待补充",
+    "area": "丁香",
+    "gender": "母",
+    "images": [
+      "images/小刀/api-45320-1.jpg"
+    ],
+    "personality": [
+      "生人勿近",
+      "胆小怂包"
+    ],
+    "description": "22年出生之后被保卫处笼养长大\n社会化做的不好，很怕人，不能摸\n放归后来到丁香跟了漂亮橘，老夫少妻，并生下一窝小猫\n24年年初失踪",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "268970",
+        "date": "2025-09-25 22:38:58",
+        "type": "article",
+        "title": "Plj和小刀之女",
+        "content": "生了毛蓬蓬一只糊栗子，萌的很超过，可惜和妈妈一起失踪了。",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0925/22/88bf98842-c5297efc58b0e678bbba310d3589cba5.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0925/22/88bf98842-d32389655c83c0f2040ab81ffe46181e.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0925/22/88bf98842-d31453d1b4b090022ab1302567ffade2.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0925/22/88bf98842-b5e6f486f62bf8567a8af49f8056681b.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0911/17/88bf98842-df8d0fc61e93a7d1ac01a1e7466cfba7.jpg"
+        ]
+      },
+      {
+        "sourceId": "268585",
+        "date": "2025-09-24 15:46:20",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/15/e8b8cca1c-533899d93f6f686f6469cee9701ee0d2.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [
+      "小刀疤"
+    ],
+    "sourceId": "45320",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/15/e8b8cca1c-533899d93f6f686f6469cee9701ee0d2.jpg"
+    ]
+  },
+  {
+    "name": "CC",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（2025-01-01）",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "母",
+    "images": [
+      "images/CC/api-45359-1.jpg"
+    ],
+    "personality": [
+      "撒娇求撸",
+      "公认妈宝",
+      "喜欢贴贴"
+    ],
+    "description": "三三当街生下的女儿，很乖巧亲人。出生后不久就被预定自提，现已和叔叔小黑一起被领养回家，成为粤猫🐱",
+    "relationships": [],
+    "relationshipHints": [
+      {
+        "relatedCatName": "三三",
+        "relation": null,
+        "relationCandidates": [
+          "女儿"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "三三当街生下的女儿，很乖巧亲人。出生后不久就被预定自提，现已和叔叔小黑一起被领养回家，成为粤猫🐱"
+        ],
+        "source": "api-story-inference"
+      },
+      {
+        "relatedCatName": "黑小虎",
+        "relation": null,
+        "relationCandidates": [
+          "女儿"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "三三当街生下的女儿，很乖巧亲人。出生后不久就被预定自提，现已和叔叔小黑一起被领养回家，成为粤猫🐱"
+        ],
+        "source": "api-story-inference"
+      }
+    ],
+    "updates": [
+      {
+        "sourceId": "268723",
+        "date": "2025-09-25 08:52:10",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0925/08/e8b8cca1c-cd9b8993fa5a17a471c9741232d7ec57.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45359",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0925/08/e8b8cca1c-cd9b8993fa5a17a471c9741232d7ec57.jpg"
+    ]
+  },
+  {
+    "name": "项圈小黑",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（2025-03-01）",
+    "notes": "待补充",
+    "area": "丁香",
+    "gender": "公",
+    "images": [
+      "images/项圈小黑/api-45357-1.jpg"
+    ],
+    "personality": [
+      "生人勿近",
+      "喜欢贴贴",
+      "拈花惹草"
+    ],
+    "description": "方脸纯黑猫，出生在海棠宿舍，被同学领养，毕业后带走。\n发情后曾离家出走到丁香，成为黑姐的迷弟，死活不回家，因此主人给它佩戴红色项圈而得名\n比较警惕，但没什么攻击性，一开始和除了黑姐之外的人和猫关系都很紧张，在e猫黑姐的感染下渐渐融入，可以摸也可以和猫友好相处。\n现已和cc一起被领养回家，成为粤猫🐱",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "268721",
+        "date": "2025-09-25 08:46:07",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0925/08/e8b8cca1c-f6e9d82396e18d032f02332eba5733c8.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45357",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0925/08/e8b8cca1c-f6e9d82396e18d032f02332eba5733c8.jpg"
+    ]
+  },
+  {
+    "name": "喵特勒老妈",
+    "status": "喵星或失踪",
+    "vaccine": "待补充",
+    "sterilized": "未绝育",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "母",
+    "images": [
+      "images/喵特勒老妈/api-45325-1.jpg"
+    ],
+    "personality": [
+      "生人勿近",
+      "胆小怂包"
+    ],
+    "description": "究极怕人，但十分能生\n生的崽一只比一只怕人\n一直没有落网绝育\n因为怕人 失踪很久才发觉",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "268600",
+        "date": "2025-09-24 17:19:55",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/17/e8b8cca1c-b276d7f74242eb026f57be09a1f1731f.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45325",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/17/e8b8cca1c-b276d7f74242eb026f57be09a1f1731f.jpg"
+    ]
+  },
+  {
+    "name": "中分头",
+    "status": "喵星或失踪",
+    "vaccine": "待补充",
+    "sterilized": "未绝育",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "公",
+    "images": [
+      "images/中分头/api-45324-1.jpg"
+    ],
+    "personality": [
+      "生人勿近",
+      "胆小怂包"
+    ],
+    "description": "细看长的很幽默的中分头\n很怕人，行踪诡秘，因此失踪很久才发觉",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "268598",
+        "date": "2025-09-24 17:18:10",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/17/e8b8cca1c-e5a5cd7a2835d2505f5f072e258efd6b.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45324",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/17/e8b8cca1c-e5a5cd7a2835d2505f5f072e258efd6b.jpg"
+    ]
+  },
+  {
+    "name": "喵特勒",
+    "status": "喵星或失踪",
+    "vaccine": "待补充",
+    "sterilized": "未绝育",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "公",
+    "images": [
+      "images/喵特勒/api-45323-1.jpg"
+    ],
+    "personality": [
+      "胆小怂包",
+      "生人勿近"
+    ],
+    "description": "中分头、深情哥的兄弟\n有一道斜刘海和八嘎胡\n很怕人，但是经常四处和猫打架\n25年春天疑似猫瘟去世\n据说茶叶的孩子牛奶、茶叶蛋是此咪的遗腹子",
+    "relationships": [],
+    "relationshipHints": [
+      {
+        "relatedCatName": "深情哥",
+        "relation": null,
+        "relationCandidates": [
+          "兄弟",
+          "孩子"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "中分头、深情哥的兄弟 有一道斜刘海和八嘎胡 很怕人，但是经常四处和猫打架 25年春天疑似猫瘟去世 据说茶叶的孩子牛奶、茶叶蛋是此咪的遗腹子"
+        ],
+        "source": "api-story-inference"
+      },
+      {
+        "relatedCatName": "中分头",
+        "relation": null,
+        "relationCandidates": [
+          "兄弟",
+          "孩子"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "中分头、深情哥的兄弟 有一道斜刘海和八嘎胡 很怕人，但是经常四处和猫打架 25年春天疑似猫瘟去世 据说茶叶的孩子牛奶、茶叶蛋是此咪的遗腹子"
+        ],
+        "source": "api-story-inference"
+      },
+      {
+        "relatedCatName": "牛奶",
+        "relation": null,
+        "relationCandidates": [
+          "兄弟",
+          "孩子"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "中分头、深情哥的兄弟 有一道斜刘海和八嘎胡 很怕人，但是经常四处和猫打架 25年春天疑似猫瘟去世 据说茶叶的孩子牛奶、茶叶蛋是此咪的遗腹子"
+        ],
+        "source": "api-story-inference"
+      },
+      {
+        "relatedCatName": "茶叶",
+        "relation": null,
+        "relationCandidates": [
+          "兄弟",
+          "孩子"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "中分头、深情哥的兄弟 有一道斜刘海和八嘎胡 很怕人，但是经常四处和猫打架 25年春天疑似猫瘟去世 据说茶叶的孩子牛奶、茶叶蛋是此咪的遗腹子"
+        ],
+        "source": "api-story-inference"
+      }
+    ],
+    "updates": [
+      {
+        "sourceId": "268597",
+        "date": "2025-09-24 17:16:35",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/17/e8b8cca1c-c6ffaac9d97ab7e623cc5dda5d73f178.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45323",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/17/e8b8cca1c-c6ffaac9d97ab7e623cc5dda5d73f178.jpg"
+    ]
+  },
+  {
+    "name": "罗小黑",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（2025-09-01）",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "母",
+    "images": [
+      "images/罗小黑/api-45321-1.jpg",
+      "images/罗小黑/api-45321-2.jpg"
+    ],
+    "personality": [
+      "软萌好盘",
+      "撒娇求撸",
+      "喜欢贴贴"
+    ],
+    "description": "很粘人的大眼黑猫，性格很好，哪都给摸。被水手热烈追求。\n25年夏天出现，很快怀孕，后引产且被领养，过上幸福喵生~",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "268594",
+        "date": "2025-09-24 17:07:06",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/17/e8b8cca1c-7c47bee33aee4618809e7b273ac3ae33.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45321",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/17/e8b8cca1c-7c47bee33aee4618809e7b273ac3ae33.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0924/17/e8b8cca1c-964eec8a128046e9c0312b7e166892b4.jpg"
+    ]
+  },
+  {
+    "name": "橘桑",
+    "status": "喵星或失踪",
+    "vaccine": "待补充",
+    "sterilized": "未绝育",
+    "notes": "待补充",
+    "area": "海棠",
+    "gender": "公",
+    "images": [
+      "images/橘桑/api-45318-1.jpg"
+    ],
+    "personality": [
+      "喵拳攻击",
+      "生人勿近"
+    ],
+    "description": "初代拳皇，23年左右出生在海棠，和兄弟白领结黑猫关系很好，形影不离\n白领结失踪后四处溜达，变成了冷酷的孤狼鲨手，知道要饭但伸手就打\n24年春夏失踪\n",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "268581",
+        "date": "2025-09-24 15:41:42",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/15/e8b8cca1c-1a448eaca8ab58afd3cebb39c829b459.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45318",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/15/e8b8cca1c-1a448eaca8ab58afd3cebb39c829b459.jpg"
+    ]
+  },
+  {
+    "name": "小八嘎",
+    "status": "喵星或失踪",
+    "vaccine": "待补充",
+    "sterilized": "未绝育",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "公",
+    "images": [
+      "images/小八嘎/api-45317-1.jpg"
+    ],
+    "personality": [
+      "泡图书馆",
+      "公认妈宝",
+      "聪明机灵"
+    ],
+    "description": "黑子和太君的独苗苗，继承了父亲的八嘎胡\n很黏妈妈，很活泼，长大点儿开始亲人了\n22年寒假被狗群咬死",
+    "relationships": [],
+    "relationshipHints": [
+      {
+        "relatedCatName": "太君",
+        "relation": null,
+        "relationCandidates": [
+          "独苗苗",
+          "妈妈",
+          "父亲"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "黑子和太君的独苗苗，继承了父亲的八嘎胡 很黏妈妈，很活泼，长大点儿开始亲人了 22年寒假被狗群咬死"
+        ],
+        "source": "api-story-inference"
+      },
+      {
+        "relatedCatName": "黑子",
+        "relation": null,
+        "relationCandidates": [
+          "独苗苗",
+          "妈妈",
+          "父亲"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "黑子和太君的独苗苗，继承了父亲的八嘎胡 很黏妈妈，很活泼，长大点儿开始亲人了 22年寒假被狗群咬死"
+        ],
+        "source": "api-story-inference"
+      }
+    ],
+    "updates": [
+      {
+        "sourceId": "268580",
+        "date": "2025-09-24 15:37:44",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/15/e8b8cca1c-6f33d90719a24edf570a0731ff8c8480.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45317",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/15/e8b8cca1c-6f33d90719a24edf570a0731ff8c8480.jpg"
+    ]
+  },
+  {
+    "name": "朱迪",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（2025-02-01）",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "公",
+    "images": [
+      "images/朱迪/api-45316-1.jpg",
+      "images/朱迪/api-45316-2.jpg"
+    ],
+    "personality": [
+      "软萌好盘",
+      "见人就蹭",
+      "喜欢贴贴"
+    ],
+    "description": "和妹妹小倒霉蛋一起被主人遗弃到学校\n非常乖的呆呆小猫，给撸给抱\n都有一定问题，朱迪嗅觉不良，妹妹行动神经有点差\n妹妹较快被领养，朱迪也在24年底被领养",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "268576",
+        "date": "2025-09-24 15:25:58",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/15/e8b8cca1c-f51c64a3f8b4148234d3d12a7cd18ad6.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45316",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/15/e8b8cca1c-f51c64a3f8b4148234d3d12a7cd18ad6.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0924/15/e8b8cca1c-cf873fd9c89bfc4f68721cbefb53fbc6.jpg"
+    ]
+  },
+  {
+    "name": "奶咖",
+    "status": "喵星或失踪",
+    "vaccine": "待补充",
+    "sterilized": "未绝育",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "公",
+    "images": [
+      "images/奶咖/api-45315-1.jpg",
+      "images/奶咖/api-45315-2.jpg"
+    ],
+    "personality": [
+      "生人勿近",
+      "胆小怂包",
+      "公认妈宝"
+    ],
+    "description": "长的胖嘟嘟的狸花小孩，被奶茶领养（？）\n很依赖奶茶这个大姐姐或者养母\n但是不亲人，不能靠近\n24年年底出车祸去世",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "268574",
+        "date": "2025-09-24 14:56:36",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/14/e8b8cca1c-c1e668b84f6f57c34489dfc1738d9498.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45315",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/14/e8b8cca1c-c1e668b84f6f57c34489dfc1738d9498.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0924/14/e8b8cca1c-7ce4f3a9cf4e0d8a0c8800469bc245d2.jpg"
+    ]
+  },
+  {
+    "name": "煤炭",
+    "status": "喵星或失踪",
+    "vaccine": "待补充",
+    "sterilized": "未绝育",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "公",
+    "images": [
+      "images/煤炭/api-45306-1.jpg"
+    ],
+    "personality": [
+      "见人就蹭",
+      "撒娇求撸",
+      "聪明机灵"
+    ],
+    "description": "非常有个猫魅力的大黑猫，街溜子，喜欢两脚兽，喜欢坐在凳子上，会自动上腿，陪伴性很强。疑似是黑子的爹（？）\n在失踪后发现于逐日工程附近去世",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "268555",
+        "date": "2025-09-24 14:23:34",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/14/e8b8cca1c-095af6bf25a8b9811ed96bb31452ca9c.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45306",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/14/e8b8cca1c-095af6bf25a8b9811ed96bb31452ca9c.jpg"
+    ]
+  },
+  {
+    "name": "三四",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（2025-04-01）",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "母",
+    "images": [
+      "images/三四/api-45302-1.jpg",
+      "images/三四/api-45302-2.jpg"
+    ],
+    "personality": [
+      "喜欢贴贴",
+      "碰瓷讨粮",
+      "喵拳攻击"
+    ],
+    "description": "*202511月更新：本月三四已经到领养家庭，享受荣华富贵十五年的咪生！\n长的很萌很呆的黄绿眼狸花，心情好的时候给摸给贴贴，有点怕冷，喜欢蹲在人身边取暖，但翻脸速度很快，和无辜的外表严重不符，撸猫需谨慎。",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "268545",
+        "date": "2025-09-24 13:55:55",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/13/e8b8cca1c-f5803ea01df5594041aa0d4561a08c92.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45302",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/13/e8b8cca1c-f5803ea01df5594041aa0d4561a08c92.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0924/13/e8b8cca1c-ec44e1ec6ce3054fddd4dca642ed4ab5.jpg"
+    ]
+  },
+  {
+    "name": "栗子",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（2025-03-01）",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "母",
+    "images": [
+      "images/栗子/api-45301-1.jpg"
+    ],
+    "personality": [
+      "见人就蹭",
+      "撒娇求撸",
+      "喜欢贴贴"
+    ],
+    "description": "亲人的貌美玳瑁，自带眼妆，大眼睛小短脸，很甜蜜的性格，胆子不大，喜欢两脚兽的抚摸🥰25年3月被栗子妈妈@蹲蹲橘白漂亮橘 自提，开启幸福喵生~",
+    "relationships": [],
+    "relationshipHints": [
+      {
+        "relatedCatName": "漂亮橘",
+        "relation": null,
+        "relationCandidates": [
+          "妈妈"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "亲人的貌美玳瑁，自带眼妆，大眼睛小短脸，很甜蜜的性格，胆子不大，喜欢两脚兽的抚摸🥰25年3月被栗子妈妈@蹲蹲橘白漂亮橘 自提，开启幸福喵生~"
+        ],
+        "source": "api-story-inference"
+      },
+      {
+        "relatedCatName": "橘白",
+        "relation": null,
+        "relationCandidates": [
+          "妈妈"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "亲人的貌美玳瑁，自带眼妆，大眼睛小短脸，很甜蜜的性格，胆子不大，喜欢两脚兽的抚摸🥰25年3月被栗子妈妈@蹲蹲橘白漂亮橘 自提，开启幸福喵生~"
+        ],
+        "source": "api-story-inference"
+      }
+    ],
+    "updates": [
+      {
+        "sourceId": "268541",
+        "date": "2025-09-24 13:48:38",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/13/e8b8cca1c-9776e04833ba74cc0da446e1470d2056.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45301",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/13/e8b8cca1c-9776e04833ba74cc0da446e1470d2056.jpg"
+    ]
+  },
+  {
+    "name": "大嗓门",
+    "status": "喵星或失踪",
+    "vaccine": "待补充",
+    "sterilized": "未绝育",
+    "notes": "待补充",
+    "area": "竹园",
+    "gender": "母",
+    "images": [
+      "images/大嗓门/api-45293-1.jpg",
+      "images/大嗓门/api-45293-2.jpg"
+    ],
+    "personality": [
+      "软萌好盘",
+      "喜欢贴贴"
+    ],
+    "description": "24年10月第一次出现在教学楼对过停车场，非常爱叫而得名。后被带到竹园长大。非常上相的大眼睛包子脸奶油色小猫，很亲人，24年寒假后失踪。",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "268518",
+        "date": "2025-09-24 11:37:55",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/11/e8b8cca1c-3aec9ef07d3cca3d1ca3d7d2234a17de.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45293",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/11/e8b8cca1c-3aec9ef07d3cca3d1ca3d7d2234a17de.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0924/11/e8b8cca1c-8d7535691b7b7c42e545a63e4864d217.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0924/11/e8b8cca1c-a00ad8a543b5c2b6b456ccc15dcf4438.jpg"
+    ]
+  },
+  {
+    "name": "黑介",
+    "status": "喵星或失踪",
+    "vaccine": "待补充",
+    "sterilized": "未绝育",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "公",
+    "images": [
+      "images/黑介/api-45292-1.jpg",
+      "images/黑介/api-45292-2.jpg"
+    ],
+    "personality": [
+      "喵拳攻击",
+      "热衷挑事"
+    ],
+    "description": "尾巴非常短粗的黑猫，因为是宗介的好朋咪而得名。宗介去世后追求过奶茶，还去逐日工程胖揍二头。",
+    "relationships": [],
+    "relationshipHints": [
+      {
+        "relatedCatName": "二头",
+        "relation": null,
+        "relationCandidates": [
+          "好友"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "尾巴非常短粗的黑猫，因为是宗介的好朋咪而得名。宗介去世后追求过奶茶，还去逐日工程胖揍二头。"
+        ],
+        "source": "api-story-inference"
+      },
+      {
+        "relatedCatName": "宗介",
+        "relation": null,
+        "relationCandidates": [
+          "好友"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "尾巴非常短粗的黑猫，因为是宗介的好朋咪而得名。宗介去世后追求过奶茶，还去逐日工程胖揍二头。"
+        ],
+        "source": "api-story-inference"
+      },
+      {
+        "relatedCatName": "奶茶",
+        "relation": null,
+        "relationCandidates": [
+          "好友"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "尾巴非常短粗的黑猫，因为是宗介的好朋咪而得名。宗介去世后追求过奶茶，还去逐日工程胖揍二头。"
+        ],
+        "source": "api-story-inference"
+      }
+    ],
+    "updates": [
+      {
+        "sourceId": "268517",
+        "date": "2025-09-24 11:32:42",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/11/e8b8cca1c-cee245d9b06433d11a26cb1ab63b859f.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45292",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/11/e8b8cca1c-cee245d9b06433d11a26cb1ab63b859f.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/1207/18/e8b8cca1c-f38e6cb5661624915025a5ae320a6b29.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/1207/18/e8b8cca1c-d7e6bebd319a97cd526065d46fdd9400.jpg"
+    ]
+  },
+  {
+    "name": "宗介",
+    "status": "喵星或失踪",
+    "vaccine": "待补充",
+    "sterilized": "未绝育",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "公",
+    "images": [
+      "images/宗介/api-45291-1.jpg",
+      "images/宗介/api-45291-2.jpg"
+    ],
+    "personality": [
+      "喵拳攻击",
+      "生人勿近"
+    ],
+    "description": "长的很俊秀但拳王，伸手必打。经常有两脚兽被它的外表欺骗，得到疫苗大礼包。因为小时候在综合楼之间玩而得名。24年4月在停车场被发现去世。",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "268516",
+        "date": "2025-09-24 11:30:07",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/11/e8b8cca1c-9d9c19b40223fa8fbae023b922ed35f0.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45291",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/11/e8b8cca1c-9d9c19b40223fa8fbae023b922ed35f0.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0924/11/e8b8cca1c-46e293750b6368b657fa747781873600.jpg"
+    ]
+  },
+  {
+    "name": "邪恶奶牛",
+    "status": "就读中",
+    "vaccine": "未接种",
+    "sterilized": "未绝育",
+    "notes": "—",
+    "area": "丁香",
+    "gender": "公",
+    "images": [
+      "images/邪恶奶牛/邪恶奶牛1.jpg",
+      "images/邪恶奶牛/邪恶奶牛2.jpg",
+      "images/邪恶奶牛/邪恶奶牛3.jpg"
+    ],
+    "personality": [
+      "喵拳攻击",
+      "生人勿近",
+      "热衷挑事"
+    ],
+    "description": "非常没有猫德的奶牛，怕人且好斗，疑似曾揍过老猫王大头。很警惕，至今未落网。",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "268514",
+        "date": "2025-09-24 11:25:05",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/11/e8b8cca1c-315703d6d53c60a7e80d6fcedda3d8b7.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [
+      "丁香奶牛"
+    ],
+    "sourceId": "45290",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/11/e8b8cca1c-315703d6d53c60a7e80d6fcedda3d8b7.jpg"
+    ]
+  },
+  {
+    "name": "三三",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（2024-09-01）",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "母",
+    "images": [
+      "images/三三/api-45289-1.jpg"
+    ],
+    "personality": [
+      "聪明机灵",
+      "喜欢贴贴",
+      "撒娇求撸"
+    ],
+    "description": "身材匀称的黄眼狸花，非常机灵亲人，绝世好猫，可抱可撸，喜欢被拍屁股。\n疑似茶叶的一胎女儿，项圈小黑的同胎姊妹，另说是一直纯色狸花一胎四只里的第三只。\n曾当街突然产子吓飞所有人。25年7月已被三三妈毕业自提，开启幸福喵生~",
+    "relationships": [],
+    "relationshipHints": [
+      {
+        "relatedCatName": "项圈小黑",
+        "relation": null,
+        "relationCandidates": [
+          "女儿",
+          "同胎"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "身材匀称的黄眼狸花，非常机灵亲人，绝世好猫，可抱可撸，喜欢被拍屁股。 疑似茶叶的一胎女儿，项圈小黑的同胎姊妹，另说是一直纯色狸花一胎四只里的第三只。 曾当街突然产子吓飞所有人。25年7月已被三三妈毕业自提，开启幸福喵生~"
+        ],
+        "source": "api-story-inference"
+      },
+      {
+        "relatedCatName": "茶叶",
+        "relation": null,
+        "relationCandidates": [
+          "女儿",
+          "同胎"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "身材匀称的黄眼狸花，非常机灵亲人，绝世好猫，可抱可撸，喜欢被拍屁股。 疑似茶叶的一胎女儿，项圈小黑的同胎姊妹，另说是一直纯色狸花一胎四只里的第三只。 曾当街突然产子吓飞所有人。25年7月已被三三妈毕业自提，开启幸福喵生"
+        ],
+        "source": "api-story-inference"
+      },
+      {
+        "relatedCatName": "黑小虎",
+        "relation": null,
+        "relationCandidates": [
+          "女儿",
+          "同胎"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "身材匀称的黄眼狸花，非常机灵亲人，绝世好猫，可抱可撸，喜欢被拍屁股。 疑似茶叶的一胎女儿，项圈小黑的同胎姊妹，另说是一直纯色狸花一胎四只里的第三只。 曾当街突然产子吓飞所有人。25年7月已被三三妈毕业自提，开启幸福喵生~"
+        ],
+        "source": "api-story-inference"
+      }
+    ],
+    "updates": [
+      {
+        "sourceId": "268513",
+        "date": "2025-09-24 11:23:15",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/11/e8b8cca1c-90d9b2961bbed5ff5b43bad473bc830c.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45289",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/11/e8b8cca1c-90d9b2961bbed5ff5b43bad473bc830c.jpg"
+    ]
+  },
+  {
+    "name": "奥利奥",
+    "status": "喵星或失踪",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（2022-09-01）",
+    "notes": "待补充",
+    "area": "竹园",
+    "gender": "母",
+    "images": [
+      "images/奥利奥/api-45288-1.jpg",
+      "images/奥利奥/api-45288-2.jpg"
+    ],
+    "personality": [
+      "喜欢贴贴",
+      "撒娇求撸",
+      "聪明机灵"
+    ],
+    "description": "绿眼正开脸奶牛，亲人。24年竹园暑期装修失踪。",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "268509",
+        "date": "2025-09-24 11:19:13",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/11/e8b8cca1c-1a8020fdfd986cbaccad323ad10a95d3.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45288",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/11/e8b8cca1c-1a8020fdfd986cbaccad323ad10a95d3.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0924/11/e8b8cca1c-dc5e8a568567c8a38edcd4b7d3a7059d.jpg"
+    ]
+  },
+  {
+    "name": "苏菲",
+    "status": "喵星或失踪",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（2021-09-24）",
+    "notes": "待补充",
+    "area": "竹园",
+    "gender": "母",
+    "images": [
+      "images/苏菲/api-45287-1.jpg",
+      "images/苏菲/api-45287-2.jpg"
+    ],
+    "personality": [
+      "见人就蹭",
+      "喜欢贴贴",
+      "聪明机灵"
+    ],
+    "description": "很漂亮的浓颜三花，活泼亲人的狗狗猫，和人混熟之后会跟着人跑。24年竹园暑假翻新失踪。",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "268505",
+        "date": "2025-09-24 11:08:27",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/11/e8b8cca1c-f32f3a743ce492e357d9297d3b366915.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45287",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/11/e8b8cca1c-f32f3a743ce492e357d9297d3b366915.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0924/11/e8b8cca1c-6bc84346324b211a93c2c8bb1a64bb07.jpg"
+    ]
+  },
+  {
+    "name": "太子",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（日期待补充）",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "母",
+    "images": [
+      "images/太子/api-45286-1.jpg"
+    ],
+    "personality": [
+      "软萌好盘",
+      "喜欢贴贴",
+      "见人就蹭"
+    ],
+    "description": "长的很漂亮的长毛橘白，性格亲人又文静，和太君好过，但宝宝难产没生下来。被狗咬伤后得到学姐的救助和收养，获得幸福喵生~",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "268496",
+        "date": "2025-09-24 10:40:18",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/10/e8b8cca1c-29c93cef5f48cd9856fd20f257cd2399.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45286",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/10/e8b8cca1c-29c93cef5f48cd9856fd20f257cd2399.jpg"
+    ]
+  },
+  {
+    "name": "楼长",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（2023-11-01）",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "母",
+    "images": [
+      "images/楼长/api-45283-1.jpg"
+    ],
+    "personality": [
+      "见人就蹭",
+      "撒娇求撸",
+      "聪明机灵"
+    ],
+    "description": "非常亲人的奶牛，很嗲很黏人。自行进宿舍生宝宝，宝宝均已被送养。疑似被人泼油漆扔掉又自行找回，紧急送到可以领养猫的绿树网吧。（为了人和猫的安全，请拒绝流浪猫进宿舍）",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "268483",
+        "date": "2025-09-24 10:03:44",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/10/e8b8cca1c-9d7cb413c410ca640d93809d37d8e8c3.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [
+      "牛牛"
+    ],
+    "sourceId": "45283",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/10/e8b8cca1c-9d7cb413c410ca640d93809d37d8e8c3.jpg"
+    ]
+  },
+  {
+    "name": "丁香小奶牛",
+    "status": "喵星或失踪",
+    "vaccine": "待补充",
+    "sterilized": "未绝育",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "母",
+    "images": [
+      "images/丁香小奶牛/api-45282-1.jpg"
+    ],
+    "personality": [
+      "胆小怂包",
+      "喜欢贴贴",
+      "生人勿近"
+    ],
+    "description": "很怕人的小奶牛，但是很友好，熟了之后会鼓起勇气贴贴。被橘白老师狂热追求，怀孕后失踪。曾误上逐日工程天线塔（疑似躲橘白），两天下不来，被同学们救下来。",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "268480",
+        "date": "2025-09-24 09:56:40",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/09/e8b8cca1c-c415bd78fbbe030bf4f5a1e361c64dcc.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45282",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/09/e8b8cca1c-c415bd78fbbe030bf4f5a1e361c64dcc.jpg"
+    ]
+  },
+  {
+    "name": "橘白",
+    "status": "喵星或失踪",
+    "vaccine": "待补充",
+    "sterilized": "未绝育",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "公",
+    "images": [
+      "images/橘白/api-45281-1.jpg",
+      "images/橘白/api-45281-2.jpg"
+    ],
+    "personality": [
+      "软萌好盘",
+      "碰瓷讨粮",
+      "胆小怂包"
+    ],
+    "description": "梭子蟹脸长毛橘白，娇娇怯怯的，喜欢在树丛里睡大觉，蓬蓬的像棉花糖。笨的会上树不会下来，被大家营救。似乎不太受母猫欢迎，以前追求小奶牛，天天跟人家后面，追了好久才追到。23年2月底失足落入水池，失温去世。",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "268477",
+        "date": "2025-09-24 09:44:30",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/09/e8b8cca1c-fd84f2aa90c4ace0d8fe5f85051894e6.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45281",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/09/e8b8cca1c-fd84f2aa90c4ace0d8fe5f85051894e6.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0924/09/e8b8cca1c-8acb82418fd3e84be4d6304a00799c32.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0924/09/e8b8cca1c-69fb4f846a9a3718788d518c4070f825.jpg"
+    ]
+  },
+  {
+    "name": "黑子",
+    "status": "喵星或失踪",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（日期待补充）",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "母",
+    "images": [
+      "images/黑子/api-45279-1.jpg"
+    ],
+    "personality": [
+      "胆小怂包",
+      "喜欢贴贴",
+      "公认妈宝"
+    ],
+    "description": "胖琥的二胎女儿，在图书馆混了很久，有点胆小，生人勿近，但熟了之后会发现其实是娇滴滴的笨蛋甜妹。",
+    "relationships": [],
+    "relationshipHints": [
+      {
+        "relatedCatName": "胖琥",
+        "relation": null,
+        "relationCandidates": [
+          "女儿"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "胖琥的二胎女儿，在图书馆混了很久，有点胆小，生人勿近，但熟了之后会发现其实是娇滴滴的笨蛋甜妹。"
+        ],
+        "source": "api-story-inference"
+      }
+    ],
+    "updates": [
+      {
+        "sourceId": "268471",
+        "date": "2025-09-24 09:15:11",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/09/e8b8cca1c-81f67f8d2152c43f9b77f785f2a586ed.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45279",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/09/e8b8cca1c-81f67f8d2152c43f9b77f785f2a586ed.jpg"
+    ]
+  },
+  {
+    "name": "Miko",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "未绝育",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "公",
+    "images": [
+      "images/Miko/api-45277-1.jpg"
+    ],
+    "personality": [
+      "软萌好盘",
+      "撒娇求撸",
+      "旋饭狂魔"
+    ],
+    "description": "麻薯的孩子，大耳朵大眼睛橘猫。2025.9被福福妈@佩可和福福（xhs同名）自提，成为三胎家庭老幺。",
+    "relationships": [],
+    "relationshipHints": [
+      {
+        "relatedCatName": "麻薯",
+        "relation": null,
+        "relationCandidates": [
+          "孩子"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "麻薯的孩子，大耳朵大眼睛橘猫。2025.9被福福妈@佩可和福福（xhs同名）自提，成为三胎家庭老幺。"
+        ],
+        "source": "api-story-inference"
+      },
+      {
+        "relatedCatName": "福福",
+        "relation": null,
+        "relationCandidates": [
+          "孩子"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "麻薯的孩子，大耳朵大眼睛橘猫。2025.9被福福妈@佩可和福福（xhs同名）自提，成为三胎家庭老幺。"
+        ],
+        "source": "api-story-inference"
+      }
+    ],
+    "updates": [
+      {
+        "sourceId": "268468",
+        "date": "2025-09-24 09:00:30",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/09/e8b8cca1c-9e17c77ad8b514cdd658eee10ea74e79.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45277",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/09/e8b8cca1c-9e17c77ad8b514cdd658eee10ea74e79.jpg"
+    ]
+  },
+  {
+    "name": "豆腐脑",
+    "status": "就读中",
+    "vaccine": "未接种",
+    "sterilized": "已绝育（日期待补充）",
+    "notes": "—",
+    "area": "教学区",
+    "gender": "母",
+    "images": [
+      "images/豆腐脑/豆腐脑1.jpg"
+    ],
+    "personality": [
+      "生人勿近",
+      "喵拳攻击",
+      "胆小怂包"
+    ],
+    "description": "2026.05更新：已落网绝育\n豆花、蓝豆、黄豆的妈妈。非常胆小怕人，无法靠近，一直没能抓住去绝育。",
+    "relationships": [],
+    "relationshipHints": [
+      {
+        "relatedCatName": "黄豆",
+        "relation": null,
+        "relationCandidates": [
+          "妈妈"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "2026.05更新：已落网绝育 豆花、蓝豆、黄豆的妈妈。非常胆小怕人，无法靠近，一直没能抓住去绝育。"
+        ],
+        "source": "api-story-inference"
+      },
+      {
+        "relatedCatName": "蓝豆",
+        "relation": null,
+        "relationCandidates": [
+          "妈妈"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "2026.05更新：已落网绝育 豆花、蓝豆、黄豆的妈妈。非常胆小怕人，无法靠近，一直没能抓住去绝育。"
+        ],
+        "source": "api-story-inference"
+      },
+      {
+        "relatedCatName": "豆花",
+        "relation": null,
+        "relationCandidates": [
+          "妈妈"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "2026.05更新：已落网绝育 豆花、蓝豆、黄豆的妈妈。非常胆小怕人，无法靠近，一直没能抓住去绝育。"
+        ],
+        "source": "api-story-inference"
+      }
+    ],
+    "updates": [
+      {
+        "sourceId": "268462",
+        "date": "2025-09-24 04:44:12",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-3c4f49718e77af8be3a92015ca3e090d.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45273",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-3c4f49718e77af8be3a92015ca3e090d.jpg"
+    ]
+  },
+  {
+    "name": "阿猪",
+    "status": "喵星或失踪",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（日期待补充）",
+    "notes": "待补充",
+    "area": "海棠",
+    "gender": "公",
+    "images": [
+      "images/阿猪/api-45272-1.jpg",
+      "images/阿猪/api-45272-2.jpg"
+    ],
+    "personality": [
+      "超级校霸",
+      "软萌好盘"
+    ],
+    "description": "几乎已经是学校里年纪最大的猫，18年以前就出现在海棠，蝉联多年海棠唯一霸主。大脸盘鸡腿，贪吃又懒，但战斗力惊人。总体亲人，但有点小暴脾气，会翻脸抓人。在25年上半年失踪。",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "268461",
+        "date": "2025-09-24 04:41:50",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-e8fe9c74968bd94cfa99dee814dcc834.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45272",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-e8fe9c74968bd94cfa99dee814dcc834.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-a81a6f5a5b26089a5d0aa71cf2ec14d7.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-6d71265f35a3c734b8c8260540b3a5cf.jpg"
+    ]
+  },
+  {
+    "name": "蛋挞",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "未绝育",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "母",
+    "images": [
+      "images/蛋挞/api-45271-1.jpg"
+    ],
+    "personality": [
+      "软萌好盘",
+      "撒娇求撸",
+      "喜欢贴贴"
+    ],
+    "description": "来才最后一窝的老二，被第一个领养人退养后遇到了蛋挞爸，蛋挞爸又领养了姐姐奶茶，一起过上了荣华富贵的幸福生活。",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "268460",
+        "date": "2025-09-24 04:38:46",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-4636543122352fa8c3567691054864ab.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45271",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-4636543122352fa8c3567691054864ab.jpg"
+    ]
+  },
+  {
+    "name": "曲奇",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "未绝育",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "公",
+    "images": [
+      "images/曲奇/api-45270-1.jpg"
+    ],
+    "personality": [
+      "胆小怂包",
+      "软萌好盘",
+      "喜欢贴贴"
+    ],
+    "description": "来才的其中一个孩子，和大面包有一段不解之缘（疑似被大面包从窝里偷出来的），性格非常好，十分有猫德，现已被领养过上荣华富贵的生活。",
+    "relationships": [],
+    "relationshipHints": [
+      {
+        "relatedCatName": "大面包",
+        "relation": null,
+        "relationCandidates": [
+          "孩子"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "来才的其中一个孩子，和大面包有一段不解之缘（疑似被大面包从窝里偷出来的），性格非常好，十分有猫德，现已被领养过上荣华富贵的生活。"
+        ],
+        "source": "api-story-inference"
+      },
+      {
+        "relatedCatName": "来才",
+        "relation": null,
+        "relationCandidates": [
+          "孩子"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "来才的其中一个孩子，和大面包有一段不解之缘（疑似被大面包从窝里偷出来的），性格非常好，十分有猫德，现已被领养过上荣华富贵的生活。"
+        ],
+        "source": "api-story-inference"
+      }
+    ],
+    "updates": [
+      {
+        "sourceId": "268459",
+        "date": "2025-09-24 04:32:56",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-a6c22f31b9b5cfac777bc9fc7402a906.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45270",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-a6c22f31b9b5cfac777bc9fc7402a906.jpg"
+    ]
+  },
+  {
+    "name": "茶叶",
+    "status": "喵星或失踪",
+    "vaccine": "待补充",
+    "sterilized": "未绝育",
+    "notes": "待补充",
+    "area": "海棠",
+    "gender": "母",
+    "images": [
+      "images/茶叶/api-45267-1.jpg"
+    ],
+    "personality": [
+      "撒娇求撸",
+      "软萌好盘"
+    ],
+    "description": "曾在宿舍生活，被海棠毕业生弃养。\n曾生过三胎，是项圈小黑和三三的妈妈\n亲人聪明，在要绝育的前一天晚上人间蒸发，至今未找到，留下三个孩子，其中一个亲人的孩子替母受过，小小年纪失去了蛋蛋。",
+    "relationships": [],
+    "relationshipHints": [
+      {
+        "relatedCatName": "项圈小黑",
+        "relation": null,
+        "relationCandidates": [
+          "妈妈",
+          "孩子"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "曾在宿舍生活，被海棠毕业生弃养。 曾生过三胎，是项圈小黑和三三的妈妈 亲人聪明，在要绝育的前一天晚上人间蒸发，至今未找到，留下三个孩子，其中一个亲人的孩子替母受过，小小年纪失去了蛋蛋。"
+        ],
+        "source": "api-story-inference"
+      },
+      {
+        "relatedCatName": "三三",
+        "relation": null,
+        "relationCandidates": [
+          "妈妈",
+          "孩子"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "曾在宿舍生活，被海棠毕业生弃养。 曾生过三胎，是项圈小黑和三三的妈妈 亲人聪明，在要绝育的前一天晚上人间蒸发，至今未找到，留下三个孩子，其中一个亲人的孩子替母受过，小小年纪失去了蛋蛋。"
+        ],
+        "source": "api-story-inference"
+      },
+      {
+        "relatedCatName": "黑小虎",
+        "relation": null,
+        "relationCandidates": [
+          "妈妈",
+          "孩子"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "曾在宿舍生活，被海棠毕业生弃养。 曾生过三胎，是项圈小黑和三三的妈妈 亲人聪明，在要绝育的前一天晚上人间蒸发，至今未找到，留下三个孩子，其中一个亲人的孩子替母受过，小小年纪失去了蛋蛋。"
+        ],
+        "source": "api-story-inference"
+      }
+    ],
+    "updates": [
+      {
+        "sourceId": "268456",
+        "date": "2025-09-24 04:19:12",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-df7f0b41cadf241373fe1a0ac9a2a92e.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [
+      "咪咪"
+    ],
+    "sourceId": "45267",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-df7f0b41cadf241373fe1a0ac9a2a92e.jpg"
+    ]
+  },
+  {
+    "name": "竹园奶牛一号",
+    "status": "就读中",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（2025-04-04）",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "公",
+    "images": [
+      "images/竹园奶牛一号/api-45266-1.jpg"
+    ],
+    "personality": [
+      "生人勿近"
+    ],
+    "description": "疑似斜眼狼留下的奶牛大军中的一只，已经绝育。（目前确定的照片也只有绝育基地一张）",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "268455",
+        "date": "2025-09-24 04:08:49",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-fbfafd2002c2ab9e683fad148c55258a.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45266",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-fbfafd2002c2ab9e683fad148c55258a.jpg"
+    ]
+  },
+  {
+    "name": "竹园大橘",
+    "status": "就读中",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（2025-04-04）",
+    "notes": "待补充",
+    "area": "竹园",
+    "gender": "公",
+    "images": [
+      "images/竹园大橘/api-45265-1.jpg"
+    ],
+    "personality": [
+      "生人勿近",
+      "喵拳攻击"
+    ],
+    "description": "一只非常凶悍的大橘，在诱捕笼里疯狂挣扎，撞破了额头。行踪不定（其实是竹园太多不亲人橘猫了，分不清，不过已经绝育了就很好了）照片目前只能找到在绝育基地的一张。",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "268454",
+        "date": "2025-09-24 04:07:21",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-b9c95b6ec15172c60f7022d2411f7527.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45265",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-b9c95b6ec15172c60f7022d2411f7527.jpg"
+    ]
+  },
+  {
+    "name": "黑哥",
+    "status": "就读中",
+    "vaccine": "未接种",
+    "sterilized": "已绝育（日期待补充）",
+    "notes": "第二针认捐人：鲨人不wink",
+    "area": "竹园",
+    "gender": "公",
+    "images": [
+      "images/黑哥/黑哥2.jpg",
+      "images/黑哥/黑哥1.jpg"
+    ],
+    "personality": [
+      "生人勿近",
+      "喵拳攻击",
+      "超级校霸"
+    ],
+    "description": "竹园传说，神出鬼没，一只巨大的黑色公公猫。",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "268452",
+        "date": "2025-09-24 04:01:34",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-65927a552700514b1a3f7c678b060ffd.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45263",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-65927a552700514b1a3f7c678b060ffd.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-76287820455bccfd53583d9cc5ccdd9d.jpg"
+    ],
+    "photoUpdatedAt": "2026-08-14"
+  },
+  {
+    "name": "焦炭馒头",
+    "status": "喵星或失踪",
+    "vaccine": "未接种",
+    "sterilized": "已绝育（2025-03-23）",
+    "notes": "—",
+    "area": "竹园",
+    "gender": "母",
+    "images": [
+      "images/焦炭馒头/焦炭馒头1.jpg"
+    ],
+    "personality": [
+      "生人勿近",
+      "胆小怂包"
+    ],
+    "description": "在海棠生存了很久，有口炎，很胆小，一直在围栏里面偷偷讨饭。2025年被捕绝育引产，医生告知年龄可能有十岁以上（也可能口炎导致牙口磨损比实际严重），身体已经不支持怀孕了，当时只怀了一个，名副其实的西电第一老太太猫。",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "268321",
+        "date": "2025-09-23 17:25:41",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0923/17/e8b8cca1c-beb3771f06f94f6e222ecc695c2df0cc.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45247",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0923/17/e8b8cca1c-9b754a7fed81a7c9b0d17ba4e28c534a.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0923/17/e8b8cca1c-319dcf44b84f39f7aa38bc0e9326b90e.jpg"
+    ]
+  },
+  {
+    "name": "竹园警长",
+    "status": "就读中",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（2025-09-15）",
+    "notes": "待补充",
+    "area": "竹园",
+    "gender": "公",
+    "images": [
+      "images/竹园警长/api-45246-1.jpg"
+    ],
+    "personality": [
+      "生人勿近",
+      "胆小怂包"
+    ],
+    "description": "绿眼正开脸白手套奶牛，很怕人，但贪吃，每天去找竹园三小只蹭饭。",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "268319",
+        "date": "2025-09-23 17:20:07",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0923/17/e8b8cca1c-64b79bb619c86fabfbbb07712070bc4e.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45246",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0923/17/e8b8cca1c-64b79bb619c86fabfbbb07712070bc4e.jpg"
+    ]
+  },
+  {
+    "name": "来才",
+    "status": "就读中",
+    "vaccine": "未接种",
+    "sterilized": "已绝育（日期待补充）",
+    "notes": "—",
+    "area": "竹园",
+    "gender": "母",
+    "images": [
+      "images/来才/来才1.jpg"
+    ],
+    "personality": [
+      "生人勿近",
+      "胆小怂包",
+      "喵拳攻击"
+    ],
+    "description": "独来独往的胆小橘猫，至少有过五个孩子，均已被领养。25年已完成绝育。",
+    "relationships": [],
+    "relationshipHints": [
+      {
+        "relatedCatName": "胆小橘",
+        "relation": null,
+        "relationCandidates": [
+          "孩子"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "独来独往的胆小橘猫，至少有过五个孩子，均已被领养。25年已完成绝育。"
+        ],
+        "source": "api-story-inference"
+      }
+    ],
+    "updates": [
+      {
+        "sourceId": "268318",
+        "date": "2025-09-23 17:17:08",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0923/17/e8b8cca1c-d999d0686cfc145accf00eb1682e4dd0.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45245",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0923/17/e8b8cca1c-d999d0686cfc145accf00eb1682e4dd0.jpg"
+    ]
+  },
+  {
+    "name": "奶茶",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（日期待补充）",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "母",
+    "images": [
+      "images/奶茶/api-45188-1.jpg"
+    ],
+    "personality": [
+      "喜欢贴贴",
+      "软萌好盘",
+      "聪明机灵"
+    ],
+    "description": "温柔亲人的黄眼圆脸玳瑁\n喜欢趴电动车，也喜欢扶着台阶坐在大楼梯上\n冬天会化身全自动上腿机，在人怀里睡大觉\n2025.09已被@我是小脑斧（xhs同名）自提，开启幸福咪生！",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "267963",
+        "date": "2025-09-22 15:16:28",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0922/15/e8b8cca1c-a1bc668913e332f12bc455ca5755ea32.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45188",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0922/15/e8b8cca1c-a1bc668913e332f12bc455ca5755ea32.jpg"
+    ]
+  },
+  {
+    "name": "福福",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "已绝育（日期待补充）",
+    "notes": "待补充",
+    "area": "丁香",
+    "gender": "母",
+    "images": [
+      "images/福福/api-45174-1.jpg",
+      "images/福福/api-45174-2.jpg"
+    ],
+    "personality": [
+      "公认妈宝",
+      "喜欢贴贴",
+      "软萌好盘"
+    ],
+    "description": "黄狸花色加白，大耳朵小小的脸，爱心形嘴套子，花臂咪一枚。\n小小年纪不幸得了口炎，被好心人带去医院做了全口拔牙，现已完全恢复。在丁香被香香女王罩着生活，可还是被不知名坏猫一口咬坏屁股，手术康复后才发现其实是神经兮兮体育生搞笑女一个，喜欢追着自己的尾巴转圈圈，一米七的猫爬架说跳就跳，便宜哥哥说揍就揍（虽然打不过），喜欢尝试妈给买的各种窝窝和玩具，给足了情绪价值。\n2024.12.5已被@佩可和福福（xhs同名）自提，开启幸福猫生🐱",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "267878",
+        "date": "2025-09-22 09:16:12",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0922/09/e8b8cca1c-9b137055dfb64791364e6b6ef4ab4af9.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45174",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0922/09/e8b8cca1c-9b137055dfb64791364e6b6ef4ab4af9.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0924/10/e8b8cca1c-03d55e168d93b480671bddb6b961e3d7.jpg"
+    ]
+  },
+  {
+    "name": "芝麻",
+    "status": "已毕业",
+    "vaccine": "待补充",
+    "sterilized": "未绝育",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "公",
+    "images": [
+      "images/芝麻/api-45152-1.jpg"
+    ],
+    "personality": [
+      "见人就蹭",
+      "软萌好盘",
+      "撒娇求撸"
+    ],
+    "description": "*202511编：芝麻已经在领养家庭享受它的荣华富贵十五年！\n是大猫麻薯生的最后一窝小猫（麻薯已送去断情绝爱），性格非常好，麻薯带娃时不慎掉进沥青里所以现在身上还有沥青。因为妈妈叫麻薯，名字里有麻字，他又是奶牛猫有黑毛，所以叫芝麻。",
+    "relationships": [],
+    "relationshipHints": [
+      {
+        "relatedCatName": "麻薯",
+        "relation": null,
+        "relationCandidates": [
+          "妈妈"
+        ],
+        "confidence": "inferred",
+        "evidence": [
+          "*202511编：芝麻已经在领养家庭享受它的荣华富贵十五年！ 是大猫麻薯生的最后一窝小猫（麻薯已送去断情绝爱），性格非常好，麻薯带娃时不慎掉进沥青里所以现在身上还有沥青。因为妈妈叫麻薯，名字里有麻字，他又是奶牛猫",
+          "*202511编：芝麻已经在领养家庭享受它的荣华富贵十五年！ 是大猫麻薯生的最后一窝小猫（麻薯已送去断情绝爱），性格非常好，麻薯带娃时不慎掉进沥青里所以现在身上还有沥青。因为妈妈叫麻薯，名字里有麻字，他又是奶牛猫有黑毛，所以叫芝麻。",
+          "它的荣华富贵十五年！ 是大猫麻薯生的最后一窝小猫（麻薯已送去断情绝爱），性格非常好，麻薯带娃时不慎掉进沥青里所以现在身上还有沥青。因为妈妈叫麻薯，名字里有麻字，他又是奶牛猫有黑毛，所以叫芝麻。"
+        ],
+        "source": "api-story-inference"
+      }
+    ],
+    "updates": [
+      {
+        "sourceId": "267752",
+        "date": "2025-09-21 18:22:05",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0921/18/e8b8cca1c-a9b5f6c5b66d4d9269906b8eae487b85.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [],
+    "sourceId": "45152",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0921/18/e8b8cca1c-a9b5f6c5b66d4d9269906b8eae487b85.jpg"
+    ]
+  },
+  {
+    "name": "黑小虎",
+    "status": "就读中",
+    "vaccine": "一针 2025-11-30；二针未接种；三针未接种",
+    "sterilized": "已绝育（2025-02-26）",
+    "notes": "第二/三针认捐人：长乐",
+    "area": "竹园",
+    "gender": "公",
+    "images": [
+      "images/黑小虎/黑小虎1.jpg"
+    ],
+    "personality": [
+      "生人勿近",
+      "旋饭狂魔"
+    ],
+    "description": "比较怕人的一只小黑猫，和某几个人人建立起了亲密关系，和这几个人人关系很好，别人比较难接近。",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [
+      {
+        "sourceId": "264994",
+        "date": "2025-09-11 21:32:06",
+        "type": "cat-line",
+        "title": null,
+        "content": "",
+        "images": [
+          "https://static.nordri.co/rms/public/193079755/2025/0911/21/e8b8cca1c-b8d2cd4e40b183d4d9fcd25637f00a63.jpg",
+          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
+        ]
+      }
+    ],
+    "aliases": [
+      "小黑"
+    ],
+    "sourceId": "44692",
+    "sourceImages": [
+      "https://static.nordri.co/rms/public/193079755/2025/0911/21/e8b8cca1c-0aa334b1fd0c117d0fd06644a34d7174.jpg",
+      "https://static.nordri.co/rms/public/193079755/2025/0911/21/e8b8cca1c-524b4ce3a0a8face073734c1c6d3cf20.jpg"
+    ]
+  },
+  {
+    "name": "警长",
+    "status": "就读中",
+    "vaccine": "一针 2025-11-01；二针未接种；三针未接种",
+    "sterilized": "已绝育（日期待补充）",
+    "notes": "—",
+    "area": "竹园",
+    "gender": "公",
+    "images": [
+      "images/警长/警长1.jpg"
+    ],
+    "personality": [],
+    "description": null,
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [],
+    "aliases": [],
+    "sourceId": null,
+    "sourceImages": []
+  },
+  {
+    "name": "茶叶大蛋",
+    "status": "就读中",
+    "vaccine": "未接种",
+    "sterilized": "未绝育",
+    "notes": "第二/三针认捐人：毛橘妈",
+    "area": "海棠",
+    "gender": "公",
+    "images": [
+      "images/茶叶大蛋/茶叶大蛋1.jpg"
+    ],
+    "personality": [],
+    "description": null,
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [],
+    "aliases": [],
+    "sourceId": null,
+    "sourceImages": []
+  },
+  {
+    "name": "彪哥",
+    "status": "就读中",
+    "vaccine": "一针 2026-05-20；二针未接种；三针未接种",
+    "sterilized": "已绝育（日期待补充）",
+    "notes": "斜眼狼儿子；第二针认捐人：鲨人不wink",
+    "area": "竹园",
+    "gender": "公",
+    "images": [
+      "images/彪哥/彪哥4.jpg",
+      "images/彪哥/彪哥3.jpg",
+      "images/彪哥/彪哥2.jpg",
+      "images/彪哥/彪哥1.jpg"
+    ],
+    "personality": [],
+    "description": null,
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [],
+    "aliases": [],
+    "sourceId": null,
+    "sourceImages": []
+  },
+  {
+    "name": "小小黑",
+    "status": "就读中",
+    "vaccine": "未接种",
+    "sterilized": "2026-05-17 已绝育",
+    "notes": "2026-05-17 在缘愈绝育/治疗，术后恢复待跟进。",
+    "area": "海棠",
+    "gender": "母",
+    "images": [
+      "images/小小黑/小小黑2.jpg",
+      "images/小小黑/小小黑1.jpg"
+    ],
+    "personality": [],
+    "description": null,
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [],
+    "aliases": [],
+    "sourceId": null,
+    "sourceImages": []
+  },
+  {
+    "name": "咖啡",
+    "status": "喵星或失踪",
+    "vaccine": "—",
+    "sterilized": "已绝育（日期待补充）",
+    "notes": "约 2026-04-30 因猫瘟去世，具体日期待补充。",
+    "area": "丁香",
+    "gender": "公",
+    "images": [
+      "images/咖啡/咖啡1.jpg",
+      "images/咖啡/咖啡2.jpg"
+    ],
+    "personality": [],
+    "description": null,
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [],
+    "aliases": [],
+    "sourceId": null,
+    "sourceImages": []
+  },
+  {
+    "name": "邪恶橘白",
+    "status": "就读中",
+    "vaccine": "未接种",
+    "sterilized": "2026-07-04 已绝育",
+    "notes": "橘白双色，怕人，已绝育但疫苗未接种。",
+    "area": "丁香",
+    "gender": "公",
+    "images": [
+      "images/胆小橘/胆小橘1.jpg"
+    ],
+    "personality": [],
+    "description": null,
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [],
+    "aliases": [],
+    "sourceId": null,
+    "sourceImages": []
+  },
+  {
+    "name": "金琥",
+    "status": "就读中",
+    "vaccine": "未接种",
+    "sterilized": "2026-06-28 已绝育",
+    "notes": "纯白短毛，怕人，已绝育但疫苗未接种。",
+    "area": "竹园",
+    "gender": "公",
+    "images": [
+      "images/金琥/金琥2.jpg",
+      "images/金琥/金琥1.jpg",
+      "images/金琥/金琥3.jpg"
+    ],
+    "personality": [],
+    "description": null,
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [],
+    "aliases": [],
+    "sourceId": null,
+    "sourceImages": []
   }
 ];
