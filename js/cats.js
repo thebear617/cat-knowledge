@@ -3746,7 +3746,9 @@ export const catProfiles = [
       "images/大头/大头17.jpg",
       "images/大头/大头18.jpg",
       "images/大头/大头19.jpg",
-      "images/大头/大头20.jpg"
+      "images/大头/大头20.jpg",
+      "images/大头/大头21.jpg",
+      "images/大头/大头22.jpg"
     ],
     "personality": [
       "聪明机灵",
@@ -3907,7 +3909,7 @@ export const catProfiles = [
       "https://static.nordri.co/rms/public/193079755/2025/0911/19/e8b8cca1c-2d7a1e05ec5b239cfb1d867a91edcc9d.jpg",
       "https://static.nordri.co/rms/public/193079755/2025/0911/19/e8b8cca1c-0617a71b7f47a7d59d291ec175ae62c4.jpg"
     ],
-    "photoUpdatedAt": "2026-08-18",
+    "photoUpdatedAt": "2026-09-12",
     "cover": "images/大头/datou10.jpg"
   },
   {
@@ -3933,7 +3935,8 @@ export const catProfiles = [
       "images/漂亮橘/漂亮橘12.jpg",
       "images/漂亮橘/漂亮橘13.jpg",
       "images/漂亮橘/漂亮橘14.jpg",
-      "images/漂亮橘/漂亮橘15.jpg"
+      "images/漂亮橘/漂亮橘15.jpg",
+      "images/漂亮橘/漂亮橘16.jpg"
     ],
     "personality": [
       "胆小怂包",
@@ -4145,7 +4148,7 @@ export const catProfiles = [
     "sourceImages": [
       "https://static.nordri.co/rms/public/193079755/2025/0923/09/e8b8cca1c-04b77bb7d8da588a54b32950bce778ca.jpg"
     ],
-    "photoUpdatedAt": "2026-08-19",
+    "photoUpdatedAt": "2026-09-12",
     "cover": "images/漂亮橘/漂亮橘7.jpg"
   },
   {
