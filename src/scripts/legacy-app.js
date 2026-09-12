@@ -6,9 +6,8 @@ import { priceSnapshot } from '../data/price-snapshot.js';
 
 const BASE_URL = `${import.meta.env.BASE_URL.replace(/\/?$/, '/')}`;
 const STATUS_ORDER = ['全部', '就读中', '已毕业', '喵星或失踪'];
-const VACCINE_OPTIONS = ['全部', '零针', '一针', '两针', '疫苗毕业'];
-const STERILIZED_OPTIONS = ['全部', '已绝育', '未绝育'];
-const FRIENDLINESS_OPTIONS = ['全部', '亲人', '怕人', '非常怕人'];
+const VACCINE_OPTIONS = ['全部', '待补充', '零针', '一针', '两针', '疫苗毕业'];
+const STERILIZED_OPTIONS = ['全部', '待补充', '已绝育', '未绝育'];
 const OPERATIONS_VIEWS = [
   { id: 'inventory', label: '物资库存', icon: '📦' },
   { id: 'collaboration', label: '行动协作', icon: '🤝' },
@@ -36,10 +35,9 @@ const state = {
   status: '全部',
   vaccine: '全部',
   sterilized: '全部',
-  friendliness: '全部',
   area: '全部',
   selectedName: null,
-  photoPage: 1,
+  updatesExpanded: false,
   directoryPage: 1,
   directoryPageSize: null,
   directorySort: 'name',
@@ -268,6 +266,7 @@ function isEmptyValue(value) {
 }
 
 function getVaccineBucket(cat) {
+  if (isEmptyValue(cat.vaccine)) return '待补充';
   const text = `${cat.vaccine}`;
   const hasD1 = /一针\s*(202\d|✅)/.test(text);
   const hasD2 = /二针\s*(202\d|✅)/.test(text);
@@ -284,15 +283,13 @@ function getVaccineSummary(cat) {
     一针: '已完成一针',
     两针: '已完成二针',
     疫苗毕业: '已完成三针',
-  }[getVaccineBucket(cat)];
+    待补充: '待补充',
+  }[getVaccineBucket(cat)] || '待补充';
 }
 
 function getSterilizedBucket(cat) {
-  return isEmptyValue(cat.sterilized) || String(cat.sterilized).includes('未') ? '未绝育' : '已绝育';
-}
-
-function getFriendlinessBucket(cat) {
-  return String(cat.friendliness || '待观察');
+  if (isEmptyValue(cat.sterilized)) return '待补充';
+  return String(cat.sterilized).includes('未') ? '未绝育' : '已绝育';
 }
 
 function getSterilizedSummary(cat) {
@@ -331,7 +328,6 @@ function getFilteredCats() {
     const haystack = normalize([
       cat.name,
       cat.status,
-      cat.friendliness,
       cat.vaccine,
       cat.sterilized,
       cat.notes,
@@ -343,7 +339,6 @@ function getFilteredCats() {
       && (state.status === '全部' || cat.status === state.status)
       && (state.vaccine === '全部' || getVaccineBucket(cat) === state.vaccine)
       && (state.sterilized === '全部' || getSterilizedBucket(cat) === state.sterilized)
-      && (state.friendliness === '全部' || getFriendlinessBucket(cat) === state.friendliness)
       && (state.area === '全部' || cat.area === state.area);
   });
 
@@ -481,7 +476,7 @@ function sidebarNavIcon(tabId) {
 // ============== Home Tab ==============
 
 function isHomeFiltered() {
-  return state.status !== '全部' || state.vaccine !== '全部' || state.sterilized !== '全部' || state.friendliness !== '全部' || state.area !== '全部' || state.query !== '';
+  return state.status !== '全部' || state.vaccine !== '全部' || state.sterilized !== '全部' || state.area !== '全部' || state.query !== '';
 }
 
 function getActiveHomeFilter() {
@@ -602,7 +597,6 @@ function renderCatCard(cat) {
       ${firstImage ? `<img class="cat-card-photo" src="${cdnUrl(firstImage)}" alt="${escapeHtml(cat.name)}" loading="lazy">` : `<div class="cat-card-placeholder">🐱</div>`}
       <h2 class="cat-card-name">${escapeHtml(cat.name)}</h2>
       <div class="cat-card-statuses" aria-label="${escapeHtml(cat.name)}状态">
-        ${renderSummaryTag('抓捕/亲人', getFriendlinessBucket(cat), cat.friendliness)}
         ${renderSummaryTag('绝育', getSterilizedSummary(cat), cat.sterilized)}
       </div>
     </article>
@@ -642,94 +636,287 @@ function renderOptionalSummaryTag(label, value, className = '') {
   return renderSummaryTag(label, value, value, className);
 }
 
+function getCatUpdates(cat) {
+  return (Array.isArray(cat.updates) ? cat.updates : [])
+    .filter(update => update && (update.date || update.title || update.content))
+    .sort((a, b) => {
+      const parseDate = value => Date.parse(String(value || '').replace(' ', 'T')) || 0;
+      return parseDate(b.date) - parseDate(a.date);
+    });
+}
+
+function formatUpdateDate(value) {
+  const text = String(value || '').trim();
+  return text.match(/^\d{4}-\d{2}-\d{2}/)?.[0] || text || '日期待补充';
+}
+
+function displayDrawerValue(value) {
+  return isEmptyValue(value) ? '待补充' : String(value);
+}
+
+function drawerSectionIcon(icon) {
+  const common = 'fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"';
+  const icons = {
+    story: `<svg class="drawer-section-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5c2.8-1.3 5.5-.9 8 1.1 2.5-2 5.2-2.4 8-1.1v13c-2.8-1.3-5.5-.9-8 1.1-2.5-2-5.2-2.4-8-1.1Z" ${common}/><path d="M12 6.6v13" ${common}/></svg>`,
+    appearance: `<svg class="drawer-section-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5.5" width="16" height="15" rx="2" ${common}/><path d="M8 3.5v4M16 3.5v4M4 10h16M8 14h.01M12 14h.01M16 14h.01M8 17.5h.01M12 17.5h.01" ${common}/></svg>`,
+    relationships: `<img class="drawer-section-icon drawer-section-icon-relationship-cat" src="${cdnUrl('images/ui/relationship-cat.png')}" alt="" aria-hidden="true">`,
+    updates: `<svg class="drawer-section-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5h9l3 3v14H6z" ${common}/><path d="M15 3.5v3h3M9 11h6M9 15h6" ${common}/></svg>`,
+    personality: `<svg class="drawer-section-icon drawer-section-icon-paw" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="16.5" rx="5.8" ry="4.2" fill="currentColor"/><circle cx="5.8" cy="10" r="2.1" fill="currentColor"/><circle cx="10" cy="6.3" r="2.1" fill="currentColor"/><circle cx="14.5" cy="6.3" r="2.1" fill="currentColor"/><circle cx="18.2" cy="10" r="2.1" fill="currentColor"/></svg>`
+  };
+  return icons[icon] || '';
+}
+
+function renderDrawerSection(title, content, className = '', meta = '', icon = '') {
+  if (!content) return '';
+  return `
+    <section class="drawer-section${className ? ` ${className}` : ''}">
+      <div class="drawer-section-heading">
+        <h3>${drawerSectionIcon(icon)}<span>${escapeHtml(title)}</span></h3>
+        ${meta ? `<span class="drawer-section-meta">${escapeHtml(meta)}</span>` : ''}
+      </div>
+      ${content}
+    </section>
+  `;
+}
+
+function renderDrawerGenderBadge(gender) {
+  const knownGender = gender === '公' || gender === '母';
+  const symbol = gender === '公' ? '♂' : gender === '母' ? '♀' : '·';
+  return `<span class="drawer-gender-badge gender-${knownGender ? gender : 'unknown'}" aria-label="性别：${escapeHtml(displayDrawerValue(gender))}"><b aria-hidden="true">${symbol}</b></span>`;
+}
+
+function renderDrawerFact(label, value, detail = '', icon = '', tooltip = false) {
+  const primary = displayDrawerValue(value);
+  const detailText = !isEmptyValue(detail) && String(detail) !== primary ? String(detail) : '';
+  const primaryHtml = tooltip && detailText
+    ? `<span class="drawer-fact-value summary-source" tabindex="0" aria-label="${escapeHtml(label)}：${escapeHtml(primary)}；详细记录：${escapeHtml(detailText)}"><strong>${escapeHtml(primary)}</strong><span class="summary-detail drawer-summary-detail">${escapeHtml(detailText)}</span></span>`
+    : `<strong>${escapeHtml(primary)}</strong>`;
+  return `
+    <div class="drawer-fact">
+      <div class="drawer-fact-heading"><span class="drawer-fact-icon" aria-hidden="true">${icon}</span><span>${escapeHtml(label)}</span></div>
+      ${primaryHtml}
+    </div>
+  `;
+}
+
+function getAppearanceSummary(cat) {
+  return cat.appearanceDate || cat.firstSeen || cat.firstSeenAt || cat.appearedAt || '待补充';
+}
+
+function renderDrawerFacts(cat) {
+  const sterilizedIcon = `<img class="drawer-fact-image drawer-fact-image-sterilized" src="${cdnUrl('images/ui/sterilized-fixed.png')}" alt="" aria-hidden="true">`;
+  const vaccineIcon = `<img class="drawer-fact-image drawer-fact-image-vaccine" src="${cdnUrl('images/ui/vaccine-syringe.png')}" alt="" aria-hidden="true">`;
+  return `
+    <section class="drawer-facts-card" aria-label="基础信息">
+      <div class="drawer-facts-grid">
+        ${renderDrawerFact('区域', cat.area, '', drawerSectionIcon('personality'))}
+        ${renderDrawerFact('出现时间', getAppearanceSummary(cat), '', drawerSectionIcon('appearance'))}
+        ${renderDrawerFact('绝育', getSterilizedSummary(cat), cat.sterilized, sterilizedIcon, true)}
+        ${renderDrawerFact('疫苗', getVaccineSummary(cat), cat.vaccine, vaccineIcon, true)}
+      </div>
+    </section>
+  `;
+}
+
+function renderDrawerGallery(cat) {
+  const images = Array.isArray(cat.images) ? cat.images : [];
+  if (!images.length) {
+    return `
+      <section class="drawer-gallery" aria-label="照片">
+        <div class="drawer-photo-placeholder"><span aria-hidden="true">🐱</span><p>暂无照片</p></div>
+      </section>
+    `;
+  }
+
+  const coverSrc = getCatCover(cat) || images[0];
+  const thumbnails = images.filter(src => src !== coverSrc).map((src, index) => `
+    <button class="drawer-photo-thumb" type="button" data-photo-preview aria-label="预览${escapeHtml(cat.name)}的照片 ${index + 1}">
+      <img src="${cdnUrl(src.replace(/([^/]+)$/, 'thumb/$1'))}" data-full="${cdnUrl(src)}" alt="${escapeHtml(cat.name)} 照片预览 ${index + 1}" loading="lazy">
+    </button>
+  `).join('');
+  return `
+    <section class="drawer-gallery" aria-label="照片">
+      <button class="drawer-gallery-main" type="button" data-main-photo aria-label="查看${escapeHtml(cat.name)}大图">
+        <img class="drawer-gallery-main-image" src="${cdnUrl(coverSrc)}" data-full="${cdnUrl(coverSrc)}" alt="${escapeHtml(cat.name)}" loading="eager">
+      </button>
+      <div class="drawer-photo-strip" aria-label="照片缩略图">${thumbnails}</div>
+    </section>
+  `;
+}
+
+function findRelatedCat(name) {
+  return catProfiles.find(item => item.name === name || (Array.isArray(item.aliases) && item.aliases.includes(name)));
+}
+
+const SYMMETRIC_RELATIONS = new Set(['好友', '兄弟姐妹', '同事', '情侣', '宿敌', '夫妻']);
+
+function getChildRelation(cat) {
+  if (cat?.gender === '公') return '儿子';
+  if (cat?.gender === '母') return '女儿';
+  return '子女';
+}
+
+function getParentRelation(cat) {
+  if (cat?.gender === '公') return '爸爸';
+  if (cat?.gender === '母') return '妈妈';
+  return '家长';
+}
+
+function getInverseRelation(relation, sourceCat) {
+  if (SYMMETRIC_RELATIONS.has(relation)) return relation;
+  if (relation === '妈妈' || relation === '爸爸') return getChildRelation(sourceCat);
+  if (relation === '儿子' || relation === '女儿') return getParentRelation(sourceCat);
+  return '';
+}
+
+function getCatRelationships(cat) {
+  const directRelationships = Array.isArray(cat.relationships)
+    ? cat.relationships.filter(item => item?.relatedCatName)
+    : [];
+  const relationships = [...directRelationships];
+  const directTargets = new Set(directRelationships.map(item => findRelatedCat(item.relatedCatName)?.name || item.relatedCatName));
+
+  for (const sourceCat of catProfiles) {
+    if (sourceCat.name === cat.name) continue;
+    const sourceRelationships = Array.isArray(sourceCat.relationships)
+      ? sourceCat.relationships.filter(item => item?.relatedCatName)
+      : [];
+    for (const item of sourceRelationships) {
+      const targetCat = findRelatedCat(item.relatedCatName);
+      if (!targetCat || targetCat.name !== cat.name || directTargets.has(sourceCat.name)) continue;
+      const inverseRelation = getInverseRelation(item.relation, sourceCat);
+      if (!inverseRelation) continue;
+      relationships.push({
+        ...item,
+        relatedCatName: sourceCat.name,
+        relation: inverseRelation,
+        derived: true
+      });
+      directTargets.add(sourceCat.name);
+    }
+  }
+
+  return relationships;
+}
+
+function renderRelationshipCard(item, catName) {
+  const relatedName = item.relatedCatName;
+  const relatedCat = findRelatedCat(relatedName);
+  const relatedImage = relatedCat ? getCatCover(relatedCat) : null;
+  const relation = item.relation || '关系待补充';
+  const note = [item.note, item.notes, item.remark, item.remarks, item.memo]
+    .find(value => !isEmptyValue(value));
+  const image = relatedImage
+    ? `<img src="${cdnUrl(relatedImage.replace(/([^/]+)$/, 'thumb/$1'))}" alt="${escapeHtml(relatedName)}" loading="lazy">`
+    : '<span class="drawer-relation-placeholder" aria-hidden="true">🐱</span>';
+  const element = relatedCat ? 'button' : 'div';
+  const interaction = relatedCat
+    ? `type="button" data-related-cat="${escapeHtml(relatedCat.name)}" aria-label="查看${escapeHtml(relatedCat.name)}详情"`
+    : '';
+  return `
+    <${element} class="drawer-relation-card" ${interaction} title="${escapeHtml(`${catName}与${relatedName}的关系`)}">
+      ${image}
+      <div class="drawer-relation-copy">
+        <strong>${escapeHtml(relatedName)}</strong>
+        <span class="drawer-relation-type">${escapeHtml(relation)}</span>
+        ${note ? `<small class="drawer-relation-note">${escapeHtml(String(note))}</small>` : ''}
+      </div>
+    </${element}>
+  `;
+}
+
+function renderDrawerRelationships(cat) {
+  const relationships = getCatRelationships(cat);
+  const formalHtml = relationships.length
+    ? `<div class="drawer-relation-group"><div class="drawer-relation-list">${relationships.map(item => renderRelationshipCard(item, cat.name)).join('')}</div></div>`
+    : '<div class="drawer-relation-group"><div class="drawer-relation-list drawer-relation-list-empty"><div class="drawer-relation-empty" role="status">待补充</div></div></div>';
+  return renderDrawerSection('关系', formalHtml, 'drawer-relationships', '', 'relationships');
+}
+
+function renderDrawerUpdates(cat) {
+  const updates = getCatUpdates(cat);
+  if (!updates.length) return '';
+  const visibleUpdates = state.updatesExpanded ? updates : updates.slice(0, 3);
+  const updatesHtml = visibleUpdates.map(update => {
+    const title = String(update.title || '').trim();
+    const content = String(update.content || '').trim();
+    const date = formatUpdateDate(update.date);
+    return `
+      <article class="drawer-update">
+        <time datetime="${escapeHtml(date)}">${escapeHtml(date)}</time>
+        ${title ? `<h4>${escapeHtml(title)}</h4>` : ''}
+        ${content ? `<p>${escapeHtml(content)}</p>` : '<p class="drawer-update-empty">暂无文字记录</p>'}
+      </article>
+    `;
+  }).join('');
+  const toggle = updates.length > 3
+    ? `<button class="drawer-updates-toggle" type="button" data-updates-toggle data-expanded="${state.updatesExpanded}" aria-expanded="${state.updatesExpanded}">${state.updatesExpanded ? '收起动态' : `展开全部动态（共 ${updates.length} 条）`}</button>`
+    : '';
+  return renderDrawerSection('猫咪动态', `<div class="drawer-updates-list">${updatesHtml}</div>${toggle}`, 'drawer-updates', `共 ${updates.length} 条`, 'updates');
+}
+
+function renderDrawerPersonality(cat) {
+  const personality = Array.isArray(cat.personality) ? cat.personality.filter(value => !isEmptyValue(value)) : [];
+  if (!personality.length) return '';
+  return renderDrawerSection('性格关键词', `<div class="drawer-keyword-list">${personality.map(value => `<span>${escapeHtml(value)}</span>`).join('')}</div>`, 'drawer-personality', '', 'personality');
+}
+
+function renderDrawerArchive(cat) {
+  const sections = [];
+  if (!isEmptyValue(cat.description)) {
+    sections.push(renderDrawerSection('故事档案', `<p class="drawer-story">${escapeHtml(cat.description)}</p>`, 'drawer-description', '', 'story'));
+  }
+  const relationships = renderDrawerRelationships(cat);
+  if (relationships) sections.push(relationships);
+  const updates = renderDrawerUpdates(cat);
+  if (updates) sections.push(updates);
+  return sections.join('');
+}
+
 function openDrawer(name) {
   const cat = catProfiles.find(item => item.name === name);
   if (!cat) return;
 
   state.selectedName = name;
-  state.photoPage = 1;
+  state.updatesExpanded = false;
   renderDrawer(cat);
 }
 
-function isMobilePhotoLayout() {
-  return window.matchMedia('(max-width: 719px)').matches;
-}
-
-function renderPhotoPagination(totalItems, page, pageSize) {
-  if (!isMobilePhotoLayout() || totalItems <= pageSize) return '';
-  const totalPages = Math.ceil(totalItems / pageSize);
-  const pageButtons = Array.from({ length: totalPages }, (_, index) => {
-    const pageNumber = index + 1;
-    return `<button type="button" class="photo-pagination-page${pageNumber === page ? ' is-current' : ''}" data-photo-page="${pageNumber}" aria-label="第 ${pageNumber} 页"${pageNumber === page ? ' aria-current="page"' : ''}>${pageNumber}</button>`;
-  }).join('');
-  return `
-    <nav class="photo-pagination" aria-label="照片翻页">
-      <div class="photo-pagination-controls">
-        <button type="button" class="photo-pagination-direction" data-photo-page="${page - 1}" aria-label="上一页" title="上一页"${page === 1 ? ' disabled' : ''}>‹</button>
-        ${pageButtons}
-        <button type="button" class="photo-pagination-direction" data-photo-page="${page + 1}" aria-label="下一页" title="下一页"${page === totalPages ? ' disabled' : ''}>›</button>
-      </div>
-    </nav>
-  `;
-}
-
-function renderDrawer(cat, { page = 1 } = {}) {
+function renderDrawer(cat, { updatesExpanded = state.updatesExpanded } = {}) {
   hideSummaryTooltip();
   drawer.hidden = false;
   drawerBackdrop.hidden = false;
+  state.updatesExpanded = updatesExpanded;
 
-  const imgs = cat.images || [];
-  const photoPageSize = 4;
-  const totalPhotoPages = Math.max(1, Math.ceil(imgs.length / photoPageSize));
-  const currentPhotoPage = isMobilePhotoLayout()
-    ? Math.min(Math.max(page, 1), totalPhotoPages)
-    : 1;
-  state.photoPage = currentPhotoPage;
-  const visibleImgs = isMobilePhotoLayout()
-    ? imgs.slice((currentPhotoPage - 1) * photoPageSize, currentPhotoPage * photoPageSize)
-    : imgs;
-  const photosHtml = imgs.length === 0
-    ? `
-        <div class="photo-empty">
-          <p>暂无照片</p>
-          <p class="photo-empty-hint">将照片放入 <code>images/${escapeHtml(cat.name)}/</code> 文件夹，并在 cats.js 中添加路径即可</p>
-        </div>
-      `
-    : `
-        <div class="photo-grid">
-          ${visibleImgs.map(src => `
-            <div class="photo-item">
-              <img src="${cdnUrl(src.replace(/([^/]+)$/, 'thumb/$1'))}" data-full="${cdnUrl(src)}" alt="${escapeHtml(cat.name)}" loading="lazy" onclick="openPhotoViewer(this)">
-            </div>
-          `).join('')}
-        </div>
-        ${renderPhotoPagination(imgs.length, currentPhotoPage, photoPageSize)}
-      `;
-  const areaTag = renderOptionalSummaryTag('区域', cat.area, 'drawer-area-tag');
-  const secondaryTags = `${renderSummaryTag('抓捕/亲人', getFriendlinessBucket(cat), cat.friendliness)}${areaTag}${renderOptionalSummaryTag('性别', cat.gender)}${renderNotesTag(cat.notes)}`;
+  const aliases = Array.isArray(cat.aliases) ? cat.aliases.filter(value => !isEmptyValue(value)) : [];
+  const aliasText = aliases.join('、');
 
   drawer.innerHTML = `
     <div class="drawer-header">
-      <div>
-        <h2>${escapeHtml(cat.name)}</h2>
+      <div class="drawer-identity">
+        <div class="drawer-title-row">
+          <h2>${escapeHtml(cat.name)}</h2>
+          ${aliasText ? `<span class="drawer-alias" title="别名：${escapeHtml(aliasText)}">· ${escapeHtml(aliasText)}</span>` : ''}
+          ${renderDrawerGenderBadge(cat.gender)}
+          ${renderStatusTag(cat)}
+        </div>
       </div>
-      <button class="icon-button" id="closeDrawer" type="button" aria-label="关闭详情">×</button>
+      <div class="drawer-header-note" aria-hidden="true">
+        <span>世界破破烂烂，</span>
+        <span>小猫缝缝补补。 ${drawerSectionIcon('personality')}</span>
+      </div>
+      <button class="icon-button" id="closeDrawer" type="button" aria-label="关闭详情"><span aria-hidden="true">×</span></button>
     </div>
     <div class="drawer-content">
-      <section class="drawer-profile" aria-label="档案信息">
-        <div class="drawer-tags">
-          ${renderStatusTag(cat)}
-          <span class="tag vaccine-${getVaccineBucket(cat)} summary-source" tabindex="0" aria-label="疫苗状态：${escapeHtml(getVaccineSummary(cat))}；具体记录：${escapeHtml(cat.vaccine || '—')}">
-            <span>${escapeHtml(getVaccineSummary(cat))}</span>
-            <span class="summary-detail">${escapeHtml(cat.vaccine || '—')}</span>
-          </span>
-          ${renderSummaryTag('绝育', getSterilizedSummary(cat), cat.sterilized)}
-          ${secondaryTags ? `<span class="drawer-tags-secondary">${secondaryTags}</span>` : ''}
-        </div>
-      </section>
-      <section class="drawer-photos" aria-label="照片">
-        ${photosHtml}
-      </section>
+      <div class="drawer-layout">
+        <section class="drawer-column drawer-left" aria-label="照片与基础信息">
+          ${renderDrawerGallery(cat)}
+          ${renderDrawerFacts(cat)}
+        </section>
+        <section class="drawer-column drawer-right" aria-label="故事与动态">
+          ${renderDrawerArchive(cat)}
+        </section>
+      </div>
     </div>
   `;
 
@@ -739,14 +926,29 @@ function renderDrawer(cat, { page = 1 } = {}) {
   focusWithoutScrolling(closeButton);
   closeButton.addEventListener('click', closeDrawer);
 
-  drawer.querySelectorAll('[data-photo-page]').forEach(button => {
+  drawer.querySelectorAll('[data-related-cat]').forEach(button => {
     button.addEventListener('click', () => {
-      if (button.disabled) return;
-      const nextPage = Number(button.dataset.photoPage);
-      if (!Number.isInteger(nextPage) || nextPage === state.photoPage) return;
-      renderDrawer(cat, { page: nextPage });
+      const relatedCat = findRelatedCat(button.dataset.relatedCat);
+      if (relatedCat) openDrawer(relatedCat.name);
     });
   });
+
+  drawer.querySelectorAll('[data-photo-preview]').forEach(button => {
+    button.addEventListener('click', () => {
+      const previewImage = button.querySelector('img');
+      if (previewImage) openPhotoViewer(previewImage);
+    });
+  });
+
+  const mainPhoto = drawer.querySelector('[data-main-photo] .drawer-gallery-main-image');
+  if (mainPhoto) mainPhoto.addEventListener('click', () => openPhotoViewer(mainPhoto));
+
+  const updatesToggle = drawer.querySelector('[data-updates-toggle]');
+  if (updatesToggle) {
+    updatesToggle.addEventListener('click', () => {
+      renderDrawer(cat, { updatesExpanded: !state.updatesExpanded });
+    });
+  }
 
   bindSummaryTooltips(drawer);
 }
@@ -823,7 +1025,7 @@ function bindSummaryTooltips(container) {
 function closeDrawer() {
   hideSummaryTooltip();
   state.selectedName = null;
-  state.photoPage = 1;
+  state.updatesExpanded = false;
   drawer.hidden = true;
   drawerBackdrop.hidden = true;
   drawer.innerHTML = '';
@@ -831,30 +1033,12 @@ function closeDrawer() {
   unlockMainAreaScroll();
 }
 
-let lastPhotoLayoutIsMobile = isMobilePhotoLayout();
-
-window.addEventListener('resize', () => {
-  const isMobile = isMobilePhotoLayout();
-  if (isMobile === lastPhotoLayoutIsMobile) return;
-  lastPhotoLayoutIsMobile = isMobile;
-  if (!drawer.hidden && state.selectedName) {
-    const cat = catProfiles.find(item => item.name === state.selectedName);
-    if (cat) renderDrawer(cat);
-  }
-}, { passive: true });
-
 function openPhotoViewer(img) {
   const fullSrc = img.dataset.full || img.src;
   const overlay = document.createElement('div');
   overlay.className = 'photo-viewer';
   overlay.innerHTML = `<img src="${fullSrc}" alt="${img.alt}">`;
   overlay.addEventListener('click', () => overlay.remove());
-  document.addEventListener('keydown', function handler(e) {
-    if (e.key === 'Escape') {
-      overlay.remove();
-      document.removeEventListener('keydown', handler);
-    }
-  });
   document.body.appendChild(overlay);
 }
 
@@ -1482,7 +1666,6 @@ function bindControls() {
         state.status = '全部';
         state.vaccine = '全部';
         state.sterilized = '全部';
-        state.friendliness = '全部';
         state.area = '全部';
         state.directoryPage = 1;
         state.directorySort = 'name';
@@ -1607,7 +1790,6 @@ function bindControls() {
         state.status = '全部';
         state.vaccine = '全部';
         state.sterilized = '全部';
-        state.friendliness = '全部';
         state.area = '全部';
         state.directoryPage = 1;
         renderApp();
@@ -1911,7 +2093,6 @@ function applyHomeFilter(filterKey) {
   state.status = '全部';
   state.vaccine = '全部';
   state.sterilized = '全部';
-  state.friendliness = '全部';
   state.area = '全部';
   state.directoryPage = 1;
 
@@ -2076,6 +2257,11 @@ function openSidebar() {
 drawerBackdrop.addEventListener('click', closeDrawer);
 document.addEventListener('keydown', event => {
   if (event.key === 'Escape') {
+    const photoViewer = document.querySelector('.photo-viewer');
+    if (photoViewer) {
+      photoViewer.remove();
+      return;
+    }
     if (!drawer.hidden) closeDrawer();
     closeSidebar();
   }
