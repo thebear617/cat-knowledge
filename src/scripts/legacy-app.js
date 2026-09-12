@@ -418,12 +418,26 @@ function scheduleDirectoryPageSizeSync() {
   });
 }
 
+function getCompactPaginationItems(totalPages, page) {
+  if (totalPages <= 7) return Array.from({ length: totalPages }, (_, index) => index + 1);
+
+  const items = [1];
+  const start = Math.max(2, page - 1);
+  const end = Math.min(totalPages - 1, page + 1);
+  if (start > 2) items.push('ellipsis-start');
+  for (let pageNumber = start; pageNumber <= end; pageNumber += 1) items.push(pageNumber);
+  if (end < totalPages - 1) items.push('ellipsis-end');
+  items.push(totalPages);
+  return items;
+}
+
 function renderDirectoryPagination(totalItems, page, pageSize) {
   if (totalItems <= pageSize) return '';
   const totalPages = Math.ceil(totalItems / pageSize);
-  const pageButtons = Array.from({ length: totalPages }, (_, index) => {
-    const pageNumber = index + 1;
-    return `<button type="button" class="directory-pagination-page${pageNumber === page ? ' is-current' : ''}" data-directory-page="${pageNumber}" aria-label="第 ${pageNumber} 页"${pageNumber === page ? ' aria-current="page"' : ''}>${pageNumber}</button>`;
+  const pageItems = isMobileDirectoryLayout() ? getCompactPaginationItems(totalPages, page) : Array.from({ length: totalPages }, (_, index) => index + 1);
+  const pageButtons = pageItems.map(item => {
+    if (typeof item !== 'number') return '<span class="directory-pagination-ellipsis" aria-hidden="true">…</span>';
+    return `<button type="button" class="directory-pagination-page${item === page ? ' is-current' : ''}" data-directory-page="${item}" aria-label="第 ${item} 页"${item === page ? ' aria-current="page"' : ''}>${item}</button>`;
   }).join('');
   return `
     <nav class="directory-pagination" aria-label="猫咪档案翻页">
@@ -868,8 +882,6 @@ function renderDrawerArchive(cat) {
   }
   const relationships = renderDrawerRelationships(cat);
   if (relationships) sections.push(relationships);
-  const updates = renderDrawerUpdates(cat);
-  if (updates) sections.push(updates);
   return sections.join('');
 }
 
@@ -909,12 +921,12 @@ function renderDrawer(cat, { updatesExpanded = state.updatesExpanded } = {}) {
     </div>
     <div class="drawer-content">
       <div class="drawer-layout">
-        <section class="drawer-column drawer-left" aria-label="照片与基础信息">
+        <section class="drawer-column drawer-left" aria-label="照片">
           ${renderDrawerGallery(cat)}
-          ${renderDrawerFacts(cat)}
         </section>
-        <section class="drawer-column drawer-right" aria-label="故事与动态">
+        <section class="drawer-column drawer-right" aria-label="故事、关系与基础信息">
           ${renderDrawerArchive(cat)}
+          ${renderDrawerFacts(cat)}
         </section>
       </div>
     </div>
@@ -1388,9 +1400,10 @@ function renderProcurementRow(item) {
 
 function renderProcurementPagination({ page, totalPages, pageSize }, totalItems) {
   if (totalItems <= pageSize) return '';
-  const pageButtons = Array.from({ length: totalPages }, (_, index) => {
-    const pageNumber = index + 1;
-    return `<button type="button" class="procurement-pagination-page${pageNumber === page ? ' is-current' : ''}" data-procurement-page="${pageNumber}" aria-label="第 ${pageNumber} 页"${pageNumber === page ? ' aria-current="page"' : ''}>${pageNumber}</button>`;
+  const pageItems = isMobileDirectoryLayout() ? getCompactPaginationItems(totalPages, page) : Array.from({ length: totalPages }, (_, index) => index + 1);
+  const pageButtons = pageItems.map(item => {
+    if (typeof item !== 'number') return '<span class="procurement-pagination-ellipsis" aria-hidden="true">…</span>';
+    return `<button type="button" class="procurement-pagination-page${item === page ? ' is-current' : ''}" data-procurement-page="${item}" aria-label="第 ${item} 页"${item === page ? ' aria-current="page"' : ''}>${item}</button>`;
   }).join('');
   return `
     <nav class="procurement-pagination" aria-label="采购记录翻页">

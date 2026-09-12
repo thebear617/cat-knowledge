@@ -1552,6 +1552,10 @@ select {
   font-size: 1.95rem;
   font-weight: 600;
   line-height: 1;
+  transform: rotate(0deg);
+}
+
+.drawer-gender-badge.gender-公 b {
   transform: rotate(45deg);
 }
 
@@ -2282,6 +2286,18 @@ select {
   min-width: 2.35rem !important;
   padding: 0 !important;
   font-size: 1.25rem !important;
+}
+
+.directory-pagination-ellipsis,
+.procurement-pagination-ellipsis {
+  display: inline-flex;
+  min-width: 1rem;
+  height: 2.25rem;
+  align-items: center;
+  justify-content: center;
+  color: #a99784;
+  font-size: .85rem;
+  line-height: 1;
 }
 
 .photo-empty {
@@ -5445,6 +5461,50 @@ body.drawer-open {
     max-width: none;
   }
 
+  .directory-pagination,
+  .procurement-pagination {
+    width: 100%;
+    max-width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding: 0 .1rem .15rem;
+    scrollbar-width: none;
+  }
+
+  .directory-pagination::-webkit-scrollbar,
+  .procurement-pagination::-webkit-scrollbar {
+    display: none;
+  }
+
+  .directory-pagination-controls,
+  .procurement-pagination-controls {
+    flex: 0 0 auto;
+    gap: .25rem;
+    margin-inline: auto;
+  }
+
+  .directory-pagination-controls button,
+  .procurement-pagination-controls button {
+    min-width: 1.9rem;
+    height: 2rem;
+    padding: 0 .35rem;
+    font-size: .72rem;
+  }
+
+  .directory-pagination-direction,
+  .procurement-pagination-direction {
+    width: 1.9rem;
+    min-width: 1.9rem !important;
+    font-size: 1.05rem !important;
+  }
+
+  .directory-pagination-ellipsis,
+  .procurement-pagination-ellipsis {
+    min-width: .75rem;
+    height: 2rem;
+    font-size: .76rem;
+  }
+
   .operations-shell,
   .knowledge-shell {
     margin-top: 3.35rem;
@@ -5674,12 +5734,17 @@ body.drawer-open {
 
   .drawer-gender-badge b {
     font-size: 1.65rem;
+    transform: rotate(0deg);
+  }
+
+  .drawer-gender-badge.gender-公 b {
+    transform: rotate(45deg);
   }
 
   .icon-button {
-    width: 2.75rem;
-    height: 2.75rem;
-    font-size: 1.6rem;
+    width: 2.4rem;
+    height: 2.4rem;
+    font-size: 1.35rem;
   }
 
   .drawer-layout {
