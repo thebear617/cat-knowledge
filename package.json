@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "astro dev --port 4327",
     "dev:verify": "node scripts/start-isolated-cms-dev.mjs",
+    "finance:generate": "node scripts/generate-finance-data.mjs",
+    "finance:validate": "node scripts/validate-finance-data.mjs",
     "build": "astro build",
     "preview": "astro preview"
   },

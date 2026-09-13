@@ -1,6 +1,7 @@
 ---
 import '../../css/style.css';
 import '../styles/knowledge.css';
+import '../styles/finance.css';
 import { getCollection } from 'astro:content';
 const knowledgePosts = (await getCollection('science', ({ data }) => !data.draft))
   .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf())

@@ -1,0 +1,82 @@
+{
+  "source": "公账收支表.csv",
+  "sourceRowCount": 328,
+  "recordCount": 328,
+  "dateRange": {
+    "from": "2025-06-09",
+    "to": "2026-08-24"
+  },
+  "categoryCounts": {
+    "捐赠收入": 137,
+    "物料费": 58,
+    "医药费": 52,
+    "交通费": 59,
+    "其他": 11,
+    "义卖收入": 10,
+    "<空>": 1
+  },
+  "cashIncome": {
+    "count": 145,
+    "cents": 3999333
+  },
+  "cashExpense": {
+    "count": 180,
+    "cents": 3367525
+  },
+  "inKindCount": 2,
+  "placeholderCount": 1,
+  "evidenceCount": 29,
+  "balanceAudit": {
+    "populatedCount": 72,
+    "matches": 35,
+    "mismatches": 37,
+    "note": "余额为来源字段核验结果，不作为公开账户余额。"
+  },
+  "unmappedCatNames": {
+    "食堂橘猫": 1,
+    "槿月": 1,
+    "夏至": 5,
+    "斜眼狼儿子": 2,
+    "小红猫": 2
+  },
+  "aliasCounts": {
+    "渣男 → 赫兹": 7
+  },
+  "duplicateGroups": [
+    {
+      "key": "捐款¦income¦10¦",
+      "rows": [
+        41,
+        94
+      ]
+    },
+    {
+      "key": "同学捐款¦income¦20¦",
+      "rows": [
+        78,
+        261
+      ]
+    },
+    {
+      "key": "*@捐款¦income¦50¦",
+      "rows": [
+        109,
+        201
+      ]
+    },
+    {
+      "key": "同学捐款¦income¦5.2¦",
+      "rows": [
+        114,
+        179
+      ]
+    },
+    {
+      "key": "同学捐款¦income¦200¦",
+      "rows": [
+        197,
+        314
+      ]
+    }
+  ]
+}
