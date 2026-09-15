@@ -2458,7 +2458,6 @@ function bindSummaryCards() {
 // ============== Sidebar Toggle ==============
 
 const DESKTOP_SIDEBAR_BREAKPOINT = 720;
-let desktopSidebarPinned = false;
 let desktopSidebarHovered = false;
 let compactSidebarLayout = window.innerWidth < DESKTOP_SIDEBAR_BREAKPOINT;
 let sidebarHoverCloseTimer = null;
@@ -2477,12 +2476,14 @@ function clearSidebarHoverCloseTimer() {
 function updateSidebarToggleState(expanded) {
   const toggle = document.getElementById('sidebarToggle');
   if (!toggle) return;
+  const label = expanded ? '侧边栏已展开' : '展开侧边栏';
   toggle.setAttribute('aria-expanded', String(expanded));
-  toggle.setAttribute('aria-label', expanded ? '侧边栏已展开' : '展开侧边栏');
+  toggle.setAttribute('aria-label', label);
+  toggle.setAttribute('title', label);
 }
 
 function syncDesktopSidebar() {
-  const expanded = desktopSidebarPinned || desktopSidebarHovered;
+  const expanded = desktopSidebarHovered;
   document.body.classList.toggle('sidebar-expanded', !compactSidebarLayout && expanded);
   document.body.classList.toggle('sidebar-collapsed', !compactSidebarLayout && !expanded);
   updateSidebarToggleState(compactSidebarLayout ? document.body.classList.contains('sidebar-open') : expanded);
@@ -2496,7 +2497,6 @@ function setDesktopSidebarHover(value) {
 
 function scheduleDesktopSidebarClose() {
   clearSidebarHoverCloseTimer();
-  if (desktopSidebarPinned) return;
   sidebarHoverCloseTimer = window.setTimeout(() => {
     desktopSidebarHovered = false;
     syncDesktopSidebar();
@@ -2506,7 +2506,6 @@ function scheduleDesktopSidebarClose() {
 function closeSidebar() {
   document.body.classList.remove('sidebar-open');
   document.body.style.overflow = '';
-  desktopSidebarPinned = false;
   desktopSidebarHovered = false;
   clearSidebarHoverCloseTimer();
   syncDesktopSidebar();
@@ -2521,7 +2520,6 @@ function openSidebar() {
   const toggle = document.getElementById('sidebarToggle');
   const backdrop = document.getElementById('sidebarBackdrop');
   const close = document.getElementById('sidebarClose');
-  const collapse = document.getElementById('sidebarCollapse');
   const sidebar = document.getElementById('sidebar');
 
   if (toggle) {
@@ -2531,25 +2529,20 @@ function openSidebar() {
     toggle.addEventListener('mouseleave', () => {
       if (!compactSidebarLayout) scheduleDesktopSidebarClose();
     });
+    toggle.addEventListener('focus', () => {
+      if (!compactSidebarLayout) setDesktopSidebarHover(true);
+    });
     toggle.addEventListener('click', () => {
       if (compactSidebarLayout) {
         openSidebar();
         return;
       }
-      desktopSidebarPinned = true;
+      // 桌面端不做固定：手柄只负责展开预览，鼠标离开侧边栏后自动收起
       setDesktopSidebarHover(true);
     });
   }
   if (backdrop) backdrop.addEventListener('click', closeSidebar);
   if (close) close.addEventListener('click', closeSidebar);
-  if (collapse) {
-    collapse.addEventListener('click', () => {
-      desktopSidebarPinned = false;
-      desktopSidebarHovered = false;
-      clearSidebarHoverCloseTimer();
-      syncDesktopSidebar();
-    });
-  }
   if (sidebar) {
     sidebar.addEventListener('mouseenter', () => {
       if (!compactSidebarLayout) setDesktopSidebarHover(true);
@@ -2557,13 +2550,20 @@ function openSidebar() {
     sidebar.addEventListener('mouseleave', () => {
       if (!compactSidebarLayout) scheduleDesktopSidebarClose();
     });
+    sidebar.addEventListener('focusin', () => {
+      if (!compactSidebarLayout) setDesktopSidebarHover(true);
+    });
+    sidebar.addEventListener('focusout', event => {
+      if (compactSidebarLayout) return;
+      if (sidebar.contains(event.relatedTarget) || event.relatedTarget === toggle) return;
+      scheduleDesktopSidebarClose();
+    });
   }
 
   window.addEventListener('resize', () => {
     const nextCompactLayout = isCompactSidebarLayout();
     if (nextCompactLayout !== compactSidebarLayout) {
       compactSidebarLayout = nextCompactLayout;
-      desktopSidebarPinned = false;
       desktopSidebarHovered = false;
       clearSidebarHoverCloseTimer();
       closeSidebar();

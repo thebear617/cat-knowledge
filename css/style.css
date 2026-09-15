@@ -71,10 +71,6 @@ body {
   display: none;
 }
 
-.sidebar-collapse {
-  display: none;
-}
-
 .sidebar-brand {
   padding: 1.6rem 1.2rem 1.2rem;
   border-bottom: 1px solid rgba(255, 255, 255, .12);
@@ -5235,14 +5231,15 @@ body.drawer-open {
     z-index: 30;
     width: 2.2rem;
     height: 4.5rem;
-    border: 1px solid #d8c6ad;
+    border: 1px solid #cdb99c;
     border-left: none;
     border-radius: 0 .8rem .8rem 0;
-    background: rgba(255, 249, 238, .94);
+    background: rgba(255, 250, 241, .96);
     color: #6b482d;
     font-size: 1.05rem;
     transform: translateY(-50%);
-    box-shadow: 0 4px 14px rgba(78, 53, 31, .16);
+    box-shadow: 0 4px 14px rgba(78, 53, 31, .18);
+    cursor: pointer;
     transition: opacity .18s ease, background .15s ease, color .15s ease;
   }
 
@@ -5253,42 +5250,7 @@ body.drawer-open {
 
   body.sidebar-expanded .sidebar-toggle {
     opacity: 0;
-    pointer-events: auto;
-  }
-
-  .sidebar-collapse {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    width: 2rem;
-    height: 2rem;
-    border: 1px solid transparent;
-    border-radius: .55rem;
-    background: transparent;
-    color: rgba(255, 224, 169, .76);
-    line-height: 1;
-    cursor: pointer;
-    transition: background .15s, border-color .15s, color .15s;
-  }
-
-  .sidebar-collapse:hover {
-    border-color: rgba(255, 224, 169, .24);
-    background: rgba(255, 224, 169, .12);
-    color: #ffe0a9;
-  }
-
-  .sidebar-collapse svg {
-    display: block;
-    width: 1.2rem;
-    height: 1.2rem;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.7;
-    stroke-linecap: round;
-    stroke-linejoin: round;
+    pointer-events: none;
   }
 }
 
