@@ -2209,7 +2209,8 @@ export const catProfiles = [
     "images": [
       "images/二头/二头3.jpg",
       "images/二头/二头2.jpg",
-      "images/二头/二头1.jpg"
+      "images/二头/二头1.jpg",
+      "images/二头/二头4.jpg"
     ],
     "personality": [
       "撒娇求撸",
@@ -2359,7 +2360,8 @@ export const catProfiles = [
     "sourceImages": [
       "https://static.nordri.co/rms/public/193079755/2025/0911/21/e8b8cca1c-ffc38528755ef4ffb32c2b4fe3ea8aea.jpg",
       "https://static.nordri.co/rms/public/193079755/2025/0911/21/e8b8cca1c-7265d0bd1ea665a99875f841ec89c78a.jpg"
-    ]
+    ],
+    "photoUpdatedAt": "2026-09-15"
   },
   {
     "name": "芸豆",
@@ -3748,7 +3750,8 @@ export const catProfiles = [
       "images/大头/大头19.jpg",
       "images/大头/大头20.jpg",
       "images/大头/大头21.jpg",
-      "images/大头/大头22.jpg"
+      "images/大头/大头22.jpg",
+      "images/大头/大头23.jpg"
     ],
     "personality": [
       "聪明机灵",
@@ -3909,7 +3912,7 @@ export const catProfiles = [
       "https://static.nordri.co/rms/public/193079755/2025/0911/19/e8b8cca1c-2d7a1e05ec5b239cfb1d867a91edcc9d.jpg",
       "https://static.nordri.co/rms/public/193079755/2025/0911/19/e8b8cca1c-0617a71b7f47a7d59d291ec175ae62c4.jpg"
     ],
-    "photoUpdatedAt": "2026-09-12",
+    "photoUpdatedAt": "2026-09-15",
     "cover": "images/大头/datou10.jpg"
   },
   {
