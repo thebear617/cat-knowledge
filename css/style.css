@@ -1814,12 +1814,14 @@ select {
   display: grid;
   min-width: 0;
   gap: .55rem;
+  --drawer-photo-long-edge: 27.1875rem;
 }
 
 .drawer-gallery-main {
   display: block;
-  width: 100%;
-  aspect-ratio: 4 / 3;
+  width: min(100%, var(--drawer-photo-long-edge));
+  aspect-ratio: 1 / 1;
+  margin-inline: auto;
   overflow: hidden;
   border: 0;
   border-radius: 1rem;
@@ -2099,6 +2101,10 @@ select {
   line-height: 1.75;
   overflow-wrap: anywhere;
   white-space: pre-wrap;
+}
+
+.drawer-story-empty {
+  color: var(--drawer-muted);
 }
 
 .drawer-aliases {
@@ -5720,10 +5726,6 @@ body.drawer-open {
 
   .drawer-section {
     padding: .9rem;
-  }
-
-  .drawer-gallery-main {
-    aspect-ratio: 4 / 3;
   }
 
   .drawer-photo-thumb {

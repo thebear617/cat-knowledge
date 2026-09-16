@@ -1116,11 +1116,15 @@ function renderDrawerPersonality(cat) {
   return renderDrawerSection('性格关键词', `<div class="drawer-keyword-list">${personality.map(value => `<span>${escapeHtml(value)}</span>`).join('')}</div>`, 'drawer-personality', '', 'personality');
 }
 
+function renderDrawerStory(cat) {
+  const story = isEmptyValue(cat.description)
+    ? '<p class="drawer-story drawer-story-empty" role="status">待补充</p>'
+    : `<p class="drawer-story">${escapeHtml(cat.description)}</p>`;
+  return renderDrawerSection('故事档案', story, 'drawer-description', '', 'story');
+}
+
 function renderDrawerArchive(cat) {
-  const sections = [];
-  if (!isEmptyValue(cat.description)) {
-    sections.push(renderDrawerSection('故事档案', `<p class="drawer-story">${escapeHtml(cat.description)}</p>`, 'drawer-description', '', 'story'));
-  }
+  const sections = [renderDrawerStory(cat)];
   const relationships = renderDrawerRelationships(cat);
   if (relationships) sections.push(relationships);
   return sections.join('');
