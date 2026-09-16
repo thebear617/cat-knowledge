@@ -8657,9 +8657,12 @@ export const catProfiles = [
     "area": "竹园",
     "gender": "公",
     "images": [
-      "images/金琥/金琥2.jpg",
       "images/金琥/金琥1.jpg",
-      "images/金琥/金琥3.jpg"
+      "images/金琥/金琥2.jpg",
+      "images/金琥/金琥3.jpg",
+      "images/金琥/金琥4.jpg",
+      "images/金琥/金琥5.jpg",
+      "images/金琥/金琥6.jpg"
     ],
     "personality": [],
     "description": null,
@@ -8668,6 +8671,7 @@ export const catProfiles = [
     "updates": [],
     "aliases": [],
     "sourceId": null,
-    "sourceImages": []
+    "sourceImages": [],
+    "photoUpdatedAt": "2026-09-16"
   }
 ];
