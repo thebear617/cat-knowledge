@@ -3939,7 +3939,9 @@ export const catProfiles = [
       "images/漂亮橘/漂亮橘13.jpg",
       "images/漂亮橘/漂亮橘14.jpg",
       "images/漂亮橘/漂亮橘15.jpg",
-      "images/漂亮橘/漂亮橘16.jpg"
+      "images/漂亮橘/漂亮橘16.jpg",
+      "images/漂亮橘/漂亮橘17.jpg",
+      "images/漂亮橘/漂亮橘18.jpg"
     ],
     "personality": [
       "胆小怂包",
@@ -4151,7 +4153,7 @@ export const catProfiles = [
     "sourceImages": [
       "https://static.nordri.co/rms/public/193079755/2025/0923/09/e8b8cca1c-04b77bb7d8da588a54b32950bce778ca.jpg"
     ],
-    "photoUpdatedAt": "2026-09-12",
+    "photoUpdatedAt": "2026-09-19",
     "cover": "images/漂亮橘/漂亮橘7.jpg"
   },
   {
@@ -8673,5 +8675,50 @@ export const catProfiles = [
     "sourceId": null,
     "sourceImages": [],
     "photoUpdatedAt": "2026-09-16"
+  },
+  {
+    "name": "龙蛋",
+    "status": "就读中",
+    "vaccine": "未接种",
+    "sterilized": "未绝育",
+    "notes": "待补充",
+    "area": "丁香",
+    "gender": "公",
+    "images": [
+      "images/龙蛋/龙蛋1.jpg"
+    ],
+    "personality": [
+      "活泼好动"
+    ],
+    "description": "26 年暑假出现在丁香 14，是个很有生命力很有活力的小旅行家，跟大头叔、漂亮橘叔、赫兹叔叔都玩的很开，喜欢偷袭，喜欢抓小虫",
+    "relationships": [
+      {
+        "relatedCatName": "漂亮橘",
+        "relation": "好友",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "manual-confirmation"
+      },
+      {
+        "relatedCatName": "大头",
+        "relation": "好友",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "manual-confirmation"
+      },
+      {
+        "relatedCatName": "赫兹",
+        "relation": "好友",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "manual-confirmation"
+      }
+    ],
+    "relationshipHints": [],
+    "updates": [],
+    "aliases": [],
+    "sourceId": null,
+    "sourceImages": [],
+    "photoUpdatedAt": "2026-09-19"
   }
 ];
