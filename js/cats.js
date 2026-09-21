@@ -3751,7 +3751,9 @@ export const catProfiles = [
       "images/大头/大头20.jpg",
       "images/大头/大头21.jpg",
       "images/大头/大头22.jpg",
-      "images/大头/大头23.jpg"
+      "images/大头/大头23.jpg",
+      "images/大头/大头24.jpg",
+      "images/大头/大头25.jpg"
     ],
     "personality": [
       "聪明机灵",
@@ -3912,7 +3914,7 @@ export const catProfiles = [
       "https://static.nordri.co/rms/public/193079755/2025/0911/19/e8b8cca1c-2d7a1e05ec5b239cfb1d867a91edcc9d.jpg",
       "https://static.nordri.co/rms/public/193079755/2025/0911/19/e8b8cca1c-0617a71b7f47a7d59d291ec175ae62c4.jpg"
     ],
-    "photoUpdatedAt": "2026-09-15",
+    "photoUpdatedAt": "2026-09-21",
     "cover": "images/大头/datou10.jpg"
   },
   {
@@ -8664,7 +8666,9 @@ export const catProfiles = [
       "images/金琥/金琥3.jpg",
       "images/金琥/金琥4.jpg",
       "images/金琥/金琥5.jpg",
-      "images/金琥/金琥6.jpg"
+      "images/金琥/金琥6.jpg",
+      "images/金琥/金琥7.jpg",
+      "images/金琥/金琥8.jpg"
     ],
     "personality": [],
     "description": null,
@@ -8674,7 +8678,7 @@ export const catProfiles = [
     "aliases": [],
     "sourceId": null,
     "sourceImages": [],
-    "photoUpdatedAt": "2026-09-16"
+    "photoUpdatedAt": "2026-09-21"
   },
   {
     "name": "龙蛋",
