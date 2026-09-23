@@ -9,6 +9,7 @@
     "finance:generate": "node scripts/generate-finance-data.mjs",
     "finance:validate": "node scripts/validate-finance-data.mjs",
     "build": "astro build",
+    "build:local": "CODEBUDDY_SAFE_DELETE_ENABLED=0 astro build",
     "preview": "astro preview"
   },
   "devDependencies": {
