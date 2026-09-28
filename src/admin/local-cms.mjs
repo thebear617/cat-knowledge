@@ -295,7 +295,7 @@ function previewInline(value) {
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 }
 
-// 与 src/scripts/legacy-app.js 的 markdownToHtml 保持同一套语法
+// 与 src/scripts/app/knowledge.js 的 markdownToHtml 保持同一套语法
 // （h1-h3 / 有序列表 / 无序列表 / 引用 / 行内代码 / 加粗），
 // 仅额外注入 data-source-start/end，供 CMS 编辑器与预览双向定位。
 function renderPreviewHtml(markdown) {
