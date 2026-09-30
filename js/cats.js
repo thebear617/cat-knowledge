@@ -340,7 +340,9 @@ export const catProfiles = [
     "area": "教学区",
     "gender": "母",
     "images": [
-      "images/蓝豆/蓝豆1.jpg"
+      "images/蓝豆/蓝豆1.jpg",
+      "images/蓝豆/蓝豆2.jpg",
+      "images/蓝豆/蓝豆3.jpg"
     ],
     "personality": [
       "生人勿近",
@@ -447,7 +449,8 @@ export const catProfiles = [
     "sourceId": "45274",
     "sourceImages": [
       "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-02d335d90f3529d021fb31ad330e0f33.jpg"
-    ]
+    ],
+    "photoUpdatedAt": "2026-09-30"
   },
   {
     "name": "二橙",
@@ -3753,7 +3756,9 @@ export const catProfiles = [
       "images/大头/大头22.jpg",
       "images/大头/大头23.jpg",
       "images/大头/大头24.jpg",
-      "images/大头/大头25.jpg"
+      "images/大头/大头25.jpg",
+      "images/大头/大头26.jpg",
+      "images/大头/大头27.jpg"
     ],
     "personality": [
       "聪明机灵",
@@ -3914,7 +3919,7 @@ export const catProfiles = [
       "https://static.nordri.co/rms/public/193079755/2025/0911/19/e8b8cca1c-2d7a1e05ec5b239cfb1d867a91edcc9d.jpg",
       "https://static.nordri.co/rms/public/193079755/2025/0911/19/e8b8cca1c-0617a71b7f47a7d59d291ec175ae62c4.jpg"
     ],
-    "photoUpdatedAt": "2026-09-21",
+    "photoUpdatedAt": "2026-09-30",
     "cover": "images/大头/datou10.jpg"
   },
   {
@@ -8540,7 +8545,8 @@ export const catProfiles = [
     "area": "竹园",
     "gender": "公",
     "images": [
-      "images/警长/警长1.jpg"
+      "images/警长/警长1.jpg",
+      "images/警长/警长2.jpg"
     ],
     "personality": [],
     "description": null,
@@ -8549,7 +8555,8 @@ export const catProfiles = [
     "updates": [],
     "aliases": [],
     "sourceId": null,
-    "sourceImages": []
+    "sourceImages": [],
+    "photoUpdatedAt": "2026-09-30"
   },
   {
     "name": "茶叶大蛋",
