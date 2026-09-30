@@ -3945,7 +3945,8 @@ export const catProfiles = [
       "images/漂亮橘/漂亮橘17.jpg",
       "images/漂亮橘/漂亮橘18.jpg",
       "images/漂亮橘/漂亮橘19.jpg",
-      "images/漂亮橘/漂亮橘20.jpg"
+      "images/漂亮橘/漂亮橘20.jpg",
+      "images/漂亮橘/漂亮橘21.jpg"
     ],
     "personality": [
       "胆小怂包",
