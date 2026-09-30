@@ -2375,7 +2375,8 @@ export const catProfiles = [
     "area": "竹园",
     "gender": "母",
     "images": [
-      "images/芸豆/芸豆1.jpg"
+      "images/芸豆/芸豆1.jpg",
+      "images/芸豆/芸豆2.jpg"
     ],
     "personality": [
       "软萌好盘",
@@ -2487,7 +2488,8 @@ export const catProfiles = [
     "sourceId": "44691",
     "sourceImages": [
       "https://static.nordri.co/rms/public/193079755/2025/0911/21/e8b8cca1c-6440670de9fcf40003d8ed96e8b2715a.jpg"
-    ]
+    ],
+    "photoUpdatedAt": "2026-09-30"
   },
   {
     "name": "橙留香",
@@ -8681,7 +8683,8 @@ export const catProfiles = [
       "images/金琥/金琥5.jpg",
       "images/金琥/金琥6.jpg",
       "images/金琥/金琥7.jpg",
-      "images/金琥/金琥8.jpg"
+      "images/金琥/金琥8.jpg",
+      "images/金琥/金琥9.jpg"
     ],
     "personality": [],
     "description": null,
@@ -8691,7 +8694,7 @@ export const catProfiles = [
     "aliases": [],
     "sourceId": null,
     "sourceImages": [],
-    "photoUpdatedAt": "2026-09-21"
+    "photoUpdatedAt": "2026-09-30"
   },
   {
     "name": "龙蛋",
@@ -8814,7 +8817,9 @@ export const catProfiles = [
     "gender": "母",
     "images": [
       "images/糯糯/糯糯1.jpg",
-      "images/糯糯/糯糯2.jpg"
+      "images/糯糯/糯糯2.jpg",
+      "images/糯糯/糯糯3.jpg",
+      "images/糯糯/糯糯4.jpg"
     ],
     "personality": [],
     "description": null,
@@ -8823,7 +8828,8 @@ export const catProfiles = [
     "updates": [],
     "aliases": [],
     "sourceId": null,
-    "sourceImages": []
+    "sourceImages": [],
+    "photoUpdatedAt": "2026-09-30"
   },
   {
     "name": "笑笑",
@@ -8854,7 +8860,8 @@ export const catProfiles = [
     "area": "竹园",
     "gender": "母",
     "images": [
-      "images/麦麦/麦麦1.jpg"
+      "images/麦麦/麦麦1.jpg",
+      "images/麦麦/麦麦2.jpg"
     ],
     "personality": [],
     "description": "竹园的台阶守望者，因为爱吃麦当劳所以被起名为“麦麦”",
@@ -8863,7 +8870,8 @@ export const catProfiles = [
     "updates": [],
     "aliases": [],
     "sourceId": null,
-    "sourceImages": []
+    "sourceImages": [],
+    "photoUpdatedAt": "2026-09-30"
   },
   {
     "name": "无牙仔",
