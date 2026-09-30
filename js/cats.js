@@ -8692,7 +8692,8 @@ export const catProfiles = [
     "area": "丁香",
     "gender": "公",
     "images": [
-      "images/龙蛋/龙蛋1.jpg"
+      "images/龙蛋/龙蛋1.jpg",
+      "images/龙蛋/龙蛋2.jpg"
     ],
     "personality": [
       "活泼好动"
@@ -8726,7 +8727,7 @@ export const catProfiles = [
     "aliases": [],
     "sourceId": null,
     "sourceImages": [],
-    "photoUpdatedAt": "2026-09-19"
+    "photoUpdatedAt": "2026-09-30"
   },
   {
     "name": "陶吉吉",
