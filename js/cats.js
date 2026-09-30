@@ -5482,8 +5482,7 @@ export const catProfiles = [
       "images/银杏/银杏2.jpg",
       "images/银杏/银杏3.jpg",
       "images/银杏/银杏4.jpg",
-      "images/银杏/银杏5.jpg",
-      "images/银杏/银杏6.jpg"
+      "images/银杏/银杏5.jpg"
     ],
     "personality": [
       "胆小怂包",
@@ -5525,8 +5524,7 @@ export const catProfiles = [
       "https://static.nordri.co/rms/public/193079755/2025/1128/11/e8b8cca1c-e3e29e679c23c01f465ab15621d94781.jpg",
       "https://static.nordri.co/rms/public/193079755/2025/1128/11/e8b8cca1c-2e2bd3f3723d8fc9395cc173c04b4a8c.jpg",
       "https://static.nordri.co/rms/public/193079755/2025/1128/11/e8b8cca1c-ad657b2764509807acfa5badcf2cd30c.jpg"
-    ],
-    "photoUpdatedAt": "2026-09-30"
+    ]
   },
   {
     "name": "赫兹",
@@ -8881,7 +8879,8 @@ export const catProfiles = [
     "gender": "母",
     "images": [
       "images/麦麦/麦麦1.jpg",
-      "images/麦麦/麦麦2.jpg"
+      "images/麦麦/麦麦2.jpg",
+      "images/麦麦/麦麦3.jpg"
     ],
     "personality": [],
     "description": "竹园的台阶守望者，因为爱吃麦当劳所以被起名为“麦麦”",
