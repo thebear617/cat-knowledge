@@ -8285,43 +8285,6 @@ export const catProfiles = [
     ]
   },
   {
-    "name": "竹园警长",
-    "status": "就读中",
-    "vaccine": "待补充",
-    "sterilized": "已绝育（2025-09-15）",
-    "notes": "待补充",
-    "area": "竹园",
-    "gender": "公",
-    "images": [
-      "images/竹园警长/api-45246-1.jpg"
-    ],
-    "personality": [
-      "生人勿近",
-      "胆小怂包"
-    ],
-    "description": "绿眼正开脸白手套奶牛，很怕人，但贪吃，每天去找竹园三小只蹭饭。",
-    "relationships": [],
-    "relationshipHints": [],
-    "updates": [
-      {
-        "sourceId": "268319",
-        "date": "2025-09-23 17:20:07",
-        "type": "cat-line",
-        "title": null,
-        "content": "",
-        "images": [
-          "https://static.nordri.co/rms/public/193079755/2025/0923/17/e8b8cca1c-64b79bb619c86fabfbbb07712070bc4e.jpg",
-          "https://static.nordri.co/rms/public/193079755/2025/0817/14/3d61b7041-23f65b3d05e240369954656c5a590a23.jpg"
-        ]
-      }
-    ],
-    "aliases": [],
-    "sourceId": "45246",
-    "sourceImages": [
-      "https://static.nordri.co/rms/public/193079755/2025/0923/17/e8b8cca1c-64b79bb619c86fabfbbb07712070bc4e.jpg"
-    ]
-  },
-  {
     "name": "来才",
     "status": "就读中",
     "vaccine": "未接种",
@@ -8506,7 +8469,7 @@ export const catProfiles = [
   {
     "name": "黑小虎",
     "status": "就读中",
-    "vaccine": "一针 2025-11-30；二针未接种；三针未接种",
+    "vaccine": "一针 2025-11-30；二针已完成（日期待补充）；三针已完成（日期待补充）",
     "sterilized": "已绝育（2025-02-26）",
     "notes": "第二/三针认捐人：长乐",
     "area": "竹园",
@@ -8558,6 +8521,7 @@ export const catProfiles = [
     "gender": "公",
     "images": [
       "images/警长/警长1.jpg",
+      "images/竹园警长/api-45246-1.jpg",
       "images/警长/警长2.jpg"
     ],
     "personality": [],

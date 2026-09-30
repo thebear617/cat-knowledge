@@ -12,7 +12,7 @@ const STATUS_ORDER = ['全部', '就读中', '已毕业', '喵星或失踪'];
 const VACCINE_OPTIONS = ['全部', '待补充', '零针', '一针', '两针', '疫苗毕业'];
 const STERILIZED_OPTIONS = ['全部', '待补充', '已绝育', '未绝育'];
 const DIRECTORY_MOBILE_PAGE_SIZE = 6;
-const DIRECTORY_DESKTOP_PAGE_SIZE = 15;
+const DIRECTORY_DESKTOP_PAGE_SIZE = 14;
 const DIRECTORY_SORT_OPTIONS = [
   { value: 'name', label: '名称排序' },
   { value: 'area', label: '区域排序' },
@@ -196,7 +196,7 @@ function syncDirectoryPageSize() {
   if (!grid) return;
   const pageSize = isMobileDirectoryLayout()
     ? DIRECTORY_MOBILE_PAGE_SIZE
-    : getComputedStyle(grid).gridTemplateColumns.split(/\s+/).filter(Boolean).length * 3;
+    : getComputedStyle(grid).gridTemplateColumns.split(/\s+/).filter(Boolean).length * 2;
   if (!pageSize || state.directoryPageSize === pageSize) return;
   state.directoryPageSize = pageSize;
   state.directoryPage = 1;
@@ -288,6 +288,7 @@ function getDirectoryData() {
     catsWithPhotos,
     directoryCats,
     visibleDirectoryCats,
+    directoryPageSize,
     directoryPagination: renderDirectoryPagination(directoryCats.length, currentDirectoryPage, directoryPageSize),
   };
 }
@@ -306,18 +307,22 @@ function renderHomeStats({ summary, filtered, activeFilter }) {
 }
 
 function renderDirectorySection(data, { standalone = false, showFootnote = false } = {}) {
-  const { catsWithPhotos, directoryCats, visibleDirectoryCats, directoryPagination } = data;
+  const { catsWithPhotos, directoryCats, visibleDirectoryCats, directoryPageSize, directoryPagination } = data;
+  const desktopPlaceholderCount = isMobileDirectoryLayout()
+    ? 0
+    : Math.max(0, directoryPageSize - visibleDirectoryCats.length);
+  const desktopPlaceholders = Array.from({ length: desktopPlaceholderCount }, () => '<span class="home-directory-placeholder" aria-hidden="true"></span>').join('');
   const footnote = showFootnote
-    ? '<p class="home-directory-footnote" role="note">图源来自西电猫猫群，若有已毕业毛孩子家长需要隐藏毛孩子信息，或拍摄图片的友友需要隐藏照片的请私信猫猫群管理员</p>'
+    ? '<p class="home-directory-footnote" role="note">图源：XDU猫猫群<br class="home-directory-footnote-break">如需隐藏猫咪或照片，请联系群管理员</p>'
     : '';
-  return `<section class="home-directory${standalone ? ' directory-page-list' : ''}"><header><div><p><img class="directory-heading-icon" src="${cdnUrl('images/cat-archive-icon.png')}" alt="" aria-hidden="true">猫猫档案</p></div><small>${standalone ? '持续档案' : '猫咪目录'}</small></header>${renderCatControls(directoryCats.length)}${directoryCats.length ? `<div class="home-directory-grid">${visibleDirectoryCats.map(cat => `<button class="home-directory-card" data-cat-name="${escapeHtml(cat.name)}" type="button"><img src="${cdnUrl(getDirectoryCover(cat))}" alt="${escapeHtml(cat.name)}" loading="lazy"><span>${escapeHtml(cat.name)}</span></button>`).join('')}</div>${directoryPagination}${footnote}` : '<p class="home-directory-empty">没有匹配的猫咪，可以清空筛选后再试。</p>'}</section>`;
+  return `<section class="home-directory${standalone ? ' directory-page-list' : ''}"><header><div><p><img class="directory-heading-icon" src="${cdnUrl('images/cat-archive-icon.png')}" alt="" aria-hidden="true">猫猫档案</p></div><small>${standalone ? '持续档案' : '猫咪目录'}</small></header>${renderCatControls(directoryCats.length)}${directoryCats.length ? `<div class="home-directory-grid">${visibleDirectoryCats.map(cat => `<button class="home-directory-card" data-cat-name="${escapeHtml(cat.name)}" type="button"><img src="${cdnUrl(getDirectoryCover(cat))}" alt="${escapeHtml(cat.name)}" loading="lazy"><span>${escapeHtml(cat.name)}</span></button>`).join('')}${desktopPlaceholders}</div>${directoryPagination}${footnote}` : '<p class="home-directory-empty">没有匹配的猫咪，可以清空筛选后再试。</p>'}</section>`;
 }
 
 function renderHomeLandingPage() {
   const data = getDirectoryData();
   const heroCat = catProfiles.find(cat => cat.name === '大头' && getCatCover(cat)) || data.catsWithPhotos[0];
   const coverStripCats = getTimedFeaturedCats(data.catsWithPhotos, heroCat);
-  return `<section class="home-yearbook home-landing-page"><div class="home-cover"><div class="home-cover-copy"><h2>猫猫手册</h2><p class="home-cover-title">它们路过校园，也路过我们的生活</p><i></i><p class="home-cover-note home-cover-note-desktop">从镜头和档案中，<br>认识校园里的每一只猫。</p><p class="home-cover-note home-cover-note-mobile">让每一次相遇，<br>都被好好记住。</p></div>${heroCat ? `<div class="home-cover-photos"><button class="home-cover-photo" data-cat-name="${escapeHtml(heroCat.name)}" type="button"><img src="${cdnUrl(getCatCover(heroCat))}" alt="${escapeHtml(heroCat.name)}"><strong>${escapeHtml(heroCat.name)}</strong></button><div class="home-cover-strip">${coverStripCats.slice(0, 3).map(cat => `<button data-cat-name="${escapeHtml(cat.name)}" type="button"><img src="${cdnUrl(getCatCover(cat))}" alt="${escapeHtml(cat.name)}"></button>`).join('')}</div></div>` : ''}</div>${renderHomeStats(data)}${renderDirectorySection(data, { standalone: true, showFootnote: true })}</section>`;
+  return `<section class="home-yearbook home-landing-page"><div class="home-cover"><div class="home-cover-copy"><h2>猫猫手册</h2><p class="home-cover-title">咪也有自己的生活和故事</p><i></i><p class="home-cover-note home-cover-note-desktop">这里有它们的名字，<br>也有它们的故事</p><p class="home-cover-note home-cover-note-mobile">这里有它们的名字，<br>也有它们的故事</p></div>${heroCat ? `<div class="home-cover-photos"><button class="home-cover-photo" data-cat-name="${escapeHtml(heroCat.name)}" type="button"><img src="${cdnUrl(getCatCover(heroCat))}" alt="${escapeHtml(heroCat.name)}"></button><div class="home-cover-strip">${coverStripCats.slice(0, 3).map(cat => `<button data-cat-name="${escapeHtml(cat.name)}" type="button"><img src="${cdnUrl(getCatCover(cat))}" alt="${escapeHtml(cat.name)}"></button>`).join('')}</div></div>` : ''}</div>${renderHomeStats(data)}${renderDirectorySection(data, { standalone: true, showFootnote: true })}</section>`;
 }
 
 function renderDirectoryPage() {
@@ -548,6 +553,12 @@ function getAppearanceSummary(cat) {
 function renderDrawerFacts(cat) {
   const sterilizedIcon = `<img class="drawer-fact-image drawer-fact-image-sterilized" src="${cdnUrl('images/ui/sterilized-fixed.png')}" alt="" aria-hidden="true">`;
   const vaccineIcon = `<img class="drawer-fact-image drawer-fact-image-vaccine" src="${cdnUrl('images/ui/vaccine-syringe.png')}" alt="" aria-hidden="true">`;
+  const mobileFacts = [
+    !isEmptyValue(cat.area) ? `在${cat.area}` : '地点待补充',
+    !isEmptyValue(cat.sterilized) ? getSterilizedSummary(cat) : '',
+    !isEmptyValue(cat.vaccine) ? getVaccineSummary(cat) : '',
+    !isEmptyValue(getAppearanceSummary(cat)) && getAppearanceSummary(cat) !== '待补充' ? getAppearanceSummary(cat) : ''
+  ].filter(Boolean);
   return `
     <section class="drawer-facts-card" aria-label="基础信息">
       <div class="drawer-facts-grid">
@@ -556,6 +567,7 @@ function renderDrawerFacts(cat) {
         ${renderDrawerFact('绝育', getSterilizedSummary(cat), cat.sterilized, sterilizedIcon, true)}
         ${renderDrawerFact('疫苗', getVaccineSummary(cat), cat.vaccine, vaccineIcon, true)}
       </div>
+      <div class="drawer-facts-mobile-summary" aria-label="简要信息">${mobileFacts.map(value => `<span>${escapeHtml(value)}</span>`).join('<i aria-hidden="true">·</i>')}</div>
     </section>
   `;
 }
@@ -571,6 +583,7 @@ function renderDrawerGallery(cat) {
   }
 
   const coverSrc = getCatCover(cat) || images[0];
+  const galleryImages = [coverSrc, ...images.filter(src => src !== coverSrc)];
   const thumbnailSources = images.length === 1 ? [coverSrc] : images.filter(src => src !== coverSrc);
   const thumbnails = thumbnailSources.map((src, index) => `
     <button class="drawer-photo-thumb" type="button" data-photo-preview aria-label="预览${escapeHtml(cat.name)}的照片 ${index + 1}">
@@ -583,6 +596,7 @@ function renderDrawerGallery(cat) {
         <img class="drawer-gallery-main-image" src="${cdnUrl(coverSrc)}" data-full="${cdnUrl(coverSrc)}" alt="${escapeHtml(cat.name)}" loading="eager">
       </button>
       <div class="drawer-photo-strip" aria-label="照片缩略图">${thumbnails}</div>
+      <div class="drawer-photo-count" aria-live="polite" aria-label="照片位置"><span data-photo-current>1</span>/<span data-photo-total>${galleryImages.length}</span></div>
     </section>
   `;
 }
@@ -789,8 +803,7 @@ function renderDrawer(cat, { updatesExpanded = state.updatesExpanded } = {}) {
     });
   });
 
-  const mainPhoto = drawer.querySelector('[data-main-photo] .drawer-gallery-main-image');
-  if (mainPhoto) mainPhoto.addEventListener('click', () => openPhotoViewer(mainPhoto));
+  bindDrawerGallery(drawer, cat);
 
   const updatesToggle = drawer.querySelector('[data-updates-toggle]');
   if (updatesToggle) {
@@ -915,11 +928,88 @@ function closeDrawer() {
 
 function openPhotoViewer(img) {
   const fullSrc = img.dataset.full || img.src;
+  const altText = String(img.alt || '').trim();
+  const indexMatch = altText.match(/(?:照片|照片预览)\s*(\d+)$/);
+  const photoIndex = indexMatch ? indexMatch[1] : '1';
+  const catName = altText.replace(/\s+(?:照片|照片预览)\s*\d+$/, '').trim() || '猫咪照片';
+  const sourceName = decodeURIComponent(fullSrc.split('/').pop()?.split('?')[0] || 'photo.jpg');
+  const extension = sourceName.match(/\.[a-z0-9]+$/i)?.[0] || '.jpg';
+  const downloadName = `${catName}-${photoIndex}${extension}`;
   const overlay = document.createElement('div');
   overlay.className = 'photo-viewer';
-  overlay.innerHTML = `<img src="${fullSrc}" alt="${img.alt}">`;
+  overlay.innerHTML = `
+    <img src="${escapeHtml(fullSrc)}" alt="${escapeHtml(altText)}">
+    <div class="photo-viewer-actions">
+      <a class="photo-viewer-download" data-photo-download href="${escapeHtml(fullSrc)}" download="${escapeHtml(downloadName)}">下载原图</a>
+      <button class="photo-viewer-close" type="button" aria-label="关闭图片预览">×</button>
+    </div>
+  `;
   overlay.addEventListener('click', () => overlay.remove());
+  overlay.querySelector('[data-photo-download]').addEventListener('click', event => event.stopPropagation());
+  overlay.querySelector('.photo-viewer-close').addEventListener('click', event => {
+    event.stopPropagation();
+    overlay.remove();
+  });
   document.body.appendChild(overlay);
+}
+
+function bindDrawerGallery(container, cat) {
+  const main = container.querySelector('[data-main-photo]');
+  const image = main?.querySelector('.drawer-gallery-main-image');
+  const current = container.querySelector('[data-photo-current]');
+  if (!main || !image || !current) return;
+
+  const images = [getCatCover(cat), ...(Array.isArray(cat.images) ? cat.images : [])
+    .filter(src => src && src !== getCatCover(cat))];
+  if (!images.length) return;
+
+  let index = 0;
+  let startX = 0;
+  let startY = 0;
+  let suppressClick = false;
+
+  const updatePhoto = nextIndex => {
+    index = (nextIndex + images.length) % images.length;
+    const source = images[index];
+    image.src = cdnUrl(source);
+    image.dataset.full = cdnUrl(source);
+    image.alt = `${cat.name} 照片 ${index + 1}`;
+    current.textContent = String(index + 1);
+    main.setAttribute('aria-label', `查看${cat.name}大图，当前第${index + 1}张，共${images.length}张`);
+  };
+
+  const isMobile = window.matchMedia('(max-width: 719px)').matches;
+  if (!isMobile) {
+    main.addEventListener('click', () => openPhotoViewer(image));
+    return;
+  }
+
+  main.addEventListener('touchstart', event => {
+    if (event.touches.length !== 1) return;
+    startX = event.touches[0].clientX;
+    startY = event.touches[0].clientY;
+  }, { passive: true });
+
+  main.addEventListener('touchend', event => {
+    if (!startX && !startY) return;
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - startX;
+    const deltaY = touch.clientY - startY;
+    startX = 0;
+    startY = 0;
+    if (Math.abs(deltaX) < 36 || Math.abs(deltaX) < Math.abs(deltaY) * 1.15) return;
+    updatePhoto(index + (deltaX < 0 ? 1 : -1));
+    suppressClick = true;
+    window.setTimeout(() => { suppressClick = false; }, 350);
+  }, { passive: true });
+
+  main.addEventListener('click', event => {
+    if (suppressClick) {
+      event.preventDefault();
+      return;
+    }
+    openPhotoViewer(image);
+  });
 }
 
 function bindCatCards() {
