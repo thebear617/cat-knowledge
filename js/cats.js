@@ -3944,7 +3944,8 @@ export const catProfiles = [
       "images/漂亮橘/漂亮橘16.jpg",
       "images/漂亮橘/漂亮橘17.jpg",
       "images/漂亮橘/漂亮橘18.jpg",
-      "images/漂亮橘/漂亮橘19.jpg"
+      "images/漂亮橘/漂亮橘19.jpg",
+      "images/漂亮橘/漂亮橘20.jpg"
     ],
     "personality": [
       "胆小怂包",
@@ -4156,7 +4157,7 @@ export const catProfiles = [
     "sourceImages": [
       "https://static.nordri.co/rms/public/193079755/2025/0923/09/e8b8cca1c-04b77bb7d8da588a54b32950bce778ca.jpg"
     ],
-    "photoUpdatedAt": "2026-09-23",
+    "photoUpdatedAt": "2026-09-30",
     "cover": "images/漂亮橘/漂亮橘7.jpg"
   },
   {
