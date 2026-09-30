@@ -3760,7 +3760,7 @@ export const catProfiles = [
       "霸道总裁",
       "校园暖男"
     ],
-    "description": "丁香“老猫王”，猫群群头像。据传2020年之前就生活在丁香的原住民，非常聪明的绿眼狸花，对人对猫都很温柔，听得懂自己的名字。爱喝水，爱吃冻干，是少有的对猫条不感兴趣的猫猫，养生这一块👍🏻",
+    "description": "丁香“老猫王”，猫群群头像。据传2020年之前就生活在丁香的原住民，非常聪明的绿眼狸花，对人对猫都很温柔，听得懂自己的名字。爱喝水，爱吃冻干，是少有的对猫条不感兴趣的猫猫，养生这一块👍🏻 头哥从来不惹事，但也不怕事。一旦有人欺负他的兄弟姐妹，他就会大展身手，算是人狠话不多的一只咪。",
     "relationships": [
       {
         "relatedCatName": "黑姐",
@@ -8727,5 +8727,161 @@ export const catProfiles = [
     "sourceId": null,
     "sourceImages": [],
     "photoUpdatedAt": "2026-09-19"
+  },
+  {
+    "name": "陶吉吉",
+    "status": "就读中",
+    "vaccine": "未接种",
+    "sterilized": "未绝育",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "公",
+    "images": [
+      "images/陶吉吉/陶吉吉1.jpg",
+      "images/陶吉吉/陶吉吉2.jpeg",
+      "images/陶吉吉/陶吉吉3.jpg",
+      "images/陶吉吉/陶吉吉4.jpg"
+    ],
+    "personality": [],
+    "description": null,
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [],
+    "aliases": [],
+    "sourceId": null,
+    "sourceImages": []
+  },
+  {
+    "name": "羊粪蛋",
+    "status": "就读中",
+    "vaccine": "未接种",
+    "sterilized": "已绝育（2026-09-16）",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "公",
+    "images": [],
+    "personality": [],
+    "description": null,
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [],
+    "aliases": [],
+    "sourceId": null,
+    "sourceImages": []
+  },
+  {
+    "name": "豆米",
+    "status": "就读中",
+    "vaccine": "未接种",
+    "sterilized": "已绝育（2026-09-16）",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "母",
+    "images": [
+      "images/豆米/豆米1.jpg",
+      "images/豆米/豆米2.jpg",
+      "images/豆米/豆米3.jpg",
+      "images/豆米/豆米4.jpg",
+      "images/豆米/豆米5.jpg"
+    ],
+    "personality": [],
+    "description": null,
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [],
+    "aliases": [],
+    "sourceId": null,
+    "sourceImages": []
+  },
+  {
+    "name": "糯糯",
+    "status": "就读中",
+    "vaccine": "未接种",
+    "sterilized": "未绝育",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "母",
+    "images": [
+      "images/糯糯/糯糯1.jpg",
+      "images/糯糯/糯糯2.jpg"
+    ],
+    "personality": [],
+    "description": null,
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [],
+    "aliases": [],
+    "sourceId": null,
+    "sourceImages": []
+  },
+  {
+    "name": "笑笑",
+    "status": "就读中",
+    "vaccine": "未接种",
+    "sterilized": "未绝育",
+    "notes": "待补充",
+    "area": "待补充",
+    "gender": "公",
+    "images": [
+      "images/笑笑/笑笑1.jpg"
+    ],
+    "personality": [],
+    "description": null,
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [],
+    "aliases": [],
+    "sourceId": null,
+    "sourceImages": []
+  },
+  {
+    "name": "麦麦",
+    "status": "就读中",
+    "vaccine": "未接种",
+    "sterilized": "已绝育（2026-07）",
+    "notes": "待补充",
+    "area": "竹园",
+    "gender": "母",
+    "images": [
+      "images/麦麦/麦麦1.jpg"
+    ],
+    "personality": [],
+    "description": "竹园的台阶守望者，因为爱吃麦当劳所以被起名为“麦麦”",
+    "relationships": [],
+    "relationshipHints": [],
+    "updates": [],
+    "aliases": [],
+    "sourceId": null,
+    "sourceImages": []
+  },
+  {
+    "name": "无牙仔",
+    "status": "就读中",
+    "vaccine": "待补充",
+    "sterilized": "待补充",
+    "notes": "待补充",
+    "area": "竹园",
+    "gender": "母",
+    "images": [
+      "images/无牙仔/无牙仔1.jpg",
+      "images/无牙仔/无牙仔2.jpg",
+      "images/无牙仔/无牙仔3.jpg"
+    ],
+    "personality": [],
+    "description": "经常和竹园的金琥一起出现，那一只老奶奶猫之前得过口炎，已经被家属区的老师们和竹园的同学们救助，现在已经能够正常进食。",
+    "relationships": [
+      {
+        "relatedCatName": "金琥",
+        "relation": "好友",
+        "confidence": "confirmed",
+        "evidence": null,
+        "source": "manual-confirmation"
+      }
+    ],
+    "relationshipHints": [],
+    "updates": [],
+    "aliases": [],
+    "sourceId": null,
+    "sourceImages": []
   }
 ];

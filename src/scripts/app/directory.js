@@ -305,16 +305,19 @@ function renderHomeStats({ summary, filtered, activeFilter }) {
   }).join('')}</section>`;
 }
 
-function renderDirectorySection(data, { standalone = false } = {}) {
+function renderDirectorySection(data, { standalone = false, showFootnote = false } = {}) {
   const { catsWithPhotos, directoryCats, visibleDirectoryCats, directoryPagination } = data;
-  return `<section class="home-directory${standalone ? ' directory-page-list' : ''}"><header><div><p><img class="directory-heading-icon" src="${cdnUrl('images/cat-archive-icon.png')}" alt="" aria-hidden="true">猫猫档案</p></div><small>${standalone ? '持续档案' : '猫咪目录'}</small></header>${renderCatControls(directoryCats.length)}${directoryCats.length ? `<div class="home-directory-grid">${visibleDirectoryCats.map(cat => `<button class="home-directory-card" data-cat-name="${escapeHtml(cat.name)}" type="button"><img src="${cdnUrl(getDirectoryCover(cat))}" alt="${escapeHtml(cat.name)}" loading="lazy"><span>${escapeHtml(cat.name)}</span></button>`).join('')}</div>${directoryPagination}` : '<p class="home-directory-empty">没有匹配的猫咪，可以清空筛选后再试。</p>'}</section>`;
+  const footnote = showFootnote
+    ? '<p class="home-directory-footnote" role="note">图源来自西电猫猫群，若有已毕业毛孩子家长需要隐藏毛孩子信息，或拍摄图片的友友需要隐藏照片的请私信猫猫群管理员</p>'
+    : '';
+  return `<section class="home-directory${standalone ? ' directory-page-list' : ''}"><header><div><p><img class="directory-heading-icon" src="${cdnUrl('images/cat-archive-icon.png')}" alt="" aria-hidden="true">猫猫档案</p></div><small>${standalone ? '持续档案' : '猫咪目录'}</small></header>${renderCatControls(directoryCats.length)}${directoryCats.length ? `<div class="home-directory-grid">${visibleDirectoryCats.map(cat => `<button class="home-directory-card" data-cat-name="${escapeHtml(cat.name)}" type="button"><img src="${cdnUrl(getDirectoryCover(cat))}" alt="${escapeHtml(cat.name)}" loading="lazy"><span>${escapeHtml(cat.name)}</span></button>`).join('')}</div>${directoryPagination}${footnote}` : '<p class="home-directory-empty">没有匹配的猫咪，可以清空筛选后再试。</p>'}</section>`;
 }
 
 function renderHomeLandingPage() {
   const data = getDirectoryData();
   const heroCat = catProfiles.find(cat => cat.name === '大头' && getCatCover(cat)) || data.catsWithPhotos[0];
   const coverStripCats = getTimedFeaturedCats(data.catsWithPhotos, heroCat);
-  return `<section class="home-yearbook home-landing-page"><div class="home-cover"><div class="home-cover-copy"><h2>猫猫手册</h2><p class="home-cover-title">它们路过校园，也路过我们的生活</p><i></i><p class="home-cover-note home-cover-note-desktop">从镜头和档案中，<br>认识校园里的每一只猫。</p><p class="home-cover-note home-cover-note-mobile">让每一次相遇，<br>都被好好记住。</p></div>${heroCat ? `<div class="home-cover-photos"><button class="home-cover-photo" data-cat-name="${escapeHtml(heroCat.name)}" type="button"><img src="${cdnUrl(getCatCover(heroCat))}" alt="${escapeHtml(heroCat.name)}"><strong>${escapeHtml(heroCat.name)}</strong></button><div class="home-cover-strip">${coverStripCats.slice(0, 3).map(cat => `<button data-cat-name="${escapeHtml(cat.name)}" type="button"><img src="${cdnUrl(getCatCover(cat))}" alt="${escapeHtml(cat.name)}"></button>`).join('')}</div></div>` : ''}</div>${renderHomeStats(data)}${renderDirectorySection(data, { standalone: true })}</section>`;
+  return `<section class="home-yearbook home-landing-page"><div class="home-cover"><div class="home-cover-copy"><h2>猫猫手册</h2><p class="home-cover-title">它们路过校园，也路过我们的生活</p><i></i><p class="home-cover-note home-cover-note-desktop">从镜头和档案中，<br>认识校园里的每一只猫。</p><p class="home-cover-note home-cover-note-mobile">让每一次相遇，<br>都被好好记住。</p></div>${heroCat ? `<div class="home-cover-photos"><button class="home-cover-photo" data-cat-name="${escapeHtml(heroCat.name)}" type="button"><img src="${cdnUrl(getCatCover(heroCat))}" alt="${escapeHtml(heroCat.name)}"><strong>${escapeHtml(heroCat.name)}</strong></button><div class="home-cover-strip">${coverStripCats.slice(0, 3).map(cat => `<button data-cat-name="${escapeHtml(cat.name)}" type="button"><img src="${cdnUrl(getCatCover(cat))}" alt="${escapeHtml(cat.name)}"></button>`).join('')}</div></div>` : ''}</div>${renderHomeStats(data)}${renderDirectorySection(data, { standalone: true, showFootnote: true })}</section>`;
 }
 
 function renderDirectoryPage() {
@@ -568,7 +571,8 @@ function renderDrawerGallery(cat) {
   }
 
   const coverSrc = getCatCover(cat) || images[0];
-  const thumbnails = images.filter(src => src !== coverSrc).map((src, index) => `
+  const thumbnailSources = images.length === 1 ? [coverSrc] : images.filter(src => src !== coverSrc);
+  const thumbnails = thumbnailSources.map((src, index) => `
     <button class="drawer-photo-thumb" type="button" data-photo-preview aria-label="预览${escapeHtml(cat.name)}的照片 ${index + 1}">
       <img src="${cdnUrl(src.replace(/([^/]+)$/, 'thumb/$1'))}" data-full="${cdnUrl(src)}" alt="${escapeHtml(cat.name)} 照片预览 ${index + 1}" loading="lazy">
     </button>
@@ -701,10 +705,14 @@ function renderDrawerPersonality(cat) {
 }
 
 function renderDrawerStory(cat) {
-  const story = isEmptyValue(cat.description)
+  const isEmptyStory = isEmptyValue(cat.description);
+  const story = isEmptyStory
     ? '<p class="drawer-story drawer-story-empty" role="status">待补充</p>'
-    : `<p class="drawer-story">${escapeHtml(cat.description)}</p>`;
-  return renderDrawerSection('故事档案', story, 'drawer-description', '', 'story');
+    : `<div class="drawer-story-popover" data-story-popover>
+        <p class="drawer-story" data-story-preview tabindex="-1">${escapeHtml(cat.description)}</p>
+        <div class="drawer-story-bubble" data-story-bubble role="tooltip" aria-hidden="true">${escapeHtml(cat.description)}</div>
+      </div>`;
+  return renderDrawerSection('故事档案', story, `drawer-description${isEmptyStory ? ' drawer-description-empty' : ''}`, '', 'story');
 }
 
 function renderDrawerArchive(cat) {
@@ -792,6 +800,7 @@ function renderDrawer(cat, { updatesExpanded = state.updatesExpanded } = {}) {
   }
 
   bindSummaryTooltips(drawer);
+  bindDrawerStoryPopovers(drawer);
 }
 
 function hideSummaryTooltip() {
@@ -861,6 +870,36 @@ function bindSummaryTooltips(container) {
   window.addEventListener('resize', () => {
     if (activeSummaryTooltip && container.contains(activeSummaryTooltip.source)) positionSummaryTooltip(activeSummaryTooltip.source, activeSummaryTooltip.detail);
   }, { passive: true });
+}
+
+function syncDrawerStoryPopover(popover) {
+  const preview = popover.querySelector('[data-story-preview]');
+  const bubble = popover.querySelector('[data-story-bubble]');
+  if (!preview || !bubble) return;
+
+  const isTruncated = preview.scrollHeight > preview.clientHeight + 1;
+  popover.classList.toggle('is-truncated', isTruncated);
+  bubble.setAttribute('aria-hidden', isTruncated ? 'false' : 'true');
+
+  if (isTruncated) {
+    const bubbleId = bubble.id || `drawer-story-${Date.now()}`;
+    bubble.id = bubbleId;
+    preview.setAttribute('tabindex', '0');
+    preview.setAttribute('aria-describedby', bubbleId);
+  } else {
+    preview.setAttribute('tabindex', '-1');
+    preview.removeAttribute('aria-describedby');
+  }
+}
+
+function bindDrawerStoryPopovers(container) {
+  const popovers = [...container.querySelectorAll('[data-story-popover]')];
+  if (!popovers.length) return;
+
+  const sync = () => popovers.forEach(syncDrawerStoryPopover);
+  sync();
+  window.requestAnimationFrame(sync);
+  window.addEventListener('resize', sync, { passive: true });
 }
 
 function closeDrawer() {

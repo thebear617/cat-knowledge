@@ -305,7 +305,7 @@ select {
 .home-yearbook,
 .home-filter-view {
   min-height: 100%;
-  padding: 2.6rem clamp(1.4rem, 3.4vw, 3.75rem) 3rem;
+  padding: 2.6rem clamp(1.4rem, 3.4vw, 3.75rem) 1rem;
   background-color: #f7f0e4;
   background-image: radial-gradient(rgba(112, 78, 46, .07) .55px, transparent .7px), linear-gradient(90deg, rgba(170, 133, 89, .06), transparent 14%, transparent 86%, rgba(170, 133, 89, .06));
   background-size: 5px 5px, 100% 100%;
@@ -1723,7 +1723,7 @@ select {
   display: grid;
   min-width: 0;
   gap: .55rem;
-  --drawer-photo-long-edge: 27.1875rem;
+  --drawer-photo-long-edge: 26.65rem;
 }
 
 .drawer-gallery-main {
@@ -1880,12 +1880,22 @@ select {
 
 .drawer-relation-group {
   display: grid;
+  flex: 1 1 auto;
+  min-height: 0;
   gap: .45rem;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .drawer-relationships {
+  display: flex;
+  flex: 0 0 9.25rem;
+  flex-direction: column;
+  height: 9.25rem;
+  min-height: 9.25rem;
   border: var(--drawer-border-width) solid var(--drawer-border);
   background: var(--drawer-card);
+  overflow: hidden;
 }
 
 .drawer-keyword-list span,
@@ -1908,11 +1918,20 @@ select {
   gap: 1rem 1.15rem;
 }
 
+.drawer-relation-list-empty {
+  display: flex;
+  min-height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
 .drawer-relation-empty {
+  width: 100%;
   padding: .2rem 0;
   color: var(--drawer-muted);
   font-size: .9rem;
   line-height: 1.4;
+  text-align: center;
 }
 
 .drawer-relation-card {
@@ -2012,8 +2031,68 @@ select {
   white-space: pre-wrap;
 }
 
+.drawer-story-popover {
+  position: relative;
+  min-width: 0;
+}
+
+.drawer-story {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  max-height: calc(1.75em * 4);
+  overflow: hidden;
+}
+
+.drawer-story-bubble {
+  position: absolute;
+  top: calc(100% + .65rem);
+  left: 0;
+  z-index: 10;
+  width: min(34rem, calc(100vw - 4rem));
+  max-height: min(16rem, calc(100dvh - 2rem));
+  overflow: auto;
+  border: var(--drawer-border-width) solid #e7d6c3;
+  border-radius: .85rem;
+  background: #fffaf3;
+  box-shadow: 0 .75rem 1.8rem rgba(91, 65, 43, .2);
+  padding: .75rem .85rem;
+  color: #4c3b2e;
+  font-size: .8rem;
+  font-weight: 700;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transform: translateY(-.35rem);
+  transition: opacity .15s ease, transform .15s ease, visibility .15s ease;
+}
+
+.drawer-story-popover.is-truncated:hover .drawer-story-bubble,
+.drawer-story-popover.is-truncated:focus-within .drawer-story-bubble {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+  transform: translateY(0);
+}
+
 .drawer-story-empty {
   color: var(--drawer-muted);
+}
+
+.drawer-description-empty {
+  display: flex;
+  flex-direction: column;
+}
+
+.drawer-description-empty > .drawer-story-empty {
+  display: grid;
+  flex: 1 1 auto;
+  width: 100%;
+  place-items: center;
+  text-align: center;
 }
 
 .drawer-aliases {
@@ -2110,6 +2189,37 @@ select {
   }
 }
 
+@media (min-width: 981px) {
+  .drawer-column {
+    min-height: 0;
+  }
+
+  .drawer-gallery {
+    height: 100%;
+    align-content: start;
+  }
+
+  .drawer-right {
+    min-height: 0;
+  }
+
+  .drawer-right > .drawer-archive {
+    min-height: 0;
+    flex: 1 1 auto;
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+
+  .drawer-right > .drawer-facts-card {
+    flex: 0 0 auto;
+  }
+
+  .drawer-description {
+    min-height: 0;
+    height: 10.3rem;
+    overflow: visible;
+  }
+}
+
 .photo-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2147,6 +2257,16 @@ select {
   display: flex;
   justify-content: center;
   margin-top: 1rem;
+}
+
+.home-directory-footnote {
+  margin: 1rem 0 0;
+  border-top: 1px dashed #cbb497;
+  padding: .75rem .2rem 0;
+  color: #9a7b62;
+  font-size: .78rem;
+  line-height: 1.7;
+  text-align: center;
 }
 
 .photo-pagination-controls,
@@ -5849,6 +5969,8 @@ button.chronicle-calendar-cell:focus-visible {
   body {
     min-height: 100%;
     height: auto;
+    overflow-x: clip;
+    overscroll-behavior-x: none;
   }
 
   .layout {
@@ -5894,6 +6016,7 @@ button.chronicle-calendar-cell:focus-visible {
     padding-top: calc(3.9rem + env(safe-area-inset-top));
     padding-right: .85rem;
     padding-left: .85rem;
+    padding-bottom: 0;
   }
 
   .home-cover {
@@ -6012,7 +6135,7 @@ button.chronicle-calendar-cell:focus-visible {
     max-width: 100%;
     justify-content: flex-start;
     overflow-x: auto;
-    padding: 0 .1rem .15rem;
+    padding: 0 .1rem 0;
     scrollbar-width: none;
   }
 
@@ -6221,10 +6344,10 @@ button.chronicle-calendar-cell:focus-visible {
 
   .cat-drawer:not([hidden]) {
     top: 50%;
-    right: auto;
+    right: max(12px, env(safe-area-inset-right));
     bottom: auto;
-    left: 50%;
-    width: calc(100vw - max(24px, env(safe-area-inset-left) + env(safe-area-inset-right))) !important;
+    left: max(12px, env(safe-area-inset-left));
+    width: auto !important;
     height: auto;
     max-width: none;
     max-height: calc(100dvh - max(12px, env(safe-area-inset-top)) - max(12px, env(safe-area-inset-bottom)));
@@ -6232,8 +6355,10 @@ button.chronicle-calendar-cell:focus-visible {
     box-sizing: border-box;
     overflow-x: hidden;
     overflow-y: auto;
+    overscroll-behavior-x: none;
+    touch-action: pan-y;
     border-radius: 1rem;
-    transform: translate(-50%, -50%);
+    transform: translateY(-50%);
     animation: none;
   }
 
