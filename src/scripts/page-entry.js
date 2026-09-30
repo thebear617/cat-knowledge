@@ -2,6 +2,7 @@ import { state } from './app/state.js';
 import { renderFinanceTab, bindFinanceControls } from './app/finance.js';
 import { bindProcurementControls } from './app/procurement.js';
 import { renderSuppliesTab, renderTimelineTab, bindOperationsControls } from './app/operations.js';
+import { renderMiscTab, bindMiscControls } from './app/misc.js';
 import { renderScienceTab, bindKnowledgeControls, bindKnowledgeToc } from './app/knowledge.js';
 import {
   renderHomeTab,
@@ -18,6 +19,7 @@ import { renderSidebar, closeSidebar } from './app/navigation.js';
 const PAGE_RENDERERS = {
   home: renderHomeTab,
   timeline: renderTimelineTab,
+  misc: renderMiscTab,
   supplies: renderSuppliesTab,
   finance: renderFinanceTab,
   knowledge: renderScienceTab
@@ -32,7 +34,12 @@ let directoryResizeBound = false;
 
 state.activeTab = currentPage;
 const pageQuery = new URLSearchParams(window.location.search);
-if (currentPage === 'finance' && pageQuery.get('view') === 'price') state.financeView = 'price';
+if (currentPage === 'misc') {
+  const miscView = pageQuery.get('view');
+  if (['diary-list', 'diary-calendar', 'price', 'knowledge', 'supplies'].includes(miscView)) state.miscView = miscView;
+  if (miscView === 'knowledge') state.knowledgeArticle = pageQuery.get('article') || null;
+}
+if (currentPage === 'timeline' && pageQuery.get('view') === 'finance') state.timelineView = 'finance';
 if (currentPage === 'knowledge') state.knowledgeArticle = pageQuery.get('article') || null;
 
 function renderApp() {
@@ -45,8 +52,9 @@ function renderApp() {
   const content = PAGE_RENDERERS[currentPage]();
   app.classList.toggle('knowledge-app-shell', currentPage === 'knowledge');
   app.classList.toggle('operations-app-shell', currentPage === 'supplies');
-  app.classList.toggle('chronicle-app-shell', currentPage === 'timeline');
-  app.classList.toggle('procurement-app-shell', currentPage === 'finance' && state.financeView === 'price');
+  app.classList.toggle('chronicle-app-shell', currentPage === 'timeline' || (currentPage === 'misc' && state.miscView === 'diary-calendar'));
+  app.classList.toggle('misc-app-shell', currentPage === 'misc');
+  app.classList.toggle('procurement-app-shell', currentPage === 'misc' && state.miscView === 'price');
   app.classList.toggle('finance-app-shell', currentPage === 'finance');
   app.classList.toggle('home-app-shell', currentPage === 'home');
   app.innerHTML = `<div class="tab-panel">${content}</div>`;
@@ -56,6 +64,7 @@ function renderApp() {
   bindProcurementControls(renderApp);
   bindFinanceControls(renderApp);
   bindOperationsControls(renderApp);
+  bindMiscControls(renderApp);
   bindKnowledgeControls(renderApp);
   bindKnowledgeToc();
 
@@ -83,6 +92,7 @@ function bindControls() {
       if (value !== state.query) {
         state.query = value;
         state.directoryPage = 1;
+        state.timelinePage = 1;
         renderApp();
       }
     }
@@ -99,10 +109,12 @@ function bindControls() {
     button.addEventListener('click', () => {
       state.query = '';
       state.directoryPage = 1;
+      state.timelinePage = 1;
       renderApp();
     });
   });
 
+  bindCatCards();
   if (currentPage !== 'home') return;
 
   const filterToggle = document.getElementById('filterToggle');
@@ -173,7 +185,6 @@ function bindControls() {
     renderApp();
   });
 
-  bindCatCards();
   bindSummaryCards();
   document.querySelectorAll('[data-directory-page]').forEach(button => {
     button.addEventListener('click', () => {

@@ -2692,7 +2692,7 @@ export const catProfiles = [
   },
   {
     "name": "瓜皮头",
-    "status": "就读中",
+    "status": "喵星或失踪",
     "vaccine": "待补充",
     "sterilized": "未绝育",
     "notes": "待补充",
@@ -6273,7 +6273,7 @@ export const catProfiles = [
   },
   {
     "name": "小煤球",
-    "status": "就读中",
+    "status": "喵星或失踪",
     "vaccine": "待补充",
     "sterilized": "未绝育",
     "notes": "待补充",
@@ -8119,7 +8119,7 @@ export const catProfiles = [
   },
   {
     "name": "竹园奶牛一号",
-    "status": "就读中",
+    "status": "喵星或失踪",
     "vaccine": "待补充",
     "sterilized": "已绝育（2025-04-04）",
     "notes": "待补充",
@@ -8155,7 +8155,7 @@ export const catProfiles = [
   },
   {
     "name": "竹园大橘",
-    "status": "就读中",
+    "status": "喵星或失踪",
     "vaccine": "待补充",
     "sterilized": "已绝育（2025-04-04）",
     "notes": "待补充",
@@ -8552,7 +8552,7 @@ export const catProfiles = [
     "name": "茶叶大蛋",
     "status": "就读中",
     "vaccine": "未接种",
-    "sterilized": "未绝育",
+    "sterilized": "已绝育（约 2026-04）",
     "notes": "第二/三针认捐人：毛橘妈",
     "area": "海棠",
     "gender": "公",
@@ -8564,7 +8564,9 @@ export const catProfiles = [
     "relationships": [],
     "relationshipHints": [],
     "updates": [],
-    "aliases": [],
+    "aliases": [
+      "茶叶蛋"
+    ],
     "sourceId": null,
     "sourceImages": []
   },

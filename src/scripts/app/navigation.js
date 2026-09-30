@@ -4,10 +4,7 @@ import { escapeHtml } from './shared.js';
 
 const TABS = [
   { id: 'home', title: '首页', icon: '🏠' },
-  { id: 'timeline', title: '猫猫编年史', icon: '📜' },
-  { id: 'supplies', title: '物资与协作', icon: '📦' },
-  { id: 'finance', title: '财务公示', icon: '▣' },
-  { id: 'knowledge', title: '猫猫知识', icon: '📖' }
+  ...(import.meta.env.DEV ? [{ id: 'misc', title: '猫猫杂物', icon: '▤' }] : [])
 ];
 
 // ============== Tab Navigation ==============
@@ -18,9 +15,9 @@ function renderSidebar() {
   const activePage = window.__catPage || state.activeTab;
   nav.innerHTML = TABS.map(tab => {
     const active = tab.id === activePage ? ' active' : '';
-    return `<a class="sidebar-item${active}" data-tab="${tab.id}" href="${escapeHtml(pageHref(tab.id))}" aria-current="${tab.id === activePage ? 'page' : 'false'}">
+    return `<a class="sidebar-item${active}" data-tab="${tab.id}" href="${escapeHtml(pageHref(tab.id))}" aria-current="${tab.id === activePage ? 'page' : 'false'}" aria-label="${escapeHtml(tab.title)}">
       <span class="sidebar-icon">${sidebarNavIcon(tab.id)}</span>
-      <span>${escapeHtml(tab.title)}</span>
+      <span class="sidebar-item-label">${escapeHtml(tab.title)}</span>
     </a>`;
   }).join('');
 }
@@ -33,7 +30,8 @@ function sidebarNavIcon(tabId) {
     supplies: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 8 8-4 8 4v10l-8 4-8-4Z" ${common}/><path d="m4 8 8 4 8-4M12 12v10" ${common}/></svg>`,
     finance: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5h9l3 3V20a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z" ${common}/><path d="M14.5 3.5V7H18M8 11h8M8 14.5h5M8 18h3" ${common}/></svg>`,
     procurement: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10l1 4v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" ${common}/><path d="M6 7h12M10 11h4" ${common}/></svg>`,
-    knowledge: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5c3.2-1.5 5.9-1 8 1.1 2.1-2.1 4.8-2.6 8-1.1v13c-3.2-1.5-5.9-1-8 1.1-2.1-2.1-4.8-2.6-8-1.1Z" ${common}/><path d="M12 6.6v13" ${common}/></svg>`
+    knowledge: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5c3.2-1.5 5.9-1 8 1.1 2.1-2.1 4.8-2.6 8-1.1v13c-3.2-1.5-5.9-1-8 1.1-2.1-2.1-4.8-2.6-8-1.1Z" ${common}/><path d="M12 6.6v13" ${common}/></svg>`,
+    misc: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5h16v11H4zM6 8.5V5h12v3.5M8 12h8M8 15.5h5" ${common}/></svg>`
   };
   return icons[tabId] || icons.home;
 }
@@ -106,22 +104,10 @@ function openSidebar() {
   const sidebar = document.getElementById('sidebar');
 
   if (toggle) {
-    toggle.addEventListener('mouseenter', () => {
-      if (!compactSidebarLayout) setDesktopSidebarHover(true);
-    });
-    toggle.addEventListener('mouseleave', () => {
-      if (!compactSidebarLayout) scheduleDesktopSidebarClose();
-    });
-    toggle.addEventListener('focus', () => {
-      if (!compactSidebarLayout) setDesktopSidebarHover(true);
-    });
     toggle.addEventListener('click', () => {
       if (compactSidebarLayout) {
         openSidebar();
-        return;
       }
-      // 桌面端不做固定：手柄只负责展开预览，鼠标离开侧边栏后自动收起
-      setDesktopSidebarHover(true);
     });
   }
   if (backdrop) backdrop.addEventListener('click', closeSidebar);

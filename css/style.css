@@ -138,6 +138,9 @@ body {
   flex: 1;
   overflow-y: auto;
   min-width: 0;
+  background-color: #f7f0e4;
+  background-image: radial-gradient(rgba(112, 78, 46, .07) .55px, transparent .7px), linear-gradient(90deg, rgba(170, 133, 89, .06), transparent 14%, transparent 86%, rgba(170, 133, 89, .06));
+  background-size: 5px 5px, 100% 100%;
 }
 
 button,
@@ -310,7 +313,6 @@ select {
 
 .home-cover,
 .home-stat-ribbon,
-.home-featured,
 .home-yearbook-footer,
 .home-filter-view > * {
   max-width: 1320px;
@@ -349,14 +351,6 @@ select {
   margin-top: 1rem;
   font-size: 1.25rem;
   letter-spacing: .05em;
-}
-
-.home-cover-copy > span {
-  display: block;
-  margin-top: .35rem;
-  color: #907866;
-  font-size: .9rem;
-  letter-spacing: .1em;
 }
 
 .home-cover-copy i {
@@ -460,7 +454,7 @@ select {
   display: flex;
   justify-content: center;
   gap: 0;
-  margin-top: -1rem;
+  margin-top: 1rem;
   position: relative;
   z-index: 2;
   border: 1px solid #dfcfb9;
@@ -506,95 +500,6 @@ select {
   font-size: .82rem;
 }
 
-.home-featured {
-  margin-top: 3.4rem;
-}
-
-.home-featured > header {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 1rem;
-  padding-bottom: .75rem;
-  border-bottom: 1px dashed #cbb497;
-}
-
-.home-featured > header p {
-  color: #5c4130;
-  font-family: Georgia, "Songti SC", STSong, serif;
-  font-size: 1.45rem;
-  font-weight: 700;
-  letter-spacing: .08em;
-}
-
-.home-featured > header span,
-.home-featured > header small {
-  color: #876e59;
-  font-family: Georgia, "Songti SC", STSong, serif;
-  font-size: .82rem;
-}
-
-.home-feature-grid {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 1.25rem;
-  margin-top: 1.2rem;
-}
-
-.home-feature-card {
-  overflow: hidden;
-  border: 1px solid #dfcfb9;
-  border-radius: 1px;
-  background: #fff9ee;
-  box-shadow: 3px 4px 10px rgba(78, 53, 31, .13);
-  color: #5c4130;
-  padding: .55rem .55rem .75rem;
-  text-align: left;
-  transition: transform .18s, box-shadow .18s;
-}
-
-.home-feature-card:hover {
-  box-shadow: 6px 9px 16px rgba(78, 53, 31, .18);
-  transform: translateY(-5px) rotate(.3deg);
-}
-
-.home-feature-card.card-1 { transform: rotate(-2deg); }
-.home-feature-card.card-2 { transform: rotate(.8deg); }
-.home-feature-card.card-3 { transform: rotate(-.7deg); }
-.home-feature-card.card-4 { transform: rotate(1.3deg); }
-.home-feature-card.card-5 { transform: rotate(-1.1deg); }
-
-.home-feature-card.card-1:hover,
-.home-feature-card.card-2:hover,
-.home-feature-card.card-3:hover,
-.home-feature-card.card-4:hover,
-.home-feature-card.card-5:hover { transform: translateY(-5px) rotate(0); }
-
-.home-feature-card img {
-  display: block;
-  width: 100%;
-  aspect-ratio: .88;
-  object-fit: cover;
-}
-
-.home-feature-card div {
-  padding: .6rem .2rem 0;
-}
-
-.home-feature-card h3 {
-  font-family: Georgia, "Songti SC", STSong, serif;
-  font-size: 1.1rem;
-}
-
-.home-feature-card p,
-.home-feature-card span {
-  display: block;
-  margin-top: .25rem;
-  color: #826b57;
-  font-size: .72rem;
-  line-height: 1.45;
-}
-
 .home-directory {
   margin: 3.8rem auto 0;
   max-width: 1320px;
@@ -610,6 +515,9 @@ select {
 }
 
 .home-directory > header p {
+  display: flex;
+  align-items: center;
+  gap: .45rem;
   color: #5c4130;
   font-family: Georgia, "Songti SC", STSong, serif;
   font-size: 1.45rem;
@@ -617,7 +525,14 @@ select {
   letter-spacing: .08em;
 }
 
-.home-directory > header span,
+.directory-heading-icon {
+  flex: 0 0 auto;
+  display: block;
+  width: 1.8rem;
+  height: 1.8rem;
+  object-fit: contain;
+}
+
 .home-directory > header small {
   color: #876e59;
   font-family: Georgia, "Songti SC", STSong, serif;
@@ -724,7 +639,6 @@ select {
 @media (max-width: 960px) {
   .home-cover { grid-template-columns: 1fr; }
   .home-cover-photos { max-width: 48rem; width: 100%; margin: 0 auto; }
-  .home-feature-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 @media (max-width: 680px) {
@@ -735,20 +649,14 @@ select {
   .home-cover-strip { top: 1rem; width: 5.4rem; }
   .home-stat-ribbon { flex-wrap: wrap; justify-content: flex-start; margin-top: 1rem; }
   .home-stat-ribbon button { min-width: 50%; border-right: 0; padding: .45rem .6rem; text-align: left; }
-  .home-featured { display: none; }
-  .home-featured > header,
   .home-directory > header { align-items: flex-start; flex-direction: column; }
   .directory-filter-grid { grid-template-columns: 1fr; }
-  .home-feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .85rem; }
-  .home-feature-card:last-child { grid-column: 1 / -1; max-width: calc(50% - .42rem); }
   .home-directory { margin-top: 2.7rem; }
   .home-directory-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
 }
 
 @media (max-width: 719px) {
   .home-edition,
-  .home-cover-copy > span,
-  .home-directory > header span,
   .home-directory > header > small {
     display: none;
   }
@@ -2234,21 +2142,24 @@ select {
 }
 
 .photo-pagination,
-.directory-pagination {
+.directory-pagination,
+.timeline-pagination {
   display: flex;
   justify-content: center;
   margin-top: 1rem;
 }
 
 .photo-pagination-controls,
-.directory-pagination-controls {
+.directory-pagination-controls,
+.timeline-pagination-controls {
   display: inline-flex;
   align-items: center;
   gap: .35rem;
 }
 
 .photo-pagination-controls button,
-.directory-pagination-controls button {
+.directory-pagination-controls button,
+.timeline-pagination-controls button {
   min-width: 2.35rem;
   height: 2.25rem;
   border: 1px solid #e0d2c0;
@@ -2264,19 +2175,23 @@ select {
 .photo-pagination-controls button:hover:not(:disabled),
 .photo-pagination-controls button.is-current,
 .directory-pagination-controls button:hover:not(:disabled),
-.directory-pagination-controls button.is-current {
+.directory-pagination-controls button.is-current,
+.timeline-pagination-controls button:hover:not(:disabled),
+.timeline-pagination-controls button.is-current {
   border-color: #b85e0b;
   background: #fff2dc;
   color: #a24d05;
 }
 
 .photo-pagination-controls button.is-current,
-.directory-pagination-controls button.is-current {
+.directory-pagination-controls button.is-current,
+.timeline-pagination-controls button.is-current {
   font-weight: 700;
 }
 
 .photo-pagination-controls button:disabled,
-.directory-pagination-controls button:disabled {
+.directory-pagination-controls button:disabled,
+.timeline-pagination-controls button:disabled {
   border-color: #eee6dd;
   background: #fffdfa;
   color: #cbbfb2;
@@ -2284,7 +2199,8 @@ select {
 }
 
 .photo-pagination-direction,
-.directory-pagination-direction {
+.directory-pagination-direction,
+.timeline-pagination-direction {
   width: 2.35rem;
   min-width: 2.35rem !important;
   padding: 0 !important;
@@ -3168,49 +3084,195 @@ body.drawer-open {
   font-size: .9rem;
 }
 
-.chronicle-search {
+.chronicle-search-controls {
   display: flex;
   align-items: center;
-  min-width: min(21rem, 42vw);
-  border: 1px solid #d6c6b4;
-  border-radius: 999px;
-  background: rgba(255, 253, 248, .78);
-  padding: .18rem .28rem .18rem .85rem;
+  gap: .55rem;
+  min-width: 0;
 }
 
-.chronicle-search > span {
-  margin: 0 .45rem 0 0;
-  color: #8b6a4a;
-  font-family: inherit;
-  font-size: 1.25rem;
+.chronicle-filter-wrap {
+  position: relative;
+  flex: none;
+}
+
+.chronicle-filter-toggle {
+  display: grid;
+  width: 2.85rem;
+  height: 2.85rem;
+  place-items: center;
+  border: 1px solid #d8c6ad;
+  border-radius: .8rem;
+  background: #fff9ee;
+  color: #775842;
+  box-shadow: 1px 2px 4px rgba(78, 53, 31, .08);
+  cursor: pointer;
+  transition: background .18s, color .18s, border-color .18s;
+}
+
+.chronicle-filter-toggle svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+.chronicle-filter-toggle:hover,
+.chronicle-filter-toggle.has-filter,
+.chronicle-filter-toggle[aria-expanded="true"] {
+  border-color: #ba8051;
+  background: #a96c3d;
+  color: #fffaf0;
+}
+
+.chronicle-filter-menu {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + .6rem);
+  left: 0;
+  width: 11.5rem;
+  border: 1px solid #cdb795;
+  border-radius: .55rem;
+  background-color: #f8efdf;
+  background-image: radial-gradient(rgba(112, 78, 46, .07) .55px, transparent .7px);
+  background-size: 5px 5px;
+  box-shadow: 5px 7px 15px rgba(78, 53, 31, .15);
+  padding: .7rem;
+}
+
+.chronicle-filter-menu[hidden] {
+  display: none;
+}
+
+.chronicle-filter-menu > strong {
+  display: block;
+  padding: .15rem .3rem .5rem;
+  color: #5d4230;
+  font-family: Georgia, "Songti SC", STSong, serif;
+  font-size: .8rem;
+  letter-spacing: .08em;
+}
+
+.chronicle-filter-options {
+  display: grid;
+  gap: .25rem;
+}
+
+.chronicle-filter-option {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  width: 100%;
+  border: 1px solid transparent;
+  border-radius: .35rem;
+  background: transparent;
+  color: #654a36;
+  padding: .42rem .45rem;
+  font-size: .78rem;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color .16s, background .16s, color .16s;
+}
+
+.chronicle-filter-option:hover,
+.chronicle-filter-option.is-selected {
+  border-color: #d8bd97;
+  background: rgba(200, 164, 122, .16);
+  color: #a45e2c;
+}
+
+.chronicle-filter-option .timeline-filter-dot {
+  flex: none;
+}
+
+.chronicle-filter-option b {
+  margin-left: auto;
+  color: #a45e2c;
+  font-size: .85rem;
+}
+
+.chronicle-search {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  min-width: min(21rem, 42vw);
+  height: 2.85rem;
+  border: 1px solid #d8c6ad;
+  border-radius: 999px;
+  background: rgba(255, 249, 238, .76);
+  color: #8a6f58;
+  padding-left: .9rem;
+  transition: border-color .18s, box-shadow .18s;
+}
+
+.chronicle-search:focus-within {
+  border-color: #b78355;
+  box-shadow: 0 0 0 3px rgba(183, 131, 85, .12);
+}
+
+.chronicle-search > svg {
+  flex: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
 }
 
 .chronicle-search input {
+  width: 100%;
   min-width: 0;
   flex: 1;
   border: 0;
   outline: 0;
   background: transparent;
-  color: #493c30;
-  padding: .5rem 0;
-  font-size: .82rem;
+  color: #4d3829;
+  padding: 0 .65rem;
+  font: inherit;
+  font-size: .88rem;
+}
+
+.chronicle-search input::placeholder {
+  color: #a48d79;
 }
 
 .chronicle-search button {
+  display: grid;
+  place-items: center;
+  align-self: stretch;
+  min-width: 2.65rem;
   border: 0;
-  border-radius: 999px;
-  background: #4a3828;
-  color: #fffaf2;
-  padding: .48rem .78rem;
-  font-size: .76rem;
-  font-weight: 700;
+  border-left: 1px solid #e4d4bd;
+  border-radius: 0 999px 999px 0;
+  background: transparent;
+  color: #8a6f58;
+  padding: 0;
+  cursor: pointer;
+}
+
+.chronicle-search button:hover {
+  color: #a45e2c;
+}
+
+.chronicle-search button .paw-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: currentColor;
+  stroke: none;
 }
 
 .chronicle-search .chronicle-search-clear {
-  margin-left: .25rem;
+  min-width: 2rem;
+  border-left: 0;
+  border-radius: 0;
   background: transparent;
   color: #8b6a4a;
-  padding: .35rem .45rem;
+  padding: 0;
   font-size: 1rem;
 }
 
@@ -3588,9 +3650,15 @@ body.drawer-open {
   padding: 0;
 }
 
+.main-area:has(.app-shell.chronicle-app-shell) {
+  background-color: #f7f0e4;
+  background-image: radial-gradient(rgba(112, 78, 46, .07) .55px, transparent .7px), linear-gradient(90deg, rgba(170, 133, 89, .07), transparent 15%, transparent 85%, rgba(170, 133, 89, .07));
+  background-size: 5px 5px, 100% 100%;
+}
+
 .chronicle-shell {
   min-height: 100%;
-  padding: 2.5rem clamp(1.4rem, 3.2vw, 3.5rem) 3rem;
+  padding: 1.25rem clamp(1.4rem, 3.2vw, 3.5rem) 3rem;
   background-color: #f7f0e4;
   background-image: radial-gradient(rgba(112, 78, 46, .07) .55px, transparent .7px), linear-gradient(90deg, rgba(170, 133, 89, .07), transparent 15%, transparent 85%, rgba(170, 133, 89, .07));
   background-size: 5px 5px, 100% 100%;
@@ -3798,12 +3866,26 @@ body.drawer-open {
   transform: rotate(2deg);
 }
 
+.chronicle-calendar-workspace > .chronicle-photo-card {
+  grid-column: 2;
+  grid-row: 2;
+  width: 12.5rem;
+  justify-self: end;
+}
+
+.chronicle-calendar-workspace > .chronicle-total-row > .chronicle-total-card {
+  width: 12.5rem;
+  flex: 0 0 12.5rem;
+  justify-self: start;
+}
+
 .chronicle-photo-card img {
   display: block;
   width: 100%;
   aspect-ratio: 1.22;
-  filter: sepia(.48) contrast(.88);
+  filter: none;
   object-fit: cover;
+  object-position: center 35%;
 }
 
 .chronicle-photo-card figcaption {
@@ -3962,6 +4044,536 @@ body.drawer-open {
 
   .chronicle-quote b {
     display: none;
+  }
+}
+
+/* Keep the original record list as the primary view. */
+.timeline-list {
+  display: block;
+  overflow: hidden;
+}
+
+.timeline-table-head,
+.timeline-item {
+  grid-template-columns: 4.7rem minmax(4rem, .75fr) 5rem minmax(5rem, .9fr) minmax(9rem, 1.55fr);
+}
+
+.timeline-table-head {
+  min-height: 2.35rem;
+  align-items: center;
+}
+
+.timeline-item {
+  min-height: 3.3rem;
+  align-items: center;
+}
+
+.timeline-item::before {
+  display: none;
+}
+
+.timeline-entry-cat,
+.timeline-entry-location,
+.timeline-entry-desc {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chronicle-quote {
+  margin-left: 0;
+}
+
+@media (max-width: 680px) {
+  .timeline-item {
+    min-height: 4.25rem;
+  }
+
+  .timeline-entry-cat,
+  .timeline-entry-location,
+  .timeline-entry-desc {
+    max-width: 100%;
+  }
+
+  .chronicle-quote {
+    margin-left: 0;
+  }
+}
+
+/* Calendar workspace: a second view appended below the record list. */
+.chronicle-calendar-section {
+  max-width: 1320px;
+  margin: 2.6rem auto 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.chronicle-layout.chronicle-layout-list-only {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.chronicle-calendar-heading {
+  padding-bottom: .65rem;
+  align-items: flex-end;
+}
+
+.chronicle-calendar-heading + .chronicle-calendar-section {
+  margin-top: .35rem;
+}
+
+.chronicle-calendar-section > .chronicle-quote {
+  margin-top: 1rem;
+}
+
+/* Calendar workspace: a quiet monthly overview with a focused detail panel. */
+.chronicle-calendar-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1320px;
+  min-height: 8rem;
+  margin: 0 auto;
+  padding: .8rem 0 1.4rem;
+}
+
+.chronicle-calendar-page-header h1 {
+  margin: 0;
+  color: #3d2e22;
+  font-family: Georgia, "Songti SC", STSong, serif;
+  font-size: clamp(2.4rem, 4.1vw, 3.55rem);
+  letter-spacing: .08em;
+}
+
+.chronicle-header-illustration {
+  flex: 0 0 min(17rem, 28vw);
+  height: 6.5rem;
+}
+
+.chronicle-calendar-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.95fr) minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  gap: 16px;
+  max-width: 1320px;
+  margin: 0 auto;
+  align-items: stretch;
+}
+
+.chronicle-calendar-card,
+.chronicle-detail-card {
+  min-width: 0;
+  border: 1px solid #dfcfb9;
+  border-radius: .55rem;
+  background: #fff9ee;
+  box-shadow: 3px 4px 12px rgba(78, 53, 31, .1);
+}
+
+.chronicle-calendar-card {
+  display: flex;
+  height: 492px;
+  min-height: 0;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chronicle-calendar-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex: 0 0 56px;
+  height: 56px;
+  min-height: 56px;
+  padding: 0 21px;
+  border-bottom: 1px solid #e3d7c8;
+}
+
+.chronicle-calendar-toolbar h2 {
+  margin: 0;
+  color: #3f3227;
+  font-size: 1.45rem;
+  letter-spacing: .02em;
+}
+
+.chronicle-calendar-toolbar-tools {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1.15rem;
+  min-width: 0;
+}
+
+.chronicle-calendar-legend {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: .85rem;
+  color: #746152;
+  font-size: .76rem;
+  white-space: nowrap;
+}
+
+.chronicle-calendar-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+}
+
+.chronicle-calendar-legend .chronicle-calendar-dot {
+  flex: none;
+  width: .48rem;
+  height: .48rem;
+}
+
+.chronicle-calendar-nav {
+  display: inline-flex;
+  gap: .35rem;
+  flex: none;
+}
+
+.chronicle-calendar-nav button {
+  display: grid;
+  place-items: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border: 1px solid #dfcfb9;
+  border-radius: .45rem;
+  background: #fffdf9;
+  color: #74563d;
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.chronicle-calendar-nav button:hover:not(:disabled) {
+  border-color: #c98543;
+  background: #fff3e1;
+  color: #a45e2c;
+}
+
+.chronicle-calendar-nav button:disabled {
+  color: #cbbfb2;
+  cursor: not-allowed;
+}
+
+.chronicle-calendar-weekdays,
+.chronicle-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.chronicle-calendar-grid {
+  flex: 1;
+  min-height: 0;
+  grid-auto-rows: minmax(0, 1fr);
+}
+
+.chronicle-calendar-weekdays {
+  flex: 0 0 39px;
+  height: 39px;
+  border-bottom: 1px solid #e3d7c8;
+}
+
+.chronicle-calendar-weekdays span {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  color: #897562;
+  font-size: .78rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.chronicle-calendar-cell {
+  position: relative;
+  min-height: 0;
+  border: 0;
+  border-right: 1px solid #e7ddd0;
+  border-bottom: 1px solid #e7ddd0;
+  background: #fff9ee;
+  color: #4a3b2d;
+  padding: 12px 16px;
+  text-align: left;
+}
+
+button.chronicle-calendar-cell {
+  cursor: pointer;
+  font: inherit;
+}
+
+button.chronicle-calendar-cell:hover,
+button.chronicle-calendar-cell:focus-visible {
+  background: #fff4e6;
+  outline: 0;
+}
+
+.chronicle-calendar-cell:nth-child(7n) {
+  border-right: 0;
+}
+
+.chronicle-calendar-cell.is-other-month {
+  background: #fcf7ef;
+  color: #c9bdae;
+}
+
+.chronicle-calendar-cell.is-today .chronicle-calendar-date {
+  color: #b85e0b;
+}
+
+.chronicle-calendar-lunar {
+  display: inline;
+  margin-left: 8px;
+  color: #927d69;
+  font-size: .8125rem;
+  line-height: 1.2;
+}
+
+.chronicle-calendar-lunar.is-start {
+  color: #b85e0b;
+  font-weight: 700;
+}
+
+.chronicle-calendar-cell.is-other-month .chronicle-calendar-lunar,
+.chronicle-calendar-cell.is-other-month .chronicle-calendar-date {
+  color: #c9bdae;
+}
+
+.chronicle-calendar-cell.is-selected {
+  z-index: 1;
+  box-shadow: inset 0 0 0 2px #f0a05f;
+  background: #fff4e6;
+}
+
+.chronicle-calendar-date {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 24px;
+  color: inherit;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.chronicle-calendar-dots {
+  position: absolute;
+  right: 17px;
+  bottom: 13px;
+  display: inline-flex;
+  gap: 7px;
+}
+
+.chronicle-calendar-dot {
+  display: block;
+  width: .43rem;
+  height: .43rem;
+  border-radius: 50%;
+}
+
+.chronicle-calendar-dot-type-救助 { background: #d96d34; }
+.chronicle-calendar-dot-type-疫苗 { background: #989550; }
+.chronicle-calendar-dot-type-绝育 { background: #6d91b2; }
+.chronicle-calendar-dot-type-送养 { background: #b48a3c; }
+
+.chronicle-detail-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.chronicle-detail-header {
+  padding: 1.25rem 1.35rem 1rem;
+  border-bottom: 1px solid #e3d7c8;
+}
+
+.chronicle-detail-header > span {
+  color: #a2764e;
+  font-size: .75rem;
+  letter-spacing: .08em;
+}
+
+.chronicle-detail-header h2 {
+  margin-top: .35rem;
+  color: #3f3227;
+  font-family: Georgia, "Songti SC", STSong, serif;
+  font-size: 1.65rem;
+  letter-spacing: .03em;
+}
+
+.chronicle-detail-events {
+  display: grid;
+  gap: .7rem;
+  padding: 1rem;
+}
+
+.chronicle-detail-event {
+  border: 1px solid #e3d7c8;
+  border-radius: .45rem;
+  background: #fffdf9;
+  padding: .85rem .9rem;
+}
+
+.chronicle-detail-event > header {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+}
+
+.chronicle-detail-event > header strong {
+  min-width: 0;
+  color: #4e3e2e;
+  font-family: Georgia, "Songti SC", STSong, serif;
+  font-size: .95rem;
+  line-height: 1.45;
+}
+
+.chronicle-detail-event dl {
+  display: grid;
+  gap: .55rem;
+  margin-top: .8rem;
+}
+
+.chronicle-detail-event dl div {
+  display: grid;
+  grid-template-columns: 2.4rem minmax(0, 1fr);
+  gap: .6rem;
+  font-size: .8rem;
+  line-height: 1.55;
+}
+
+.chronicle-detail-event dt {
+  color: #9a806a;
+}
+
+.chronicle-detail-event dd {
+  min-width: 0;
+  margin: 0;
+  color: #675444;
+}
+
+.chronicle-detail-empty {
+  display: grid;
+  place-content: center;
+  flex: 1;
+  min-height: 20rem;
+  padding: 2rem;
+  color: #9a806a;
+  text-align: center;
+}
+
+.chronicle-detail-empty > span {
+  color: #c28a54;
+  font-size: 2rem;
+}
+
+.chronicle-detail-empty h2 {
+  margin-top: .8rem;
+  color: #5a4432;
+  font-family: Georgia, "Songti SC", STSong, serif;
+  font-size: 1.15rem;
+}
+
+.chronicle-detail-empty p {
+  margin-top: .45rem;
+  font-size: .82rem;
+  line-height: 1.6;
+}
+
+.chronicle-detail-empty.is-quiet {
+  min-height: 12rem;
+}
+
+@media (max-width: 900px) {
+  .chronicle-calendar-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .chronicle-detail-card {
+    min-height: 22rem;
+  }
+}
+
+@media (max-width: 680px) {
+  .chronicle-calendar-page-header {
+    min-height: 5.5rem;
+    padding: .5rem 0 1rem;
+  }
+
+  .chronicle-calendar-page-header h1 {
+    font-size: 2.1rem;
+  }
+
+  .chronicle-header-illustration {
+    flex-basis: 6rem;
+    height: 3.5rem;
+  }
+
+  .chronicle-calendar-toolbar {
+    flex-basis: auto;
+    height: auto;
+    min-height: 48px;
+    padding: 8px 10px;
+  }
+
+  .chronicle-calendar-toolbar h2 {
+    font-size: 1.2rem;
+  }
+
+  .chronicle-calendar-weekdays {
+    flex-basis: 30px;
+    height: 30px;
+  }
+
+  .chronicle-calendar-weekdays span {
+    font-size: 11px;
+  }
+
+  .chronicle-calendar-card {
+    height: auto;
+  }
+
+  .chronicle-calendar-grid {
+    flex: 0 0 auto;
+    grid-auto-rows: auto;
+  }
+
+  .chronicle-calendar-cell {
+    height: 62px;
+    min-height: 62px;
+    padding: 7px 3px;
+  }
+
+  .chronicle-calendar-date {
+    display: block;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    font-size: 13px;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .chronicle-calendar-lunar {
+    display: block;
+    max-width: 100%;
+    margin: 2px 0 0;
+    overflow: hidden;
+    font-size: 9px;
+    line-height: 1.1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .chronicle-calendar-dots {
+    right: 5px;
+    bottom: 8px;
+    gap: 8px;
+  }
+
+  .chronicle-detail-header {
+    padding: 1rem;
   }
 }
 
@@ -5228,37 +5840,6 @@ body.drawer-open {
     transform: translateX(0);
   }
 
-  .sidebar-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    top: 50%;
-    left: 0;
-    z-index: 30;
-    width: 2.2rem;
-    height: 4.5rem;
-    border: 1px solid #cdb99c;
-    border-left: none;
-    border-radius: 0 .8rem .8rem 0;
-    background: rgba(255, 250, 241, .96);
-    color: #6b482d;
-    font-size: 1.05rem;
-    transform: translateY(-50%);
-    box-shadow: 0 4px 14px rgba(78, 53, 31, .18);
-    cursor: pointer;
-    transition: opacity .18s ease, background .15s ease, color .15s ease;
-  }
-
-  .sidebar-toggle:hover {
-    background: #f8efdf;
-    color: #a45e2c;
-  }
-
-  body.sidebar-expanded .sidebar-toggle {
-    opacity: 0;
-    pointer-events: none;
-  }
 }
 
 /* ===== Mobile polish ===== */
@@ -5416,22 +5997,17 @@ body.drawer-open {
     height: 2.45rem;
   }
 
-  .home-feature-grid,
   .home-directory-grid {
     gap: .65rem;
   }
 
-  .home-feature-card,
   .home-directory-card {
     min-width: 0;
   }
 
-  .home-feature-card:last-child {
-    max-width: none;
-  }
-
   .directory-pagination,
-  .procurement-pagination {
+  .procurement-pagination,
+  .timeline-pagination {
     width: 100%;
     max-width: 100%;
     justify-content: flex-start;
@@ -5441,19 +6017,22 @@ body.drawer-open {
   }
 
   .directory-pagination::-webkit-scrollbar,
-  .procurement-pagination::-webkit-scrollbar {
+  .procurement-pagination::-webkit-scrollbar,
+  .timeline-pagination::-webkit-scrollbar {
     display: none;
   }
 
   .directory-pagination-controls,
-  .procurement-pagination-controls {
+  .procurement-pagination-controls,
+  .timeline-pagination-controls {
     flex: 0 0 auto;
     gap: .25rem;
     margin-inline: auto;
   }
 
   .directory-pagination-controls button,
-  .procurement-pagination-controls button {
+  .procurement-pagination-controls button,
+  .timeline-pagination-controls button {
     min-width: 1.9rem;
     height: 2rem;
     padding: 0 .35rem;
@@ -5461,7 +6040,8 @@ body.drawer-open {
   }
 
   .directory-pagination-direction,
-  .procurement-pagination-direction {
+  .procurement-pagination-direction,
+  .timeline-pagination-direction {
     width: 1.9rem;
     min-width: 1.9rem !important;
     font-size: 1.05rem !important;
@@ -5772,14 +6352,6 @@ body.drawer-open {
 }
 
 @media (max-width: 420px) {
-  .home-feature-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .home-feature-card:last-child {
-    grid-column: auto;
-  }
-
   .workflow-card ol {
     grid-template-columns: 1fr;
   }
@@ -6672,5 +7244,599 @@ body.drawer-open {
 
   .procurement-index-note {
     display: none;
+  }
+}
+
+/* ===== Phase 1: visible archive navigation and cross-view links ===== */
+
+.sidebar-item-label {
+  min-width: 0;
+}
+
+.timeline-cat-link,
+.finance-cat-link {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.timeline-cat-link {
+  padding: 0 .12rem;
+  color: #69482f;
+  text-decoration: underline;
+  text-decoration-color: rgba(169, 108, 61, .42);
+  text-underline-offset: .16em;
+}
+
+.timeline-cat-link:hover,
+.timeline-cat-link:focus-visible {
+  color: #a45e2c;
+  text-decoration-color: currentColor;
+}
+
+.finance-cat-link {
+  color: #80502e;
+  text-decoration: underline;
+  text-decoration-color: rgba(169, 108, 61, .38);
+  text-underline-offset: .15em;
+}
+
+.finance-cat-link:hover,
+.finance-cat-link:focus-visible {
+  color: #a45e2c;
+  text-decoration-color: currentColor;
+}
+
+.finance-cat-pills .finance-cat-link {
+  display: inline-flex;
+  margin: .1rem .25rem .1rem 0;
+  padding: .2rem .5rem;
+  border: 1px solid #dec9ad;
+  border-radius: 999px;
+  background: #fff8ed;
+  text-decoration: none;
+}
+
+@media (min-width: 720px) {
+  :root { --sidebar-rail-w: 4.15rem; }
+
+  .sidebar {
+    width: var(--sidebar-rail-w);
+    overflow: visible;
+    transition: width .28s cubic-bezier(.22, 1, .36, 1);
+  }
+
+  body.sidebar-expanded .sidebar {
+    width: var(--sidebar-w);
+    overflow-y: auto;
+  }
+
+  .sidebar-brand,
+  .sidebar-nav,
+  .sidebar-footer {
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+  }
+
+  .sidebar-brand {
+    padding: .9rem .45rem .7rem;
+  }
+
+  .sidebar-brand::after,
+  .sidebar-eyebrow,
+  .sidebar-title,
+  .sidebar-subtitle,
+  .sidebar-footer {
+    display: none;
+  }
+
+  .sidebar-brand-paw {
+    width: 2.1rem;
+    height: 2.1rem;
+    margin: 0 auto;
+  }
+
+  .sidebar-nav {
+    gap: .35rem;
+    padding: .55rem .45rem 1rem;
+  }
+
+  .sidebar-item {
+    position: relative;
+    justify-content: center;
+    width: 3.25rem;
+    min-height: 3.25rem;
+    padding: .7rem .35rem;
+    letter-spacing: 0;
+  }
+
+  .sidebar-item-label {
+    position: absolute;
+    top: 50%;
+    left: calc(100% + .55rem);
+    z-index: 3;
+    width: max-content;
+    max-width: 10rem;
+    padding: .45rem .65rem;
+    border: 1px solid rgba(236, 193, 132, .26);
+    border-radius: .5rem;
+    background: #2f2419;
+    color: #ffe0a9;
+    box-shadow: 0 5px 14px rgba(47, 36, 25, .2);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-50%) translateX(-.25rem);
+    transition: opacity .15s ease, transform .15s ease;
+  }
+
+  .sidebar-item:hover .sidebar-item-label,
+  .sidebar-item:focus-visible .sidebar-item-label {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+
+  body.sidebar-expanded .sidebar-brand {
+    padding: 2rem 1.2rem 1.45rem;
+  }
+
+  body.sidebar-expanded .sidebar-brand::after,
+  body.sidebar-expanded .sidebar-footer {
+    display: block;
+  }
+
+  body.sidebar-expanded .sidebar-eyebrow,
+  body.sidebar-expanded .sidebar-title,
+  body.sidebar-expanded .sidebar-subtitle {
+    display: block;
+  }
+
+  body.sidebar-expanded .sidebar-brand-paw {
+    width: 2.45rem;
+    height: 2.45rem;
+    margin: 0 auto .65rem;
+  }
+
+  body.sidebar-expanded .sidebar-nav {
+    gap: .45rem;
+    padding: .2rem .75rem 1rem;
+  }
+
+  body.sidebar-expanded .sidebar-item {
+    justify-content: flex-start;
+    width: 100%;
+    min-height: 0;
+    padding: .85rem .9rem;
+    letter-spacing: .07em;
+  }
+
+  body.sidebar-expanded .sidebar-item-label {
+    position: static;
+    width: auto;
+    max-width: none;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+  }
+
+}
+
+/* ===== Phase 2: home cat directory ===== */
+
+/* ===== 猫猫杂物：保留暂时移出主页面的备用视图 ===== */
+.app-shell.misc-app-shell {
+  width: 100%;
+  max-width: none;
+  padding: 0;
+}
+
+.misc-shell {
+  min-height: 100%;
+  padding: clamp(2rem, 4vw, 3.2rem) clamp(1rem, 3.2vw, 3.5rem) 3rem;
+  background-color: #f7f0e4;
+  background-image: radial-gradient(rgba(112, 78, 46, .07) .55px, transparent .7px), linear-gradient(90deg, rgba(170, 133, 89, .07), transparent 15%, transparent 85%, rgba(170, 133, 89, .07));
+  background-size: 5px 5px, 100% 100%;
+  color: #4a3b2d;
+}
+
+.misc-page-header,
+.misc-view-tabs,
+.misc-view-content {
+  max-width: 1320px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.misc-page-header {
+  padding-bottom: 1.25rem;
+}
+
+.misc-page-header p,
+.misc-section-heading p {
+  margin-bottom: .35rem;
+  color: #a2764e;
+  font-size: .78rem;
+  letter-spacing: .12em;
+}
+
+.misc-page-header h1 {
+  color: #3d2e22;
+  font-family: Georgia, "Songti SC", STSong, serif;
+  font-size: clamp(2.35rem, 4.2vw, 3.55rem);
+  font-weight: 500;
+  letter-spacing: .08em;
+  line-height: 1.05;
+}
+
+.misc-page-header span {
+  display: block;
+  margin-top: .55rem;
+  color: #746152;
+  font-family: Georgia, "Songti SC", STSong, serif;
+  font-size: .9rem;
+}
+
+.misc-view-tabs {
+  display: flex;
+  gap: .1rem;
+  border-bottom: 1px solid #d9c7ae;
+}
+
+.misc-view-tabs button {
+  position: relative;
+  min-width: 9rem;
+  border: 1px solid transparent;
+  border-bottom: 0;
+  border-radius: .65rem .65rem 0 0;
+  background: transparent;
+  color: #75685d;
+  padding: .75rem 1.1rem .8rem;
+  font-family: Georgia, "Songti SC", STSong, serif;
+  font-size: .98rem;
+  cursor: pointer;
+}
+
+.misc-view-tabs button:hover,
+.misc-view-tabs button.is-active {
+  border-color: #d9c7ae;
+  background: rgba(255, 251, 245, .78);
+  color: #a45e2c;
+}
+
+.misc-view-tabs button.is-active {
+  box-shadow: 0 2px 0 #fff9ee;
+}
+
+.misc-view-content {
+  padding-top: 1.35rem;
+}
+
+.misc-section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.25rem;
+  margin-bottom: 1rem;
+  padding: 0 .1rem .85rem;
+  border-bottom: 1px dashed #cbb497;
+}
+
+.misc-section-heading h2 {
+  color: #4d382b;
+  font-family: Georgia, "Songti SC", STSong, serif;
+  font-size: clamp(1.65rem, 3vw, 2.35rem);
+  font-weight: 500;
+  letter-spacing: .06em;
+}
+
+.misc-section-heading .chronicle-search-controls {
+  flex: 0 1 35rem;
+  width: min(100%, 35rem);
+}
+
+.misc-timeline-list-body {
+  overflow: hidden;
+  border: 1px solid #dfcfb9;
+  border-radius: .55rem;
+  background: rgba(255, 249, 238, .72);
+  box-shadow: 3px 4px 12px rgba(78, 53, 31, .08);
+  padding: 1rem 1.1rem 1.15rem;
+}
+
+.misc-timeline-list-body .chronicle-mobile-summary {
+  display: none;
+}
+
+.misc-view-content .procurement-shell--finance-embedded {
+  max-width: none;
+  padding: .1rem 0 0;
+}
+
+.misc-view-content > .operations-shell.operations-shell--embedded {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+/* 猫猫日记的第二视图：财务公示 */
+.chronicle-total-row {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  min-width: 0;
+}
+
+.chronicle-calendar-workspace > .chronicle-total-row {
+  grid-column: 1;
+  grid-row: 2;
+  align-self: start;
+}
+
+.chronicle-total-actions {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.chronicle-total-actions .chronicle-view-tabs,
+.chronicle-finance-tabs .chronicle-view-tabs {
+  flex: none;
+  margin-top: 0;
+}
+
+.chronicle-dashboard-card {
+  min-width: 0;
+  flex: 1 1 22rem;
+  border: 1px solid #dfcfb9;
+  border-radius: .55rem;
+  background: #fff9ee;
+  box-shadow: 3px 4px 12px rgba(78, 53, 31, .1);
+  padding: .8rem 1rem .55rem;
+}
+
+.chronicle-calendar-workspace > .chronicle-total-row > .chronicle-total-card,
+.chronicle-calendar-workspace > .chronicle-total-row > .chronicle-dashboard-card,
+.chronicle-calendar-workspace > .chronicle-photo-card {
+  border: 1px solid #dfcfb9;
+  border-radius: .55rem;
+  background: #fff9ee;
+  box-shadow: 3px 4px 12px rgba(78, 53, 31, .1);
+  transform: none;
+}
+
+.chronicle-calendar-workspace > .chronicle-total-row > .chronicle-total-card::after {
+  display: none;
+}
+
+.chronicle-dashboard-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+}
+
+.chronicle-dashboard-head h3 {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  min-width: 0;
+  margin: 0;
+  color: #493628;
+  font-size: 1rem;
+  letter-spacing: .03em;
+}
+
+.chronicle-dashboard-icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 1.55rem;
+  height: 1.55rem;
+  border-radius: 50%;
+  background: #fff0dc;
+  color: #c66f31;
+}
+
+.chronicle-dashboard-icon svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.65;
+}
+
+.chronicle-dashboard-link,
+.chronicle-finance-back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  flex: none;
+  border: 1px solid #e3ad78;
+  border-radius: .45rem;
+  background: #fffaf2;
+  color: #a35f31;
+  padding: .38rem .6rem;
+  font-family: Georgia, "Songti SC", STSong, serif;
+  font-size: .76rem;
+  cursor: pointer;
+}
+
+.chronicle-dashboard-link:hover,
+.chronicle-finance-back-button:hover {
+  border-color: #c98543;
+  background: #fff0dc;
+  color: #87451f;
+}
+
+.chronicle-dashboard-chart-wrap {
+  min-height: 7.5rem;
+  margin-top: .3rem;
+}
+
+.chronicle-dashboard-chart {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.chronicle-dashboard-grid-line {
+  stroke: #eadfce;
+  stroke-dasharray: 2 3;
+  stroke-width: 1;
+}
+
+.chronicle-dashboard-y-label,
+.chronicle-dashboard-x-label {
+  fill: #a18b76;
+  font-family: Georgia, "Songti SC", STSong, serif;
+  font-size: 10px;
+}
+
+.chronicle-dashboard-y-label {
+  text-anchor: end;
+}
+
+.chronicle-dashboard-x-label {
+  text-anchor: middle;
+}
+
+.chronicle-dashboard-line {
+  fill: none;
+  stroke: #cb7135;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.2;
+}
+
+.chronicle-dashboard-node {
+  fill: #fff9ee;
+  stroke: #cb7135;
+  stroke-width: 2;
+}
+
+.chronicle-dashboard-empty {
+  display: grid;
+  min-height: 7.5rem;
+  place-items: center;
+  color: #a18b76;
+  font-family: Georgia, "Songti SC", STSong, serif;
+  font-size: .82rem;
+}
+
+.chronicle-finance-tabs {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: .85rem;
+}
+
+.chronicle-view-tabs {
+  display: inline-flex;
+  gap: .1rem;
+  margin-top: .95rem;
+  border: 1px solid #d8c6ad;
+  border-radius: .5rem;
+  background: rgba(255, 249, 238, .58);
+  padding: .16rem;
+}
+
+.chronicle-view-tabs button {
+  border: 0;
+  border-radius: .35rem;
+  background: transparent;
+  color: #806b58;
+  padding: .48rem .85rem;
+  font-family: Georgia, "Songti SC", STSong, serif;
+  font-size: .82rem;
+  cursor: pointer;
+}
+
+.chronicle-view-tabs button:hover,
+.chronicle-view-tabs button.is-active {
+  background: #855633;
+  color: #fff8ed;
+}
+
+.chronicle-finance-view.finance-shell {
+  max-width: 1320px;
+  min-height: 0;
+  margin: 0 auto;
+  padding: 0;
+  background: transparent;
+}
+
+.chronicle-finance-view .finance-ledger-view {
+  padding-top: 0;
+}
+
+@media (max-width: 719px) {
+  .misc-shell {
+    padding: 1.15rem max(.75rem, env(safe-area-inset-left)) 2rem;
+  }
+
+  .misc-page-header {
+    padding-bottom: 1rem;
+  }
+
+  .misc-page-header h1 {
+    font-size: clamp(2rem, 10vw, 2.75rem);
+  }
+
+  .misc-view-tabs button {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .misc-section-heading {
+    align-items: stretch;
+    flex-direction: column;
+    gap: .8rem;
+  }
+
+  .misc-section-heading .chronicle-search-controls {
+    width: 100%;
+  }
+
+  .chronicle-total-row {
+    flex-wrap: wrap;
+    align-items: stretch;
+  }
+
+  .chronicle-total-row > .chronicle-total-card {
+    flex: 0 0 12.5rem;
+  }
+
+  .chronicle-total-actions {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .chronicle-dashboard-card {
+    flex-basis: 100%;
+  }
+
+  .chronicle-view-tabs {
+    display: flex;
+    width: 100%;
+  }
+
+  .chronicle-view-tabs button {
+    flex: 1;
+  }
+
+  .misc-timeline-list-body {
+    padding: .7rem;
   }
 }

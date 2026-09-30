@@ -1,5 +1,5 @@
 import { financeSnapshot } from '../../data/finance-snapshot.js';
-import { renderProcurementTab } from './procurement.js';
+import { openDrawer } from './directory.js';
 import { state } from './state.js';
 import { escapeHtml, normalize } from './shared.js';
 
@@ -135,14 +135,16 @@ function renderFinanceAmount(record) {
 
 function renderFinanceRow(record) {
   const selected = state.selectedFinanceId === record.id;
-  const relatedCats = record.relatedCats.length ? record.relatedCats.join('、') : '—';
+  const relatedCats = record.relatedCats.length
+    ? record.relatedCats.map(name => `<span class="finance-cat-link" role="link" tabindex="0" data-cat-profile="${escapeHtml(name)}">${escapeHtml(name)}</span>`).join('、')
+    : '—';
   const note = record.note || (record.recordType === 'in_kind' ? '实物捐赠，不计入现金收支' : '');
   return `<button class="finance-ledger-row${selected ? ' is-selected' : ''}" type="button" data-finance-record="${escapeHtml(record.id)}" aria-pressed="${selected}" aria-label="查看 ${escapeHtml(record.description || financeTypeLabel(record))} 的账目详情">
     <span class="finance-date-cell"><time datetime="${escapeHtml(record.date)}">${escapeHtml(financeShortDate(record.date))}</time></span>
     <span>${renderFinanceTypeTag(record)}</span>
     <span class="finance-item-cell"><strong>${escapeHtml(record.description || '未填写事项')}</strong>${note ? `<small>${escapeHtml(note)}</small>` : ''}</span>
     <span class="finance-category-cell">${escapeHtml(record.category || '待分类')}</span>
-    <span class="finance-cats-cell">${escapeHtml(relatedCats)}</span>
+    <span class="finance-cats-cell">${relatedCats}</span>
     <span>${renderFinanceAmount(record)}</span>
     <span class="finance-evidence-cell">${record.evidence ? '<span class="finance-evidence-link">查看</span>' : '—'}</span>
   </button>`;
@@ -154,7 +156,7 @@ function renderFinanceDetail(record) {
   }
   const catStatus = record.relatedCatStatus || [];
   const hasUnmappedCat = catStatus.some(item => item.status === 'unmapped');
-  const cats = record.relatedCats.length ? record.relatedCats.map(name => `<span>${escapeHtml(name)}</span>`).join('') : '<span>—</span>';
+  const cats = record.relatedCats.length ? record.relatedCats.map(name => `<button class="finance-cat-link" type="button" data-cat-profile="${escapeHtml(name)}">${escapeHtml(name)}</button>`).join('') : '<span>—</span>';
   const evidence = record.evidence ? `<figure class="finance-evidence"><a href="${escapeHtml(record.evidence.url)}" target="_blank" rel="noopener noreferrer"><img src="${escapeHtml(record.evidence.url)}" alt="${escapeHtml(record.description || '账目凭证')}" loading="lazy"><span>在新窗口查看原始凭证 ↗</span></a></figure>` : '<div class="finance-no-evidence">暂无公开凭证</div>';
   return `<aside class="finance-detail-card" aria-label="账目详情">
     <header class="finance-detail-header"><div><span class="finance-detail-kicker">账目详情</span><h2>${escapeHtml(record.description || '未填写事项')}</h2></div><span class="finance-detail-source">#${escapeHtml(record.source.row)}</span></header>
@@ -225,24 +227,16 @@ function renderFinanceLedgerView() {
 }
 
 function renderFinanceTab() {
-  const isLedger = state.financeView === 'ledger';
   return `<section class="finance-shell">
-    <header class="finance-page-header"><div><p class="finance-eyebrow">XDU CAT · PUBLIC LEDGER</p><div class="finance-title-line"><h1>财务公示</h1><p>记录每一份善意的来处，也记录它最终去了哪里。</p></div></div><span class="finance-cutoff">▣ &nbsp;数据截至 ${escapeHtml(financeSnapshot.meta.cutoffDate)}</span></header>
-    <nav class="finance-view-tabs" aria-label="财务公示视图"><button type="button" class="${isLedger ? 'is-active' : ''}" data-finance-view="ledger" aria-current="${isLedger ? 'page' : 'false'}"><span>▣</span>账目公示</button><button type="button" class="${!isLedger ? 'is-active' : ''}" data-finance-view="price" aria-current="${!isLedger ? 'page' : 'false'}"><span>◇</span>价格参考</button></nav>
-    ${isLedger ? renderFinanceLedgerView() : `<div class="finance-price-view">${renderProcurementTab({ embedded: true })}</div>`}
+    <header class="finance-page-header"><div><p class="finance-eyebrow">西电猫猫 · 公账记录</p><div class="finance-title-line"><h1>财务公示</h1><p>记录每一份善意的来处，也记录它最终去了哪里。</p></div></div><span class="finance-cutoff">▣ &nbsp;数据截至 ${escapeHtml(financeSnapshot.meta.cutoffDate)}</span></header>
+    ${renderFinanceLedgerView()}
     <footer class="finance-page-footer"><span>♣ &nbsp;每一笔收支，都用于帮助猫咪。感谢所有支持与信任。</span><span>让更多小生命被看见，让温暖持续发生。 ♡</span></footer>
   </section>`;
 }
 
 function bindFinanceControls(renderApp) {
-  if (state.activeTab !== 'finance') return;
-
-  document.querySelectorAll('[data-finance-view]').forEach(button => {
-    button.addEventListener('click', () => {
-      state.financeView = button.dataset.financeView === 'price' ? 'price' : 'ledger';
-      renderApp();
-    });
-  });
+  const isTimelineFinance = (state.activeTab === 'timeline' || (state.activeTab === 'misc' && state.miscView === 'diary-calendar')) && state.timelineView === 'finance';
+  if (state.activeTab !== 'finance' && !isTimelineFinance) return;
 
   const searchInput = document.getElementById('financeSearchInput');
   const searchButton = document.getElementById('financeSearchButton');
@@ -281,12 +275,18 @@ function bindFinanceControls(renderApp) {
   });
 
   document.querySelectorAll('[data-finance-record]').forEach(button => {
-    button.addEventListener('click', () => {
+    button.addEventListener('click', event => {
+      if (event.target.closest('[data-cat-profile]')) return;
       state.selectedFinanceId = button.dataset.financeRecord;
       renderApp();
       document.querySelector('.finance-detail-card')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });
   });
+
+  document.querySelectorAll('[data-cat-profile]').forEach(button => button.addEventListener('click', event => {
+    event.stopPropagation();
+    openDrawer(button.dataset.catProfile);
+  }));
 
   document.querySelector('[data-finance-reset]')?.addEventListener('click', () => {
     state.financeQuery = '';
@@ -299,4 +299,4 @@ function bindFinanceControls(renderApp) {
   });
 }
 
-export { renderFinanceTab, bindFinanceControls };
+export { renderFinanceTab, renderFinanceLedgerView, bindFinanceControls };

@@ -3,6 +3,8 @@ import path from 'node:path';
 import { defineConfig } from 'astro/config';
 import localCms from './src/admin/local-cms.mjs';
 
+const localOnlyPages = ['admin', 'timeline', 'misc', 'supplies', 'finance', 'knowledge'];
+
 // GitHub Pages 部署时使用 SITE_BASE=/cat-knowledge/（在 deploy workflow 的 build step 注入）；
 // 本地开发保持默认根路径，后台可直接访问 /admin/。
 export default defineConfig({
@@ -11,10 +13,10 @@ export default defineConfig({
   vite: { server: { strictPort: true }, plugins: [localCms()] },
   output: 'static',
   integrations: [{
-    name: 'remove-local-cms-from-static-output',
+    name: 'remove-local-only-pages-from-static-output',
     hooks: {
       'astro:build:done': async ({ dir }) => {
-        await fs.rm(path.join(dir.pathname, 'admin'), { recursive: true, force: true });
+        await Promise.all(localOnlyPages.map(page => fs.rm(path.join(dir.pathname, page), { recursive: true, force: true })));
       },
     },
   }],

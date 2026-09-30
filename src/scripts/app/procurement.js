@@ -431,7 +431,7 @@ function renderProcurementTab({ embedded = false } = {}) {
 }
 
 function isProcurementViewActive() {
-  return state.activeTab === 'procurement' || (state.activeTab === 'finance' && state.financeView === 'price');
+  return state.activeTab === 'procurement' || (state.activeTab === 'misc' && state.miscView === 'price');
 }
 
 function bindProcurementControls(renderApp) {

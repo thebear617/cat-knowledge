@@ -2,18 +2,25 @@ import { catProfiles } from '../../../js/cats.js';
 import { roles } from '../../../js/roles.js';
 import { supplies } from '../../../js/supplies.js';
 import { timelineEvents } from '../../../js/timeline.js';
+import { renderFinanceLedgerView } from './finance.js';
+import { openDrawer } from './directory.js';
 import { knowledgePosts } from './data.js';
 import { pageHref } from './routes.js';
 import { state } from './state.js';
 import { escapeHtml, isEmptyValue, normalize } from './shared.js';
 
 const BASE_URL = `${import.meta.env.BASE_URL.replace(/\/?$/, '/')}`;
+const CHRONICLE_PHOTO = `${BASE_URL}images/chronicle-photo.png`;
 const OPERATIONS_VIEWS = [
-  { id: 'inventory', label: '物资库存', icon: '📦' },
-  { id: 'collaboration', label: '行动协作', icon: '🤝' },
-  { id: 'workflows', label: '工作流程', icon: '↗' }
+  { id: 'inventory', label: '物资库存', icon: '📦' }
 ];
 const TIMELINE_TYPES = ['全部', '救助', '疫苗', '绝育', '送养'];
+const LUNAR_DAY_NAMES = {
+  1: '初一', 2: '初二', 3: '初三', 4: '初四', 5: '初五', 6: '初六', 7: '初七', 8: '初八', 9: '初九', 10: '初十',
+  11: '十一', 12: '十二', 13: '十三', 14: '十四', 15: '十五', 16: '十六', 17: '十七', 18: '十八', 19: '十九', 20: '二十',
+  21: '廿一', 22: '廿二', 23: '廿三', 24: '廿四', 25: '廿五', 26: '廿六', 27: '廿七', 28: '廿八', 29: '廿九', 30: '三十'
+};
+const lunarDateFormatter = new Intl.DateTimeFormat('zh-CN-u-ca-chinese', { month: 'long', day: 'numeric' });
 
 function cdnUrl(path) {
   if (!path) return path;
@@ -22,13 +29,13 @@ function cdnUrl(path) {
   return `${BASE_URL}${parts}`;
 }
 
-function getCatCover(cat) {
-  if (cat.cover) return cat.cover;
-  return cat.images && cat.images.length ? cat.images[0] : null;
-}
-
-function catImageUrl(path) {
-  return cdnUrl(path);
+function renderCatProfileLinks(value, className = '') {
+  return String(value || '').split('、').map(name => name.trim()).filter(Boolean).map(name => {
+    const known = catProfiles.some(cat => cat.name === name);
+    return known
+      ? `<button class="${className}" type="button" data-cat-profile="${escapeHtml(name)}">${escapeHtml(name)}</button>`
+      : escapeHtml(name);
+  }).join('、');
 }
 
 // ============== Supplies Tab ==============
@@ -47,9 +54,9 @@ function getFilteredSupplies() {
   }).filter(Boolean);
 }
 
-function renderSuppliesTab() {
-  const view = OPERATIONS_VIEWS.find(item => item.id === state.operationsView) || OPERATIONS_VIEWS[0];
-  return `<section class="operations-shell"><header class="operations-heading"><div><p>校园救助行动手册</p><h1>物资与协作 <span aria-hidden="true">◌</span></h1><strong>${state.operationsView === 'inventory' ? '物资库存档案' : escapeHtml(view.label)}</strong></div><div class="operations-stamp" aria-label="西电猫猫档案室"><span>西电猫猫档案室</span><b>每一份物资，都有去处</b><i>XDU CATS</i></div></header><nav class="operations-tabs" aria-label="运营台内容切换">${OPERATIONS_VIEWS.map(item => `<button data-operations-view="${item.id}" class="${state.operationsView === item.id ? 'is-active' : ''}" type="button"><span>${item.icon}</span>${item.label}</button>`).join('')}</nav>${state.operationsView === 'inventory' ? renderInventoryView() : state.operationsView === 'collaboration' ? renderCollaborationView() : renderWorkflowView()}</section>`;
+function renderSuppliesTab({ embedded = false } = {}) {
+  if (embedded) return `<section class="operations-shell operations-shell--embedded">${renderInventoryView()}</section>`;
+  return `<section class="operations-shell"><header class="operations-heading"><div><p>校园救助行动手册</p><h1>救助行动 <span aria-hidden="true">◌</span></h1><strong>物资库存档案</strong></div><div class="operations-stamp" aria-label="西电猫猫档案室"><span>西电猫猫档案室</span><b>每一份物资，都有去处</b><i>西电猫猫</i></div></header><nav class="operations-tabs" aria-label="救助行动视图切换">${OPERATIONS_VIEWS.map(item => `<button data-operations-view="${item.id}" class="${state.operationsView === item.id ? 'is-active' : ''}" type="button"><span>${item.icon}</span>${item.label}</button>`).join('')}</nav>${renderInventoryView()}</section>`;
 }
 
 function renderInventoryView() {
@@ -95,7 +102,7 @@ function renderInventoryView() {
   }
 
   html += '</div>';
-  html += `<aside class="inventory-aside" aria-label="库存档案索引"><section class="inventory-note-card inventory-category-card"><p>CATALOGUE</p><h2>分类速览</h2><div>${supplies.map(category => `<button data-inventory-category="${escapeHtml(category.category)}" class="${state.inventoryCategory === category.category ? 'is-active' : ''}" type="button"><span>${categoryIcons[category.category] || '📦'}</span><strong>${escapeHtml(category.category)}</strong><small>${category.items.length} 项</small></button>`).join('')}</div></section><section class="inventory-note-card inventory-location-card"><p>LOCATION INDEX</p><h2>存放索引</h2><ul>${recordedLocations.map(location => `<li><span>●</span>${escapeHtml(location)}</li>`).join('')}</ul></section><section class="inventory-note-card inventory-tip-card"><p>ARCHIVE NOTE</p><h2>归档说明</h2><p>所有数量、地点和备注均以现有物资档案为准；展开分类即可查看完整记录。</p><small>全库共 ${totalRecordedItems} 项物资记录</small></section></aside></section>`;
+  html += `<aside class="inventory-aside" aria-label="库存档案索引"><section class="inventory-note-card inventory-category-card"><p>分类索引</p><h2>分类速览</h2><div>${supplies.map(category => `<button data-inventory-category="${escapeHtml(category.category)}" class="${state.inventoryCategory === category.category ? 'is-active' : ''}" type="button"><span>${categoryIcons[category.category] || '📦'}</span><strong>${escapeHtml(category.category)}</strong><small>${category.items.length} 项</small></button>`).join('')}</div></section><section class="inventory-note-card inventory-location-card"><p>存放索引</p><h2>存放索引</h2><ul>${recordedLocations.map(location => `<li><span>●</span>${escapeHtml(location)}</li>`).join('')}</ul></section><section class="inventory-note-card inventory-tip-card"><p>归档说明</p><h2>归档说明</h2><p>所有数量、地点和备注均以现有物资档案为准；展开分类即可查看完整记录。</p><small>全库共 ${totalRecordedItems} 项物资记录</small></section></aside></section>`;
   return html;
 }
 
@@ -113,7 +120,17 @@ function getFilteredTimeline() {
 }
 
 function buildChronicleSearch() {
-  return `<div class="chronicle-search"><span>⌕</span><input id="searchInput" type="search" value="${escapeHtml(state.query)}" placeholder="搜索猫名、地点或备注" autocomplete="off"><button id="searchBtn" type="button">搜索</button>${state.query ? '<button id="clearSearch" class="chronicle-search-clear" type="button" aria-label="清除搜索">×</button>' : ''}</div>`;
+  const filterOptions = TIMELINE_TYPES.map(type => `<button class="chronicle-filter-option${state.timelineType === type ? ' is-selected' : ''}" type="button" role="menuitemradio" aria-checked="${state.timelineType === type}" data-timeline-type="${type}"><i class="timeline-filter-dot timeline-type-${type}"></i><span>${type}</span>${state.timelineType === type ? '<b aria-hidden="true">✓</b>' : ''}</button>`).join('');
+  return `<div class="chronicle-search-controls"><div class="chronicle-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3"></circle><path d="m16 16 4.3 4.3"></path></svg><input id="searchInput" type="search" value="${escapeHtml(state.query)}" placeholder="搜索猫名、地点" autocomplete="off" aria-label="搜索猫名、地点">${state.query ? '<button id="clearSearch" class="chronicle-search-clear" type="button" aria-label="清除搜索">×</button>' : ''}<button id="searchBtn" type="button" aria-label="搜索"><svg viewBox="0 0 24 24" aria-hidden="true" class="paw-icon"><circle cx="6.2" cy="9.3" r="2.1"></circle><circle cx="11.1" cy="6.2" r="2.1"></circle><circle cx="16.1" cy="8.1" r="2.1"></circle><circle cx="18.3" cy="13" r="2.1"></circle><path d="M12.1 11.1c-3.1 0-5.3 2.2-5.3 4.8 0 2 1.4 3.2 3.3 3.2.8 0 1.4-.2 2 .6.6.4 1.3.6 2 .6 1.9 0 3.2-1.2 3.2-3.2 0-2.6-2.1-4.8-5.2-4.8Z"></path></svg></button></div><div class="chronicle-filter-wrap"><button class="chronicle-filter-toggle${state.timelineType !== '全部' ? ' has-filter' : ''}" id="timelineFilterToggle" type="button" aria-label="筛选事件类型" title="筛选事件类型" aria-haspopup="menu" aria-expanded="false" aria-controls="timelineFilterMenu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"></path></svg></button><div class="chronicle-filter-menu" id="timelineFilterMenu" role="menu" aria-label="筛选事件类型" hidden><strong>筛选记录</strong><div class="chronicle-filter-options">${filterOptions}</div></div></div></div>`;
+}
+
+function renderTimelinePagination(page, totalPages) {
+  if (totalPages <= 1) return '';
+  const pageButtons = Array.from({ length: totalPages }, (_, index) => {
+    const pageNumber = index + 1;
+    return `<button type="button" class="timeline-pagination-page${pageNumber === page ? ' is-current' : ''}" data-timeline-page="${pageNumber}" aria-label="第 ${pageNumber} 页"${pageNumber === page ? ' aria-current="page"' : ''}>${pageNumber}</button>`;
+  }).join('');
+  return `<nav class="timeline-pagination" aria-label="猫猫日记翻页"><div class="timeline-pagination-controls"><button type="button" class="timeline-pagination-direction" data-timeline-page="${page - 1}" aria-label="上一页" title="上一页"${page === 1 ? ' disabled' : ''}>‹</button>${pageButtons}<button type="button" class="timeline-pagination-direction" data-timeline-page="${page + 1}" aria-label="下一页" title="下一页"${page === totalPages ? ' disabled' : ''}>›</button></div></nav>`;
 }
 
 function chronicleMotif(kind) {
@@ -127,48 +144,171 @@ function chronicleMotif(kind) {
   return motifs[kind] || '';
 }
 
-function renderTimelineTab() {
-  const events = getFilteredTimeline();
-  const chroniclePhoto = catImageUrl(getCatCover(catProfiles[0]));
-  const months = {};
-  for (const event of events) {
-    const key = event.date.slice(0, 7);
-    if (!months[key]) months[key] = [];
-    months[key].push(event);
-  }
-  const monthNames = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
-  const typeDescriptions = { '救助': '发现受伤或需要帮助的猫咪', '疫苗': '进行疫苗接种记录', '绝育': '完成绝育手术记录', '送养': '成功进入送养流程' };
-  const visibleMonths = Object.keys(months).sort();
-  const mobileSummary = state.query ? `“${escapeHtml(state.query)}” · 找到 ${events.length} 条记录` : `共 ${events.length} 条记录`;
-  const mobileMonthNav = visibleMonths.map((key, index) => {
-    const [year, month] = key.split('-');
-    return `<button data-timeline-month="${key}" type="button" aria-label="跳转到 ${year} 年 ${month} 月"><span>${index === 0 ? year : ''}</span><strong>${month}</strong></button>`;
-  }).join('');
-  let html = `<section class="chronicle-shell"><div class="chronicle-layout"><main class="chronicle-rail"><header class="chronicle-heading"><div><div class="chronicle-title-line"><h1>猫猫编年史</h1><span class="chronicle-postmark">🐾</span></div><span>记录校园猫咪的点滴故事，每一次相遇都值得被珍藏。</span></div>${buildChronicleSearch()}</header><div class="chronicle-type-filters" aria-label="事件类型筛选">${TIMELINE_TYPES.map(type => `<button data-timeline-type="${type}" class="${state.timelineType === type ? 'is-active' : ''}" type="button">${type === '全部' ? '全部' : `<i class="timeline-filter-dot timeline-type-${type}"></i>${type}`}</button>`).join('')}</div><div class="chronicle-archive-body">`;
-  html += `<nav class="chronicle-mobile-month-nav" aria-label="月份导航">${mobileMonthNav}</nav><div class="chronicle-mobile-summary">${mobileSummary}${state.query ? '<button id="clearSearchMobile" type="button">清除</button>' : ''}</div>`;
+function timelineMonthKey(date) {
+  return date.slice(0, 7);
+}
 
+function timelineMonthLabel(monthKey) {
+  const [year, month] = monthKey.split('-');
+  return `${year}年${Number(month)}月`;
+}
+
+function timelineDateLabel(date) {
+  const value = new Date(`${date}T00:00:00`);
+  const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+  return `${value.getMonth() + 1}月${value.getDate()}日 周${weekdays[value.getDay()]}`;
+}
+
+function timelineLunarText(year, month, day) {
+  const value = new Date(year, month - 1, day, 12);
+  const parts = lunarDateFormatter.formatToParts(value);
+  const monthName = parts.find(part => part.type === 'month')?.value || '';
+  const lunarDay = Number(parts.find(part => part.type === 'day')?.value || 0);
+  const lunarText = lunarDay === 1 ? monthName : (LUNAR_DAY_NAMES[lunarDay] || String(lunarDay));
+  return `<span class="chronicle-calendar-lunar${lunarDay === 1 ? ' is-start' : ''}">${escapeHtml(lunarText)}</span>`;
+}
+
+function timelineCalendarCells(monthKey, events, selectedDate) {
+  const [year, month] = monthKey.split('-').map(Number);
+  const firstDay = new Date(year, month - 1, 1).getDay();
+  const daysInMonth = new Date(year, month, 0).getDate();
+  const previousMonthDays = new Date(year, month - 1, 0).getDate();
+  const today = new Date();
+  const todayKey = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+  const eventsByDate = new Map();
+  events.forEach(event => {
+    const dayEvents = eventsByDate.get(event.date) || [];
+    dayEvents.push(event);
+    eventsByDate.set(event.date, dayEvents);
+  });
+  const cells = [];
+  for (let index = 0; index < firstDay; index += 1) {
+    const day = previousMonthDays - firstDay + index + 1;
+    const previousMonth = month === 1 ? 12 : month - 1;
+    const previousYear = month === 1 ? year - 1 : year;
+    cells.push(`<div class="chronicle-calendar-cell is-other-month" aria-hidden="true"><span class="chronicle-calendar-date">${day}日</span>${timelineLunarText(previousYear, previousMonth, day)}</div>`);
+  }
+  for (let day = 1; day <= daysInMonth; day += 1) {
+    const date = `${monthKey}-${String(day).padStart(2, '0')}`;
+    const dayEvents = eventsByDate.get(date) || [];
+    const classes = ['chronicle-calendar-cell'];
+    if (date === selectedDate) classes.push('is-selected');
+    if (date === todayKey) classes.push('is-today');
+    if (dayEvents.length) classes.push('has-events');
+    const markers = dayEvents.slice(0, 3).map(event => `<i class="chronicle-calendar-dot chronicle-calendar-dot-type-${event.type}" title="${escapeHtml(event.type)}"></i>`).join('');
+    cells.push(`<button class="${classes.join(' ')}" type="button" data-timeline-date="${date}" aria-label="${timelineDateLabel(date)}${dayEvents.length ? `，${dayEvents.length} 条记录` : ''}" aria-pressed="${date === selectedDate}"><span class="chronicle-calendar-date">${day}日</span>${timelineLunarText(year, month, day)}${markers ? `<span class="chronicle-calendar-dots" aria-hidden="true">${markers}</span>` : ''}</button>`);
+  }
+  const totalCells = 42;
+  const trailingDays = totalCells - cells.length;
+  for (let day = 1; day <= trailingDays; day += 1) {
+    const nextMonth = month === 12 ? 1 : month + 1;
+    const nextYear = month === 12 ? year + 1 : year;
+    cells.push(`<div class="chronicle-calendar-cell is-other-month" aria-hidden="true"><span class="chronicle-calendar-date">${day}日</span>${timelineLunarText(nextYear, nextMonth, day)}</div>`);
+  }
+  return cells.join('');
+}
+
+function renderTimelineDetail(date, events) {
+  const dateEvents = date ? events.filter(event => event.date === date) : [];
+  if (!date) {
+    return '<aside class="chronicle-detail-card" aria-label="猫猫日记详情"><div class="chronicle-detail-empty"><span>▦</span><h2>选择一个日期</h2><p>点击左侧日历中的日期，查看当天的记录。</p></div></aside>';
+  }
+  if (!dateEvents.length) {
+    return `<aside class="chronicle-detail-card" aria-label="猫猫日记详情"><header class="chronicle-detail-header"><span>记录详情</span><h2>${timelineDateLabel(date)}</h2></header><div class="chronicle-detail-empty is-quiet"><span>—</span><h2>这一天没有记录</h2><p>可以选择日历中带有圆点的日期。</p></div></aside>`;
+  }
+  const eventCards = dateEvents.map(event => {
+    const cats = renderCatProfileLinks(event.cat, 'timeline-cat-link');
+    return `<article class="chronicle-detail-event"><header><span class="timeline-badge timeline-badge-${event.type}">${escapeHtml(event.type)}</span><strong>${cats}</strong></header><dl>${event.location ? `<div><dt>地点</dt><dd>${escapeHtml(event.location)}</dd></div>` : ''}${event.notes ? `<div><dt>记录</dt><dd>${escapeHtml(event.notes)}</dd></div>` : ''}</dl></article>`;
+  }).join('');
+  return `<aside class="chronicle-detail-card" aria-label="猫猫日记详情"><header class="chronicle-detail-header"><span>记录详情</span><h2>${timelineDateLabel(date)}</h2></header><div class="chronicle-detail-events">${eventCards}</div></aside>`;
+}
+
+function renderTimelineListView() {
+  const filteredEvents = getFilteredTimeline();
+  const orderedEvents = [...filteredEvents].sort((a, b) => a.date.localeCompare(b.date));
+  const totalPages = Math.max(1, Math.ceil(orderedEvents.length / 14));
+  const currentPage = Math.min(Math.max(Number(state.timelinePage) || 1, 1), totalPages);
+  state.timelinePage = currentPage;
+  const events = orderedEvents.slice((currentPage - 1) * 14, currentPage * 14);
+  const pageSummary = totalPages > 1 ? ` · 第 ${currentPage}/${totalPages} 页` : '';
+  const mobileSummary = state.query ? `“${escapeHtml(state.query)}” · 找到 ${filteredEvents.length} 条记录${pageSummary}` : `共 ${filteredEvents.length} 条记录${pageSummary}`;
+  let html = '<div class="misc-timeline-list-body"><div class="chronicle-mobile-summary">' + `${mobileSummary}${state.query ? '<button id="clearSearchMobile" type="button">清除</button>' : ''}</div>`;
   if (!events.length) {
     html += '<section class="empty-state"><h2>没有匹配的事件</h2><p>可以清除搜索或切换事件类型。</p></section>';
   } else {
-    html += '<div class="timeline-list">';
-    html += `<div class="chronicle-floating-motifs" aria-hidden="true"><i class="chronicle-float-flower">${chronicleMotif('flower')}</i><i class="chronicle-float-stamp">${chronicleMotif('stamp')}</i><i class="chronicle-float-envelope">${chronicleMotif('envelope')}</i></div>`;
-    for (const [key, items] of Object.entries(months).sort()) {
-      const [year, month] = key.split('-');
-      const m = Number(month);
-      const isFirst = key === visibleMonths[0];
-      html += `<section class="timeline-month" id="timeline-${key}"><header class="timeline-month-label"><span>${year}</span><h2>${String(m).padStart(2, '0')}</h2><small>${items.length} 条记录</small></header><div class="timeline-events">${isFirst ? '<div class="timeline-table-head"><span>日期</span><span>猫名</span><span>事件类型</span><span>地点</span><span>备注</span></div>' : ''}`;
-      for (const event of items.sort((a, b) => a.date.localeCompare(b.date))) {
-        const location = isEmptyValue(event.location) ? '' : `<span class="timeline-entry-location">⌖ ${escapeHtml(event.location)}</span>`;
-        const notes = isEmptyValue(event.notes) ? '' : `<span class="timeline-entry-desc">${escapeHtml(event.notes)}</span>`;
-        html += `<article class="timeline-item timeline-type-${event.type}"><time datetime="${event.date}">${event.date.slice(5).replace('-', '.')}</time><span class="timeline-entry-cat">${escapeHtml(event.cat)}</span><span class="timeline-badge timeline-badge-${event.type}">${escapeHtml(event.type)}</span>${location}${notes}</article>`;
-      }
-      html += '</div></section>';
+    html += '<div class="timeline-list"><div class="timeline-table-head"><span>日期</span><span>猫名</span><span>事件类型</span><span>地点</span><span>备注</span></div>';
+    for (const event of events) {
+      const locationValue = isEmptyValue(event.location) ? '' : String(event.location);
+      const notesValue = isEmptyValue(event.notes) ? '' : String(event.notes);
+      const location = locationValue ? `<span class="timeline-entry-location" title="${escapeHtml(locationValue)}">⌖ ${escapeHtml(locationValue)}</span>` : '';
+      const notes = notesValue ? `<span class="timeline-entry-desc" title="${escapeHtml(notesValue)}">${escapeHtml(notesValue)}</span>` : '';
+      html += `<article class="timeline-item timeline-type-${event.type}"><time datetime="${event.date}">${event.date.slice(5).replace('-', '.')}</time><span class="timeline-entry-cat">${renderCatProfileLinks(event.cat, 'timeline-cat-link')}</span><span class="timeline-badge timeline-badge-${event.type}">${escapeHtml(event.type)}</span>${location}${notes}</article>`;
     }
-    html += `</div><footer class="chronicle-quote"><span>“</span><p>它们或许只是我们校园里的过客，但对于它们，我们是全部。</p><i>${chronicleMotif('paw')}</i><b></b></footer>`;
+    html += `</div>${renderTimelinePagination(currentPage, totalPages)}`;
   }
+  return `${html}</div>`;
+}
 
-  html += `</div></main><aside class="chronicle-aside" aria-label="编年史索引"><section class="chronicle-nav-card"><p>时间索引</p><div>${visibleMonths.map(key => { const [year, month] = key.split('-'); return `<button data-timeline-month="${key}" type="button"><span>${year} / ${month}</span><i></i></button>`; }).join('')}</div></section><section class="chronicle-legend-card"><p>事件类型图例</p><div>${TIMELINE_TYPES.slice(1).map(type => `<div><i class="timeline-filter-dot timeline-type-${type}"></i><span><strong>${type}</strong><small>${typeDescriptions[type]}</small></span></div>`).join('')}</div></section><section class="chronicle-total-card"><p>记录总数</p><strong>${timelineEvents.length}<small>条记录</small></strong><span>持续更新</span></section>${chroniclePhoto ? `<figure class="chronicle-photo-card"><img src="${chroniclePhoto}" alt="${escapeHtml(catProfiles[0].name)}"><figcaption>愿每一次记录，都成为更好的明天。</figcaption></figure>` : ''}</aside></div></section>`;
-  return html;
+function renderChronicleDashboard(events) {
+  const monthKeys = [...new Set(timelineEvents.map(event => timelineMonthKey(event.date)))].sort();
+  const counts = monthKeys.map(monthKey => events.filter(event => timelineMonthKey(event.date) === monthKey).length);
+  const width = 440;
+  const height = 120;
+  const padding = { top: 10, right: 14, bottom: 24, left: 25 };
+  const plotWidth = width - padding.left - padding.right;
+  const plotHeight = height - padding.top - padding.bottom;
+  const max = Math.max(...counts, 1);
+  const points = counts.map((count, index) => ({
+    x: padding.left + (index * plotWidth) / Math.max(counts.length - 1, 1),
+    y: padding.top + (1 - count / max) * plotHeight
+  }));
+  const linePath = points.map((point, index) => `${index ? 'L' : 'M'}${point.x.toFixed(1)},${point.y.toFixed(1)}`).join(' ');
+  const gridLines = [0, .5, 1].map(ratio => {
+    const y = padding.top + (1 - ratio) * plotHeight;
+    return `<line class="chronicle-dashboard-grid-line" x1="${padding.left}" x2="${width - padding.right}" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}"/><text class="chronicle-dashboard-y-label" x="${padding.left - 8}" y="${(y + 3).toFixed(1)}">${Math.round(max * ratio)}</text>`;
+  }).join('');
+  const labels = monthKeys.map((monthKey, index) => {
+    const [, month] = monthKey.split('-');
+    return `<text class="chronicle-dashboard-x-label" x="${points[index].x.toFixed(1)}" y="${height - 8}">${Number(month)}月</text>`;
+  }).join('');
+  const nodes = points.map((point, index) => `<circle class="chronicle-dashboard-node" cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="3.2"><title>${timelineMonthLabel(monthKeys[index])} · ${counts[index]} 条记录</title></circle>`).join('');
+  const chart = events.length
+    ? `<svg class="chronicle-dashboard-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="猫猫日记月度记录趋势">${gridLines}<path class="chronicle-dashboard-line" d="${linePath}"/>${nodes}${labels}</svg>`
+    : '<div class="chronicle-dashboard-empty">暂无匹配记录</div>';
+  return `<article class="chronicle-dashboard-card" aria-label="猫猫日记数据看板"><header class="chronicle-dashboard-head"><h3><span class="chronicle-dashboard-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 19V5m0 14h16M8 16v-4m4 4V8m4 8v-7"/></svg></span>记录趋势</h3><button class="chronicle-dashboard-link" type="button" data-timeline-view="finance">财务公示 <span aria-hidden="true">›</span></button></header><div class="chronicle-dashboard-chart-wrap">${chart}</div></article>`;
+}
+
+function renderTimelineCalendarView() {
+  const filteredEvents = getFilteredTimeline();
+  const orderedEvents = [...filteredEvents].sort((a, b) => a.date.localeCompare(b.date));
+  const monthKeys = [...new Set(orderedEvents.map(event => timelineMonthKey(event.date)))].sort();
+  const now = new Date();
+  const fallbackMonth = monthKeys[monthKeys.length - 1] || `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+  const monthKey = monthKeys.includes(state.timelineMonth) ? state.timelineMonth : fallbackMonth;
+  state.timelineMonth = monthKey;
+  const monthEvents = orderedEvents.filter(event => timelineMonthKey(event.date) === monthKey);
+  const selectedDate = state.timelineSelectedDate && state.timelineSelectedDate.startsWith(`${monthKey}-`)
+    ? state.timelineSelectedDate
+    : (monthEvents[monthEvents.length - 1]?.date || null);
+  state.timelineSelectedDate = selectedDate;
+  const monthIndex = monthKeys.indexOf(monthKey);
+  const previousMonth = monthKeys[monthIndex - 1] || '';
+  const nextMonth = monthKeys[monthIndex + 1] || '';
+  const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+  const calendar = timelineCalendarCells(monthKey, monthEvents, selectedDate);
+  const chroniclePhoto = CHRONICLE_PHOTO;
+  const calendarLegend = TIMELINE_TYPES.slice(1).map(type => `<span><i class="chronicle-calendar-dot chronicle-calendar-dot-type-${type}"></i>${type}</span>`).join('');
+  const chronicleQuote = `<footer class="chronicle-quote"><span>“</span><p>它们或许只是我们校园里的过客，但对于它们，我们是全部。</p><i>${chronicleMotif('paw')}</i><b></b></footer>`;
+  const calendarSection = `<section class="chronicle-calendar-section" aria-label="猫猫日记日历"><div class="chronicle-calendar-workspace"><section class="chronicle-calendar-card" aria-label="猫猫日记日历"><header class="chronicle-calendar-toolbar"><h2>${timelineMonthLabel(monthKey)}</h2><div class="chronicle-calendar-toolbar-tools"><div class="chronicle-calendar-legend" aria-label="日历图例">${calendarLegend}</div><div class="chronicle-calendar-nav"><button type="button" data-timeline-calendar-nav="${previousMonth}" aria-label="上一个月"${previousMonth ? '' : ' disabled'}>‹</button><button type="button" data-timeline-calendar-nav="${nextMonth}" aria-label="下一个月"${nextMonth ? '' : ' disabled'}>›</button></div></div></header><div class="chronicle-calendar-weekdays">${weekdays.map(day => `<span>${day}</span>`).join('')}</div><div class="chronicle-calendar-grid">${calendar}</div></section>${renderTimelineDetail(selectedDate, orderedEvents)}<div class="chronicle-total-row"><section class="chronicle-total-card"><p>记录总数</p><strong>${timelineEvents.length}<small>条记录</small></strong></section>${renderChronicleDashboard(orderedEvents)}</div><figure class="chronicle-photo-card"><img src="${chroniclePhoto}" alt="校园猫咪"><figcaption>人，咪真的很想你</figcaption></figure></div>${chronicleQuote}</section>`;
+  const chronicleHeader = `<header class="chronicle-heading chronicle-calendar-heading"><div><div class="chronicle-title-line"><h1>猫猫日记</h1><span class="chronicle-postmark">🐾</span></div><span>记录校园猫咪的点滴故事，每一次相遇都值得被珍藏</span></div>${buildChronicleSearch()}</header>`;
+  return `<section class="chronicle-shell">${chronicleHeader}${calendarSection}</section>`;
+}
+
+function renderTimelineTab() {
+  if (state.timelineView === 'finance') {
+    return `<section class="chronicle-shell chronicle-finance-shell"><header class="chronicle-heading chronicle-calendar-heading"><div><div class="chronicle-title-line"><h1>猫猫日记</h1><span class="chronicle-postmark">🐾</span></div><span>记录每一笔帮助猫咪的收支，也记录它们如何回到生活里</span></div><button class="chronicle-finance-back-button" type="button" data-timeline-view="diary"><span aria-hidden="true">‹</span> 返回猫猫日记</button></header><div class="chronicle-finance-view finance-shell">${renderFinanceLedgerView()}</div></section>`;
+  }
+  return renderTimelineCalendarView();
 }
 
 // ============== Operations: Collaboration & Workflows ==============
@@ -185,17 +325,7 @@ function roleKnowledgeLinks(roleName) {
 
 function renderCollaborationView() {
   const roleIcons = { '义卖组': '🛍️', '疫苗绝育组': '🩺', '赞助组': '🤝', '宣传财务组': '📣' };
-  return `<section class="operations-archive-view collaboration-view"><header class="operations-section-heading archive-section-heading"><div><p>COLLABORATION FILES</p><h2>行动协作</h2><span>按小组归档职责、协作阶段与相关行动知识，不预设虚假的任务状态。</span></div><strong>${roles.length} 个协作小组</strong></header><div class="operations-archive-layout"><main class="collaboration-list">${roles.map((role, index) => { const links = roleKnowledgeLinks(role.name); return `<article class="collaboration-role"><span class="archive-item-number">0${index + 1}</span><div class="collaboration-role-top"><span class="collaboration-role-icon">${roleIcons[role.name] || '👥'}</span><div><h3>${escapeHtml(role.name)}</h3><p>${escapeHtml(role.description)}</p></div></div><dl class="collaboration-phases">${role.phases.map(phase => `<div><dt>${escapeHtml(phase.label)}</dt><dd>${escapeHtml(phase.detail)}</dd></div>`).join('')}</dl>${links.length ? `<div class="role-knowledge-links"><span>查阅条目</span>${links.map(post => `<button data-operations-knowledge-slug="${escapeHtml(post.slug)}" type="button">${escapeHtml(post.title)} →</button>`).join('')}</div>` : ''}</article>`; }).join('')}</main><aside class="operations-archive-aside"><section class="operations-note-card"><p>GROUP INDEX</p><h3>协作目录</h3><ol>${roles.map((role, index) => `<li><span>0${index + 1}</span>${escapeHtml(role.name)}</li>`).join('')}</ol></section><section class="operations-note-card operations-note-card-tilted"><p>COLLABORATION NOTE</p><h3>协作说明</h3><span>每个小组独立记录职责与阶段；具体操作以关联的猫猫知识文章为准。</span></section></aside></div></section>`;
-}
-
-function renderWorkflowView() {
-  const workflows = [
-    { icon: '🐾', title: '新猫出现后的评估', text: '从发现、隔离到两周观察，再判断送养或放归路径。', steps: ['发现情况', '隔离观察', '记录评估', '确定路径'], article: '新猫出现后的去留评估' },
-    { icon: '💉', title: '疫苗接种准备', text: '在接种前后确认健康情况、时间窗口和观察要点。', steps: ['健康评估', '确认窗口', '接种记录', '后续观察'], article: '疫苗接种前后怎么准备' },
-    { icon: '✂️', title: '绝育行动安排', text: '围绕抓捕、接送、术后恢复和放归的行动安排。', steps: ['确认对象', '抓捕接送', '术后照护', '恢复放归'], article: '绝育行动怎么安排' },
-    { icon: '🧾', title: '救助费用处理', text: '将费用确认、救助执行与后续记录放进同一条规则。', steps: ['确认需求', '执行救助', '保留记录', '规则处理'], article: '救助费用如何按规则处理' }
-  ];
-  return `<section class="operations-archive-view workflow-view"><header class="operations-section-heading archive-section-heading"><div><p>FIELD MANUAL</p><h2>工作流程</h2><span>把已有的救助行动知识整理成可快速查阅的步骤卷宗。</span></div><strong>${workflows.length} 条行动流程</strong></header><div class="operations-archive-layout"><main class="workflow-list">${workflows.map((workflow, index) => { const post = knowledgePosts.find(item => item.title === workflow.article); return `<article class="workflow-card"><header class="workflow-card-head"><span>${workflow.icon}</span><div><small>流程 0${index + 1}</small><h3>${workflow.title}</h3><p>${workflow.text}</p></div></header><ol>${workflow.steps.map(step => `<li>${escapeHtml(step)}</li>`).join('')}</ol>${post ? `<footer><button data-operations-knowledge-slug="${escapeHtml(post.slug)}" type="button">查阅完整科普文章 →</button></footer>` : ''}</article>`; }).join('')}</main><aside class="operations-archive-aside"><section class="operations-note-card"><p>PROCESS INDEX</p><h3>行动索引</h3><ol>${workflows.map((workflow, index) => `<li><span>0${index + 1}</span>${escapeHtml(workflow.title)}</li>`).join('')}</ol></section><section class="operations-note-card operations-note-card-tilted"><p>FIELD NOTE</p><h3>使用提示</h3><span>流程卡用于快速确认步骤；遇到具体情形时，请继续查阅对应的完整科普文章。</span></section></aside></div></section>`;
+  return `<section class="operations-archive-view collaboration-view"><header class="operations-section-heading archive-section-heading"><div><p>协作档案</p><h2>行动协作</h2><span>按小组归档职责、协作阶段与相关行动知识，不预设虚假的任务状态。</span></div><strong>${roles.length} 个协作小组</strong></header><div class="operations-archive-layout"><main class="collaboration-list">${roles.map((role, index) => { const links = roleKnowledgeLinks(role.name); return `<article class="collaboration-role"><span class="archive-item-number">0${index + 1}</span><div class="collaboration-role-top"><span class="collaboration-role-icon">${roleIcons[role.name] || '👥'}</span><div><h3>${escapeHtml(role.name)}</h3><p>${escapeHtml(role.description)}</p></div></div><dl class="collaboration-phases">${role.phases.map(phase => `<div><dt>${escapeHtml(phase.label)}</dt><dd>${escapeHtml(phase.detail)}</dd></div>`).join('')}</dl>${links.length ? `<div class="role-knowledge-links"><span>查阅条目</span>${links.map(post => `<button data-operations-knowledge-slug="${escapeHtml(post.slug)}" type="button">${escapeHtml(post.title)} →</button>`).join('')}</div>` : ''}</article>`; }).join('')}</main><aside class="operations-archive-aside"><section class="operations-note-card"><p>小组索引</p><h3>协作目录</h3><ol>${roles.map((role, index) => `<li><span>0${index + 1}</span>${escapeHtml(role.name)}</li>`).join('')}</ol></section><section class="operations-note-card operations-note-card-tilted"><p>协作说明</p><h3>协作说明</h3><span>每个小组独立记录职责与阶段；具体操作以关联的猫猫知识文章为准。</span></section></aside></div></section>`;
 }
 
 // ============== Science Tab ==============
@@ -221,6 +351,57 @@ function bindOperationsControls(renderApp) {
     const slug = button.dataset.operationsKnowledgeSlug;
     window.location.href = `${pageHref('knowledge')}?article=${encodeURIComponent(slug)}`;
   }));
+
+  document.querySelectorAll('[data-timeline-view]').forEach(button => button.addEventListener('click', () => {
+    state.timelineView = button.dataset.timelineView === 'finance' ? 'finance' : 'diary';
+    renderApp();
+  }));
+
+  const timelineFilterToggle = document.getElementById('timelineFilterToggle');
+  const timelineFilterMenu = document.getElementById('timelineFilterMenu');
+  if (timelineFilterToggle && timelineFilterMenu) {
+    timelineFilterToggle.addEventListener('click', () => {
+      const shouldOpen = timelineFilterMenu.hidden;
+      timelineFilterMenu.hidden = !shouldOpen;
+      timelineFilterToggle.setAttribute('aria-expanded', String(shouldOpen));
+    });
+    timelineFilterMenu.addEventListener('keydown', event => {
+      if (event.key !== 'Escape') return;
+      timelineFilterMenu.hidden = true;
+      timelineFilterToggle.setAttribute('aria-expanded', 'false');
+      timelineFilterToggle.focus();
+    });
+  }
+
+  document.querySelectorAll('[data-timeline-calendar-nav]').forEach(button => button.addEventListener('click', () => {
+    if (button.disabled || !button.dataset.timelineCalendarNav) return;
+    state.timelineMonth = button.dataset.timelineCalendarNav;
+    state.timelineSelectedDate = null;
+    renderApp();
+  }));
+
+  document.querySelectorAll('[data-timeline-type]').forEach(button => button.addEventListener('click', () => {
+    state.timelineType = button.dataset.timelineType;
+    state.timelinePage = 1;
+    renderApp();
+  }));
+
+  document.querySelectorAll('[data-timeline-page]').forEach(button => button.addEventListener('click', () => {
+    if (button.disabled) return;
+    const page = Number(button.dataset.timelinePage);
+    if (!Number.isInteger(page) || page < 1 || page === state.timelinePage) return;
+    state.timelinePage = page;
+    renderApp();
+  }));
+
+  document.querySelectorAll('[data-timeline-date]').forEach(button => button.addEventListener('click', () => {
+    state.timelineSelectedDate = button.dataset.timelineDate;
+    renderApp();
+  }));
+
+  document.querySelectorAll('.timeline-cat-link').forEach(button => button.addEventListener('click', () => {
+    openDrawer(button.dataset.catProfile);
+  }));
 }
 
-export { renderSuppliesTab, renderTimelineTab, chronicleMotif, bindOperationsControls };
+export { renderSuppliesTab, renderTimelineTab, renderTimelineListView, renderCollaborationView, buildChronicleSearch, chronicleMotif, bindOperationsControls };
