@@ -8800,7 +8800,8 @@ export const catProfiles = [
       "images/豆米/豆米2.jpg",
       "images/豆米/豆米3.jpg",
       "images/豆米/豆米4.jpg",
-      "images/豆米/豆米5.jpg"
+      "images/豆米/豆米5.jpg",
+      "images/豆米/豆米6.jpg"
     ],
     "personality": [],
     "description": null,
@@ -8809,7 +8810,8 @@ export const catProfiles = [
     "updates": [],
     "aliases": [],
     "sourceId": null,
-    "sourceImages": []
+    "sourceImages": [],
+    "photoUpdatedAt": "2026-10-01"
   },
   {
     "name": "糯糯",
