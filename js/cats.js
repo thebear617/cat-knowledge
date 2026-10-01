@@ -1993,7 +1993,8 @@ export const catProfiles = [
       "images/水手/水手3.jpg",
       "images/水手/水手4.jpg",
       "images/水手/水手5.jpg",
-      "images/水手/水手6.jpg"
+      "images/水手/水手6.jpg",
+      "images/水手/水手7.jpg"
     ],
     "personality": [
       "聪明机灵",
@@ -2033,7 +2034,7 @@ export const catProfiles = [
       "https://static.nordri.co/rms/public/193079755/2025/0911/21/e8b8cca1c-5ff9d84e2c1f93c333bea80fefc2a340.jpg",
       "https://static.nordri.co/rms/public/193079755/2025/0911/21/e8b8cca1c-c04db4d8c1706c255f9681c45b850739.jpg"
     ],
-    "photoUpdatedAt": "2026-09-30"
+    "photoUpdatedAt": "2026-10-01"
   },
   {
     "name": "豆花",
@@ -2223,7 +2224,10 @@ export const catProfiles = [
       "images/二头/二头6.jpg",
       "images/二头/二头7.jpg",
       "images/二头/二头8.jpg",
-      "images/二头/二头9.jpg"
+      "images/二头/二头9.jpg",
+      "images/二头/二头10.jpg",
+      "images/二头/二头11.jpg",
+      "images/二头/二头12.jpg"
     ],
     "personality": [
       "撒娇求撸",
@@ -2374,7 +2378,7 @@ export const catProfiles = [
       "https://static.nordri.co/rms/public/193079755/2025/0911/21/e8b8cca1c-ffc38528755ef4ffb32c2b4fe3ea8aea.jpg",
       "https://static.nordri.co/rms/public/193079755/2025/0911/21/e8b8cca1c-7265d0bd1ea665a99875f841ec89c78a.jpg"
     ],
-    "photoUpdatedAt": "2026-09-30"
+    "photoUpdatedAt": "2026-10-01"
   },
   {
     "name": "芸豆",
@@ -3312,7 +3316,8 @@ export const catProfiles = [
     "gender": "公",
     "images": [
       "images/脏白/脏白2.jpg",
-      "images/脏白/脏白1.jpg"
+      "images/脏白/脏白1.jpg",
+      "images/脏白/脏白3.jpg"
     ],
     "personality": [
       "生人勿近",
@@ -3421,7 +3426,8 @@ export const catProfiles = [
     "sourceId": "45151",
     "sourceImages": [
       "https://static.nordri.co/rms/public/193079755/2025/0921/18/e8b8cca1c-2f682945ec4d2b5e083e3dcf4c4957c4.jpg"
-    ]
+    ],
+    "photoUpdatedAt": "2026-10-01"
   },
   {
     "name": "天水",
@@ -3671,7 +3677,9 @@ export const catProfiles = [
       "images/虎先锋/虎先锋4.jpg",
       "images/虎先锋/虎先锋3.jpg",
       "images/虎先锋/虎先锋2.jpg",
-      "images/虎先锋/虎先锋1.jpg"
+      "images/虎先锋/虎先锋1.jpg",
+      "images/虎先锋/虎先锋6.jpg",
+      "images/虎先锋/虎先锋7.jpg"
     ],
     "personality": [
       "生人勿近",
@@ -3739,7 +3747,8 @@ export const catProfiles = [
       "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-a2ffdb02cbe0793ef1baf0613f47828f.jpg",
       "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-8dcad435d255a31b06c64a8d3e3c81cf.jpg",
       "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-9395ffeb7e58b89ac0584a5922341ab5.jpg"
-    ]
+    ],
+    "photoUpdatedAt": "2026-10-01"
   },
   {
     "name": "大头",
@@ -3781,7 +3790,10 @@ export const catProfiles = [
       "images/大头/大头29.jpg",
       "images/大头/大头30.jpg",
       "images/大头/大头31.jpg",
-      "images/大头/大头32.jpg"
+      "images/大头/大头32.jpg",
+      "images/大头/大头33.jpg",
+      "images/大头/大头34.jpg",
+      "images/大头/大头35.jpg"
     ],
     "personality": [
       "聪明机灵",
@@ -3942,7 +3954,7 @@ export const catProfiles = [
       "https://static.nordri.co/rms/public/193079755/2025/0911/19/e8b8cca1c-2d7a1e05ec5b239cfb1d867a91edcc9d.jpg",
       "https://static.nordri.co/rms/public/193079755/2025/0911/19/e8b8cca1c-0617a71b7f47a7d59d291ec175ae62c4.jpg"
     ],
-    "photoUpdatedAt": "2026-09-30",
+    "photoUpdatedAt": "2026-10-01",
     "cover": "images/大头/datou10.jpg"
   },
   {
@@ -3977,7 +3989,9 @@ export const catProfiles = [
       "images/漂亮橘/漂亮橘21.jpg",
       "images/漂亮橘/漂亮橘22.jpg",
       "images/漂亮橘/漂亮橘23.jpg",
-      "images/漂亮橘/漂亮橘24.jpg"
+      "images/漂亮橘/漂亮橘24.jpg",
+      "images/漂亮橘/漂亮橘25.jpg",
+      "images/漂亮橘/漂亮橘26.jpg"
     ],
     "personality": [
       "胆小怂包",
@@ -4189,7 +4203,7 @@ export const catProfiles = [
     "sourceImages": [
       "https://static.nordri.co/rms/public/193079755/2025/0923/09/e8b8cca1c-04b77bb7d8da588a54b32950bce778ca.jpg"
     ],
-    "photoUpdatedAt": "2026-09-30",
+    "photoUpdatedAt": "2026-10-01",
     "cover": "images/漂亮橘/漂亮橘7.jpg"
   },
   {
@@ -5567,7 +5581,13 @@ export const catProfiles = [
       "images/赫兹/赫兹8.jpg",
       "images/赫兹/赫兹9.jpg",
       "images/赫兹/赫兹10.jpg",
-      "images/赫兹/赫兹11.jpg"
+      "images/赫兹/赫兹11.jpg",
+      "images/赫兹/赫兹12.jpg",
+      "images/赫兹/赫兹13.jpg",
+      "images/赫兹/赫兹14.jpg",
+      "images/赫兹/赫兹15.jpg",
+      "images/赫兹/赫兹16.jpg",
+      "images/赫兹/赫兹17.jpg"
     ],
     "personality": [
       "胆小怂包",
@@ -5596,7 +5616,7 @@ export const catProfiles = [
     "sourceImages": [
       "https://static.nordri.co/rms/public/193079755/2025/1116/08/e8b8cca1c-155f05688a6a6b5fe6abbe177b2e2340.jpg"
     ],
-    "photoUpdatedAt": "2026-09-30"
+    "photoUpdatedAt": "2026-10-01"
   },
   {
     "name": "白介",
@@ -7872,7 +7892,8 @@ export const catProfiles = [
     "area": "教学区",
     "gender": "母",
     "images": [
-      "images/豆腐脑/豆腐脑1.jpg"
+      "images/豆腐脑/豆腐脑1.jpg",
+      "images/豆腐脑/豆腐脑2.jpg"
     ],
     "personality": [
       "生人勿近",
@@ -7936,7 +7957,8 @@ export const catProfiles = [
     "sourceId": "45273",
     "sourceImages": [
       "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-3c4f49718e77af8be3a92015ca3e090d.jpg"
-    ]
+    ],
+    "photoUpdatedAt": "2026-10-01"
   },
   {
     "name": "阿猪",
@@ -8686,7 +8708,9 @@ export const catProfiles = [
       "images/金琥/金琥6.jpg",
       "images/金琥/金琥7.jpg",
       "images/金琥/金琥8.jpg",
-      "images/金琥/金琥9.jpg"
+      "images/金琥/金琥9.jpg",
+      "images/金琥/金琥10.jpg",
+      "images/金琥/金琥11.jpg"
     ],
     "personality": [],
     "description": null,
@@ -8696,7 +8720,7 @@ export const catProfiles = [
     "aliases": [],
     "sourceId": null,
     "sourceImages": [],
-    "photoUpdatedAt": "2026-09-30"
+    "photoUpdatedAt": "2026-10-01"
   },
   {
     "name": "龙蛋",
@@ -8714,7 +8738,9 @@ export const catProfiles = [
       "images/龙蛋/龙蛋5.jpg",
       "images/龙蛋/龙蛋6.jpg",
       "images/龙蛋/龙蛋7.jpg",
-      "images/龙蛋/龙蛋8.jpg"
+      "images/龙蛋/龙蛋8.jpg",
+      "images/龙蛋/龙蛋9.jpg",
+      "images/龙蛋/龙蛋10.jpg"
     ],
     "personality": [
       "活泼好动"
@@ -8781,7 +8807,9 @@ export const catProfiles = [
     "notes": "待补充",
     "area": "待补充",
     "gender": "公",
-    "images": [],
+    "images": [
+      "images/羊粪蛋/羊粪蛋1.jpg"
+    ],
     "personality": [],
     "description": null,
     "relationships": [],
@@ -8789,7 +8817,8 @@ export const catProfiles = [
     "updates": [],
     "aliases": [],
     "sourceId": null,
-    "sourceImages": []
+    "sourceImages": [],
+    "photoUpdatedAt": "2026-10-01"
   },
   {
     "name": "豆米",
@@ -8805,7 +8834,8 @@ export const catProfiles = [
       "images/豆米/豆米3.jpg",
       "images/豆米/豆米4.jpg",
       "images/豆米/豆米5.jpg",
-      "images/豆米/豆米6.jpg"
+      "images/豆米/豆米6.jpg",
+      "images/豆米/豆米7.jpg"
     ],
     "personality": [],
     "description": null,
