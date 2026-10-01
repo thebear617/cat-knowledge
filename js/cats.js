@@ -8593,7 +8593,8 @@ export const catProfiles = [
     "area": "海棠",
     "gender": "公",
     "images": [
-      "images/茶叶大蛋/茶叶大蛋1.jpg"
+      "images/茶叶大蛋/茶叶大蛋1.jpg",
+      "images/茶叶大蛋/茶叶大蛋2.jpg"
     ],
     "personality": [],
     "description": null,
@@ -8604,7 +8605,8 @@ export const catProfiles = [
       "茶叶蛋"
     ],
     "sourceId": null,
-    "sourceImages": []
+    "sourceImages": [],
+    "photoUpdatedAt": "2026-10-01"
   },
   {
     "name": "彪哥",
