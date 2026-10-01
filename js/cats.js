@@ -8672,7 +8672,7 @@ export const catProfiles = [
   {
     "name": "金琥",
     "status": "就读中",
-    "vaccine": "未接种",
+    "vaccine": "一针 2026-10-01（胡椒）；二针未接种；三针未接种",
     "sterilized": "2026-06-28 已绝育",
     "notes": "纯白短毛，怕人，已绝育但疫苗未接种。",
     "area": "竹园",
@@ -8749,7 +8749,7 @@ export const catProfiles = [
   {
     "name": "陶吉吉",
     "status": "就读中",
-    "vaccine": "未接种",
+    "vaccine": "一针 2026-10-01（胡椒）；二针未接种；三针未接种",
     "sterilized": "未绝育",
     "notes": "待补充",
     "area": "待补充",
@@ -8790,7 +8790,7 @@ export const catProfiles = [
   {
     "name": "豆米",
     "status": "就读中",
-    "vaccine": "未接种",
+    "vaccine": "一针 2026-10-01（胡椒）；二针未接种；三针未接种",
     "sterilized": "已绝育（2026-09-16）",
     "notes": "待补充",
     "area": "待补充",
@@ -8890,8 +8890,8 @@ export const catProfiles = [
   {
     "name": "无牙仔",
     "status": "就读中",
-    "vaccine": "待补充",
-    "sterilized": "待补充",
+    "vaccine": "未接种",
+    "sterilized": "未绝育",
     "notes": "待补充",
     "area": "竹园",
     "gender": "母",

@@ -550,15 +550,19 @@ function getAppearanceSummary(cat) {
   return cat.appearanceDate || cat.firstSeen || cat.firstSeenAt || cat.appearedAt || '待补充';
 }
 
-function renderDrawerFacts(cat) {
-  const sterilizedIcon = `<img class="drawer-fact-image drawer-fact-image-sterilized" src="${cdnUrl('images/ui/sterilized-fixed.png')}" alt="" aria-hidden="true">`;
-  const vaccineIcon = `<img class="drawer-fact-image drawer-fact-image-vaccine" src="${cdnUrl('images/ui/vaccine-syringe.png')}" alt="" aria-hidden="true">`;
+function renderDrawerMobileSummary(cat) {
   const mobileFacts = [
     !isEmptyValue(cat.area) ? `在${cat.area}` : '地点待补充',
     !isEmptyValue(cat.sterilized) ? getSterilizedSummary(cat) : '',
     !isEmptyValue(cat.vaccine) ? getVaccineSummary(cat) : '',
     !isEmptyValue(getAppearanceSummary(cat)) && getAppearanceSummary(cat) !== '待补充' ? getAppearanceSummary(cat) : ''
   ].filter(Boolean);
+  return `<div class="drawer-facts-mobile-summary drawer-header-facts" aria-label="简要信息">${mobileFacts.map(value => `<span>${escapeHtml(value)}</span>`).join('<i aria-hidden="true">·</i>')}</div>`;
+}
+
+function renderDrawerFacts(cat) {
+  const sterilizedIcon = `<img class="drawer-fact-image drawer-fact-image-sterilized" src="${cdnUrl('images/ui/sterilized-fixed.png')}" alt="" aria-hidden="true">`;
+  const vaccineIcon = `<img class="drawer-fact-image drawer-fact-image-vaccine" src="${cdnUrl('images/ui/vaccine-syringe.png')}" alt="" aria-hidden="true">`;
   return `
     <section class="drawer-facts-card" aria-label="基础信息">
       <div class="drawer-facts-grid">
@@ -567,7 +571,6 @@ function renderDrawerFacts(cat) {
         ${renderDrawerFact('绝育', getSterilizedSummary(cat), cat.sterilized, sterilizedIcon, true)}
         ${renderDrawerFact('疫苗', getVaccineSummary(cat), cat.vaccine, vaccineIcon, true)}
       </div>
-      <div class="drawer-facts-mobile-summary" aria-label="简要信息">${mobileFacts.map(value => `<span>${escapeHtml(value)}</span>`).join('<i aria-hidden="true">·</i>')}</div>
     </section>
   `;
 }
@@ -590,13 +593,19 @@ function renderDrawerGallery(cat) {
       <img src="${cdnUrl(src.replace(/([^/]+)$/, 'thumb/$1'))}" data-full="${cdnUrl(src)}" alt="${escapeHtml(cat.name)} 照片预览 ${index + 1}" loading="lazy">
     </button>
   `).join('');
+  const photoNavigation = galleryImages.length > 1 ? `
+        <button class="drawer-photo-nav drawer-photo-nav-prev" type="button" data-photo-prev aria-label="上一张照片"><span aria-hidden="true">‹</span></button>
+        <button class="drawer-photo-nav drawer-photo-nav-next" type="button" data-photo-next aria-label="下一张照片"><span aria-hidden="true">›</span></button>
+  ` : '';
   return `
     <section class="drawer-gallery" aria-label="照片">
-      <button class="drawer-gallery-main" type="button" data-main-photo aria-label="查看${escapeHtml(cat.name)}大图">
-        <img class="drawer-gallery-main-image" src="${cdnUrl(coverSrc)}" data-full="${cdnUrl(coverSrc)}" alt="${escapeHtml(cat.name)}" loading="eager">
-      </button>
+      <div class="drawer-gallery-main-shell">
+        <button class="drawer-gallery-main" type="button" data-main-photo aria-label="查看${escapeHtml(cat.name)}大图">
+          <img class="drawer-gallery-main-image" src="${cdnUrl(coverSrc)}" data-full="${cdnUrl(coverSrc)}" alt="${escapeHtml(cat.name)}" loading="eager">
+        </button>
+        ${photoNavigation}
+      </div>
       <div class="drawer-photo-strip" aria-label="照片缩略图">${thumbnails}</div>
-      <div class="drawer-photo-count" aria-live="polite" aria-label="照片位置"><span data-photo-current>1</span>/<span data-photo-total>${galleryImages.length}</span></div>
     </section>
   `;
 }
@@ -684,10 +693,19 @@ function renderRelationshipCard(item, catName) {
 
 function renderDrawerRelationships(cat) {
   const relationships = getCatRelationships(cat);
+  const relationCountClass = relationships.length === 1
+    ? ' relation-count-1'
+    : relationships.length === 2
+      ? ' relation-count-2'
+      : relationships.length === 3
+        ? ' relation-count-3'
+        : relationships.length > 3
+          ? ' relation-count-more'
+          : '';
   const formalHtml = relationships.length
-    ? `<div class="drawer-relation-group"><div class="drawer-relation-list">${relationships.map(item => renderRelationshipCard(item, cat.name)).join('')}</div></div>`
+    ? `<div class="drawer-relation-group"><div class="drawer-relation-list${relationCountClass}">${relationships.map(item => renderRelationshipCard(item, cat.name)).join('')}</div></div>`
     : '<div class="drawer-relation-group"><div class="drawer-relation-list drawer-relation-list-empty"><div class="drawer-relation-empty" role="status">待补充</div></div></div>';
-  return renderDrawerSection('关系', formalHtml, 'drawer-relationships', '', 'relationships');
+  return renderDrawerSection('关系', formalHtml, `drawer-relationships${relationships.length ? '' : ' drawer-relationships-empty'}`, '', 'relationships');
 }
 
 function renderDrawerUpdates(cat) {
@@ -763,6 +781,7 @@ function renderDrawer(cat, { updatesExpanded = state.updatesExpanded } = {}) {
           ${renderDrawerGenderBadge(cat.gender)}
           ${renderStatusTag(cat)}
         </div>
+        ${renderDrawerMobileSummary(cat)}
       </div>
       <div class="drawer-header-note" aria-hidden="true">
         <span>世界破破烂烂，</span>
@@ -956,8 +975,9 @@ function openPhotoViewer(img) {
 function bindDrawerGallery(container, cat) {
   const main = container.querySelector('[data-main-photo]');
   const image = main?.querySelector('.drawer-gallery-main-image');
-  const current = container.querySelector('[data-photo-current]');
-  if (!main || !image || !current) return;
+  const previous = container.querySelector('[data-photo-prev]');
+  const next = container.querySelector('[data-photo-next]');
+  if (!main || !image) return;
 
   const images = [getCatCover(cat), ...(Array.isArray(cat.images) ? cat.images : [])
     .filter(src => src && src !== getCatCover(cat))];
@@ -974,7 +994,6 @@ function bindDrawerGallery(container, cat) {
     image.src = cdnUrl(source);
     image.dataset.full = cdnUrl(source);
     image.alt = `${cat.name} 照片 ${index + 1}`;
-    current.textContent = String(index + 1);
     main.setAttribute('aria-label', `查看${cat.name}大图，当前第${index + 1}张，共${images.length}张`);
   };
 
@@ -983,6 +1002,16 @@ function bindDrawerGallery(container, cat) {
     main.addEventListener('click', () => openPhotoViewer(image));
     return;
   }
+
+  previous?.addEventListener('click', event => {
+    event.stopPropagation();
+    updatePhoto(index - 1);
+  });
+
+  next?.addEventListener('click', event => {
+    event.stopPropagation();
+    updatePhoto(index + 1);
+  });
 
   main.addEventListener('touchstart', event => {
     if (event.touches.length !== 1) return;
