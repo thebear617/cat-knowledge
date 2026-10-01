@@ -8713,7 +8713,8 @@ export const catProfiles = [
       "images/龙蛋/龙蛋4.jpg",
       "images/龙蛋/龙蛋5.jpg",
       "images/龙蛋/龙蛋6.jpg",
-      "images/龙蛋/龙蛋7.jpg"
+      "images/龙蛋/龙蛋7.jpg",
+      "images/龙蛋/龙蛋8.jpg"
     ],
     "personality": [
       "活泼好动"
