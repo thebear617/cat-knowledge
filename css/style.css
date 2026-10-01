@@ -6078,6 +6078,12 @@ button.chronicle-calendar-cell:focus-visible {
     overflow-x: hidden;
   }
 
+  html:has(.home-app-shell),
+  body:has(.home-app-shell),
+  body:has(.home-app-shell) .main-area {
+    background-color: #f7f0e4;
+  }
+
   /* The archive skin is declared after the older mobile rules, so restore
      the off-canvas sidebar here instead of letting it consume layout width. */
   .sidebar {
@@ -8062,6 +8068,10 @@ button.chronicle-calendar-cell:focus-visible {
 }
 
 @media (max-width: 719px) {
+  .home-directory-footnote-desktop-comma {
+    display: none;
+  }
+
   .home-directory-footnote-break {
     display: block;
   }
@@ -8142,7 +8152,18 @@ button.chronicle-calendar-cell:focus-visible {
   }
 
   .drawer-gender-badge b {
+    display: block;
+    flex: 0 0 auto;
     font-size: 1.5rem;
+    transform-origin: center;
+  }
+
+  .drawer-gender-badge {
+    flex: 0 0 1.5rem;
+    width: 1.5rem;
+    min-width: 1.5rem;
+    height: 1.5rem;
+    justify-content: center;
   }
 
   .icon-button {

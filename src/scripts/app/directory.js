@@ -313,7 +313,7 @@ function renderDirectorySection(data, { standalone = false, showFootnote = false
     : Math.max(0, directoryPageSize - visibleDirectoryCats.length);
   const desktopPlaceholders = Array.from({ length: desktopPlaceholderCount }, () => '<span class="home-directory-placeholder" aria-hidden="true"></span>').join('');
   const footnote = showFootnote
-    ? '<p class="home-directory-footnote" role="note">图源：XDU猫猫群<br class="home-directory-footnote-break">如需隐藏猫咪或照片，请联系群管理员</p>'
+    ? '<p class="home-directory-footnote" role="note">图源：XDU猫猫群<span class="home-directory-footnote-desktop-comma">，</span><br class="home-directory-footnote-break">如需隐藏猫咪或照片，请联系群管理员</p>'
     : '';
   return `<section class="home-directory${standalone ? ' directory-page-list' : ''}"><header><div><p><img class="directory-heading-icon" src="${cdnUrl('images/cat-archive-icon.png')}" alt="" aria-hidden="true">猫猫档案</p></div><small>${standalone ? '持续档案' : '猫咪目录'}</small></header>${renderCatControls(directoryCats.length)}${directoryCats.length ? `<div class="home-directory-grid">${visibleDirectoryCats.map(cat => `<button class="home-directory-card" data-cat-name="${escapeHtml(cat.name)}" type="button"><img src="${cdnUrl(getDirectoryCover(cat))}" alt="${escapeHtml(cat.name)}" loading="lazy"><span>${escapeHtml(cat.name)}</span></button>`).join('')}${desktopPlaceholders}</div>${directoryPagination}${footnote}` : '<p class="home-directory-empty">没有匹配的猫咪，可以清空筛选后再试。</p>'}</section>`;
 }
