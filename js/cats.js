@@ -8710,7 +8710,8 @@ export const catProfiles = [
       "images/龙蛋/龙蛋1.jpg",
       "images/龙蛋/龙蛋2.jpg",
       "images/龙蛋/龙蛋3.jpg",
-      "images/龙蛋/龙蛋4.jpg"
+      "images/龙蛋/龙蛋4.jpg",
+      "images/龙蛋/龙蛋5.jpg"
     ],
     "personality": [
       "活泼好动"
@@ -8744,7 +8745,7 @@ export const catProfiles = [
     "aliases": [],
     "sourceId": null,
     "sourceImages": [],
-    "photoUpdatedAt": "2026-09-30"
+    "photoUpdatedAt": "2026-10-01"
   },
   {
     "name": "陶吉吉",
