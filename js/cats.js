@@ -8726,10 +8726,10 @@ export const catProfiles = [
   },
   {
     "name": "龙蛋",
-    "status": "就读中",
+    "status": "已毕业",
     "vaccine": "未接种",
     "sterilized": "未绝育",
-    "notes": "待补充",
+    "notes": "2026-10-01 被领养",
     "area": "丁香",
     "gender": "公",
     "images": [
