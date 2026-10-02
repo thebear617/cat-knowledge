@@ -7893,7 +7893,8 @@ export const catProfiles = [
     "gender": "母",
     "images": [
       "images/豆腐脑/豆腐脑1.jpg",
-      "images/豆腐脑/豆腐脑2.jpg"
+      "images/豆腐脑/豆腐脑2.jpg",
+      "images/豆腐脑/豆腐脑3.jpg"
     ],
     "personality": [
       "生人勿近",
@@ -7958,7 +7959,7 @@ export const catProfiles = [
     "sourceImages": [
       "https://static.nordri.co/rms/public/193079755/2025/0924/04/e8b8cca1c-3c4f49718e77af8be3a92015ca3e090d.jpg"
     ],
-    "photoUpdatedAt": "2026-10-01"
+    "photoUpdatedAt": "2026-10-02"
   },
   {
     "name": "阿猪",
