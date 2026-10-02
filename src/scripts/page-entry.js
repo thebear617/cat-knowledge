@@ -4,6 +4,7 @@ import { bindProcurementControls } from './app/procurement.js';
 import { renderSuppliesTab, renderTimelineTab, bindOperationsControls } from './app/operations.js';
 import { renderMiscTab, bindMiscControls } from './app/misc.js';
 import { renderScienceTab, bindKnowledgeControls, bindKnowledgeToc } from './app/knowledge.js';
+import { GALLERY_VIEW_IDS, renderGalleryTab } from './app/gallery.js';
 import {
   renderHomeTab,
   scheduleDirectoryPageSizeSync,
@@ -18,6 +19,7 @@ import { renderSidebar, closeSidebar } from './app/navigation.js';
 
 const PAGE_RENDERERS = {
   home: renderHomeTab,
+  gallery: renderGalleryTab,
   timeline: renderTimelineTab,
   misc: renderMiscTab,
   supplies: renderSuppliesTab,
@@ -31,6 +33,13 @@ const drawerBackdrop = document.getElementById('drawerBackdrop');
 
 let homeFeaturedRefreshTimer = null;
 let directoryResizeBound = false;
+let galleryScrollBound = false;
+let galleryScrollFrame = 0;
+
+// The compact header is much shorter than the initial header. Enter only
+// after the page has cleared that layout change, and exit only near the top.
+const GALLERY_SCROLL_ENTER = 180;
+const GALLERY_SCROLL_EXIT = 6;
 
 state.activeTab = currentPage;
 const pageQuery = new URLSearchParams(window.location.search);
@@ -57,6 +66,7 @@ function renderApp() {
   app.classList.toggle('procurement-app-shell', currentPage === 'misc' && state.miscView === 'price');
   app.classList.toggle('finance-app-shell', currentPage === 'finance');
   app.classList.toggle('home-app-shell', currentPage === 'home');
+  app.classList.toggle('gallery-app-shell', currentPage === 'gallery');
   app.innerHTML = `<div class="tab-panel">${content}</div>`;
 
   renderSidebar();
@@ -76,11 +86,34 @@ function renderApp() {
   }
 
   if (currentPage === 'home') scheduleDirectoryPageSizeSync();
+  if (currentPage === 'gallery') bindGalleryScrollState();
   if (currentPage === 'home') {
     const fifteenMinutes = 15 * 60 * 1000;
     const delay = fifteenMinutes - (Date.now() % fifteenMinutes) + 50;
     homeFeaturedRefreshTimer = window.setTimeout(renderApp, delay);
   }
+}
+
+function bindGalleryScrollState() {
+  const mainArea = document.querySelector('.main-area');
+  if (!mainArea) return;
+
+  const syncScrollState = () => {
+    if (galleryScrollFrame) return;
+    galleryScrollFrame = window.requestAnimationFrame(() => {
+      galleryScrollFrame = 0;
+      const isScrolled = app.classList.contains('gallery-scrolled');
+      const threshold = isScrolled ? GALLERY_SCROLL_EXIT : GALLERY_SCROLL_ENTER;
+      const nextState = mainArea.scrollTop > threshold;
+      if (nextState !== isScrolled) app.classList.toggle('gallery-scrolled', nextState);
+    });
+  };
+
+  if (!galleryScrollBound) {
+    mainArea.addEventListener('scroll', syncScrollState, { passive: true });
+    galleryScrollBound = true;
+  }
+  syncScrollState();
 }
 
 function bindControls() {
@@ -103,6 +136,17 @@ function bindControls() {
       }
     });
     searchBtn?.addEventListener('click', doSearch);
+  }
+
+  if (currentPage === 'gallery') {
+    document.querySelectorAll('button[data-gallery-view]').forEach(button => {
+      button.addEventListener('click', () => {
+        const view = button.dataset.galleryView;
+        if (!GALLERY_VIEW_IDS.includes(view) || view === state.galleryView) return;
+        state.galleryView = view;
+        renderApp();
+      });
+    });
   }
 
   document.querySelectorAll('#clearSearch, #clearSearchMobile').forEach(button => {

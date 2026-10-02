@@ -10,6 +10,7 @@ export const state = {
   directoryPageSize: null,
   directorySort: 'name',
   activeTab: 'home',
+  galleryView: 'archive',
   operationsView: 'inventory',
   inventoryCategory: '全部',
   timelineView: 'diary',

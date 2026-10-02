@@ -4,6 +4,7 @@ import { escapeHtml } from './shared.js';
 
 const TABS = [
   { id: 'home', title: '首页', icon: '🏠' },
+  { id: 'gallery', title: '小猫书', icon: '▦' },
   ...(import.meta.env.DEV ? [{ id: 'misc', title: '猫猫杂物', icon: '▤' }] : [])
 ];
 
@@ -26,6 +27,7 @@ function sidebarNavIcon(tabId) {
   const common = 'fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"';
   const icons = {
     home: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3.5 10 8.5-7 8.5 7v10H14v-6H10v6H3.5Z" ${common}/></svg>`,
+    gallery: `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="2" ${common}/><circle cx="8.5" cy="9" r="1.5" ${common}/><path d="m5.5 17 4.3-4.2 3.1 2.7 2.1-2.1 3.5 3.6" ${common}/></svg>`,
     timeline: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3.5h14v17H5zM8 8h8M8 12h8M8 16h5" ${common}/><path d="m7 3.5 1 2m8-2-1 2" ${common}/></svg>`,
     supplies: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 8 8-4 8 4v10l-8 4-8-4Z" ${common}/><path d="m4 8 8 4 8-4M12 12v10" ${common}/></svg>`,
     finance: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5h9l3 3V20a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z" ${common}/><path d="M14.5 3.5V7H18M8 11h8M8 14.5h5M8 18h3" ${common}/></svg>`,
