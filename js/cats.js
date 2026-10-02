@@ -2391,7 +2391,8 @@ export const catProfiles = [
     "images": [
       "images/芸豆/芸豆1.jpg",
       "images/芸豆/芸豆2.jpg",
-      "images/芸豆/芸豆3.jpg"
+      "images/芸豆/芸豆3.jpg",
+      "images/芸豆/芸豆4.jpg"
     ],
     "personality": [
       "软萌好盘",
@@ -2504,7 +2505,7 @@ export const catProfiles = [
     "sourceImages": [
       "https://static.nordri.co/rms/public/193079755/2025/0911/21/e8b8cca1c-6440670de9fcf40003d8ed96e8b2715a.jpg"
     ],
-    "photoUpdatedAt": "2026-09-30"
+    "photoUpdatedAt": "2026-10-02"
   },
   {
     "name": "橙留香",
@@ -7894,7 +7895,8 @@ export const catProfiles = [
     "images": [
       "images/豆腐脑/豆腐脑1.jpg",
       "images/豆腐脑/豆腐脑2.jpg",
-      "images/豆腐脑/豆腐脑3.jpg"
+      "images/豆腐脑/豆腐脑3.jpg",
+      "images/豆腐脑/豆腐脑4.jpg"
     ],
     "personality": [
       "生人勿近",
