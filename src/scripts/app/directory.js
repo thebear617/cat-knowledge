@@ -575,6 +575,28 @@ function renderDrawerFacts(cat) {
   `;
 }
 
+const MAX_PHOTO_DOTS = 15;
+
+function getPhotoPaginationStart(total, currentIndex) {
+  if (total <= MAX_PHOTO_DOTS) return 0;
+  const centeredStart = currentIndex - Math.floor(MAX_PHOTO_DOTS / 2);
+  return Math.min(Math.max(centeredStart, 0), total - MAX_PHOTO_DOTS);
+}
+
+function renderPhotoPagination(total, currentIndex = 0) {
+  const visibleCount = Math.min(total, MAX_PHOTO_DOTS);
+  const start = getPhotoPaginationStart(total, currentIndex);
+  return Array.from({ length: visibleCount }, (_, offset) => {
+    const photoIndex = start + offset;
+    const isCurrent = photoIndex === currentIndex;
+    return `
+      <button class="drawer-photo-dot${isCurrent ? ' is-current' : ''}" type="button" data-photo-index="${photoIndex}" aria-label="第 ${photoIndex + 1} 张照片"${isCurrent ? ' aria-current="true"' : ''}>
+        <span aria-hidden="true"></span>
+      </button>
+    `;
+  }).join('');
+}
+
 function renderDrawerGallery(cat) {
   const images = Array.isArray(cat.images) ? cat.images : [];
   if (!images.length) {
@@ -587,12 +609,6 @@ function renderDrawerGallery(cat) {
 
   const coverSrc = getCatCover(cat) || images[0];
   const galleryImages = [coverSrc, ...images.filter(src => src !== coverSrc)];
-  const thumbnailSources = images.length === 1 ? [coverSrc] : images.filter(src => src !== coverSrc);
-  const thumbnails = thumbnailSources.map((src, index) => `
-    <button class="drawer-photo-thumb" type="button" data-photo-preview aria-label="预览${escapeHtml(cat.name)}的照片 ${index + 1}">
-      <img src="${cdnUrl(src.replace(/([^/]+)$/, 'thumb/$1'))}" data-full="${cdnUrl(src)}" alt="${escapeHtml(cat.name)} 照片预览 ${index + 1}" loading="lazy">
-    </button>
-  `).join('');
   const photoNavigation = galleryImages.length > 1 ? `
         <button class="drawer-photo-nav drawer-photo-nav-prev" type="button" data-photo-prev aria-label="上一张照片"><span aria-hidden="true">‹</span></button>
         <button class="drawer-photo-nav drawer-photo-nav-next" type="button" data-photo-next aria-label="下一张照片"><span aria-hidden="true">›</span></button>
@@ -604,8 +620,11 @@ function renderDrawerGallery(cat) {
           <img class="drawer-gallery-main-image" src="${cdnUrl(coverSrc)}" data-full="${cdnUrl(coverSrc)}" alt="${escapeHtml(cat.name)}" loading="eager">
         </button>
         ${photoNavigation}
+        <div class="drawer-photo-count" data-photo-count aria-live="polite"><strong data-photo-current>1</strong><span>/ ${galleryImages.length}</span></div>
+        <div class="drawer-photo-pagination" data-photo-pagination aria-label="照片跳转">
+          ${renderPhotoPagination(galleryImages.length)}
+        </div>
       </div>
-      <div class="drawer-photo-strip" aria-label="照片缩略图">${thumbnails}</div>
     </section>
   `;
 }
@@ -754,41 +773,36 @@ function renderDrawerArchive(cat) {
   return sections.join('');
 }
 
-function openDrawer(name) {
+function getDrawerAnimationOrigin(source) {
+  if (!source || typeof source.getBoundingClientRect !== 'function') return null;
+  const rect = source.getBoundingClientRect();
+  if (!rect.width || !rect.height) return null;
+  return {
+    x: rect.left + rect.width / 2,
+    y: rect.top + rect.height / 2
+  };
+}
+
+function openDrawer(name, source = null) {
   const cat = catProfiles.find(item => item.name === name);
   if (!cat) return;
 
   state.selectedName = name;
   state.updatesExpanded = false;
-  renderDrawer(cat);
+  renderDrawer(cat, { animationOrigin: getDrawerAnimationOrigin(source) });
 }
 
-function renderDrawer(cat, { updatesExpanded = state.updatesExpanded } = {}) {
+function renderDrawer(cat, { updatesExpanded = state.updatesExpanded, animationOrigin = null } = {}) {
   hideSummaryTooltip();
+  const shouldAnimate = Boolean(animationOrigin);
+  drawer.classList.remove('drawer-opening');
+  drawer.classList.remove('drawer-closing');
+  drawer.classList.toggle('drawer-opening-pending', shouldAnimate);
   drawer.hidden = false;
   drawerBackdrop.hidden = false;
   state.updatesExpanded = updatesExpanded;
 
-  const aliases = Array.isArray(cat.aliases) ? cat.aliases.filter(value => !isEmptyValue(value)) : [];
-  const aliasText = aliases.join('、');
-
   drawer.innerHTML = `
-    <div class="drawer-header">
-      <div class="drawer-identity">
-        <div class="drawer-title-row">
-          <h2>${escapeHtml(cat.name)}</h2>
-          ${aliasText ? `<span class="drawer-alias" title="别名：${escapeHtml(aliasText)}">· ${escapeHtml(aliasText)}</span>` : ''}
-          ${renderDrawerGenderBadge(cat.gender)}
-          ${renderStatusTag(cat)}
-        </div>
-        ${renderDrawerMobileSummary(cat)}
-      </div>
-      <div class="drawer-header-note" aria-hidden="true">
-        <span>世界破破烂烂，</span>
-        <span>小猫缝缝补补。 ${drawerSectionIcon('personality')}</span>
-      </div>
-      <button class="icon-button" id="closeDrawer" type="button" aria-label="关闭详情"><span aria-hidden="true">×</span></button>
-    </div>
     <div class="drawer-content">
       <div class="drawer-layout">
         <section class="drawer-column drawer-left" aria-label="照片">
@@ -804,14 +818,29 @@ function renderDrawer(cat, { updatesExpanded = state.updatesExpanded } = {}) {
 
   document.body.classList.add('drawer-open');
   lockMainAreaScroll();
-  const closeButton = document.getElementById('closeDrawer');
-  focusWithoutScrolling(closeButton);
-  closeButton.addEventListener('click', closeDrawer);
+
+  if (shouldAnimate) {
+    const drawerRect = drawer.getBoundingClientRect();
+    drawer.style.setProperty('--drawer-origin-x', `${animationOrigin.x - drawerRect.left}px`);
+    drawer.style.setProperty('--drawer-origin-y', `${animationOrigin.y - drawerRect.top}px`);
+    window.requestAnimationFrame(() => {
+      if (drawer.hidden || state.selectedName !== cat.name) return;
+      drawer.classList.remove('drawer-opening-pending');
+      drawer.classList.add('drawer-opening');
+    });
+  } else {
+    drawer.classList.remove('drawer-opening-pending');
+    drawer.style.removeProperty('--drawer-origin-x');
+    drawer.style.removeProperty('--drawer-origin-y');
+  }
+
+  drawer.setAttribute('tabindex', '-1');
+  focusWithoutScrolling(drawer);
 
   drawer.querySelectorAll('[data-related-cat]').forEach(button => {
     button.addEventListener('click', () => {
       const relatedCat = findRelatedCat(button.dataset.relatedCat);
-      if (relatedCat) openDrawer(relatedCat.name);
+      if (relatedCat) openDrawer(relatedCat.name, button);
     });
   });
 
@@ -935,14 +964,36 @@ function bindDrawerStoryPopovers(container) {
 }
 
 function closeDrawer() {
+  if (drawer.hidden || drawer.classList.contains('drawer-closing')) return;
   hideSummaryTooltip();
   state.selectedName = null;
   state.updatesExpanded = false;
-  drawer.hidden = true;
-  drawerBackdrop.hidden = true;
-  drawer.innerHTML = '';
-  document.body.classList.remove('drawer-open');
-  unlockMainAreaScroll();
+
+  const finishClose = () => {
+    drawer.hidden = true;
+    drawerBackdrop.hidden = true;
+    drawer.innerHTML = '';
+    drawer.classList.remove('drawer-opening', 'drawer-opening-pending', 'drawer-closing');
+    drawer.style.removeProperty('--drawer-origin-x');
+    drawer.style.removeProperty('--drawer-origin-y');
+    document.body.classList.remove('drawer-open');
+    unlockMainAreaScroll();
+  };
+
+  drawer.classList.remove('drawer-opening', 'drawer-opening-pending');
+  drawer.classList.add('drawer-closing');
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    finishClose();
+    return;
+  }
+
+  const handleAnimationEnd = event => {
+    if (event.animationName !== 'drawer-float-out') return;
+    drawer.removeEventListener('animationend', handleAnimationEnd);
+    finishClose();
+  };
+  drawer.addEventListener('animationend', handleAnimationEnd);
 }
 
 function openPhotoViewer(img) {
@@ -972,11 +1023,116 @@ function openPhotoViewer(img) {
   document.body.appendChild(overlay);
 }
 
+function getMaterialSources(cat) {
+  return Array.isArray(cat?.images)
+    ? cat.images.filter(source => source && !source.startsWith('http'))
+    : [];
+}
+
+function getPhotoExtension(source) {
+  const sourceName = decodeURIComponent(String(source || '').split('/').pop()?.split('?')[0] || 'photo.jpg');
+  return sourceName.match(/\.[a-z0-9]+$/i)?.[0] || '.jpg';
+}
+
+function openMaterialViewer(cat, initialIndex = 0) {
+  const sources = getMaterialSources(cat);
+  if (!cat || !sources.length) return;
+
+  let index = Math.min(Math.max(Number(initialIndex) || 0, 0), sources.length - 1);
+  const overlay = document.createElement('div');
+  overlay.className = 'photo-viewer photo-viewer--materials';
+  overlay.tabIndex = -1;
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.setAttribute('aria-label', `${cat.name}猫猫素材`);
+  overlay.innerHTML = `
+    <div class="photo-viewer-actions">
+      <button class="photo-viewer-close" type="button" aria-label="关闭图片预览">×</button>
+    </div>
+    <figure class="photo-viewer-stage">
+      <img data-photo-viewer-image alt="">
+    </figure>
+    <div class="photo-viewer-toolbar" role="toolbar" aria-label="${escapeHtml(cat.name)}猫猫素材翻页">
+      <button class="photo-viewer-toolbar-button" data-photo-viewer-prev type="button" aria-label="上一张"><span aria-hidden="true">‹</span></button>
+      <span class="photo-viewer-counter" aria-live="polite"><strong data-photo-viewer-current></strong><span aria-hidden="true">/</span><span data-photo-viewer-total>${sources.length}</span></span>
+      <button class="photo-viewer-toolbar-button" data-photo-viewer-next type="button" aria-label="下一张"><span aria-hidden="true">›</span></button>
+      <span class="photo-viewer-toolbar-divider" aria-hidden="true"></span>
+      <button class="photo-viewer-toolbar-icon" data-photo-viewer-rotate type="button" aria-label="旋转图片" title="旋转图片">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.2 9.2A7.3 7.3 0 0 1 18 6.5l1.5 1.5"></path><path d="M19.5 4.5v3.8h-3.8"></path><path d="M18.8 14.8A7.3 7.3 0 0 1 6 17.5l-1.5-1.5"></path><path d="M4.5 19.5v-3.8h3.8"></path></svg>
+      </button>
+      <a class="photo-viewer-download photo-viewer-toolbar-download" data-photo-download href="" download aria-label="下载原图" title="下载原图">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5v10"></path><path d="m8 10 4 4 4-4"></path><path d="M5 16.5v3h14v-3"></path></svg>
+      </a>
+    </div>
+  `;
+
+  const image = overlay.querySelector('[data-photo-viewer-image]');
+  const current = overlay.querySelector('[data-photo-viewer-current]');
+  const previous = overlay.querySelector('[data-photo-viewer-prev]');
+  const next = overlay.querySelector('[data-photo-viewer-next]');
+  const rotate = overlay.querySelector('[data-photo-viewer-rotate]');
+  const download = overlay.querySelector('[data-photo-download]');
+  const close = overlay.querySelector('.photo-viewer-close');
+  let rotation = 0;
+
+  const update = nextIndex => {
+    index = (nextIndex + sources.length) % sources.length;
+    const source = sources[index];
+    const fullSrc = cdnUrl(source);
+    image.src = fullSrc;
+    rotation = 0;
+    image.style.transform = 'none';
+    image.alt = `${cat.name}猫猫素材 ${index + 1}`;
+    current.textContent = String(index + 1);
+    download.href = fullSrc;
+    download.download = `${cat.name}-${index + 1}${getPhotoExtension(source)}`;
+    previous.disabled = sources.length < 2;
+    next.disabled = sources.length < 2;
+  };
+
+  const removeViewer = () => overlay.remove();
+  update(index);
+  previous.addEventListener('click', event => {
+    event.stopPropagation();
+    update(index - 1);
+  });
+  next.addEventListener('click', event => {
+    event.stopPropagation();
+    update(index + 1);
+  });
+  rotate.addEventListener('click', event => {
+    event.stopPropagation();
+    rotation = (rotation + 90) % 360;
+    image.style.transform = `rotate(${rotation}deg)`;
+  });
+  download.addEventListener('click', event => event.stopPropagation());
+  close.addEventListener('click', event => {
+    event.stopPropagation();
+    removeViewer();
+  });
+  overlay.addEventListener('click', event => {
+    if (event.target === overlay) removeViewer();
+  });
+  overlay.addEventListener('keydown', event => {
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      update(index - 1);
+    } else if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      update(index + 1);
+    }
+  });
+
+  document.body.appendChild(overlay);
+  overlay.focus({ preventScroll: true });
+}
+
 function bindDrawerGallery(container, cat) {
   const main = container.querySelector('[data-main-photo]');
   const image = main?.querySelector('.drawer-gallery-main-image');
   const previous = container.querySelector('[data-photo-prev]');
   const next = container.querySelector('[data-photo-next]');
+  const pagination = container.querySelector('[data-photo-pagination]');
   if (!main || !image) return;
 
   const images = [getCatCover(cat), ...(Array.isArray(cat.images) ? cat.images : [])
@@ -987,6 +1143,16 @@ function bindDrawerGallery(container, cat) {
   let startX = 0;
   let startY = 0;
   let suppressClick = false;
+  const currentCounter = container.querySelector('[data-photo-current]');
+
+  function bindPagination() {
+    pagination?.querySelectorAll('[data-photo-index]').forEach(button => {
+      button.addEventListener('click', event => {
+        event.stopPropagation();
+        updatePhoto(Number(button.dataset.photoIndex));
+      });
+    });
+  }
 
   const updatePhoto = nextIndex => {
     index = (nextIndex + images.length) % images.length;
@@ -994,14 +1160,15 @@ function bindDrawerGallery(container, cat) {
     image.src = cdnUrl(source);
     image.dataset.full = cdnUrl(source);
     image.alt = `${cat.name} 照片 ${index + 1}`;
+    if (currentCounter) currentCounter.textContent = String(index + 1);
+    if (pagination) {
+      pagination.innerHTML = renderPhotoPagination(images.length, index);
+      bindPagination();
+    }
     main.setAttribute('aria-label', `查看${cat.name}大图，当前第${index + 1}张，共${images.length}张`);
   };
 
-  const isMobile = window.matchMedia('(max-width: 719px)').matches;
-  if (!isMobile) {
-    main.addEventListener('click', () => openPhotoViewer(image));
-    return;
-  }
+  bindPagination();
 
   previous?.addEventListener('click', event => {
     event.stopPropagation();
@@ -1012,6 +1179,12 @@ function bindDrawerGallery(container, cat) {
     event.stopPropagation();
     updatePhoto(index + 1);
   });
+
+  const isMobile = window.matchMedia('(max-width: 719px)').matches;
+  if (!isMobile) {
+    main.addEventListener('click', () => openPhotoViewer(image));
+    return;
+  }
 
   main.addEventListener('touchstart', event => {
     if (event.touches.length !== 1) return;
@@ -1043,13 +1216,22 @@ function bindDrawerGallery(container, cat) {
 
 function bindCatCards() {
   const selector = state.activeTab === 'home' ? '[data-cat-name]' : '.cat-card';
+  const isMaterialGallery = state.activeTab === 'gallery' && state.galleryView === 'souvenir';
   document.querySelectorAll(selector).forEach(card => {
-    card.addEventListener('click', () => openDrawer(card.dataset.catName));
+    const openCard = () => {
+      if (isMaterialGallery && card.classList.contains('gallery-card--souvenir')) {
+        const cat = catProfiles.find(item => item.name === card.dataset.catName);
+        if (cat) openMaterialViewer(cat, Number(card.dataset.materialIndex) || 0);
+        return;
+      }
+      openDrawer(card.dataset.catName, card);
+    };
+    card.addEventListener('click', openCard);
     if (card.tagName === 'BUTTON') return;
     card.addEventListener('keydown', event => {
       if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
-        openDrawer(card.dataset.catName);
+        openCard();
       }
     });
   });

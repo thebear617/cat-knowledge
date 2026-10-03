@@ -8,10 +8,8 @@ const SOURCE_AVATAR = 'images/cat-archive-icon.png';
 const CARD_VARIANTS = ['portrait-34', 'landscape-43', 'portrait-45'];
 const SOUVENIR_VARIANTS = ['square-11', 'landscape-43', 'portrait-34', 'portrait-23'];
 const GALLERY_VIEWS = [
-  { id: 'archive', label: '猫猫档案' },
-  { id: 'recommended', label: '推荐' },
-  { id: 'souvenir', label: '猫猫周边' },
-  { id: 'diary', label: '猫猫日记' }
+  { id: 'souvenir', label: '猫猫素材' },
+  { id: 'archive', label: '猫猫档案' }
 ];
 const GALLERY_VIEW_IDS = GALLERY_VIEWS.map(view => view.id);
 
@@ -140,10 +138,10 @@ function getGalleryItems(view) {
 }
 
 function renderGalleryCard(item, view) {
-  const { cat, image, variant } = item;
+  const { cat, image, imageIndex = 0, variant } = item;
   if (view.id === 'souvenir') {
     return `
-      <button class="cat-card gallery-card gallery-card--${variant} gallery-card--souvenir" type="button" data-cat-name="${escapeHtml(cat.name)}" aria-label="查看${escapeHtml(cat.name)}的猫猫周边照片">
+      <button class="cat-card gallery-card gallery-card--${variant} gallery-card--souvenir" type="button" data-cat-name="${escapeHtml(cat.name)}" data-material-index="${imageIndex}" aria-label="查看${escapeHtml(cat.name)}的猫猫素材照片">
         <span class="gallery-card-media">
           <img src="${escapeHtml(cdnUrl(image))}" alt="${escapeHtml(cat.name)}" loading="lazy">
         </span>
@@ -157,7 +155,7 @@ function renderGalleryCard(item, view) {
   const title = view.id === 'diary'
     ? getUpdateTitle(latestUpdate, cat)
     : view.id === 'souvenir'
-      ? `${cat.name} · 猫猫周边`
+      ? `${cat.name} · 猫猫素材`
       : getGalleryCardTitle(cat);
   const meta = view.id === 'diary'
     ? [cat.name, formatUpdateDate(latestUpdate?.date)].join(' · ')

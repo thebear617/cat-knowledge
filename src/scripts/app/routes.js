@@ -1,7 +1,7 @@
 const BASE_URL = `${import.meta.env.BASE_URL.replace(/\/?$/, '/')}`;
 
 const PAGE_ROUTES = {
-  home: '',
+  home: 'home/',
   gallery: 'gallery/',
   timeline: 'timeline/',
   misc: 'misc/',
