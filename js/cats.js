@@ -8869,7 +8869,8 @@ export const catProfiles = [
       "images/糯糯/糯糯3.jpg",
       "images/糯糯/糯糯4.jpg",
       "images/糯糯/糯糯5.jpg",
-      "images/糯糯/糯糯6.jpg"
+      "images/糯糯/糯糯6.jpg",
+      "images/糯糯/糯糯7.jpg"
     ],
     "personality": [],
     "description": null,
@@ -8879,7 +8880,7 @@ export const catProfiles = [
     "aliases": [],
     "sourceId": null,
     "sourceImages": [],
-    "photoUpdatedAt": "2026-09-30"
+    "photoUpdatedAt": "2026-10-04"
   },
   {
     "name": "笑笑",
