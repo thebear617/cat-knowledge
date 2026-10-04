@@ -3796,7 +3796,8 @@ export const catProfiles = [
       "images/大头/大头33.jpg",
       "images/大头/大头34.jpg",
       "images/大头/大头35.jpg",
-      "images/大头/大头36.jpg"
+      "images/大头/大头36.jpg",
+      "images/大头/大头37.jpg"
     ],
     "personality": [
       "聪明机灵",
