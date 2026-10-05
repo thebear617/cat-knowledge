@@ -22,7 +22,16 @@ async function exists(filePath) {
 
 function resizeImage(sourcePath, targetPath) {
   return new Promise((resolve, reject) => {
-    const process = spawn('sips', ['-Z', String(THUMB_MAX_SIZE), sourcePath, '--out', targetPath], {
+    const process = spawn('ffmpeg', [
+      '-hide_banner',
+      '-loglevel', 'error',
+      '-y',
+      '-i', sourcePath,
+      '-vf', `scale=${THUMB_MAX_SIZE}:${THUMB_MAX_SIZE}:force_original_aspect_ratio=decrease`,
+      '-q:v', '2',
+      '-frames:v', '1',
+      targetPath,
+    ], {
       stdio: ['ignore', 'ignore', 'pipe'],
     });
     let stderr = '';
@@ -32,7 +41,7 @@ function resizeImage(sourcePath, targetPath) {
     process.on('error', reject);
     process.on('close', (code) => {
       if (code === 0) resolve();
-      else reject(new Error(stderr.trim() || `sips exited with code ${code}`));
+      else reject(new Error(stderr.trim() || `ffmpeg exited with code ${code}`));
     });
   });
 }

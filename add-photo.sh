@@ -43,6 +43,19 @@ img.save(dst, "JPEG", quality=85, optimize=True)
 PYEOF
 }
 
+# process_thumbnail_image <src> <dst> <max_size>
+# 用 ffmpeg 生成缩略图，统一处理 Display P3、EXIF 等色彩和方向信息，避免 sips 生成黑图。
+process_thumbnail_image() {
+  local src="$1" dst="$2" max="$3"
+  if ! command -v ffmpeg >/dev/null 2>&1; then
+    echo "  ❌ 找不到 ffmpeg，无法生成缩略图。请先安装 ffmpeg。" >&2
+    return 1
+  fi
+  ffmpeg -hide_banner -loglevel error -y -i "$src" \
+    -vf "scale=${max}:${max}:force_original_aspect_ratio=decrease" \
+    -q:v 2 -frames:v 1 "$dst"
+}
+
 if [ $# -lt 2 ]; then
   echo "用法: ./add-photo.sh <猫名> <照片路径> [照片路径...]"
   echo "示例: ./add-photo.sh 二柑 ~/Downloads/photo.jpg"
@@ -78,7 +91,7 @@ for PHOTO in "$@"; do
 
   TARGET="${IMAGES_DIR}/${CAT_NAME}${NEXT}.jpg"
   process_image "$PHOTO" "$TARGET" 1200
-  process_image "$TARGET" "${THUMB_DIR}/${CAT_NAME}${NEXT}.jpg" 800
+  process_thumbnail_image "$TARGET" "${THUMB_DIR}/${CAT_NAME}${NEXT}.jpg" 800
 
   SIZE=$(du -h "$TARGET" | cut -f1)
   THUMB_SIZE=$(du -h "${THUMB_DIR}/${CAT_NAME}${NEXT}.jpg" | cut -f1)
