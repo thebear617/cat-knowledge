@@ -30,15 +30,27 @@ for (const cat of catProfiles) {
     }
     if (!String(material.src || '').trim()) errors.push(`${prefix}.src 不能为空`);
     if (typeof material.isPostcard !== 'boolean') errors.push(`${prefix}.isPostcard 必须是布尔值`);
+    const localPath = String(material.src || '').replace(/^\/+/, '');
+    if (localPath.startsWith('http')) {
+      errors.push(`${prefix}.src 必须是本地图片路径`);
+      return;
+    }
+
+    const sourcePath = path.join(ROOT, 'public', localPath);
+    const imageDirectory = path.dirname(localPath);
+    const imageName = path.basename(localPath);
+    if (!fs.existsSync(sourcePath)) errors.push(`${prefix}.src 对应的图片不存在：${localPath}`);
+    for (const variant of ['preview', 'thumb']) {
+      const variantPath = path.join(ROOT, 'public', imageDirectory, variant, imageName);
+      if (!fs.existsSync(variantPath)) errors.push(`${prefix}.src 对应的${variant}图片不存在：${path.join(imageDirectory, variant, imageName)}`);
+    }
+
     if (!material.isPostcard) return;
     postcardCount += 1;
     if (!String(material.author || '').trim()) errors.push(`${prefix}.author 是明信片素材必填项`);
     if (!validDate(String(material.photographedAt || '').trim())) {
       errors.push(`${prefix}.photographedAt 必须使用有效的 YYYY-MM-DD 日期或“待补充”`);
     }
-    const localPath = String(material.src || '').replace(/^\/+/, '');
-    if (localPath.startsWith('http')) errors.push(`${prefix}.src 必须是本地图片路径`);
-    else if (!fs.existsSync(path.join(ROOT, 'public', localPath))) errors.push(`${prefix}.src 对应的图片不存在：${localPath}`);
   });
 }
 

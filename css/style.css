@@ -2862,6 +2862,27 @@ select {
   background: rgba(255, 255, 255, .22);
 }
 
+.photo-viewer-toolbar-original {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2rem;
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(255, 255, 255, .92);
+  padding: .35rem .25rem;
+  font-size: .72rem;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.photo-viewer-toolbar-original:hover,
+.photo-viewer-toolbar-original:focus-visible {
+  background: rgba(255, 255, 255, .14);
+}
+
 .photo-viewer-toolbar-download {
   width: 2rem;
   min-height: 2rem;

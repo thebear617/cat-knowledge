@@ -1057,6 +1057,11 @@ function getPhotoExtension(source) {
   return sourceName.match(/\.[a-z0-9]+$/i)?.[0] || '.jpg';
 }
 
+function getMaterialPreviewSource(source) {
+  if (!source || source.startsWith('http')) return source;
+  return source.replace(/([^/]+)$/, 'preview/$1');
+}
+
 function openMaterialViewer(cat, initialIndex = 0, { materialFilter = 'all' } = {}) {
   const materials = getMaterialRecords(cat, materialFilter);
   const sources = materials.map(material => material.src);
@@ -1086,6 +1091,7 @@ function openMaterialViewer(cat, initialIndex = 0, { materialFilter = 'all' } = 
       <button class="photo-viewer-toolbar-icon" data-photo-viewer-rotate type="button" aria-label="旋转图片" title="旋转图片">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.2 9.2A7.3 7.3 0 0 1 18 6.5l1.5 1.5"></path><path d="M19.5 4.5v3.8h-3.8"></path><path d="M18.8 14.8A7.3 7.3 0 0 1 6 17.5l-1.5-1.5"></path><path d="M4.5 19.5v-3.8h3.8"></path></svg>
       </button>
+      <a class="photo-viewer-toolbar-original" data-photo-original href="" target="_blank" rel="noreferrer noopener" aria-label="查看原图" title="查看原图">查看原图</a>
       <a class="photo-viewer-download photo-viewer-toolbar-download" data-photo-download href="" download aria-label="下载原图" title="下载原图">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5v10"></path><path d="m8 10 4 4 4-4"></path><path d="M5 16.5v3h14v-3"></path></svg>
       </a>
@@ -1098,6 +1104,7 @@ function openMaterialViewer(cat, initialIndex = 0, { materialFilter = 'all' } = 
   const previous = overlay.querySelector('[data-photo-viewer-prev]');
   const next = overlay.querySelector('[data-photo-viewer-next]');
   const rotate = overlay.querySelector('[data-photo-viewer-rotate]');
+  const original = overlay.querySelector('[data-photo-original]');
   const download = overlay.querySelector('[data-photo-download]');
   const close = overlay.querySelector('.photo-viewer-close');
   let rotation = 0;
@@ -1107,7 +1114,9 @@ function openMaterialViewer(cat, initialIndex = 0, { materialFilter = 'all' } = 
     const source = sources[index];
     const material = materials[index];
     const fullSrc = cdnUrl(source);
-    image.src = fullSrc;
+    image.src = cdnUrl(getMaterialPreviewSource(source));
+    image.loading = 'eager';
+    image.decoding = 'async';
     rotation = 0;
     image.style.transform = 'none';
     image.alt = `${cat.name}${materialLabel} ${index + 1}`;
@@ -1118,6 +1127,7 @@ function openMaterialViewer(cat, initialIndex = 0, { materialFilter = 'all' } = 
     meta.hidden = metadata.length === 0;
     meta.textContent = metadata.join('·');
     current.textContent = String(index + 1);
+    original.href = fullSrc;
     download.href = fullSrc;
     download.download = `${cat.name}-${index + 1}${getPhotoExtension(source)}`;
     previous.disabled = sources.length < 2;
