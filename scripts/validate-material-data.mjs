@@ -40,10 +40,8 @@ for (const cat of catProfiles) {
     const imageDirectory = path.dirname(localPath);
     const imageName = path.basename(localPath);
     if (!fs.existsSync(sourcePath)) errors.push(`${prefix}.src 对应的图片不存在：${localPath}`);
-    for (const variant of ['preview', 'thumb']) {
-      const variantPath = path.join(ROOT, 'public', imageDirectory, variant, imageName);
-      if (!fs.existsSync(variantPath)) errors.push(`${prefix}.src 对应的${variant}图片不存在：${path.join(imageDirectory, variant, imageName)}`);
-    }
+    const thumbPath = path.join(ROOT, 'public', imageDirectory, 'thumb', imageName);
+    if (!fs.existsSync(thumbPath)) errors.push(`${prefix}.src 对应的缩略图不存在：${path.join(imageDirectory, 'thumb', imageName)}`);
 
     if (!material.isPostcard) return;
     postcardCount += 1;

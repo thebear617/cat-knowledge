@@ -1057,9 +1057,9 @@ function getPhotoExtension(source) {
   return sourceName.match(/\.[a-z0-9]+$/i)?.[0] || '.jpg';
 }
 
-function getMaterialPreviewSource(source) {
+function getMaterialThumbSource(source) {
   if (!source || source.startsWith('http')) return source;
-  return source.replace(/([^/]+)$/, 'preview/$1');
+  return source.replace(/([^/]+)$/, 'thumb/$1');
 }
 
 function openMaterialViewer(cat, initialIndex = 0, { materialFilter = 'all' } = {}) {
@@ -1114,7 +1114,7 @@ function openMaterialViewer(cat, initialIndex = 0, { materialFilter = 'all' } = 
     const source = sources[index];
     const material = materials[index];
     const fullSrc = cdnUrl(source);
-    image.src = cdnUrl(getMaterialPreviewSource(source));
+    image.src = cdnUrl(getMaterialThumbSource(source));
     image.loading = 'eager';
     image.decoding = 'async';
     rotation = 0;

@@ -43,19 +43,6 @@ img.save(dst, "JPEG", quality=85, optimize=True)
 PYEOF
 }
 
-# process_preview_image <src> <dst> <max_size>
-# 用 ffmpeg 生成预览图，统一处理 Display P3 等色彩配置，避免 sips 缩放后出现黑图。
-process_preview_image() {
-  local src="$1" dst="$2" max="$3"
-  if ! command -v ffmpeg >/dev/null 2>&1; then
-    echo "  ❌ 找不到 ffmpeg，无法生成预览图。请先安装 ffmpeg。" >&2
-    return 1
-  fi
-  ffmpeg -hide_banner -loglevel error -y -i "$src" \
-    -vf "scale=${max}:${max}:force_original_aspect_ratio=decrease" \
-    -q:v 2 -frames:v 1 "$dst"
-}
-
 if [ $# -lt 2 ]; then
   echo "用法: ./add-photo.sh <猫名> <照片路径> [照片路径...]"
   echo "示例: ./add-photo.sh 二柑 ~/Downloads/photo.jpg"
@@ -69,14 +56,12 @@ CAT_NAME="$1"
 shift
 
 IMAGES_DIR="public/images/${CAT_NAME}"
-PREVIEW_DIR="${IMAGES_DIR}/preview"
 THUMB_DIR="${IMAGES_DIR}/thumb"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 cd "$SCRIPT_DIR"
 
 mkdir -p "$IMAGES_DIR"
-mkdir -p "$PREVIEW_DIR"
 mkdir -p "$THUMB_DIR"
 
 ADDED=()
@@ -93,13 +78,11 @@ for PHOTO in "$@"; do
 
   TARGET="${IMAGES_DIR}/${CAT_NAME}${NEXT}.jpg"
   process_image "$PHOTO" "$TARGET" 1200
-  process_preview_image "$TARGET" "${PREVIEW_DIR}/${CAT_NAME}${NEXT}.jpg" 1200
   process_image "$TARGET" "${THUMB_DIR}/${CAT_NAME}${NEXT}.jpg" 400
 
   SIZE=$(du -h "$TARGET" | cut -f1)
-  PREVIEW_SIZE=$(du -h "${PREVIEW_DIR}/${CAT_NAME}${NEXT}.jpg" | cut -f1)
   THUMB_SIZE=$(du -h "${THUMB_DIR}/${CAT_NAME}${NEXT}.jpg" | cut -f1)
-  echo "  ${CAT_NAME}${NEXT}.jpg  原图 ${SIZE}  预览图 ${PREVIEW_SIZE}  缩略图 ${THUMB_SIZE}"
+  echo "  ${CAT_NAME}${NEXT}.jpg  原图 ${SIZE}  缩略图 ${THUMB_SIZE}"
 
   ADDED+=("${IMAGES_DIR}/${CAT_NAME}${NEXT}.jpg")
 done
