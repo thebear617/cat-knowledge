@@ -47,7 +47,7 @@ if [ $# -lt 2 ]; then
   echo "用法: ./add-photo.sh <猫名> <照片路径> [照片路径...]"
   echo "示例: ./add-photo.sh 二柑 ~/Downloads/photo.jpg"
   echo ""
-  echo "作用：自动编号 → sips 出原图(长边1200)+缩略图(长边400) → 追加到 js/cats.js 的 images"
+  echo "作用：自动编号 → sips 出原图(长边1200)+缩略图(长边800) → 追加到 js/cats.js 的 images"
   echo "      并同步该猫的 photoUpdatedAt。（新猫需先在 cats.js 手工建档）"
   exit 1
 fi
@@ -78,7 +78,7 @@ for PHOTO in "$@"; do
 
   TARGET="${IMAGES_DIR}/${CAT_NAME}${NEXT}.jpg"
   process_image "$PHOTO" "$TARGET" 1200
-  process_image "$TARGET" "${THUMB_DIR}/${CAT_NAME}${NEXT}.jpg" 400
+  process_image "$TARGET" "${THUMB_DIR}/${CAT_NAME}${NEXT}.jpg" 800
 
   SIZE=$(du -h "$TARGET" | cut -f1)
   THUMB_SIZE=$(du -h "${THUMB_DIR}/${CAT_NAME}${NEXT}.jpg" | cut -f1)

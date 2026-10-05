@@ -3,10 +3,12 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
+import { catProfiles } from '../js/cats.js';
 
 const ROOT = path.resolve(new URL('..', import.meta.url).pathname);
-const MANIFEST_INPUT = path.join(ROOT, 'data/meowzart-local-image-manifest.json');
 const PUBLIC_ROOT = path.join(ROOT, 'public');
+const THUMB_MAX_SIZE = 800;
+const FORCE_REBUILD = process.env.FORCE_THUMBNAILS === '1';
 
 async function exists(filePath) {
   try {
@@ -20,7 +22,7 @@ async function exists(filePath) {
 
 function resizeImage(sourcePath, targetPath) {
   return new Promise((resolve, reject) => {
-    const process = spawn('sips', ['-Z', '400', sourcePath, '--out', targetPath], {
+    const process = spawn('sips', ['-Z', String(THUMB_MAX_SIZE), sourcePath, '--out', targetPath], {
       stdio: ['ignore', 'ignore', 'pipe'],
     });
     let stderr = '';
@@ -36,8 +38,11 @@ function resizeImage(sourcePath, targetPath) {
 }
 
 async function main() {
-  const manifest = JSON.parse(await fs.readFile(MANIFEST_INPUT, 'utf8'));
-  const imagePaths = [...new Set(Object.values(manifest).flat())];
+  const imagePaths = [...new Set(
+    catProfiles.flatMap(cat => (Array.isArray(cat.images) ? cat.images : []))
+      .map(image => typeof image === 'string' ? image : image?.src)
+      .filter(source => source && !source.startsWith('http'))
+  )];
   let generatedCount = 0;
   let skippedCount = 0;
   let missingSourceCount = 0;
@@ -51,7 +56,7 @@ async function main() {
     }
 
     const targetPath = path.join(path.dirname(sourcePath), 'thumb', path.basename(sourcePath));
-    if (await exists(targetPath)) {
+    if (!FORCE_REBUILD && await exists(targetPath)) {
       skippedCount += 1;
       continue;
     }
