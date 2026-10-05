@@ -86,7 +86,7 @@ for PHOTO in "$@"; do
     exit 1
   fi
 
-  NEXT=$(ls "$IMAGES_DIR"/*.jpg 2>/dev/null | wc -l | tr -d ' ')
+  NEXT=$(find "$IMAGES_DIR" -maxdepth 1 -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' \) -print | wc -l | tr -d ' ')
   NEXT=$((NEXT + 1))
 
   TARGET="${IMAGES_DIR}/${CAT_NAME}${NEXT}.jpg"
