@@ -81,8 +81,11 @@ if (multiIdx >= 0) {
     .filter(Boolean)
     .map((line) => JSON.parse(line));
 
+  const itemSource = (item) => typeof item === 'string' ? item : item?.src;
   for (const relPath of relPaths) {
-    if (!items.includes(relPath)) items.push(relPath);
+    if (!items.some((item) => itemSource(item) === relPath)) {
+      items.push({ src: relPath, isPostcard: false, author: '', photographedAt: '' });
+    }
   }
 
   const rebuilt = items.map((item, i) => `${itemIndent}${JSON.stringify(item)}${i === items.length - 1 ? '' : ','}`);
@@ -94,8 +97,11 @@ if (multiIdx >= 0) {
   const inner = line.match(/\[(.*)\]/)[1].trim();
   const items = inner ? JSON.parse(`[${inner}]`) : [];
 
+  const itemSource = (item) => typeof item === 'string' ? item : item?.src;
   for (const relPath of relPaths) {
-    if (!items.includes(relPath)) items.push(relPath);
+    if (!items.some((item) => itemSource(item) === relPath)) {
+      items.push({ src: relPath, isPostcard: false, author: '', photographedAt: '' });
+    }
   }
 
   lines.splice(

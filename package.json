@@ -1,6 +1,6 @@
 {
   "name": "cat-knowledge",
-  "version": "0.17.7",
+  "version": "0.18.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,6 +8,7 @@
     "dev:verify": "node scripts/start-isolated-cms-dev.mjs",
     "finance:generate": "node scripts/generate-finance-data.mjs",
     "finance:validate": "node scripts/validate-finance-data.mjs",
+    "materials:validate": "node scripts/validate-material-data.mjs",
     "build": "astro build",
     "build:local": "CODEBUDDY_SAFE_DELETE_ENABLED=0 astro build",
     "preview": "astro preview"

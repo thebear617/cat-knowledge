@@ -9,10 +9,10 @@ export const catProfiles = [
     "area": "竹园",
     "gender": "公",
     "images": [
-      "images/大面包/大面包2.jpg",
-      "images/大面包/大面包1.jpg",
-      "images/大面包/大面包3.jpg",
-      "images/大面包/大面包4.jpg"
+      { "src": "images/大面包/大面包2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/大面包/大面包1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/大面包/大面包3.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/大面包/大面包4.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "软萌好盘",
@@ -264,7 +264,7 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "公",
     "images": [
-      "images/黄豆/api-45275-1.jpg"
+      { "src": "images/黄豆/api-45275-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "软萌好盘",
@@ -343,9 +343,9 @@ export const catProfiles = [
     "area": "教学区",
     "gender": "母",
     "images": [
-      "images/蓝豆/蓝豆1.jpg",
-      "images/蓝豆/蓝豆2.jpg",
-      "images/蓝豆/蓝豆3.jpg"
+      { "src": "images/蓝豆/蓝豆1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/蓝豆/蓝豆2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/蓝豆/蓝豆3.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "生人勿近",
@@ -464,9 +464,9 @@ export const catProfiles = [
     "area": "丁香",
     "gender": "公",
     "images": [
-      "images/二橙/二橙3.jpg",
-      "images/二橙/二橙2.jpg",
-      "images/二橙/二橙1.jpg"
+      { "src": "images/二橙/二橙3.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/二橙/二橙2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/二橙/二橙1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "撒娇求撸",
@@ -1390,12 +1390,12 @@ export const catProfiles = [
     "area": "丁香",
     "gender": "公",
     "images": [
-      "images/二柑/二柑6.jpg",
-      "images/二柑/二柑5.jpg",
-      "images/二柑/二柑4.jpg",
-      "images/二柑/二柑3.jpg",
-      "images/二柑/二柑2.jpg",
-      "images/二柑/二柑1.jpg"
+      { "src": "images/二柑/二柑6.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/二柑/二柑5.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/二柑/二柑4.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/二柑/二柑3.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/二柑/二柑2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/二柑/二柑1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "不冷不热"
@@ -1876,10 +1876,10 @@ export const catProfiles = [
     "area": "海棠",
     "gender": "公",
     "images": [
-      "images/豆介/豆介2.jpg",
-      "images/豆介/豆介1.jpg",
-      "images/豆介/豆介3.jpg",
-      "images/豆介/豆介4.jpg"
+      { "src": "images/豆介/豆介2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/豆介/豆介1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/豆介/豆介3.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/豆介/豆介4.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "喜欢贴贴",
@@ -1988,13 +1988,13 @@ export const catProfiles = [
     "area": "丁香",
     "gender": "公",
     "images": [
-      "images/水手/水手1.jpg",
-      "images/水手/水手2.jpg",
-      "images/水手/水手3.jpg",
-      "images/水手/水手4.jpg",
-      "images/水手/水手5.jpg",
-      "images/水手/水手6.jpg",
-      "images/水手/水手7.jpg"
+      { "src": "images/水手/水手1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/水手/水手2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/水手/水手3.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/水手/水手4.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/水手/水手5.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/水手/水手6.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/水手/水手7.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "聪明机灵",
@@ -2045,8 +2045,10 @@ export const catProfiles = [
     "area": "教学区",
     "gender": "母",
     "images": [
-      "images/豆花/豆花2.jpg",
-      "images/豆花/豆花1.jpg"
+      { "src": "images/豆花/豆花2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/豆花/豆花1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/豆花/豆花-欢喜-260104-1.jpg", "isPostcard": true, "author": "欢喜", "photographedAt": "2026-01-04" },
+      { "src": "images/豆花/豆花-欢喜-260104-2.jpg", "isPostcard": true, "author": "欢喜", "photographedAt": "2026-01-04" }
     ],
     "personality": [
       "撒娇求撸",
@@ -2216,18 +2218,18 @@ export const catProfiles = [
     "area": "丁香",
     "gender": "公",
     "images": [
-      "images/二头/二头3.jpg",
-      "images/二头/二头2.jpg",
-      "images/二头/二头1.jpg",
-      "images/二头/二头4.jpg",
-      "images/二头/二头5.jpg",
-      "images/二头/二头6.jpg",
-      "images/二头/二头7.jpg",
-      "images/二头/二头8.jpg",
-      "images/二头/二头9.jpg",
-      "images/二头/二头10.jpg",
-      "images/二头/二头11.jpg",
-      "images/二头/二头12.jpg"
+      { "src": "images/二头/二头3.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/二头/二头2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/二头/二头1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/二头/二头4.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/二头/二头5.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/二头/二头6.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/二头/二头7.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/二头/二头8.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/二头/二头9.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/二头/二头10.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/二头/二头11.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/二头/二头12.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "撒娇求撸",
@@ -2389,11 +2391,12 @@ export const catProfiles = [
     "area": "竹园",
     "gender": "母",
     "images": [
-      "images/芸豆/芸豆1.jpg",
-      "images/芸豆/芸豆2.jpg",
-      "images/芸豆/芸豆3.jpg",
-      "images/芸豆/芸豆4.jpg",
-      "images/芸豆/芸豆5.jpg"
+      { "src": "images/芸豆/芸豆1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/芸豆/芸豆2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/芸豆/芸豆3.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/芸豆/芸豆4.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/芸豆/芸豆5.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/芸豆/芸豆-鲨人不 wink-261004.jpg", "isPostcard": true, "author": "鲨人不 wink", "photographedAt": "2026-10-04" }
     ],
     "personality": [
       "软萌好盘",
@@ -2517,10 +2520,10 @@ export const catProfiles = [
     "area": "海棠",
     "gender": "公",
     "images": [
-      "images/橙留香/橙留香3.jpg",
-      "images/橙留香/橙留香2.jpg",
-      "images/橙留香/橙留香1.jpg",
-      "images/橙留香/橙留香4.jpg"
+      { "src": "images/橙留香/橙留香3.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/橙留香/橙留香2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/橙留香/橙留香1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/橙留香/橙留香4.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "软萌好盘",
@@ -2723,7 +2726,7 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "公",
     "images": [
-      "images/瓜皮头/api-46036-1.jpg"
+      { "src": "images/瓜皮头/api-46036-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "生人勿近",
@@ -2801,10 +2804,10 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "公",
     "images": [
-      "images/毛橘子/api-44677-1.jpg",
-      "images/毛橘子/api-44677-2.jpg",
-      "images/毛橘子/毛橘子3.jpg",
-      "images/毛橘子/毛橘子4.jpg"
+      { "src": "images/毛橘子/api-44677-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/毛橘子/api-44677-2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/毛橘子/毛橘子3.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/毛橘子/毛橘子4.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "软萌好盘",
@@ -2893,8 +2896,8 @@ export const catProfiles = [
     "area": "海棠",
     "gender": "母",
     "images": [
-      "images/麻薯/麻薯2.jpg",
-      "images/麻薯/麻薯1.jpg"
+      { "src": "images/麻薯/麻薯2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/麻薯/麻薯1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "生人勿近",
@@ -3098,8 +3101,8 @@ export const catProfiles = [
     "area": "教学区",
     "gender": "母",
     "images": [
-      "images/立夏/api-49451-1.jpg",
-      "images/立夏/api-49451-2.jpg"
+      { "src": "images/立夏/api-49451-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/立夏/api-49451-2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "撒娇求撸",
@@ -3161,7 +3164,7 @@ export const catProfiles = [
     "area": "竹园",
     "gender": "母",
     "images": [
-      "images/斜眼狼/api-45264-1.jpg"
+      { "src": "images/斜眼狼/api-45264-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "生人勿近"
@@ -3232,8 +3235,8 @@ export const catProfiles = [
     "area": "丁香",
     "gender": "公",
     "images": [
-      "images/太君/api-45278-1.jpg",
-      "images/太君/api-45278-2.jpg"
+      { "src": "images/太君/api-45278-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/太君/api-45278-2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "见人就蹭",
@@ -3317,9 +3320,10 @@ export const catProfiles = [
     "area": "教学区",
     "gender": "公",
     "images": [
-      "images/脏白/脏白2.jpg",
-      "images/脏白/脏白1.jpg",
-      "images/脏白/脏白3.jpg"
+      { "src": "images/脏白/脏白2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/脏白/脏白1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/脏白/脏白3.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/脏白/脏白-豆花米麻薯-260729.jpg", "isPostcard": true, "author": "豆花米麻薯", "photographedAt": "2026-07-29" }
     ],
     "personality": [
       "生人勿近",
@@ -3440,7 +3444,7 @@ export const catProfiles = [
     "area": "教学区",
     "gender": "公",
     "images": [
-      "images/天水/天水1.jpg"
+      { "src": "images/天水/天水1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "生人勿近",
@@ -3501,9 +3505,9 @@ export const catProfiles = [
     "area": "海棠",
     "gender": "母",
     "images": [
-      "images/裤裤/裤裤3.jpg",
-      "images/裤裤/裤裤2.jpg",
-      "images/裤裤/裤裤1.jpg"
+      { "src": "images/裤裤/裤裤3.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/裤裤/裤裤2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/裤裤/裤裤1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "喵拳攻击",
@@ -3675,13 +3679,13 @@ export const catProfiles = [
     "area": "海棠",
     "gender": "公",
     "images": [
-      "images/虎先锋/虎先锋5.jpg",
-      "images/虎先锋/虎先锋4.jpg",
-      "images/虎先锋/虎先锋3.jpg",
-      "images/虎先锋/虎先锋2.jpg",
-      "images/虎先锋/虎先锋1.jpg",
-      "images/虎先锋/虎先锋6.jpg",
-      "images/虎先锋/虎先锋7.jpg"
+      { "src": "images/虎先锋/虎先锋5.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/虎先锋/虎先锋4.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/虎先锋/虎先锋3.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/虎先锋/虎先锋2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/虎先锋/虎先锋1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/虎先锋/虎先锋6.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/虎先锋/虎先锋7.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "生人勿近",
@@ -3761,43 +3765,56 @@ export const catProfiles = [
     "area": "丁香",
     "gender": "公",
     "images": [
-      "images/大头/datou11.jpg",
-      "images/大头/datou10.jpg",
-      "images/大头/datou9.jpg",
-      "images/大头/datou8.jpg",
-      "images/大头/datou7.jpg",
-      "images/大头/datou6.jpg",
-      "images/大头/datou5.jpg",
-      "images/大头/datou4.jpg",
-      "images/大头/datou1.jpg",
-      "images/大头/datou2.jpg",
-      "images/大头/datou3.jpg",
-      "images/大头/大头12.jpg",
-      "images/大头/大头13.jpg",
-      "images/大头/大头14.jpg",
-      "images/大头/大头15.jpg",
-      "images/大头/大头16.jpg",
-      "images/大头/大头17.jpg",
-      "images/大头/大头18.jpg",
-      "images/大头/大头19.jpg",
-      "images/大头/大头20.jpg",
-      "images/大头/大头21.jpg",
-      "images/大头/大头22.jpg",
-      "images/大头/大头23.jpg",
-      "images/大头/大头24.jpg",
-      "images/大头/大头25.jpg",
-      "images/大头/大头26.jpg",
-      "images/大头/大头27.jpg",
-      "images/大头/大头28.jpg",
-      "images/大头/大头29.jpg",
-      "images/大头/大头30.jpg",
-      "images/大头/大头31.jpg",
-      "images/大头/大头32.jpg",
-      "images/大头/大头33.jpg",
-      "images/大头/大头34.jpg",
-      "images/大头/大头35.jpg",
-      "images/大头/大头36.jpg",
-      "images/大头/大头37.jpg"
+      {"src":"images/大头/datou11.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/datou10.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/datou9.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/datou8.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/datou7.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/datou6.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/datou5.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/datou4.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/datou1.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/datou2.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/datou3.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/大头12.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/大头13.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/大头14.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/大头15.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/大头16.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/大头17.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/大头18.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/大头19.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/大头20.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/大头21.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/大头22.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/大头23.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/大头24.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/大头25.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/大头26.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/大头27.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/大头28.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/大头29.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/大头30.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/大头31.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/大头32.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/大头33.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/大头34.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/大头35.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/大头36.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/大头37.jpg","isPostcard":false,"author":"","photographedAt":""},
+      {"src":"images/大头/大头-250321-小鹿过马路.jpg","isPostcard":true,"author":"小鹿过马路","photographedAt":"2025-03-21"},
+      {"src":"images/大头/大头-250323-小鹿过马路.jpg","isPostcard":true,"author":"小鹿过马路","photographedAt":"2025-03-23"},
+      {"src":"images/大头/大头-250328-小鹿过马路.jpg","isPostcard":true,"author":"小鹿过马路","photographedAt":"2025-03-28"},
+      {"src":"images/大头/大头-260107-小鹿过马路.jpg","isPostcard":true,"author":"小鹿过马路","photographedAt":"2026-01-07"},
+      {"src":"images/大头/大头-260411-小鹿过马路.jpg","isPostcard":true,"author":"小鹿过马路","photographedAt":"2026-04-11"},
+      {"src":"images/大头/大头-260414-小鹿过马路.jpg","isPostcard":true,"author":"小鹿过马路","photographedAt":"2026-04-14"},
+      {"src":"images/大头/大头-260517-小鹿过马路.jpg","isPostcard":true,"author":"小鹿过马路","photographedAt":"2026-05-17"},
+      {"src":"images/大头/大头-260619-欢喜.jpg","isPostcard":true,"author":"欢喜","photographedAt":"2026-06-19"},
+      {"src":"images/大头/大头-欢喜-260912-1.jpg","isPostcard":true,"author":"欢喜","photographedAt":"2026-09-12"},
+      {"src":"images/大头/大头-欢喜-260912-2.jpg","isPostcard":true,"author":"欢喜","photographedAt":"2026-09-12"},
+      {"src":"images/大头/大头-欢喜-260912-3.jpg","isPostcard":true,"author":"欢喜","photographedAt":"2026-09-12"},
+      {"src":"images/大头/大头-欢喜-261004.jpg","isPostcard":true,"author":"欢喜","photographedAt":"2026-10-04"},
+      {"src":"images/大头/大头-绪风-260910.png","isPostcard":true,"author":"绪风","photographedAt":"2026-09-10"}
     ],
     "personality": [
       "聪明机灵",
@@ -3970,32 +3987,32 @@ export const catProfiles = [
     "area": "丁香",
     "gender": "公",
     "images": [
-      "images/漂亮橘/漂亮橘5.jpg",
-      "images/漂亮橘/漂亮橘4.jpg",
-      "images/漂亮橘/漂亮橘3.jpg",
-      "images/漂亮橘/漂亮橘2.jpg",
-      "images/漂亮橘/漂亮橘1.jpg",
-      "images/漂亮橘/漂亮橘6.jpg",
-      "images/漂亮橘/漂亮橘7.jpg",
-      "images/漂亮橘/漂亮橘8.jpg",
-      "images/漂亮橘/漂亮橘9.jpg",
-      "images/漂亮橘/漂亮橘10.jpg",
-      "images/漂亮橘/漂亮橘11.jpg",
-      "images/漂亮橘/漂亮橘12.jpg",
-      "images/漂亮橘/漂亮橘13.jpg",
-      "images/漂亮橘/漂亮橘14.jpg",
-      "images/漂亮橘/漂亮橘15.jpg",
-      "images/漂亮橘/漂亮橘16.jpg",
-      "images/漂亮橘/漂亮橘17.jpg",
-      "images/漂亮橘/漂亮橘18.jpg",
-      "images/漂亮橘/漂亮橘19.jpg",
-      "images/漂亮橘/漂亮橘20.jpg",
-      "images/漂亮橘/漂亮橘21.jpg",
-      "images/漂亮橘/漂亮橘22.jpg",
-      "images/漂亮橘/漂亮橘23.jpg",
-      "images/漂亮橘/漂亮橘24.jpg",
-      "images/漂亮橘/漂亮橘25.jpg",
-      "images/漂亮橘/漂亮橘26.jpg"
+      { "src": "images/漂亮橘/漂亮橘5.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/漂亮橘/漂亮橘4.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/漂亮橘/漂亮橘3.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/漂亮橘/漂亮橘2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/漂亮橘/漂亮橘1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/漂亮橘/漂亮橘6.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/漂亮橘/漂亮橘7.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/漂亮橘/漂亮橘8.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/漂亮橘/漂亮橘9.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/漂亮橘/漂亮橘10.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/漂亮橘/漂亮橘11.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/漂亮橘/漂亮橘12.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/漂亮橘/漂亮橘13.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/漂亮橘/漂亮橘14.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/漂亮橘/漂亮橘15.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/漂亮橘/漂亮橘16.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/漂亮橘/漂亮橘17.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/漂亮橘/漂亮橘18.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/漂亮橘/漂亮橘19.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/漂亮橘/漂亮橘20.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/漂亮橘/漂亮橘21.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/漂亮橘/漂亮橘22.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/漂亮橘/漂亮橘23.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/漂亮橘/漂亮橘24.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/漂亮橘/漂亮橘25.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/漂亮橘/漂亮橘26.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "胆小怂包",
@@ -4219,8 +4236,8 @@ export const catProfiles = [
     "area": "海棠",
     "gender": "母",
     "images": [
-      "images/奶酪/api-50641-1.jpg",
-      "images/奶酪/api-50641-2.jpg"
+      { "src": "images/奶酪/api-50641-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/奶酪/api-50641-2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "软萌好盘",
@@ -4425,9 +4442,9 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "公",
     "images": [
-      "images/喵勒特/api-44676-1.jpg",
-      "images/喵勒特/api-44676-2.jpg",
-      "images/喵勒特/喵勒特3.jpg"
+      { "src": "images/喵勒特/api-44676-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/喵勒特/api-44676-2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/喵勒特/喵勒特3.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "该溜子",
@@ -4728,7 +4745,7 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "公",
     "images": [
-      "images/袜袜/api-45276-1.jpg"
+      { "src": "images/袜袜/api-45276-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "软萌好盘",
@@ -4904,7 +4921,7 @@ export const catProfiles = [
     "area": "海棠",
     "gender": "母",
     "images": [
-      "images/粤利粤/api-49490-1.jpg"
+      { "src": "images/粤利粤/api-49490-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "生人勿近",
@@ -4941,7 +4958,7 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "母",
     "images": [
-      "images/奶泡/api-49489-1.jpg"
+      { "src": "images/奶泡/api-49489-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "胆小怂包",
@@ -4978,8 +4995,8 @@ export const catProfiles = [
     "area": "海棠",
     "gender": "公",
     "images": [
-      "images/暹罗/api-49486-1.jpg",
-      "images/暹罗/api-49486-2.jpg"
+      { "src": "images/暹罗/api-49486-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/暹罗/api-49486-2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "胆小怂包",
@@ -5017,8 +5034,8 @@ export const catProfiles = [
     "area": "海棠",
     "gender": "母",
     "images": [
-      "images/大倒霉蛋/api-49485-1.jpg",
-      "images/大倒霉蛋/api-49485-2.jpg"
+      { "src": "images/大倒霉蛋/api-49485-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/大倒霉蛋/api-49485-2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "喜欢贴贴",
@@ -5056,8 +5073,8 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "公",
     "images": [
-      "images/胆小橘/api-49484-1.jpg",
-      "images/胆小橘/api-49484-2.jpg"
+      { "src": "images/胆小橘/api-49484-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/胆小橘/api-49484-2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "生人勿近"
@@ -5121,8 +5138,8 @@ export const catProfiles = [
     "area": "丁香",
     "gender": "公",
     "images": [
-      "images/啃啃/api-49483-1.jpg",
-      "images/啃啃/api-49483-2.jpg"
+      { "src": "images/啃啃/api-49483-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/啃啃/api-49483-2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "撒娇求撸",
@@ -5161,8 +5178,8 @@ export const catProfiles = [
     "area": "丁香",
     "gender": "公",
     "images": [
-      "images/emo/api-49482-1.jpg",
-      "images/emo/api-49482-2.jpg"
+      { "src": "images/emo/api-49482-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/emo/api-49482-2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "喜欢贴贴",
@@ -5200,8 +5217,8 @@ export const catProfiles = [
     "area": "丁香",
     "gender": "母",
     "images": [
-      "images/三花/api-49481-1.jpg",
-      "images/三花/api-49481-2.jpg"
+      { "src": "images/三花/api-49481-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/三花/api-49481-2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "聪明机灵",
@@ -5240,8 +5257,8 @@ export const catProfiles = [
     "area": "丁香",
     "gender": "公",
     "images": [
-      "images/加白/api-45284-1.jpg",
-      "images/加白/api-45284-2.jpg"
+      { "src": "images/加白/api-45284-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/加白/api-45284-2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "软萌好盘",
@@ -5293,8 +5310,8 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "母",
     "images": [
-      "images/胖琥/api-45280-1.jpg",
-      "images/胖琥/api-45280-2.jpg"
+      { "src": "images/胖琥/api-45280-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/胖琥/api-45280-2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "软萌好盘",
@@ -5359,7 +5376,9 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "母",
     "images": [
-      "images/黑姐/api-44875-1.jpg"
+      { "src": "images/黑姐/api-44875-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/黑姐/黑姐-小鹿过马路-260105-1.jpg", "isPostcard": true, "author": "小鹿过马路", "photographedAt": "2026-01-05" },
+      { "src": "images/黑姐/黑姐-小鹿过马路-260105-2.jpg", "isPostcard": true, "author": "小鹿过马路", "photographedAt": "2026-01-05" }
     ],
     "personality": [
       "见人就蹭",
@@ -5422,8 +5441,8 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "母",
     "images": [
-      "images/小满/api-49178-1.jpg",
-      "images/小满/api-49178-2.jpg"
+      { "src": "images/小满/api-49178-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/小满/api-49178-2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "泡图书馆",
@@ -5464,7 +5483,7 @@ export const catProfiles = [
     "area": "竹园",
     "gender": "公",
     "images": [
-      "images/奶霜/奶霜1.jpg"
+      { "src": "images/奶霜/奶霜1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "胆小怂包",
@@ -5516,12 +5535,12 @@ export const catProfiles = [
     "area": "竹园",
     "gender": "母",
     "images": [
-      "images/银杏/银杏1.jpg",
-      "images/银杏/银杏2.jpg",
-      "images/银杏/银杏3.jpg",
-      "images/银杏/银杏4.jpg",
-      "images/银杏/银杏5.jpg",
-      "images/银杏/银杏6.jpg"
+      { "src": "images/银杏/银杏1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/银杏/银杏2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/银杏/银杏3.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/银杏/银杏4.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/银杏/银杏5.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/银杏/银杏6.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "胆小怂包",
@@ -5575,23 +5594,23 @@ export const catProfiles = [
     "area": "丁香",
     "gender": "公",
     "images": [
-      "images/赫兹/赫兹3.jpg",
-      "images/赫兹/赫兹2.jpg",
-      "images/赫兹/赫兹1.jpg",
-      "images/赫兹/赫兹4.jpg",
-      "images/赫兹/赫兹5.jpg",
-      "images/赫兹/赫兹6.jpg",
-      "images/赫兹/赫兹7.jpg",
-      "images/赫兹/赫兹8.jpg",
-      "images/赫兹/赫兹9.jpg",
-      "images/赫兹/赫兹10.jpg",
-      "images/赫兹/赫兹11.jpg",
-      "images/赫兹/赫兹12.jpg",
-      "images/赫兹/赫兹13.jpg",
-      "images/赫兹/赫兹14.jpg",
-      "images/赫兹/赫兹15.jpg",
-      "images/赫兹/赫兹16.jpg",
-      "images/赫兹/赫兹17.jpg"
+      { "src": "images/赫兹/赫兹3.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/赫兹/赫兹2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/赫兹/赫兹1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/赫兹/赫兹4.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/赫兹/赫兹5.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/赫兹/赫兹6.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/赫兹/赫兹7.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/赫兹/赫兹8.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/赫兹/赫兹9.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/赫兹/赫兹10.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/赫兹/赫兹11.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/赫兹/赫兹12.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/赫兹/赫兹13.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/赫兹/赫兹14.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/赫兹/赫兹15.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/赫兹/赫兹16.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/赫兹/赫兹17.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "胆小怂包",
@@ -5631,8 +5650,8 @@ export const catProfiles = [
     "area": "海棠",
     "gender": "公",
     "images": [
-      "images/白介/白介2.jpg",
-      "images/白介/白介1.jpg"
+      { "src": "images/白介/白介2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/白介/白介1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "见人就蹭",
@@ -5715,8 +5734,8 @@ export const catProfiles = [
     "area": "海棠",
     "gender": "公",
     "images": [
-      "images/深情哥/深情哥2.jpg",
-      "images/深情哥/深情哥1.jpg"
+      { "src": "images/深情哥/深情哥2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/深情哥/深情哥1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "聪明机灵",
@@ -5769,7 +5788,7 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "母",
     "images": [
-      "images/毛柿子/api-45285-1.jpg"
+      { "src": "images/毛柿子/api-45285-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "软萌好盘",
@@ -5849,10 +5868,10 @@ export const catProfiles = [
     "area": "海棠",
     "gender": "母",
     "images": [
-      "images/小花/小花4.jpg",
-      "images/小花/小花3.jpg",
-      "images/小花/小花2.jpg",
-      "images/小花/小花1.jpg"
+      { "src": "images/小花/小花4.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/小花/小花3.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/小花/小花2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/小花/小花1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "撒娇求撸",
@@ -5928,8 +5947,8 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "公",
     "images": [
-      "images/牛奶/api-45268-1.jpg",
-      "images/牛奶/api-45268-2.jpg"
+      { "src": "images/牛奶/api-45268-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/牛奶/api-45268-2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "软萌好盘",
@@ -6021,9 +6040,9 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "母",
     "images": [
-      "images/盼盼/api-44688-1.jpg",
-      "images/盼盼/盼盼2.jpg",
-      "images/盼盼/盼盼3.jpg"
+      { "src": "images/盼盼/api-44688-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/盼盼/盼盼2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/盼盼/盼盼3.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "软萌好盘",
@@ -6120,8 +6139,8 @@ export const catProfiles = [
     "area": "教学区",
     "gender": "公",
     "images": [
-      "images/焦黄/api-45154-1.jpg",
-      "images/焦黄/api-45154-2.jpg"
+      { "src": "images/焦黄/api-45154-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/焦黄/api-45154-2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "喵拳攻击",
@@ -6177,7 +6196,7 @@ export const catProfiles = [
     "area": "丁香",
     "gender": "母",
     "images": [
-      "images/香香/api-45202-1.jpg"
+      { "src": "images/香香/api-45202-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "喜欢贴贴",
@@ -6228,7 +6247,7 @@ export const catProfiles = [
     "area": "竹园",
     "gender": null,
     "images": [
-      "images/三橘/api-45465-1.jpg"
+      { "src": "images/三橘/api-45465-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "胆小怂包",
@@ -6265,8 +6284,8 @@ export const catProfiles = [
     "area": "竹园",
     "gender": "母",
     "images": [
-      "images/竹园小老大/api-45464-1.jpg",
-      "images/竹园小老大/api-45464-2.jpg"
+      { "src": "images/竹园小老大/api-45464-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/竹园小老大/api-45464-2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "软萌好盘",
@@ -6305,8 +6324,8 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "公",
     "images": [
-      "images/来财/api-45463-1.jpg",
-      "images/来财/api-45463-2.jpg"
+      { "src": "images/来财/api-45463-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/来财/api-45463-2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "软萌好盘",
@@ -6345,8 +6364,8 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "公",
     "images": [
-      "images/小煤球/api-44690-1.jpg",
-      "images/小煤球/api-44690-2.jpg"
+      { "src": "images/小煤球/api-44690-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/小煤球/api-44690-2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "生人勿近"
@@ -6411,7 +6430,7 @@ export const catProfiles = [
     "area": "竹园",
     "gender": "公",
     "images": [
-      "images/小尾巴/api-45436-1.jpg"
+      { "src": "images/小尾巴/api-45436-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "软萌好盘",
@@ -6449,7 +6468,7 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "公",
     "images": [
-      "images/绿豆/api-45434-1.jpg"
+      { "src": "images/绿豆/api-45434-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "生人勿近",
@@ -6486,7 +6505,7 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "母",
     "images": [
-      "images/棉花糖/api-45433-1.jpg"
+      { "src": "images/棉花糖/api-45433-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "生人勿近",
@@ -6537,7 +6556,7 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "公",
     "images": [
-      "images/潇洒哥/api-45184-1.jpg"
+      { "src": "images/潇洒哥/api-45184-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "见人就蹭",
@@ -6586,7 +6605,7 @@ export const catProfiles = [
     "area": "丁香",
     "gender": "母",
     "images": [
-      "images/小刀/api-45320-1.jpg"
+      { "src": "images/小刀/api-45320-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "生人勿近",
@@ -6639,7 +6658,7 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "母",
     "images": [
-      "images/CC/api-45359-1.jpg"
+      { "src": "images/CC/api-45359-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "撒娇求撸",
@@ -6702,7 +6721,7 @@ export const catProfiles = [
     "area": "丁香",
     "gender": "公",
     "images": [
-      "images/项圈小黑/api-45357-1.jpg"
+      { "src": "images/项圈小黑/api-45357-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "生人勿近",
@@ -6740,7 +6759,7 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "母",
     "images": [
-      "images/喵特勒老妈/api-45325-1.jpg"
+      { "src": "images/喵特勒老妈/api-45325-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "生人勿近",
@@ -6777,7 +6796,7 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "公",
     "images": [
-      "images/中分头/api-45324-1.jpg"
+      { "src": "images/中分头/api-45324-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "生人勿近",
@@ -6814,7 +6833,7 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "公",
     "images": [
-      "images/喵特勒/api-45323-1.jpg"
+      { "src": "images/喵特勒/api-45323-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "胆小怂包",
@@ -6904,8 +6923,8 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "母",
     "images": [
-      "images/罗小黑/api-45321-1.jpg",
-      "images/罗小黑/api-45321-2.jpg"
+      { "src": "images/罗小黑/api-45321-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/罗小黑/api-45321-2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "软萌好盘",
@@ -6944,7 +6963,7 @@ export const catProfiles = [
     "area": "海棠",
     "gender": "公",
     "images": [
-      "images/橘桑/api-45318-1.jpg"
+      { "src": "images/橘桑/api-45318-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "喵拳攻击",
@@ -6981,7 +7000,7 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "公",
     "images": [
-      "images/小八嘎/api-45317-1.jpg"
+      { "src": "images/小八嘎/api-45317-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "泡图书馆",
@@ -7048,8 +7067,8 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "公",
     "images": [
-      "images/朱迪/api-45316-1.jpg",
-      "images/朱迪/api-45316-2.jpg"
+      { "src": "images/朱迪/api-45316-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/朱迪/api-45316-2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "软萌好盘",
@@ -7088,8 +7107,8 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "公",
     "images": [
-      "images/奶咖/api-45315-1.jpg",
-      "images/奶咖/api-45315-2.jpg"
+      { "src": "images/奶咖/api-45315-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/奶咖/api-45315-2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "生人勿近",
@@ -7128,7 +7147,7 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "公",
     "images": [
-      "images/煤炭/api-45306-1.jpg"
+      { "src": "images/煤炭/api-45306-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "见人就蹭",
@@ -7166,8 +7185,8 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "母",
     "images": [
-      "images/三四/api-45302-1.jpg",
-      "images/三四/api-45302-2.jpg"
+      { "src": "images/三四/api-45302-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/三四/api-45302-2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "喜欢贴贴",
@@ -7206,7 +7225,7 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "母",
     "images": [
-      "images/栗子/api-45301-1.jpg"
+      { "src": "images/栗子/api-45301-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "见人就蹭",
@@ -7269,8 +7288,8 @@ export const catProfiles = [
     "area": "竹园",
     "gender": "母",
     "images": [
-      "images/大嗓门/api-45293-1.jpg",
-      "images/大嗓门/api-45293-2.jpg"
+      { "src": "images/大嗓门/api-45293-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/大嗓门/api-45293-2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "软萌好盘",
@@ -7309,8 +7328,8 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "公",
     "images": [
-      "images/黑介/api-45292-1.jpg",
-      "images/黑介/api-45292-2.jpg"
+      { "src": "images/黑介/api-45292-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/黑介/api-45292-2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "喵拳攻击",
@@ -7386,8 +7405,8 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "公",
     "images": [
-      "images/宗介/api-45291-1.jpg",
-      "images/宗介/api-45291-2.jpg"
+      { "src": "images/宗介/api-45291-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/宗介/api-45291-2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "喵拳攻击",
@@ -7425,9 +7444,9 @@ export const catProfiles = [
     "area": "丁香",
     "gender": "公",
     "images": [
-      "images/邪恶奶牛/邪恶奶牛1.jpg",
-      "images/邪恶奶牛/邪恶奶牛2.jpg",
-      "images/邪恶奶牛/邪恶奶牛3.jpg"
+      { "src": "images/邪恶奶牛/邪恶奶牛1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/邪恶奶牛/邪恶奶牛2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/邪恶奶牛/邪恶奶牛3.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "喵拳攻击",
@@ -7467,7 +7486,7 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "母",
     "images": [
-      "images/三三/api-45289-1.jpg"
+      { "src": "images/三三/api-45289-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "聪明机灵",
@@ -7545,8 +7564,8 @@ export const catProfiles = [
     "area": "竹园",
     "gender": "母",
     "images": [
-      "images/奥利奥/api-45288-1.jpg",
-      "images/奥利奥/api-45288-2.jpg"
+      { "src": "images/奥利奥/api-45288-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/奥利奥/api-45288-2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "喜欢贴贴",
@@ -7585,8 +7604,8 @@ export const catProfiles = [
     "area": "竹园",
     "gender": "母",
     "images": [
-      "images/苏菲/api-45287-1.jpg",
-      "images/苏菲/api-45287-2.jpg"
+      { "src": "images/苏菲/api-45287-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/苏菲/api-45287-2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "见人就蹭",
@@ -7625,7 +7644,7 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "母",
     "images": [
-      "images/太子/api-45286-1.jpg"
+      { "src": "images/太子/api-45286-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "软萌好盘",
@@ -7663,7 +7682,7 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "母",
     "images": [
-      "images/楼长/api-45283-1.jpg"
+      { "src": "images/楼长/api-45283-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "见人就蹭",
@@ -7703,7 +7722,7 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "母",
     "images": [
-      "images/丁香小奶牛/api-45282-1.jpg"
+      { "src": "images/丁香小奶牛/api-45282-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "胆小怂包",
@@ -7741,8 +7760,8 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "公",
     "images": [
-      "images/橘白/api-45281-1.jpg",
-      "images/橘白/api-45281-2.jpg"
+      { "src": "images/橘白/api-45281-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/橘白/api-45281-2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "软萌好盘",
@@ -7782,7 +7801,7 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "母",
     "images": [
-      "images/黑子/api-45279-1.jpg"
+      { "src": "images/黑子/api-45279-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "胆小怂包",
@@ -7833,7 +7852,7 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "公",
     "images": [
-      "images/Miko/api-45277-1.jpg"
+      { "src": "images/Miko/api-45277-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "软萌好盘",
@@ -7896,10 +7915,11 @@ export const catProfiles = [
     "area": "教学区",
     "gender": "母",
     "images": [
-      "images/豆腐脑/豆腐脑1.jpg",
-      "images/豆腐脑/豆腐脑2.jpg",
-      "images/豆腐脑/豆腐脑3.jpg",
-      "images/豆腐脑/豆腐脑4.jpg"
+      { "src": "images/豆腐脑/豆腐脑1.jpg", "isPostcard": true, "author": "待补充", "photographedAt": "待补充" },
+      { "src": "images/豆腐脑/豆腐脑2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/豆腐脑/豆腐脑3.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/豆腐脑/豆腐脑4.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/豆腐脑/豆腐脑-豆花米麻薯-260701.jpg", "isPostcard": true, "author": "豆花米麻薯", "photographedAt": "2026-07-01" }
     ],
     "personality": [
       "生人勿近",
@@ -7975,8 +7995,8 @@ export const catProfiles = [
     "area": "海棠",
     "gender": "公",
     "images": [
-      "images/阿猪/api-45272-1.jpg",
-      "images/阿猪/api-45272-2.jpg"
+      { "src": "images/阿猪/api-45272-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/阿猪/api-45272-2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "超级校霸",
@@ -8015,7 +8035,7 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "母",
     "images": [
-      "images/蛋挞/api-45271-1.jpg"
+      { "src": "images/蛋挞/api-45271-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "软萌好盘",
@@ -8053,7 +8073,7 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "公",
     "images": [
-      "images/曲奇/api-45270-1.jpg"
+      { "src": "images/曲奇/api-45270-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "胆小怂包",
@@ -8116,7 +8136,7 @@ export const catProfiles = [
     "area": "海棠",
     "gender": "母",
     "images": [
-      "images/茶叶/api-45267-1.jpg"
+      { "src": "images/茶叶/api-45267-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "撒娇求撸",
@@ -8195,7 +8215,7 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "公",
     "images": [
-      "images/竹园奶牛一号/api-45266-1.jpg"
+      { "src": "images/竹园奶牛一号/api-45266-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "生人勿近"
@@ -8231,7 +8251,7 @@ export const catProfiles = [
     "area": "竹园",
     "gender": "公",
     "images": [
-      "images/竹园大橘/api-45265-1.jpg"
+      { "src": "images/竹园大橘/api-45265-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "生人勿近",
@@ -8268,8 +8288,9 @@ export const catProfiles = [
     "area": "竹园",
     "gender": "公",
     "images": [
-      "images/黑哥/黑哥2.jpg",
-      "images/黑哥/黑哥1.jpg"
+      { "src": "images/黑哥/黑哥2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/黑哥/黑哥1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/黑哥/黑哥-长乐-260616.jpg", "isPostcard": true, "author": "长乐", "photographedAt": "2026-06-16" }
     ],
     "personality": [
       "生人勿近",
@@ -8309,7 +8330,7 @@ export const catProfiles = [
     "area": "竹园",
     "gender": "母",
     "images": [
-      "images/焦炭馒头/焦炭馒头1.jpg"
+      { "src": "images/焦炭馒头/焦炭馒头1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "生人勿近",
@@ -8347,7 +8368,7 @@ export const catProfiles = [
     "area": "竹园",
     "gender": "母",
     "images": [
-      "images/来才/来才1.jpg"
+      { "src": "images/来才/来才1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "生人勿近",
@@ -8398,8 +8419,8 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "母",
     "images": [
-      "images/奶茶/api-45188-1.jpg",
-      "images/奶茶/奶茶2.jpg"
+      { "src": "images/奶茶/api-45188-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/奶茶/奶茶2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "喜欢贴贴",
@@ -8438,8 +8459,8 @@ export const catProfiles = [
     "area": "丁香",
     "gender": "母",
     "images": [
-      "images/福福/api-45174-1.jpg",
-      "images/福福/api-45174-2.jpg"
+      { "src": "images/福福/api-45174-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/福福/api-45174-2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "公认妈宝",
@@ -8478,7 +8499,7 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "公",
     "images": [
-      "images/芝麻/api-45152-1.jpg"
+      { "src": "images/芝麻/api-45152-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "见人就蹭",
@@ -8531,11 +8552,11 @@ export const catProfiles = [
     "area": "竹园",
     "gender": "公",
     "images": [
-      "images/黑小虎/黑小虎1.jpg",
-      "images/黑小虎/黑小虎2.jpg",
-      "images/黑小虎/黑小虎3.jpg",
-      "images/黑小虎/黑小虎4.jpg",
-      "images/黑小虎/黑小虎5.jpg"
+      { "src": "images/黑小虎/黑小虎1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/黑小虎/黑小虎2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/黑小虎/黑小虎3.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/黑小虎/黑小虎4.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/黑小虎/黑小虎5.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "生人勿近",
@@ -8576,9 +8597,11 @@ export const catProfiles = [
     "area": "竹园",
     "gender": "公",
     "images": [
-      "images/警长/警长1.jpg",
-      "images/竹园警长/api-45246-1.jpg",
-      "images/警长/警长2.jpg"
+      { "src": "images/警长/警长1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/竹园警长/api-45246-1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/警长/警长2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/警长/警长-长乐-260710.jpg", "isPostcard": true, "author": "长乐", "photographedAt": "2026-07-10" },
+      { "src": "images/警长/警长-鲨人不wink-260712.jpg", "isPostcard": true, "author": "鲨人不wink", "photographedAt": "2026-07-12" }
     ],
     "personality": [],
     "description": null,
@@ -8599,8 +8622,8 @@ export const catProfiles = [
     "area": "海棠",
     "gender": "公",
     "images": [
-      "images/茶叶大蛋/茶叶大蛋1.jpg",
-      "images/茶叶大蛋/茶叶大蛋2.jpg"
+      { "src": "images/茶叶大蛋/茶叶大蛋1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/茶叶大蛋/茶叶大蛋2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [],
     "description": null,
@@ -8623,10 +8646,11 @@ export const catProfiles = [
     "area": "竹园",
     "gender": "公",
     "images": [
-      "images/彪哥/彪哥4.jpg",
-      "images/彪哥/彪哥3.jpg",
-      "images/彪哥/彪哥2.jpg",
-      "images/彪哥/彪哥1.jpg"
+      { "src": "images/彪哥/彪哥4.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/彪哥/彪哥3.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/彪哥/彪哥2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/彪哥/彪哥1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/彪哥/彪哥-长乐-260629.jpg", "isPostcard": true, "author": "长乐", "photographedAt": "2026-06-29" }
     ],
     "personality": [],
     "description": null,
@@ -8646,8 +8670,8 @@ export const catProfiles = [
     "area": "海棠",
     "gender": "母",
     "images": [
-      "images/小小黑/小小黑2.jpg",
-      "images/小小黑/小小黑1.jpg"
+      { "src": "images/小小黑/小小黑2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/小小黑/小小黑1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [],
     "description": null,
@@ -8667,8 +8691,8 @@ export const catProfiles = [
     "area": "丁香",
     "gender": "公",
     "images": [
-      "images/咖啡/咖啡1.jpg",
-      "images/咖啡/咖啡2.jpg"
+      { "src": "images/咖啡/咖啡1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/咖啡/咖啡2.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [],
     "description": null,
@@ -8688,7 +8712,7 @@ export const catProfiles = [
     "area": "丁香",
     "gender": "公",
     "images": [
-      "images/胆小橘/胆小橘1.jpg"
+      { "src": "images/胆小橘/胆小橘1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [],
     "description": null,
@@ -8708,17 +8732,17 @@ export const catProfiles = [
     "area": "竹园",
     "gender": "公",
     "images": [
-      "images/金琥/金琥1.jpg",
-      "images/金琥/金琥2.jpg",
-      "images/金琥/金琥3.jpg",
-      "images/金琥/金琥4.jpg",
-      "images/金琥/金琥5.jpg",
-      "images/金琥/金琥6.jpg",
-      "images/金琥/金琥7.jpg",
-      "images/金琥/金琥8.jpg",
-      "images/金琥/金琥9.jpg",
-      "images/金琥/金琥10.jpg",
-      "images/金琥/金琥11.jpg"
+      { "src": "images/金琥/金琥1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/金琥/金琥2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/金琥/金琥3.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/金琥/金琥4.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/金琥/金琥5.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/金琥/金琥6.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/金琥/金琥7.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/金琥/金琥8.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/金琥/金琥9.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/金琥/金琥10.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/金琥/金琥11.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [],
     "description": null,
@@ -8739,16 +8763,16 @@ export const catProfiles = [
     "area": "丁香",
     "gender": "公",
     "images": [
-      "images/龙蛋/龙蛋1.jpg",
-      "images/龙蛋/龙蛋2.jpg",
-      "images/龙蛋/龙蛋3.jpg",
-      "images/龙蛋/龙蛋4.jpg",
-      "images/龙蛋/龙蛋5.jpg",
-      "images/龙蛋/龙蛋6.jpg",
-      "images/龙蛋/龙蛋7.jpg",
-      "images/龙蛋/龙蛋8.jpg",
-      "images/龙蛋/龙蛋9.jpg",
-      "images/龙蛋/龙蛋10.jpg"
+      { "src": "images/龙蛋/龙蛋1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/龙蛋/龙蛋2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/龙蛋/龙蛋3.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/龙蛋/龙蛋4.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/龙蛋/龙蛋5.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/龙蛋/龙蛋6.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/龙蛋/龙蛋7.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/龙蛋/龙蛋8.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/龙蛋/龙蛋9.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/龙蛋/龙蛋10.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [
       "活泼好动"
@@ -8793,10 +8817,10 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "公",
     "images": [
-      "images/陶吉吉/陶吉吉1.jpg",
-      "images/陶吉吉/陶吉吉2.jpeg",
-      "images/陶吉吉/陶吉吉3.jpg",
-      "images/陶吉吉/陶吉吉4.jpg"
+      { "src": "images/陶吉吉/陶吉吉1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/陶吉吉/陶吉吉2.jpeg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/陶吉吉/陶吉吉3.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/陶吉吉/陶吉吉4.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [],
     "description": null,
@@ -8816,7 +8840,7 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "公",
     "images": [
-      "images/羊粪蛋/羊粪蛋1.jpg"
+      { "src": "images/羊粪蛋/羊粪蛋1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [],
     "description": null,
@@ -8837,13 +8861,13 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "母",
     "images": [
-      "images/豆米/豆米1.jpg",
-      "images/豆米/豆米2.jpg",
-      "images/豆米/豆米3.jpg",
-      "images/豆米/豆米4.jpg",
-      "images/豆米/豆米5.jpg",
-      "images/豆米/豆米6.jpg",
-      "images/豆米/豆米7.jpg"
+      { "src": "images/豆米/豆米1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/豆米/豆米2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/豆米/豆米3.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/豆米/豆米4.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/豆米/豆米5.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/豆米/豆米6.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/豆米/豆米7.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [],
     "description": null,
@@ -8864,13 +8888,13 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "母",
     "images": [
-      "images/糯糯/糯糯1.jpg",
-      "images/糯糯/糯糯2.jpg",
-      "images/糯糯/糯糯3.jpg",
-      "images/糯糯/糯糯4.jpg",
-      "images/糯糯/糯糯5.jpg",
-      "images/糯糯/糯糯6.jpg",
-      "images/糯糯/糯糯7.jpg"
+      { "src": "images/糯糯/糯糯1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/糯糯/糯糯2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/糯糯/糯糯3.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/糯糯/糯糯4.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/糯糯/糯糯5.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/糯糯/糯糯6.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/糯糯/糯糯7.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [],
     "description": null,
@@ -8891,11 +8915,11 @@ export const catProfiles = [
     "area": "待补充",
     "gender": "公",
     "images": [
-      "images/笑笑/笑笑1.jpg",
-      "images/笑笑/笑笑2.jpg",
-      "images/笑笑/笑笑3.jpg",
-      "images/笑笑/笑笑4.jpg",
-      "images/笑笑/笑笑5.jpg"
+      { "src": "images/笑笑/笑笑1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/笑笑/笑笑2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/笑笑/笑笑3.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/笑笑/笑笑4.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/笑笑/笑笑5.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [],
     "description": null,
@@ -8916,9 +8940,10 @@ export const catProfiles = [
     "area": "竹园",
     "gender": "母",
     "images": [
-      "images/麦麦/麦麦1.jpg",
-      "images/麦麦/麦麦2.jpg",
-      "images/麦麦/麦麦3.jpg"
+      { "src": "images/麦麦/麦麦1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/麦麦/麦麦2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/麦麦/麦麦3.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/麦麦/麦麦-长乐-261005.jpg", "isPostcard": true, "author": "长乐", "photographedAt": "2026-10-05" }
     ],
     "personality": [],
     "description": "竹园的台阶守望者，因为爱吃麦当劳所以被起名为“麦麦”",
@@ -8939,9 +8964,9 @@ export const catProfiles = [
     "area": "竹园",
     "gender": "母",
     "images": [
-      "images/无牙仔/无牙仔1.jpg",
-      "images/无牙仔/无牙仔2.jpg",
-      "images/无牙仔/无牙仔3.jpg"
+      { "src": "images/无牙仔/无牙仔1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/无牙仔/无牙仔2.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
+      { "src": "images/无牙仔/无牙仔3.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [],
     "description": "经常和竹园的金琥一起出现，那一只老奶奶猫之前得过口炎，已经被家属区的老师们和竹园的同学们救助，现在已经能够正常进食。",

@@ -1,4 +1,5 @@
 import { catProfiles } from '../../../js/cats.js';
+import { deleteInspirationRecord, openInspirationEditor } from './gallery.js';
 import { state } from './state.js';
 import {
   escapeHtml,
@@ -166,7 +167,7 @@ function cdnUrl(path) {
 
 function getCatCover(cat) {
   if (cat.cover) return cat.cover;
-  return cat.images && cat.images.length ? cat.images[0] : null;
+  return getMaterialRecords(cat)[0]?.src || null;
 }
 
 function getDirectoryCover(cat) {
@@ -598,7 +599,7 @@ function renderPhotoPagination(total, currentIndex = 0) {
 }
 
 function renderDrawerGallery(cat) {
-  const images = Array.isArray(cat.images) ? cat.images : [];
+  const images = getMaterialRecords(cat).map((material) => material.src);
   if (!images.length) {
     return `
       <section class="drawer-gallery" aria-label="照片">
@@ -1023,9 +1024,31 @@ function openPhotoViewer(img) {
   document.body.appendChild(overlay);
 }
 
-function getMaterialSources(cat) {
+function normalizeMaterial(image) {
+  if (typeof image === 'string') {
+    return { src: image, isPostcard: false, author: '', photographedAt: '' };
+  }
+  if (!image || typeof image !== 'object') return null;
+  return {
+    ...image,
+    src: String(image.src || '').trim(),
+    isPostcard: image.isPostcard === true,
+    author: String(image.author || '').trim(),
+    photographedAt: String(image.photographedAt || '').trim()
+  };
+}
+
+function getMaterialRecords(cat, materialFilter = 'all') {
   return Array.isArray(cat?.images)
-    ? cat.images.filter(source => source && !source.startsWith('http'))
+    ? cat.images
+      .map(normalizeMaterial)
+      .filter(material => material?.src
+        && !material.src.startsWith('http')
+        && (materialFilter === 'postcard'
+          ? material.isPostcard
+          : materialFilter === 'standard'
+            ? !material.isPostcard
+            : true))
     : [];
 }
 
@@ -1034,25 +1057,28 @@ function getPhotoExtension(source) {
   return sourceName.match(/\.[a-z0-9]+$/i)?.[0] || '.jpg';
 }
 
-function openMaterialViewer(cat, initialIndex = 0) {
-  const sources = getMaterialSources(cat);
+function openMaterialViewer(cat, initialIndex = 0, { materialFilter = 'all' } = {}) {
+  const materials = getMaterialRecords(cat, materialFilter);
+  const sources = materials.map(material => material.src);
   if (!cat || !sources.length) return;
 
   let index = Math.min(Math.max(Number(initialIndex) || 0, 0), sources.length - 1);
+  const materialLabel = materialFilter === 'postcard' ? '猫猫明信片' : '猫猫素材';
   const overlay = document.createElement('div');
   overlay.className = 'photo-viewer photo-viewer--materials';
   overlay.tabIndex = -1;
   overlay.setAttribute('role', 'dialog');
   overlay.setAttribute('aria-modal', 'true');
-  overlay.setAttribute('aria-label', `${cat.name}猫猫素材`);
+  overlay.setAttribute('aria-label', `${cat.name}${materialLabel}`);
   overlay.innerHTML = `
     <div class="photo-viewer-actions">
       <button class="photo-viewer-close" type="button" aria-label="关闭图片预览">×</button>
     </div>
     <figure class="photo-viewer-stage">
+      <figcaption class="photo-viewer-material-meta" data-photo-viewer-meta hidden></figcaption>
       <img data-photo-viewer-image alt="">
     </figure>
-    <div class="photo-viewer-toolbar" role="toolbar" aria-label="${escapeHtml(cat.name)}猫猫素材翻页">
+    <div class="photo-viewer-toolbar" role="toolbar" aria-label="${escapeHtml(cat.name)}${materialLabel}翻页">
       <button class="photo-viewer-toolbar-button" data-photo-viewer-prev type="button" aria-label="上一张"><span aria-hidden="true">‹</span></button>
       <span class="photo-viewer-counter" aria-live="polite"><strong data-photo-viewer-current></strong><span aria-hidden="true">/</span><span data-photo-viewer-total>${sources.length}</span></span>
       <button class="photo-viewer-toolbar-button" data-photo-viewer-next type="button" aria-label="下一张"><span aria-hidden="true">›</span></button>
@@ -1067,6 +1093,7 @@ function openMaterialViewer(cat, initialIndex = 0) {
   `;
 
   const image = overlay.querySelector('[data-photo-viewer-image]');
+  const meta = overlay.querySelector('[data-photo-viewer-meta]');
   const current = overlay.querySelector('[data-photo-viewer-current]');
   const previous = overlay.querySelector('[data-photo-viewer-prev]');
   const next = overlay.querySelector('[data-photo-viewer-next]');
@@ -1078,11 +1105,18 @@ function openMaterialViewer(cat, initialIndex = 0) {
   const update = nextIndex => {
     index = (nextIndex + sources.length) % sources.length;
     const source = sources[index];
+    const material = materials[index];
     const fullSrc = cdnUrl(source);
     image.src = fullSrc;
     rotation = 0;
     image.style.transform = 'none';
-    image.alt = `${cat.name}猫猫素材 ${index + 1}`;
+    image.alt = `${cat.name}${materialLabel} ${index + 1}`;
+    const metadata = [
+      material.author,
+      material.photographedAt ? material.photographedAt.replace(/-/g, '.') : ''
+    ].filter(Boolean);
+    meta.hidden = metadata.length === 0;
+    meta.textContent = metadata.join('·');
     current.textContent = String(index + 1);
     download.href = fullSrc;
     download.download = `${cat.name}-${index + 1}${getPhotoExtension(source)}`;
@@ -1127,6 +1161,98 @@ function openMaterialViewer(cat, initialIndex = 0) {
   overlay.focus({ preventScroll: true });
 }
 
+function openInspirationViewer(note) {
+  const source = String(note?.cover || '').trim();
+  if (!source) return;
+
+  const fullSrc = cdnUrl(source);
+  const title = String(note?.title || '猫猫灵感');
+  const externalUrl = String(note?.sourceUrl || '').trim();
+  const overlay = document.createElement('div');
+  overlay.className = 'photo-viewer photo-viewer--materials';
+  overlay.tabIndex = -1;
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.setAttribute('aria-label', title);
+  overlay.innerHTML = [
+    '<div class="photo-viewer-actions">',
+    '<button class="photo-viewer-close" type="button" aria-label="关闭图片预览">×</button>',
+    '</div>',
+    '<figure class="photo-viewer-stage"><img data-photo-viewer-image alt=""></figure>',
+    '<div class="photo-viewer-toolbar" role="toolbar" aria-label="灵感图片工具栏">',
+    '<button class="photo-viewer-toolbar-button" type="button" aria-label="上一张" disabled><span aria-hidden="true">‹</span></button>',
+    '<span class="photo-viewer-counter" aria-live="polite"><strong>1</strong><span aria-hidden="true">/</span><span>1</span></span>',
+    '<button class="photo-viewer-toolbar-button" type="button" aria-label="下一张" disabled><span aria-hidden="true">›</span></button>',
+    '<span class="photo-viewer-toolbar-divider" aria-hidden="true"></span>',
+    '<button class="photo-viewer-toolbar-icon" data-photo-viewer-rotate type="button" aria-label="旋转图片" title="旋转图片">',
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.2 9.2A7.3 7.3 0 0 1 18 6.5l1.5 1.5"></path><path d="M19.5 4.5v3.8h-3.8"></path><path d="M18.8 14.8A7.3 7.3 0 0 1 6 17.5l-1.5-1.5"></path><path d="M4.5 19.5v-3.8h3.8"></path></svg>',
+    '</button>',
+    '<a class="photo-viewer-download photo-viewer-toolbar-download" data-photo-download href="' + escapeHtml(fullSrc) + '" download aria-label="下载原图" title="下载原图">',
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5v10"></path><path d="m8 10 4 4 4-4"></path><path d="M5 16.5v3h14v-3"></path></svg>',
+    '</a>',
+    externalUrl
+      ? '<a class="photo-viewer-toolbar-icon photo-viewer-toolbar-external" data-photo-external href="' + escapeHtml(externalUrl) + '" target="_blank" rel="noreferrer noopener" aria-label="打开外部链接" title="打开外部链接"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 5h6v6"></path><path d="m19 5-8 8"></path><path d="M18 13v5a1 1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"></path></svg></a>'
+      : '',
+    import.meta.env.DEV ? '<span class="photo-viewer-toolbar-divider" aria-hidden="true"></span><button class="photo-viewer-toolbar-icon" data-inspiration-edit type="button" aria-label="编辑灵感笔记" title="编辑灵感笔记"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 16.8-.8 3.5 3.5-.8L18.7 7.9a2.2 2.2 0 0 0-3.1-3.1L4.5 16.8Z"></path><path d="m13.9 6.1 4 4"></path></svg></button><button class="photo-viewer-toolbar-icon photo-viewer-toolbar-danger" data-inspiration-delete type="button" aria-label="删除灵感笔记" title="删除灵感笔记"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14"></path><path d="M9 7V4.5h6V7"></path><path d="m7 7 .7 13h8.6L17 7"></path><path d="M10 11v5M14 11v5"></path></svg></button>' : '',
+    '</div>'
+  ].join('');
+
+  const image = overlay.querySelector('[data-photo-viewer-image]');
+  const rotate = overlay.querySelector('[data-photo-viewer-rotate]');
+  const download = overlay.querySelector('[data-photo-download]');
+  const external = overlay.querySelector('[data-photo-external]');
+  const edit = overlay.querySelector('[data-inspiration-edit]');
+  const remove = overlay.querySelector('[data-inspiration-delete]');
+  const close = overlay.querySelector('.photo-viewer-close');
+  let rotation = 0;
+
+  image.src = fullSrc;
+  image.alt = title;
+  download.download = title + getPhotoExtension(source);
+  rotate.addEventListener('click', event => {
+    event.stopPropagation();
+    rotation = (rotation + 90) % 360;
+    image.style.transform = 'rotate(' + rotation + 'deg)';
+  });
+  download.addEventListener('click', event => event.stopPropagation());
+  external?.addEventListener('click', event => event.stopPropagation());
+  edit?.addEventListener('click', event => {
+    event.stopPropagation();
+    overlay.remove();
+    openInspirationEditor(note);
+  });
+  remove?.addEventListener('click', async event => {
+    event.stopPropagation();
+    if (remove.disabled) return;
+    const confirmed = window.confirm(`确定删除“${title}”吗？\n这会同时删除本地记录和封面图。`);
+    if (!confirmed) return;
+    remove.disabled = true;
+    try {
+      await deleteInspirationRecord(note);
+      overlay.remove();
+    } catch (error) {
+      remove.disabled = false;
+      window.alert(error instanceof Error ? error.message : '删除失败，请稍后再试');
+    }
+  });
+  close.addEventListener('click', event => {
+    event.stopPropagation();
+    overlay.remove();
+  });
+  overlay.addEventListener('click', event => {
+    if (event.target === overlay) overlay.remove();
+  });
+  overlay.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      overlay.remove();
+    }
+  });
+
+  document.body.appendChild(overlay);
+  overlay.focus({ preventScroll: true });
+}
+
 function bindDrawerGallery(container, cat) {
   const main = container.querySelector('[data-main-photo]');
   const image = main?.querySelector('.drawer-gallery-main-image');
@@ -1135,8 +1261,9 @@ function bindDrawerGallery(container, cat) {
   const pagination = container.querySelector('[data-photo-pagination]');
   if (!main || !image) return;
 
-  const images = [getCatCover(cat), ...(Array.isArray(cat.images) ? cat.images : [])
-    .filter(src => src && src !== getCatCover(cat))];
+  const coverSrc = getCatCover(cat);
+  const images = [coverSrc, ...getMaterialRecords(cat).map(material => material.src)
+    .filter(src => src && src !== coverSrc)];
   if (!images.length) return;
 
   let index = 0;
@@ -1215,13 +1342,29 @@ function bindDrawerGallery(container, cat) {
 }
 
 function bindCatCards() {
-  const selector = state.activeTab === 'home' ? '[data-cat-name]' : '.cat-card';
-  const isMaterialGallery = state.activeTab === 'gallery' && state.galleryView === 'souvenir';
+  const selector = state.activeTab === 'home' ? '[data-cat-name]' : '.cat-card, .gallery-card--inspiration';
+  const isMaterialGallery = state.activeTab === 'gallery' && ['souvenir', 'postcard'].includes(state.galleryView);
+  const materialFilter = state.galleryView === 'postcard'
+    ? 'postcard'
+    : state.galleryMaterialFilter || 'all';
+  const isInspirationGallery = state.activeTab === 'gallery' && state.galleryView === 'inspiration';
   document.querySelectorAll(selector).forEach(card => {
     const openCard = () => {
+      if (isInspirationGallery && card.classList.contains('gallery-card--inspiration')) {
+        const note = {
+          id: card.dataset.inspirationId || '',
+          cover: card.dataset.inspirationCover || card.querySelector('img')?.getAttribute('src') || '',
+          sourceUrl: card.dataset.inspirationSourceUrl || '',
+          title: card.dataset.inspirationTitle || card.getAttribute('aria-label')?.replace(/^查看/, '') || '猫猫灵感',
+          tags: card.dataset.inspirationTags ? card.dataset.inspirationTags.split(',').map(tag => tag.trim()).filter(Boolean) : [],
+          note: card.dataset.inspirationNote || ''
+        };
+        if (note.cover) openInspirationViewer(note);
+        return;
+      }
       if (isMaterialGallery && card.classList.contains('gallery-card--souvenir')) {
         const cat = catProfiles.find(item => item.name === card.dataset.catName);
-        if (cat) openMaterialViewer(cat, Number(card.dataset.materialIndex) || 0);
+        if (cat) openMaterialViewer(cat, Number(card.dataset.materialIndex) || 0, { materialFilter });
         return;
       }
       openDrawer(card.dataset.catName, card);

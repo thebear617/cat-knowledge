@@ -11,6 +11,7 @@ export const state = {
   directorySort: 'name',
   activeTab: 'gallery',
   galleryView: 'souvenir',
+  galleryMaterialFilter: 'all',
   operationsView: 'inventory',
   inventoryCategory: '全部',
   timelineView: 'diary',

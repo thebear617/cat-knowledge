@@ -9,8 +9,15 @@ const ROOT = process.env.CMS_CONTENT_ROOT
   ? path.resolve(process.env.CMS_CONTENT_ROOT)
   : path.resolve(process.cwd(), 'src/content/science');
 const DEV_SERVER_LOCK = path.resolve(process.cwd(), '.astro', 'cats-dev-server.lock');
+const INSPIRATION_DATA_FILE = path.resolve(process.cwd(), 'src/data/inspirations.json');
+const INSPIRATION_ASSET_DIRECTORY = path.resolve(process.cwd(), 'public/images/gallery/inspiration');
 const execFileAsync = promisify(execFile);
 const FIELDS = ['title', 'description', 'publishedAt', 'category', 'subcategory', 'draft', 'updated', 'slug'];
+
+function localDateValue(date = new Date()) {
+  const offset = date.getTimezoneOffset() * 60000;
+  return new Date(date.getTime() - offset).toISOString().slice(0, 10);
+}
 
 function readDevServerLock() {
   try {
@@ -212,6 +219,50 @@ function currentLocalDate() {
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
 }
 
+function safeInspirationId(value) {
+  const normalized = String(value || '').trim().replace(/[^a-zA-Z0-9_-]+/g, '-').replace(/^-+|-+$/g, '');
+  return normalized.slice(0, 80) || `inspiration-${Date.now()}`;
+}
+
+function parseInspirationTags(value) {
+  const values = Array.isArray(value) ? value : String(value || '').split(/[，,\n]/);
+  return [...new Set(values.map((tag) => String(tag).trim()).filter(Boolean))].slice(0, 20);
+}
+
+async function readInspirations() {
+  try {
+    const source = await fs.readFile(INSPIRATION_DATA_FILE, 'utf8');
+    const records = JSON.parse(source);
+    return Array.isArray(records) ? records : [];
+  } catch (error) {
+    if (error.code === 'ENOENT') return [];
+    throw error;
+  }
+}
+
+async function saveInspirations(records) {
+  await fs.mkdir(path.dirname(INSPIRATION_DATA_FILE), { recursive: true });
+  await fs.writeFile(INSPIRATION_DATA_FILE, `${JSON.stringify(records, null, 2)}\n`, 'utf8');
+}
+
+function decodeImageDataUrl(value) {
+  const match = String(value || '').match(/^data:(image\/(?:jpeg|png|webp|gif));base64,([A-Za-z0-9+/=\s]+)$/);
+  if (!match) return null;
+  const mime = match[1];
+  const buffer = Buffer.from(match[2].replace(/\s+/g, ''), 'base64');
+  if (!buffer.length || buffer.length > 12 * 1024 * 1024) return null;
+  const extension = mime === 'image/jpeg' ? 'jpg' : mime.slice('image/'.length);
+  return { buffer, extension };
+}
+
+function getInspirationAssetPath(cover) {
+  const prefix = 'images/gallery/inspiration/';
+  const normalized = String(cover || '').replace(/^\/+/, '');
+  const fileName = normalized.startsWith(prefix) ? normalized.slice(prefix.length) : '';
+  if (!fileName || fileName.includes('/') || !/^[a-zA-Z0-9_-]+\.(?:jpg|jpeg|png|webp|gif)$/i.test(fileName)) return null;
+  return path.join(INSPIRATION_ASSET_DIRECTORY, fileName);
+}
+
 function serializeMarkdown(frontmatter, body) {
   const lines = ['---'];
   for (const field of FIELDS) {
@@ -366,7 +417,39 @@ export default function localCms() {
       // the CMS page explicitly UTF-8 even when Vite later sets its own type.
       // (Dev server runs at base "/", so the admin page lives at /admin.)
       const base = String(server.config.base || '/').replace(/\/?$/, '/');
-      const adminPaths = new Set([`${base}admin`, `${base}admin/`]);
+     const adminPaths = new Set([`${base}admin`, `${base}admin/`]);
+      server.middlewares.use(base + 'images/gallery/inspiration', async (request, response, next) => {
+        if (request.method !== 'GET' && request.method !== 'HEAD') return next();
+        let pathname = '/';
+        try {
+          pathname = decodeURIComponent(new URL(request.url || '/', 'http://localhost').pathname);
+        } catch {
+          return next();
+        }
+        const fileName = path.basename(pathname);
+        if (!/^[a-zA-Z0-9_-]+\.(?:jpg|jpeg|png|webp|gif)$/i.test(fileName)) return next();
+        try {
+          const filePath = path.join(INSPIRATION_ASSET_DIRECTORY, fileName);
+          const fileStat = await fs.stat(filePath);
+          if (!fileStat.isFile()) return next();
+          const content = await fs.readFile(filePath);
+          const mime = fileName.endsWith('.jpg') || fileName.endsWith('.jpeg')
+            ? 'image/jpeg'
+            : fileName.endsWith('.png')
+              ? 'image/png'
+              : fileName.endsWith('.webp')
+                ? 'image/webp'
+                : 'image/gif';
+          response.statusCode = 200;
+          response.setHeader('Content-Type', mime);
+          response.setHeader('Content-Length', String(content.length));
+          response.setHeader('Cache-Control', 'no-cache');
+          return request.method === 'HEAD' ? response.end() : response.end(content);
+        } catch (error) {
+          if (error.code === 'ENOENT') return next();
+          return next(error);
+        }
+      });
       server.middlewares.use((request, response, next) => {
         const pathname = new URL(request.url || '/', 'http://localhost').pathname;
         if (!adminPaths.has(pathname)) return next();
@@ -387,6 +470,109 @@ export default function localCms() {
       server.middlewares.use('/admin/api', async (request, response) => {
         try {
           const url = new URL(request.url, 'http://localhost');
+          if (request.method === 'GET' && url.pathname === '/inspirations') {
+            return json(response, 200, { inspirations: await readInspirations() });
+          }
+          if (request.method === 'POST' && url.pathname === '/inspirations') {
+            const data = await readBody(request);
+            const title = String(data.title || '').trim();
+            const sourceUrl = String(data.sourceUrl || '').trim();
+            const createdAt = localDateValue();
+            const note = String(data.note || '').trim();
+            const tags = parseInspirationTags(data.tags);
+            const errors = [];
+            if (!title) errors.push('标题不能为空');
+            if (!/^https?:\/\//i.test(sourceUrl)) errors.push('链接必须是 http(s) 链接');
+            if (!tags.length) errors.push('至少填写一个标签');
+            const image = decodeImageDataUrl(data.coverDataUrl);
+            if (!image) errors.push('请选择一张不超过 12 MB 的 JPG、PNG、WebP 或 GIF 封面图');
+            if (errors.length) return json(response, 400, { errors });
+
+            const id = safeInspirationId(data.id || `inspiration-${Date.now()}`);
+            const records = await readInspirations();
+            if (records.some((record) => record.id === id)) return json(response, 409, { error: '这条灵感记录已经存在' });
+            const fileName = `${id}.${image.extension}`;
+            await fs.mkdir(INSPIRATION_ASSET_DIRECTORY, { recursive: true });
+            await fs.writeFile(path.join(INSPIRATION_ASSET_DIRECTORY, fileName), image.buffer);
+            const record = {
+              id,
+              cover: `images/gallery/inspiration/${fileName}`,
+              sourceUrl,
+              title,
+              tags,
+              note,
+              createdAt,
+            };
+            await saveInspirations([record, ...records]);
+            lastSelfWriteAt = Date.now();
+            return json(response, 200, { ok: true, inspiration: record });
+          }
+          if (request.method === 'PATCH' && url.pathname === '/inspirations') {
+            const data = await readBody(request);
+            const id = String(url.searchParams.get('id') || data.id || '').trim();
+            const records = await readInspirations();
+            const recordIndex = records.findIndex((record) => String(record.id || '') === id);
+            if (!id) return json(response, 400, { errors: ['缺少灵感记录 id'] });
+            if (recordIndex < 0) return json(response, 404, { error: '灵感记录不存在' });
+
+            const current = records[recordIndex];
+            const title = String(data.title || '').trim();
+            const sourceUrl = String(data.sourceUrl || '').trim();
+            const note = String(data.note || '').trim();
+            const tags = parseInspirationTags(data.tags);
+            const image = data.coverDataUrl ? decodeImageDataUrl(data.coverDataUrl) : null;
+            const errors = [];
+            if (!title) errors.push('标题不能为空');
+            if (!/^https?:\/\//i.test(sourceUrl)) errors.push('链接必须是 http(s) 链接');
+            if (!tags.length) errors.push('至少填写一个标签');
+            if (data.coverDataUrl && !image) errors.push('封面图必须是不超过 12 MB 的 JPG、PNG、WebP 或 GIF');
+            if (errors.length) return json(response, 400, { errors });
+
+            const nextRecord = {
+              ...current,
+              title,
+              tags,
+              sourceUrl,
+              note,
+            };
+            let nextAssetPath = null;
+            const previousAssetPath = getInspirationAssetPath(current.cover);
+            if (image) {
+              const fileName = `${safeInspirationId(current.id)}-${Date.now()}.${image.extension}`;
+              nextAssetPath = path.join(INSPIRATION_ASSET_DIRECTORY, fileName);
+              nextRecord.cover = `images/gallery/inspiration/${fileName}`;
+              await fs.mkdir(INSPIRATION_ASSET_DIRECTORY, { recursive: true });
+              await fs.writeFile(nextAssetPath, image.buffer);
+            }
+
+            const nextRecords = [...records];
+            nextRecords[recordIndex] = nextRecord;
+            try {
+              await saveInspirations(nextRecords);
+            } catch (error) {
+              if (nextAssetPath) await fs.rm(nextAssetPath, { force: true }).catch(() => {});
+              throw error;
+            }
+
+            if (nextAssetPath && previousAssetPath && previousAssetPath !== nextAssetPath) {
+              await fs.rm(previousAssetPath, { force: true }).catch(() => {});
+            }
+            lastSelfWriteAt = Date.now();
+            return json(response, 200, { ok: true, inspiration: nextRecord });
+          }
+          if (request.method === 'DELETE' && url.pathname === '/inspirations') {
+            const id = String(url.searchParams.get('id') || '').trim();
+            if (!id) return json(response, 400, { errors: ['缺少灵感记录 id'] });
+            const records = await readInspirations();
+            const record = records.find((item) => String(item.id || '') === id);
+            if (!record) return json(response, 404, { error: '灵感记录不存在' });
+
+            await saveInspirations(records.filter((item) => String(item.id || '') !== id));
+            const assetPath = getInspirationAssetPath(record.cover);
+            if (assetPath) await fs.rm(assetPath, { force: true }).catch(() => {});
+            lastSelfWriteAt = Date.now();
+            return json(response, 200, { ok: true, id });
+          }
           if (request.method === 'GET' && url.pathname === '/articles') {
             const articles = await walk();
             return json(response, 200, { articles: articles.sort((a, b) => a.title.localeCompare(b.title, 'zh-CN')) });

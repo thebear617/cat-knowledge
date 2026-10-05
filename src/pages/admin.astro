@@ -105,6 +105,8 @@ const base = import.meta.env.BASE_URL === '/' ? '/' : import.meta.env.BASE_URL.r
       content: "";
     }
     .topbar-actions { gap: 10px; }
+    .topbar-actions .back-link.primary-action { border-color: #a26136; color: #fff; background: #a26136; }
+    .topbar-actions .back-link.primary-action:hover { border-color: #8b4f2c; color: #fff; background: #8b4f2c; }
     .back-link {
       display: inline-flex;
       align-items: center;
@@ -456,6 +458,35 @@ const base = import.meta.env.BASE_URL === '/' ? '/' : import.meta.env.BASE_URL.r
     .preview blockquote { margin: .8rem 0; padding: .6rem .9rem; border-left: 3px solid #d8a474; background: #f8efe3; color: #5f5348; }
     .preview code { padding: .1em .3em; border-radius: 4px; background: #f3eadf; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .88em; }
 
+    .inspiration-modal { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 24px; }
+    .inspiration-modal[hidden] { display: none; }
+    .inspiration-modal-backdrop { position: absolute; inset: 0; background: rgba(43, 33, 23, .28); backdrop-filter: blur(2px); }
+    .inspiration-modal-card { position: relative; width: min(100%, 560px); max-height: min(92vh, 720px); overflow: auto; padding: 22px; border: 1px solid #e7e0d7; border-radius: 12px; background: #fff; box-shadow: 0 22px 60px rgba(43, 33, 23, .2); }
+    .inspiration-modal-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+    .inspiration-modal-header h2 { margin: 0; color: #2f2924; font-size: 20px; }
+    .inspiration-modal-header p { margin: 7px 0 0; color: #8a7d70; font-size: 12px; line-height: 1.6; }
+    .inspiration-modal-close { display: grid; width: 30px; height: 30px; flex: 0 0 auto; place-items: center; padding: 0; border: 0; border-radius: 50%; color: #94887c; background: transparent; font-size: 23px; line-height: 1; }
+    .inspiration-modal-close:hover { color: #8b4f2c; background: #fdf9f4; }
+    .inspiration-form { display: grid; gap: 13px; margin-top: 20px; }
+    .inspiration-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .inspiration-form label { display: grid; gap: 5px; color: #6f6257; font-size: 11px; font-weight: 700; }
+    .inspiration-form label.full { grid-column: 1 / -1; }
+    .inspiration-form input:not([type="file"]), .inspiration-form textarea { width: 100%; min-width: 0; border: 1px solid #e2d8cb; border-radius: 7px; color: #3d332b; background: #fff; font-size: 13px; }
+    .inspiration-form input:not([type="file"]) { min-height: 38px; padding: 7px 10px; }
+    .inspiration-form textarea { min-height: 82px; padding: 9px 10px; resize: vertical; line-height: 1.6; }
+    .inspiration-form input[type="file"] { padding: 6px 0; color: #6f6257; font-size: 12px; font-weight: 400; }
+    .inspiration-form input:focus, .inspiration-form textarea:focus { border-color: #c98a5b; box-shadow: inset 0 0 0 1px #c98a5b; outline: none; }
+    .inspiration-form-hint { margin: -4px 0 0; color: #a39689; font-size: 11px; font-weight: 400; line-height: 1.55; }
+    .inspiration-form-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 4px; }
+    .inspiration-form-status { min-height: 1.5em; color: #8a7d70; font-size: 11px; line-height: 1.5; }
+    .inspiration-form-status.error { color: #b42318; }
+    .inspiration-form-status.saved { color: #15803d; }
+    .inspiration-form-actions { display: flex; justify-content: flex-end; gap: 8px; }
+    .inspiration-form-actions button { min-height: 36px; padding: 0 15px; border-radius: 8px; font-size: 12px; font-weight: 700; }
+    .inspiration-form-cancel { border: 1px solid #ded2c4; color: #6f6257; background: #fff; }
+    .inspiration-form-save { border: 1px solid #a26136; color: #fff; background: #a26136; }
+    .inspiration-form-actions button:disabled { cursor: wait; opacity: .65; }
+
     .delete-modal { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 24px; }
     .delete-modal[hidden] { display: none; }
     .delete-modal-backdrop { position: absolute; inset: 0; background: rgba(43, 33, 23, .28); }
@@ -505,6 +536,11 @@ const base = import.meta.env.BASE_URL === '/' ? '/' : import.meta.env.BASE_URL.r
       .library-controls { grid-template-columns: 1fr; }
       .library-actions { justify-content: stretch; }
       .library-action-wrap, .library-action { flex: 1; }
+      .inspiration-form-grid { grid-template-columns: 1fr; }
+      .inspiration-form label.full { grid-column: auto; }
+      .inspiration-form-footer { align-items: stretch; flex-direction: column; }
+      .inspiration-form-actions { justify-content: stretch; }
+      .inspiration-form-actions button { flex: 1; }
     }
 
     .editor-actions .secondary { min-height: 34px; padding: 0 12px; }
@@ -554,7 +590,10 @@ const base = import.meta.env.BASE_URL === '/' ? '/' : import.meta.env.BASE_URL.r
         </div>
         <span class="environment">开发环境</span>
       </div>
-      <div class="topbar-actions"><a class="back-link" href={base}>返回站点 <span aria-hidden="true">↗</span></a></div>
+      <div class="topbar-actions">
+        <button class="back-link primary-action" id="open-inspiration" type="button">新增灵感笔记</button>
+        <a class="back-link" href={base}>返回站点 <span aria-hidden="true">↗</span></a>
+      </div>
     </header>
 
     <div class="workspace">
@@ -727,6 +766,28 @@ const base = import.meta.env.BASE_URL === '/' ? '/' : import.meta.env.BASE_URL.r
       </main>
     </div>
   </div>
+  <div class="inspiration-modal" id="inspiration-modal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="新增灵感笔记">
+    <div class="inspiration-modal-backdrop" data-inspiration-close></div>
+    <section class="inspiration-modal-card">
+      <form class="inspiration-form" id="inspiration-form" autocomplete="off">
+        <div class="inspiration-form-grid">
+          <label class="full">封面图 <span class="required">*</span><input id="inspiration-cover" type="file" accept="image/jpeg,image/png,image/webp,image/gif" required /></label>
+          <p class="inspiration-form-hint full">请选择你希望出现在瀑布流里的那一张；原帖其余图片不会被复制。</p>
+          <label>标题 <span class="required">*</span><input id="inspiration-title" required placeholder="请输入标题" /></label>
+          <label>标签 <span class="required">*</span><input id="inspiration-tags" autocomplete="off" required placeholder="多个标签用逗号分隔" /></label>
+          <label class="full">链接 <span class="required">*</span><input id="inspiration-source-url" autocomplete="off" type="url" required placeholder="https://..." /></label>
+          <label class="full">备注<textarea id="inspiration-note" placeholder="可留空"></textarea></label>
+        </div>
+        <div class="inspiration-form-footer">
+          <span class="inspiration-form-status" id="inspiration-status" aria-live="polite"></span>
+          <div class="inspiration-form-actions">
+            <button class="inspiration-form-cancel" id="inspiration-cancel" type="button">取消</button>
+            <button class="inspiration-form-save" id="inspiration-submit" type="submit">保存到本地</button>
+          </div>
+        </div>
+      </form>
+    </section>
+  </div>
   <div class="delete-modal" id="delete-modal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="delete-modal-title" aria-describedby="delete-modal-message">
     <div class="delete-modal-backdrop" data-delete-close></div>
     <section class="delete-modal-card">
@@ -770,6 +831,7 @@ const base = import.meta.env.BASE_URL === '/' ? '/' : import.meta.env.BASE_URL.r
     let sortKey = 'updated-desc';
     let autoSaveTimer = 0;
     let savePromise = null;
+    let inspirationReturnFocus = null;
     let draftVersion = 0;
     const EDITOR_SESSION_KEY = 'cats-admin-editor-state-v1';
     const EDITOR_DRAFT_KEY = 'cats-admin-editor-draft-v1';
@@ -890,6 +952,10 @@ const base = import.meta.env.BASE_URL === '/' ? '/' : import.meta.env.BASE_URL.r
     }
 
     function closeEscapeLayers() {
+      if (!$('inspiration-modal').hidden) {
+        closeInspirationModal();
+        return true;
+      }
       if (!$('delete-modal').hidden) {
         if (!deletePromise) closeDeleteModal();
         return true;
@@ -908,6 +974,75 @@ const base = import.meta.env.BASE_URL === '/' ? '/' : import.meta.env.BASE_URL.r
         return true;
       }
       return false;
+    }
+
+    function setInspirationStatus(message, kind = '') {
+      const status = $('inspiration-status');
+      status.textContent = message;
+      status.className = 'inspiration-form-status' + (kind ? ' ' + kind : '');
+    }
+
+    function openInspirationModal() {
+      inspirationReturnFocus = document.activeElement;
+      $('inspiration-modal').hidden = false;
+      $('inspiration-modal').setAttribute('aria-hidden', 'false');
+      setInspirationStatus('');
+      window.requestAnimationFrame(() => $('inspiration-cover').focus());
+    }
+
+    function closeInspirationModal({ restoreFocus = true } = {}) {
+      const modal = $('inspiration-modal');
+      if (modal.hidden) return;
+      modal.hidden = true;
+      modal.setAttribute('aria-hidden', 'true');
+      const returnFocus = inspirationReturnFocus;
+      inspirationReturnFocus = null;
+      if (restoreFocus && returnFocus instanceof HTMLElement && returnFocus.isConnected) returnFocus.focus({ preventScroll: true });
+    }
+
+    function readFileAsDataUrl(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result || ''));
+        reader.onerror = () => reject(new Error('封面图读取失败'));
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function saveInspiration(event) {
+      event.preventDefault();
+      const form = $('inspiration-form');
+      const submit = $('inspiration-submit');
+      const file = $('inspiration-cover').files?.[0];
+      if (!file) {
+        setInspirationStatus('请先选择封面图', 'error');
+        $('inspiration-cover').focus();
+        return;
+      }
+      submit.disabled = true;
+      setInspirationStatus('正在写入本地文件…');
+      try {
+        const coverDataUrl = await readFileAsDataUrl(file);
+        const response = await fetch('/admin/api/inspirations', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            title: $('inspiration-title').value,
+            tags: $('inspiration-tags').value,
+            sourceUrl: $('inspiration-source-url').value,
+            note: $('inspiration-note').value,
+            coverDataUrl,
+          }),
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error((data.errors || [data.error || '保存失败']).join('；'));
+        form.reset();
+        setInspirationStatus('已保存到本地，刷新“猫猫灵感”即可看到。', 'saved');
+      } catch (error) {
+        setInspirationStatus(error.message || '保存失败', 'error');
+      } finally {
+        submit.disabled = false;
+      }
     }
 
     function restoreEditorPosition(snapshot) {
@@ -1716,6 +1851,12 @@ const base = import.meta.env.BASE_URL === '/' ? '/' : import.meta.env.BASE_URL.r
     $('delete-modal-cancel').onclick = () => closeDeleteModal();
     $('delete-modal-confirm').onclick = () => { void deleteCurrentArticle(); };
     $('delete-modal').onclick = (event) => { if (!deletePromise && (event.target === event.currentTarget || (event.target instanceof Element && event.target.matches('[data-delete-close]')))) closeDeleteModal(); };
+    $('open-inspiration').onclick = openInspirationModal;
+    $('inspiration-cancel').onclick = () => closeInspirationModal();
+    $('inspiration-modal').onclick = (event) => {
+      if (event.target === event.currentTarget || (event.target instanceof Element && event.target.matches('[data-inspiration-close]'))) closeInspirationModal();
+    };
+    $('inspiration-form').addEventListener('submit', saveInspiration);
     $('immersive-toggle').onclick = () => setImmersiveMode(!document.body.classList.contains('is-immersive'));
     $('new').onclick = async () => {
       if (!(await ensureEditorSaved())) return;
@@ -1842,6 +1983,7 @@ const base = import.meta.env.BASE_URL === '/' ? '/' : import.meta.env.BASE_URL.r
     initializeCustomSelects();
     fill();
     setImmersiveMode(readImmersiveSession(), { focus: false, persist: false });
+    if (new URLSearchParams(window.location.search).get('focus') === 'inspiration') openInspirationModal();
     const savedSession = readEditorSession();
     loadList().then(async () => {
       const savedDraft = readEditorDraft();

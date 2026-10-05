@@ -32,6 +32,10 @@ async function readManifest() {
   }
 }
 
+function getMaterialSource(image) {
+  return typeof image === 'string' ? image : image?.src;
+}
+
 async function main() {
   const candidateReport = JSON.parse(await fs.readFile(CANDIDATE_INPUT, 'utf8'));
   const manifest = await readManifest();
@@ -43,7 +47,9 @@ async function main() {
   for (const candidate of candidateReport.candidates ?? []) {
     const cat = candidate.cat;
     if (cat.images?.length) {
-      for (const relativePath of cat.images) {
+      for (const image of cat.images) {
+        const relativePath = getMaterialSource(image);
+        if (!relativePath || /^https?:\/\//i.test(relativePath)) continue;
         const publicPath = path.join(PUBLIC_IMAGE_ROOT, relativePath);
         const legacyPath = path.join(ROOT, relativePath);
         try {

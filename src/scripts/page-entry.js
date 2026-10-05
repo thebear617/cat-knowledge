@@ -4,7 +4,7 @@ import { bindProcurementControls } from './app/procurement.js';
 import { renderSuppliesTab, renderTimelineTab, bindOperationsControls } from './app/operations.js';
 import { renderMiscTab, bindMiscControls } from './app/misc.js';
 import { renderScienceTab, bindKnowledgeControls, bindKnowledgeToc } from './app/knowledge.js';
-import { GALLERY_VIEW_IDS, renderGalleryTab } from './app/gallery.js';
+import { GALLERY_VIEW_IDS, MATERIAL_FILTER_IDS, renderGalleryTab, bindGalleryControls, setGalleryRenderApp } from './app/gallery.js';
 import {
   renderHomeTab,
   scheduleDirectoryPageSizeSync,
@@ -47,6 +47,18 @@ if (currentPage === 'misc') {
   const miscView = pageQuery.get('view');
   if (['diary-list', 'diary-calendar', 'price', 'knowledge', 'supplies'].includes(miscView)) state.miscView = miscView;
   if (miscView === 'knowledge') state.knowledgeArticle = pageQuery.get('article') || null;
+}
+if (currentPage === 'gallery') {
+  const requestedGalleryView = pageQuery.get('view');
+  if (requestedGalleryView === 'postcard') {
+    state.galleryView = 'souvenir';
+    state.galleryMaterialFilter = 'postcard';
+  } else if (GALLERY_VIEW_IDS.includes(requestedGalleryView)) {
+    state.galleryView = requestedGalleryView;
+  }
+  if (MATERIAL_FILTER_IDS.includes(pageQuery.get('filter'))) {
+    state.galleryMaterialFilter = pageQuery.get('filter');
+  }
 }
 if (currentPage === 'timeline' && pageQuery.get('view') === 'finance') state.timelineView = 'finance';
 if (currentPage === 'knowledge') state.knowledgeArticle = pageQuery.get('article') || null;
@@ -147,6 +159,7 @@ function bindControls() {
         renderApp();
       });
     });
+    bindGalleryControls();
   }
 
   document.querySelectorAll('#clearSearch, #clearSearchMobile').forEach(button => {
@@ -242,6 +255,7 @@ function bindControls() {
 }
 
 setDirectoryRenderApp(renderApp);
+setGalleryRenderApp(renderApp);
 
 drawerBackdrop?.addEventListener('click', closeDrawer);
 document.addEventListener('keydown', event => {
