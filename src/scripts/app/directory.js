@@ -12,8 +12,6 @@ const BASE_URL = `${import.meta.env.BASE_URL.replace(/\/?$/, '/')}`;
 const STATUS_ORDER = ['全部', '就读中', '已毕业', '喵星或失踪'];
 const VACCINE_OPTIONS = ['全部', '待补充', '零针', '一针', '两针', '疫苗毕业'];
 const STERILIZED_OPTIONS = ['全部', '待补充', '已绝育', '未绝育'];
-const DIRECTORY_MOBILE_PAGE_SIZE = 6;
-const DIRECTORY_DESKTOP_PAGE_SIZE = 14;
 const DIRECTORY_SORT_OPTIONS = [
   { value: 'name', label: '名称排序' },
   { value: 'area', label: '区域排序' },
@@ -21,18 +19,10 @@ const DIRECTORY_SORT_OPTIONS = [
 ];
 
 let renderApp = () => {};
-let directoryPageSyncFrame = null;
 let activeSummaryTooltip = null;
 
 export function setDirectoryRenderApp(callback) {
   renderApp = callback;
-}
-
-export function cancelDirectoryPageSizeSync() {
-  if (directoryPageSyncFrame) {
-    window.cancelAnimationFrame(directoryPageSyncFrame);
-    directoryPageSyncFrame = null;
-  }
 }
 
 const app = document.getElementById('app');
@@ -40,6 +30,61 @@ const drawer = document.getElementById('catDrawer');
 const drawerBackdrop = document.getElementById('drawerBackdrop');
 const mainArea = document.querySelector('.main-area');
 let mainAreaScrollLock = null;
+let drawerScrollHideTimer = 0;
+let drawerStoryScrollHideTimer = 0;
+let drawerStoryScrollTarget = null;
+
+function hideDrawerScrollIndicator() {
+  drawer?.classList.remove('is-scrolling');
+  if (drawerScrollHideTimer) {
+    window.clearTimeout(drawerScrollHideTimer);
+    drawerScrollHideTimer = 0;
+  }
+}
+
+function showDrawerScrollIndicator() {
+  if (!drawer || !window.matchMedia('(max-width: 980px)').matches) return;
+  drawer.classList.add('is-scrolling');
+  window.clearTimeout(drawerScrollHideTimer);
+  drawerScrollHideTimer = window.setTimeout(() => {
+    drawer.classList.remove('is-scrolling');
+    drawerScrollHideTimer = 0;
+  }, 700);
+}
+
+drawer?.addEventListener('scroll', showDrawerScrollIndicator, { passive: true });
+
+function hideDrawerStoryScrollIndicator() {
+  drawerStoryScrollTarget?.classList.remove('is-scrolling');
+  drawerStoryScrollTarget = null;
+  if (drawerStoryScrollHideTimer) {
+    window.clearTimeout(drawerStoryScrollHideTimer);
+    drawerStoryScrollHideTimer = 0;
+  }
+}
+
+function showDrawerStoryScrollIndicator(event) {
+  const story = event.currentTarget;
+  if (!(story instanceof HTMLElement) || !window.matchMedia('(max-width: 980px)').matches) return;
+  if (drawerStoryScrollTarget && drawerStoryScrollTarget !== story) {
+    drawerStoryScrollTarget.classList.remove('is-scrolling');
+  }
+  drawerStoryScrollTarget = story;
+  story.classList.add('is-scrolling');
+  window.clearTimeout(drawerStoryScrollHideTimer);
+  drawerStoryScrollHideTimer = window.setTimeout(() => {
+    story.classList.remove('is-scrolling');
+    if (drawerStoryScrollTarget === story) drawerStoryScrollTarget = null;
+    drawerStoryScrollHideTimer = 0;
+  }, 700);
+}
+
+function bindDrawerStoryScrollIndicators(container) {
+  hideDrawerStoryScrollIndicator();
+  container.querySelectorAll('.drawer-description .drawer-story').forEach(story => {
+    story.addEventListener('scroll', showDrawerStoryScrollIndicator, { passive: true });
+  });
+}
 
 function lockMainAreaScroll() {
   if (!mainArea || mainAreaScrollLock) return;
@@ -73,10 +118,10 @@ function getVaccineBucket(cat) {
 
 function getVaccineSummary(cat) {
   return {
-    零针: '零针',
-    一针: '已完成一针',
-    两针: '已完成二针',
-    疫苗毕业: '已完成三针',
+    零针: '未接种',
+    一针: '已一针',
+    两针: '已二针',
+    疫苗毕业: '已三针',
     待补充: '待补充',
   }[getVaccineBucket(cat)] || '待补充';
 }
@@ -187,63 +232,6 @@ function getTimedFeaturedCats(cats, heroCat) {
   return Array.from({ length: batchSize }, (_, index) => candidates[(start + index) % candidates.length]);
 }
 
-function isMobileDirectoryLayout() {
-  return window.matchMedia('(max-width: 719px)').matches;
-}
-
-function syncDirectoryPageSize() {
-  if (state.activeTab !== 'home') return;
-  const grid = document.querySelector('.home-directory-grid');
-  if (!grid) return;
-  const pageSize = isMobileDirectoryLayout()
-    ? DIRECTORY_MOBILE_PAGE_SIZE
-    : getComputedStyle(grid).gridTemplateColumns.split(/\s+/).filter(Boolean).length * 2;
-  if (!pageSize || state.directoryPageSize === pageSize) return;
-  state.directoryPageSize = pageSize;
-  state.directoryPage = 1;
-  renderApp();
-}
-
-function scheduleDirectoryPageSizeSync() {
-  if (directoryPageSyncFrame) window.cancelAnimationFrame(directoryPageSyncFrame);
-  directoryPageSyncFrame = window.requestAnimationFrame(() => {
-    directoryPageSyncFrame = null;
-    syncDirectoryPageSize();
-  });
-}
-
-function getCompactPaginationItems(totalPages, page) {
-  if (totalPages <= 7) return Array.from({ length: totalPages }, (_, index) => index + 1);
-
-  const items = [1];
-  const start = Math.max(2, page - 1);
-  const end = Math.min(totalPages - 1, page + 1);
-  if (start > 2) items.push('ellipsis-start');
-  for (let pageNumber = start; pageNumber <= end; pageNumber += 1) items.push(pageNumber);
-  if (end < totalPages - 1) items.push('ellipsis-end');
-  items.push(totalPages);
-  return items;
-}
-
-function renderDirectoryPagination(totalItems, page, pageSize) {
-  if (totalItems <= pageSize) return '';
-  const totalPages = Math.ceil(totalItems / pageSize);
-  const pageItems = isMobileDirectoryLayout() ? getCompactPaginationItems(totalPages, page) : Array.from({ length: totalPages }, (_, index) => index + 1);
-  const pageButtons = pageItems.map(item => {
-    if (typeof item !== 'number') return '<span class="directory-pagination-ellipsis" aria-hidden="true">…</span>';
-    return `<button type="button" class="directory-pagination-page${item === page ? ' is-current' : ''}" data-directory-page="${item}" aria-label="第 ${item} 页"${item === page ? ' aria-current="page"' : ''}>${item}</button>`;
-  }).join('');
-  return `
-    <nav class="directory-pagination" aria-label="猫咪档案翻页">
-      <div class="directory-pagination-controls">
-        <button type="button" class="directory-pagination-direction" data-directory-page="${page - 1}" aria-label="上一页" title="上一页"${page === 1 ? ' disabled' : ''}>‹</button>
-        ${pageButtons}
-        <button type="button" class="directory-pagination-direction" data-directory-page="${page + 1}" aria-label="下一页" title="下一页"${page === totalPages ? ' disabled' : ''}>›</button>
-      </div>
-    </nav>
-  `;
-}
-
 function renderDirectorySortPopover() {
   return `
     <div class="directory-sort-popover" id="sortPopover" hidden>
@@ -275,22 +263,12 @@ function getDirectoryData() {
   const catsWithPhotos = catProfiles.filter(cat => cat.images && cat.images.length > 0)
     .sort((a, b) => a.name.localeCompare(b.name, 'zh-Hans-CN'));
   const directoryCats = filtered ? getFilteredCats() : sortDirectoryCats(catsWithPhotos);
-  const directoryPageSize = isMobileDirectoryLayout()
-    ? DIRECTORY_MOBILE_PAGE_SIZE
-    : (state.directoryPageSize || DIRECTORY_DESKTOP_PAGE_SIZE);
-  const totalDirectoryPages = Math.max(1, Math.ceil(directoryCats.length / directoryPageSize));
-  const currentDirectoryPage = Math.min(Math.max(Number(state.directoryPage) || 1, 1), totalDirectoryPages);
-  state.directoryPage = currentDirectoryPage;
-  const visibleDirectoryCats = directoryCats.slice((currentDirectoryPage - 1) * directoryPageSize, currentDirectoryPage * directoryPageSize);
   return {
     summary,
     activeFilter,
     filtered,
     catsWithPhotos,
     directoryCats,
-    visibleDirectoryCats,
-    directoryPageSize,
-    directoryPagination: renderDirectoryPagination(directoryCats.length, currentDirectoryPage, directoryPageSize),
   };
 }
 
@@ -307,23 +285,17 @@ function renderHomeStats({ summary, filtered, activeFilter }) {
   }).join('')}</section>`;
 }
 
-function renderDirectorySection(data, { standalone = false, showFootnote = false } = {}) {
-  const { catsWithPhotos, directoryCats, visibleDirectoryCats, directoryPageSize, directoryPagination } = data;
-  const desktopPlaceholderCount = isMobileDirectoryLayout()
-    ? 0
-    : Math.max(0, directoryPageSize - visibleDirectoryCats.length);
-  const desktopPlaceholders = Array.from({ length: desktopPlaceholderCount }, () => '<span class="home-directory-placeholder" aria-hidden="true"></span>').join('');
-  const footnote = showFootnote
-    ? '<p class="home-directory-footnote" role="note">图源：XDU猫猫群<span class="home-directory-footnote-desktop-comma">，</span><br class="home-directory-footnote-break">如需隐藏猫咪或照片，请联系群管理员</p>'
-    : '';
-  return `<section class="home-directory${standalone ? ' directory-page-list' : ''}"><header><div><p><img class="directory-heading-icon" src="${cdnUrl('images/cat-archive-icon.png')}" alt="" aria-hidden="true">猫猫档案</p></div><small>${standalone ? '持续档案' : '猫咪目录'}</small></header>${renderCatControls(directoryCats.length)}${directoryCats.length ? `<div class="home-directory-grid">${visibleDirectoryCats.map(cat => `<button class="home-directory-card" data-cat-name="${escapeHtml(cat.name)}" type="button"><img src="${cdnUrl(getDirectoryCover(cat))}" alt="${escapeHtml(cat.name)}" loading="lazy"><span>${escapeHtml(cat.name)}</span></button>`).join('')}${desktopPlaceholders}</div>${directoryPagination}${footnote}` : '<p class="home-directory-empty">没有匹配的猫咪，可以清空筛选后再试。</p>'}</section>`;
+function renderDirectorySection(data, { standalone = false } = {}) {
+  const { directoryCats } = data;
+  const headingMeta = standalone ? '' : '<small>猫咪目录</small>';
+  return `<section class="home-directory${standalone ? ' directory-page-list' : ''}"><header><div><p><img class="directory-heading-icon" src="${cdnUrl('images/cat-archive-icon.png')}" alt="" aria-hidden="true">猫猫档案</p></div>${headingMeta}</header>${renderCatControls(directoryCats.length)}${directoryCats.length ? `<div class="home-directory-grid">${directoryCats.map(cat => `<button class="home-directory-card" data-cat-name="${escapeHtml(cat.name)}" type="button"><img src="${cdnUrl(getDirectoryCover(cat))}" alt="${escapeHtml(cat.name)}" loading="lazy"><span>${escapeHtml(cat.name)}</span></button>`).join('')}</div>` : '<p class="home-directory-empty">没有匹配的猫咪，可以清空筛选后再试。</p>'}</section>`;
 }
 
 function renderHomeLandingPage() {
   const data = getDirectoryData();
   const heroCat = catProfiles.find(cat => cat.name === '大头' && getCatCover(cat)) || data.catsWithPhotos[0];
   const coverStripCats = getTimedFeaturedCats(data.catsWithPhotos, heroCat);
-  return `<section class="home-yearbook home-landing-page"><div class="home-cover"><div class="home-cover-copy"><h2>猫猫手册</h2><p class="home-cover-title">咪也有自己的生活和故事</p><i></i><p class="home-cover-note home-cover-note-desktop">这里有它们的名字，<br>也有它们的故事</p><p class="home-cover-note home-cover-note-mobile">这里有它们的名字，<br>也有它们的故事</p></div>${heroCat ? `<div class="home-cover-photos"><button class="home-cover-photo" data-cat-name="${escapeHtml(heroCat.name)}" type="button"><img src="${cdnUrl(getCatCover(heroCat))}" alt="${escapeHtml(heroCat.name)}"></button><div class="home-cover-strip">${coverStripCats.slice(0, 3).map(cat => `<button data-cat-name="${escapeHtml(cat.name)}" type="button"><img src="${cdnUrl(getCatCover(cat))}" alt="${escapeHtml(cat.name)}"></button>`).join('')}</div></div>` : ''}</div>${renderHomeStats(data)}${renderDirectorySection(data, { standalone: true, showFootnote: true })}</section>`;
+  return `<section class="home-yearbook home-landing-page"><div class="home-cover"><div class="home-cover-copy"><h2>猫猫手册</h2><p class="home-cover-title">咪也有自己的生活和故事</p><i></i><p class="home-cover-note home-cover-note-desktop">这里有它们的名字<br>也有它们的故事</p><p class="home-cover-note home-cover-note-mobile">这里有它们的名字<br>也有它们的故事</p></div>${heroCat ? `<div class="home-cover-photos"><button class="home-cover-photo" data-cat-name="${escapeHtml(heroCat.name)}" type="button"><img src="${cdnUrl(getCatCover(heroCat))}" alt="${escapeHtml(heroCat.name)}"></button><div class="home-cover-strip">${coverStripCats.slice(0, 3).map(cat => `<button data-cat-name="${escapeHtml(cat.name)}" type="button"><img src="${cdnUrl(getCatCover(cat))}" alt="${escapeHtml(cat.name)}"></button>`).join('')}</div></div>` : ''}</div>${renderHomeStats(data)}${renderDirectorySection(data, { standalone: true })}</section>`;
 }
 
 function renderDirectoryPage() {
@@ -333,27 +305,6 @@ function renderDirectoryPage() {
 
 function renderHomeTab() {
   return renderHomeLandingPage();
-  /*
-  const summary = getSummary();
-  const activeFilter = getActiveHomeFilter();
-  const filtered = isHomeFiltered();
-
-  const catsWithPhotos = catProfiles.filter(cat => cat.images && cat.images.length > 0).sort((a, b) => a.name.localeCompare(b.name, 'zh-Hans-CN'));
-  const heroCat = catProfiles.find(cat => cat.name === '大头' && getCatCover(cat)) || catsWithPhotos[0];
-  const featuredCats = getTimedFeaturedCats(catsWithPhotos, heroCat);
-  const directoryCats = filtered ? getFilteredCats() : sortDirectoryCats(catsWithPhotos);
-  const directoryPageSize = isMobileDirectoryLayout()
-    ? DIRECTORY_MOBILE_PAGE_SIZE
-    : (state.directoryPageSize || DIRECTORY_DESKTOP_PAGE_SIZE);
-  const totalDirectoryPages = Math.max(1, Math.ceil(directoryCats.length / directoryPageSize));
-  const currentDirectoryPage = Math.min(Math.max(Number(state.directoryPage) || 1, 1), totalDirectoryPages);
-  state.directoryPage = currentDirectoryPage;
-  const visibleDirectoryCats = directoryCats.slice((currentDirectoryPage - 1) * directoryPageSize, currentDirectoryPage * directoryPageSize);
-  const directoryPagination = renderDirectoryPagination(directoryCats.length, currentDirectoryPage, directoryPageSize);
-  const homeStats = [summary.find(item => item.filter === 'all'), summary.find(item => item.filter === 'status-就读中'), summary.find(item => item.filter === 'status-已毕业'), summary.find(item => item.filter === 'sterilized-未绝育')].filter(Boolean);
-
-  return `<section class="home-yearbook"><div class="home-cover"><div class="home-cover-copy"><p class="home-edition">⌁ 持续档案</p><h2>猫猫手册</h2><p class="home-cover-title">它们路过校园，也路过我们的生活</p><span>/ 从开始记录的那天起 /</span><i></i><p class="home-cover-note home-cover-note-desktop">从镜头和档案中，<br>认识校园里的每一只猫。</p><p class="home-cover-note home-cover-note-mobile">让每一次相遇，<br>都被好好记住。</p></div>${heroCat ? `<div class="home-cover-photos"><button class="home-cover-photo" data-cat-name="${escapeHtml(heroCat.name)}" type="button"><img src="${cdnUrl(getCatCover(heroCat))}" alt="${escapeHtml(heroCat.name)}"><strong>${escapeHtml(heroCat.name)}</strong></button><div class="home-cover-strip">${featuredCats.slice(0, 3).map(cat => `<button data-cat-name="${escapeHtml(cat.name)}" type="button"><img src="${cdnUrl(getCatCover(cat))}" alt="${escapeHtml(cat.name)}"></button>`).join('')}</div><span>ONGOING ARCHIVE</span></div>` : ''}</div><section class="home-stat-ribbon" aria-label="西电猫猫档案统计">${homeStats.map(item => { const active = item.filter === 'all' ? !filtered : item.filter === activeFilter; return `<button class="${active ? 'is-active' : ''}" data-summary-filter="${escapeHtml(item.filter)}" type="button"><strong>${item.value}</strong><span>${escapeHtml(item.label)}</span></button>`; }).join('')}</section><section class="home-featured"><header><div><p>▣ 精选目录</p><span>点击照片，进入它们的档案</span></div><small>每 15 分钟更新</small></header><div class="home-feature-grid">${featuredCats.map((cat, index) => `<button class="home-feature-card card-${index + 1}" data-cat-name="${escapeHtml(cat.name)}" type="button"><img src="${cdnUrl(getCatCover(cat))}" alt="${escapeHtml(cat.name)}" loading="lazy"><div><h3>${escapeHtml(cat.name)}</h3><p>${escapeHtml(cat.status)} · ${escapeHtml(getSterilizedBucket(cat))}</p><span>📍 ${escapeHtml(cat.area || '地点待补充')}</span></div></button>`).join('')}</div></section><section class="home-directory"><header><div><p>◆ 全部猫咪档案</p><span>已收录 ${catsWithPhotos.length} 只猫咪的照片与档案</span></div><small>CAT DIRECTORY</small></header>${renderCatControls(directoryCats.length)}${directoryCats.length ? `<div class="home-directory-grid">${visibleDirectoryCats.map(cat => `<button class="home-directory-card" data-cat-name="${escapeHtml(cat.name)}" type="button"><img src="${cdnUrl(getDirectoryCover(cat))}" alt="${escapeHtml(cat.name)}" loading="lazy"><span>${escapeHtml(cat.name)}</span></button>`).join('')}</div>${directoryPagination}` : '<p class="home-directory-empty">没有匹配的猫咪，可以清空筛选后再试。</p>'}</section><footer class="home-yearbook-footer">谢谢关心它们的你 <svg class="home-footer-paw" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.2" cy="9.3" r="2.1"></circle><circle cx="11.1" cy="6.2" r="2.1"></circle><circle cx="16.1" cy="8.1" r="2.1"></circle><circle cx="18.3" cy="13" r="2.1"></circle><path d="M12.1 11.1c-3.1 0-5.3 2.2-5.3 4.8 0 2 1.4 3.2 3.3 3.2.8 0 1.4-.2 2-.6.6.4 1.3.6 2 .6 1.9 0 3.2-1.2 3.2-3.2 0-2.6-2.1-4.8-5.2-4.8Z"></path></svg></footer></section>`;
-  */
 }
 
 // ============== Cat Profile Tab ==============
@@ -540,7 +491,7 @@ function renderDrawerFact(label, value, detail = '', icon = '', tooltip = false)
     ? `<span class="drawer-fact-value summary-source" tabindex="0" aria-label="${escapeHtml(label)}：${escapeHtml(primary)}；详细记录：${escapeHtml(detailText)}"><strong>${escapeHtml(primary)}</strong><span class="summary-detail drawer-summary-detail">${escapeHtml(detailText)}</span></span>`
     : `<strong>${escapeHtml(primary)}</strong>`;
   return `
-    <div class="drawer-fact">
+    <div class="drawer-fact" aria-label="${escapeHtml(label)}：${escapeHtml(primary)}">
       <div class="drawer-fact-heading"><span class="drawer-fact-icon" aria-hidden="true">${icon}</span><span>${escapeHtml(label)}</span></div>
       ${primaryHtml}
     </div>
@@ -567,35 +518,13 @@ function renderDrawerFacts(cat) {
   return `
     <section class="drawer-facts-card" aria-label="基础信息">
       <div class="drawer-facts-grid">
-        ${renderDrawerFact('区域', cat.area, '', drawerSectionIcon('personality'))}
+        ${renderDrawerFact('所在区域', cat.area, '', drawerSectionIcon('personality'))}
         ${renderDrawerFact('出现时间', getAppearanceSummary(cat), '', drawerSectionIcon('appearance'))}
-        ${renderDrawerFact('绝育', getSterilizedSummary(cat), cat.sterilized, sterilizedIcon, true)}
-        ${renderDrawerFact('疫苗', getVaccineSummary(cat), cat.vaccine, vaccineIcon, true)}
+        ${renderDrawerFact('健康情况', getSterilizedSummary(cat), cat.sterilized, sterilizedIcon, true)}
+        ${renderDrawerFact('疫苗情况', getVaccineSummary(cat), cat.vaccine, vaccineIcon, true)}
       </div>
     </section>
   `;
-}
-
-const MAX_PHOTO_DOTS = 15;
-
-function getPhotoPaginationStart(total, currentIndex) {
-  if (total <= MAX_PHOTO_DOTS) return 0;
-  const centeredStart = currentIndex - Math.floor(MAX_PHOTO_DOTS / 2);
-  return Math.min(Math.max(centeredStart, 0), total - MAX_PHOTO_DOTS);
-}
-
-function renderPhotoPagination(total, currentIndex = 0) {
-  const visibleCount = Math.min(total, MAX_PHOTO_DOTS);
-  const start = getPhotoPaginationStart(total, currentIndex);
-  return Array.from({ length: visibleCount }, (_, offset) => {
-    const photoIndex = start + offset;
-    const isCurrent = photoIndex === currentIndex;
-    return `
-      <button class="drawer-photo-dot${isCurrent ? ' is-current' : ''}" type="button" data-photo-index="${photoIndex}" aria-label="第 ${photoIndex + 1} 张照片"${isCurrent ? ' aria-current="true"' : ''}>
-        <span aria-hidden="true"></span>
-      </button>
-    `;
-  }).join('');
 }
 
 function renderDrawerGallery(cat) {
@@ -622,9 +551,6 @@ function renderDrawerGallery(cat) {
         </button>
         ${photoNavigation}
         <div class="drawer-photo-count" data-photo-count aria-live="polite"><strong data-photo-current>1</strong><span>/ ${galleryImages.length}</span></div>
-        <div class="drawer-photo-pagination" data-photo-pagination aria-label="照片跳转">
-          ${renderPhotoPagination(galleryImages.length)}
-        </div>
       </div>
     </section>
   `;
@@ -634,7 +560,16 @@ function findRelatedCat(name) {
   return catProfiles.find(item => item.name === name || (Array.isArray(item.aliases) && item.aliases.includes(name)));
 }
 
-const SYMMETRIC_RELATIONS = new Set(['好友', '兄弟姐妹', '同事', '情侣', '宿敌', '夫妻']);
+const SYMMETRIC_RELATIONS = new Set(['好友', '兄弟姐妹', '兄妹', '同事', '情侣', '宿敌', '夫妻']);
+const RELATION_DISPLAY_LABELS = new Map([
+  ['兄弟姐妹', '兄妹'],
+  ['关系待补充', '待补']
+]);
+
+function getRelationDisplayLabel(relation) {
+  const normalized = String(relation || '').trim();
+  return RELATION_DISPLAY_LABELS.get(normalized) || normalized || '待补';
+}
 
 function getChildRelation(cat) {
   if (cat?.gender === '公') return '儿子';
@@ -685,22 +620,25 @@ function getCatRelationships(cat) {
   return relationships;
 }
 
-function renderRelationshipCard(item, catName) {
-  const relatedName = item.relatedCatName;
-  const relatedCat = findRelatedCat(relatedName);
-  const relatedImage = relatedCat ? getCatCover(relatedCat) : null;
-  const relation = item.relation || '关系待补充';
+function renderRelationshipCard(item, cat) {
+  const catName = cat.name;
+  const isPlaceholder = item.isPlaceholder === true;
+  const relatedName = isPlaceholder ? '待补充' : item.relatedCatName;
+  const relatedCat = isPlaceholder ? null : findRelatedCat(relatedName);
+  const relatedImage = isPlaceholder ? getCatCover(cat) : (relatedCat ? getCatCover(relatedCat) : null);
+  const relation = getRelationDisplayLabel(item.relation);
   const note = [item.note, item.notes, item.remark, item.remarks, item.memo]
     .find(value => !isEmptyValue(value));
   const image = relatedImage
-    ? `<img src="${cdnUrl(relatedImage.replace(/([^/]+)$/, 'thumb/$1'))}" alt="${escapeHtml(relatedName)}" loading="lazy">`
+    ? `<img src="${cdnUrl(relatedImage.replace(/([^/]+)$/, 'thumb/$1'))}" alt="${escapeHtml(isPlaceholder ? `${catName}首图` : relatedName)}" loading="lazy">`
     : '<span class="drawer-relation-placeholder" aria-hidden="true">🐱</span>';
   const element = relatedCat ? 'button' : 'div';
   const interaction = relatedCat
     ? `type="button" data-related-cat="${escapeHtml(relatedCat.name)}" aria-label="查看${escapeHtml(relatedCat.name)}详情"`
     : '';
+  const cardClass = `drawer-relation-card${isPlaceholder ? ' drawer-relation-card-placeholder' : ''}`;
   return `
-    <${element} class="drawer-relation-card" ${interaction} title="${escapeHtml(`${catName}与${relatedName}的关系`)}">
+    <${element} class="${cardClass}" ${interaction}${isPlaceholder ? ' aria-label="关系待补充" data-relation-placeholder="true"' : ''}>
       ${image}
       <div class="drawer-relation-copy">
         <strong>${escapeHtml(relatedName)}</strong>
@@ -713,19 +651,29 @@ function renderRelationshipCard(item, catName) {
 
 function renderDrawerRelationships(cat) {
   const relationships = getCatRelationships(cat);
-  const relationCountClass = relationships.length === 1
+  const displayRelationships = [
+    ...relationships,
+    ...Array.from({ length: Math.max(0, 2 - relationships.length) }, () => ({
+      relatedCatName: '待补充',
+      relation: '未知',
+      isPlaceholder: true
+    }))
+  ];
+  const relationCountClass = displayRelationships.length === 1
     ? ' relation-count-1'
-    : relationships.length === 2
+    : displayRelationships.length === 2
       ? ' relation-count-2'
-      : relationships.length === 3
+      : displayRelationships.length === 3
         ? ' relation-count-3'
-        : relationships.length > 3
+        : displayRelationships.length > 3
           ? ' relation-count-more'
           : '';
-  const formalHtml = relationships.length
-    ? `<div class="drawer-relation-group"><div class="drawer-relation-list${relationCountClass}">${relationships.map(item => renderRelationshipCard(item, cat.name)).join('')}</div></div>`
-    : '<div class="drawer-relation-group"><div class="drawer-relation-list drawer-relation-list-empty"><div class="drawer-relation-empty" role="status">待补充</div></div></div>';
-  return renderDrawerSection('关系', formalHtml, `drawer-relationships${relationships.length ? '' : ' drawer-relationships-empty'}`, '', 'relationships');
+  const formalHtml = `<div class="drawer-relation-group"><div class="drawer-relation-list${relationCountClass}">${displayRelationships.map(item => renderRelationshipCard(item, cat)).join('')}</div></div>`;
+  return `
+    <section class="drawer-section drawer-relationships" aria-label="关系">
+      ${formalHtml}
+    </section>
+  `;
 }
 
 function renderDrawerUpdates(cat) {
@@ -759,12 +707,19 @@ function renderDrawerPersonality(cat) {
 function renderDrawerStory(cat) {
   const isEmptyStory = isEmptyValue(cat.description);
   const story = isEmptyStory
-    ? '<p class="drawer-story drawer-story-empty" role="status">待补充</p>'
+    ? `<div class="drawer-story drawer-story-empty drawer-story-empty-copy" role="status">
+        <p>如果你看到这段话，就说明这只咪咪的故事还没有人书写，欢迎投稿。</p>
+        <small class="drawer-story-mobile-supplement">更多故事，等待继续记录，欢迎投稿</small>
+      </div>`
     : `<div class="drawer-story-popover" data-story-popover>
-        <p class="drawer-story" data-story-preview tabindex="-1">${escapeHtml(cat.description)}</p>
+        <p class="drawer-story" data-story-preview tabindex="-1">${escapeHtml(cat.description)}<span class="drawer-story-tail" data-story-tail></span></p>
         <div class="drawer-story-bubble" data-story-bubble role="tooltip" aria-hidden="true">${escapeHtml(cat.description)}</div>
       </div>`;
-  return renderDrawerSection('故事档案', story, `drawer-description${isEmptyStory ? ' drawer-description-empty' : ''}`, '', 'story');
+  return `
+    <section class="drawer-section drawer-description${isEmptyStory ? ' drawer-description-empty' : ''}" aria-label="故事档案">
+      ${story}
+    </section>
+  `;
 }
 
 function renderDrawerArchive(cat) {
@@ -795,6 +750,8 @@ function openDrawer(name, source = null) {
 
 function renderDrawer(cat, { updatesExpanded = state.updatesExpanded, animationOrigin = null } = {}) {
   hideSummaryTooltip();
+  hideDrawerScrollIndicator();
+  hideDrawerStoryScrollIndicator();
   const shouldAnimate = Boolean(animationOrigin);
   drawer.classList.remove('drawer-opening');
   drawer.classList.remove('drawer-closing');
@@ -804,14 +761,22 @@ function renderDrawer(cat, { updatesExpanded = state.updatesExpanded, animationO
   state.updatesExpanded = updatesExpanded;
 
   drawer.innerHTML = `
+    <header class="drawer-mobile-header" aria-label="猫咪详情顶部信息">
+      <div class="drawer-mobile-header-identity">
+        <h2>${escapeHtml(cat.name)}</h2>
+        ${renderDrawerGenderBadge(cat.gender)}
+        ${renderStatusTag(cat)}
+      </div>
+      <button class="drawer-mobile-close" type="button" aria-label="关闭猫咪详情">×</button>
+    </header>
     <div class="drawer-content">
       <div class="drawer-layout">
         <section class="drawer-column drawer-left" aria-label="照片">
           ${renderDrawerGallery(cat)}
         </section>
         <section class="drawer-column drawer-right" aria-label="故事、关系与基础信息">
-          ${renderDrawerArchive(cat)}
           ${renderDrawerFacts(cat)}
+          ${renderDrawerArchive(cat)}
         </section>
       </div>
     </div>
@@ -838,6 +803,8 @@ function renderDrawer(cat, { updatesExpanded = state.updatesExpanded, animationO
   drawer.setAttribute('tabindex', '-1');
   focusWithoutScrolling(drawer);
 
+  drawer.querySelector('.drawer-mobile-close')?.addEventListener('click', closeDrawer);
+
   drawer.querySelectorAll('[data-related-cat]').forEach(button => {
     button.addEventListener('click', () => {
       const relatedCat = findRelatedCat(button.dataset.relatedCat);
@@ -863,6 +830,7 @@ function renderDrawer(cat, { updatesExpanded = state.updatesExpanded, animationO
 
   bindSummaryTooltips(drawer);
   bindDrawerStoryPopovers(drawer);
+  bindDrawerStoryScrollIndicators(drawer);
 }
 
 function hideSummaryTooltip() {
@@ -934,10 +902,57 @@ function bindSummaryTooltips(container) {
   }, { passive: true });
 }
 
+const STORY_SUPPLEMENT = '更多故事，等待继续记录，欢迎投稿';
+
+function measureDrawerStoryLines(preview, tailText = '') {
+  const computed = getComputedStyle(preview);
+  const clone = preview.cloneNode(true);
+  const cloneTail = clone.querySelector('[data-story-tail]');
+  if (cloneTail) cloneTail.remove();
+  if (tailText) {
+    const tail = document.createElement('span');
+    tail.className = 'drawer-story-tail';
+    tail.textContent = tailText;
+    clone.append(tail);
+  }
+
+  Object.assign(clone.style, {
+    position: 'absolute',
+    top: '0',
+    left: '-99999px',
+    width: String(preview.clientWidth) + 'px',
+    height: 'auto',
+    maxHeight: 'none',
+    overflow: 'visible',
+    display: 'block',
+    visibility: 'hidden',
+    pointerEvents: 'none',
+    webkitLineClamp: 'unset'
+  });
+  preview.parentElement.appendChild(clone);
+
+  const lineHeight = parseFloat(computed.lineHeight) || parseFloat(computed.fontSize) * 1.6;
+  const verticalPadding = parseFloat(computed.paddingTop) + parseFloat(computed.paddingBottom);
+  const contentHeight = Math.max(0, clone.scrollHeight - verticalPadding);
+  const lines = Math.max(1, Math.ceil(contentHeight / lineHeight - .01));
+  clone.remove();
+  return lines;
+}
+
+function getDrawerStorySupplement(preview) {
+  const lineCount = measureDrawerStoryLines(preview);
+  if (lineCount >= 4) return '';
+  return STORY_SUPPLEMENT;
+}
+
 function syncDrawerStoryPopover(popover) {
   const preview = popover.querySelector('[data-story-preview]');
   const bubble = popover.querySelector('[data-story-bubble]');
   if (!preview || !bubble) return;
+
+  const tail = preview.querySelector('[data-story-tail]');
+  const isMobileDrawer = window.matchMedia?.('(max-width: 980px)').matches;
+  if (tail) tail.textContent = isMobileDrawer ? '' : getDrawerStorySupplement(preview);
 
   const isTruncated = preview.scrollHeight > preview.clientHeight + 1;
   popover.classList.toggle('is-truncated', isTruncated);
@@ -971,6 +986,8 @@ function closeDrawer() {
   state.updatesExpanded = false;
 
   const finishClose = () => {
+    hideDrawerScrollIndicator();
+    hideDrawerStoryScrollIndicator();
     drawer.hidden = true;
     drawerBackdrop.hidden = true;
     drawer.innerHTML = '';
@@ -989,8 +1006,11 @@ function closeDrawer() {
     return;
   }
 
+  const closeAnimationName = window.matchMedia('(max-width: 719px)').matches
+    ? 'drawer-sheet-out'
+    : 'drawer-float-out';
   const handleAnimationEnd = event => {
-    if (event.animationName !== 'drawer-float-out') return;
+    if (event.animationName !== closeAnimationName) return;
     drawer.removeEventListener('animationend', handleAnimationEnd);
     finishClose();
   };
@@ -1201,9 +1221,9 @@ function openInspirationViewer(note) {
     '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5v10"></path><path d="m8 10 4 4 4-4"></path><path d="M5 16.5v3h14v-3"></path></svg>',
     '</a>',
     externalUrl
-      ? '<a class="photo-viewer-toolbar-icon photo-viewer-toolbar-external" data-photo-external href="' + escapeHtml(externalUrl) + '" target="_blank" rel="noreferrer noopener" aria-label="打开外部链接" title="打开外部链接"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 5h6v6"></path><path d="m19 5-8 8"></path><path d="M18 13v5a1 1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"></path></svg></a>'
+      ? '<a class="photo-viewer-toolbar-icon photo-viewer-toolbar-external" data-photo-external href="' + escapeHtml(externalUrl) + '" target="_blank" rel="noreferrer noopener" aria-label="打开外部链接" title="打开外部链接"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 5h5v5"></path><path d="m19 5-8 8"></path><path d="M17 13v4H7V7h4"></path></svg></a>'
       : '',
-    import.meta.env.DEV ? '<span class="photo-viewer-toolbar-divider" aria-hidden="true"></span><button class="photo-viewer-toolbar-icon" data-inspiration-edit type="button" aria-label="编辑灵感笔记" title="编辑灵感笔记"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 16.8-.8 3.5 3.5-.8L18.7 7.9a2.2 2.2 0 0 0-3.1-3.1L4.5 16.8Z"></path><path d="m13.9 6.1 4 4"></path></svg></button><button class="photo-viewer-toolbar-icon photo-viewer-toolbar-danger" data-inspiration-delete type="button" aria-label="删除灵感笔记" title="删除灵感笔记"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14"></path><path d="M9 7V4.5h6V7"></path><path d="m7 7 .7 13h8.6L17 7"></path><path d="M10 11v5M14 11v5"></path></svg></button>' : '',
+    import.meta.env.DEV ? '<span class="photo-viewer-toolbar-divider photo-viewer-toolbar-local-divider" aria-hidden="true"></span><button class="photo-viewer-toolbar-icon" data-inspiration-edit type="button" aria-label="编辑灵感笔记" title="编辑灵感笔记"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 16.8-.8 3.5 3.5-.8L18.7 7.9a2.2 2.2 0 0 0-3.1-3.1L4.5 16.8Z"></path><path d="m13.9 6.1 4 4"></path></svg></button><button class="photo-viewer-toolbar-icon photo-viewer-toolbar-danger" data-inspiration-delete type="button" aria-label="删除灵感笔记" title="删除灵感笔记"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14"></path><path d="M9 7V4.5h6V7"></path><path d="m7 7 .7 13h8.6L17 7"></path><path d="M10 11v5M14 11v5"></path></svg></button>' : '',
     '</div>'
   ].join('');
 
@@ -1268,7 +1288,6 @@ function bindDrawerGallery(container, cat) {
   const image = main?.querySelector('.drawer-gallery-main-image');
   const previous = container.querySelector('[data-photo-prev]');
   const next = container.querySelector('[data-photo-next]');
-  const pagination = container.querySelector('[data-photo-pagination]');
   if (!main || !image) return;
 
   const coverSrc = getCatCover(cat);
@@ -1282,15 +1301,6 @@ function bindDrawerGallery(container, cat) {
   let suppressClick = false;
   const currentCounter = container.querySelector('[data-photo-current]');
 
-  function bindPagination() {
-    pagination?.querySelectorAll('[data-photo-index]').forEach(button => {
-      button.addEventListener('click', event => {
-        event.stopPropagation();
-        updatePhoto(Number(button.dataset.photoIndex));
-      });
-    });
-  }
-
   const updatePhoto = nextIndex => {
     index = (nextIndex + images.length) % images.length;
     const source = images[index];
@@ -1298,14 +1308,8 @@ function bindDrawerGallery(container, cat) {
     image.dataset.full = cdnUrl(source);
     image.alt = `${cat.name} 照片 ${index + 1}`;
     if (currentCounter) currentCounter.textContent = String(index + 1);
-    if (pagination) {
-      pagination.innerHTML = renderPhotoPagination(images.length, index);
-      bindPagination();
-    }
     main.setAttribute('aria-label', `查看${cat.name}大图，当前第${index + 1}张，共${images.length}张`);
   };
-
-  bindPagination();
 
   previous?.addEventListener('click', event => {
     event.stopPropagation();
@@ -1367,7 +1371,8 @@ function bindCatCards() {
           sourceUrl: card.dataset.inspirationSourceUrl || '',
           title: card.dataset.inspirationTitle || card.getAttribute('aria-label')?.replace(/^查看/, '') || '猫猫灵感',
           tags: card.dataset.inspirationTags ? card.dataset.inspirationTags.split(',').map(tag => tag.trim()).filter(Boolean) : [],
-          note: card.dataset.inspirationNote || ''
+          note: card.dataset.inspirationNote || '',
+          mediaType: card.dataset.inspirationMediaType || 'image'
         };
         if (note.cover) openInspirationViewer(note);
         return;
@@ -1397,8 +1402,6 @@ function applyHomeFilter(filterKey) {
   state.vaccine = '全部';
   state.sterilized = '全部';
   state.area = '全部';
-  state.directoryPage = 1;
-
   if (filterKey !== 'all') {
     const [type, value] = filterKey.split('-', 2);
     if (type === 'status') state.status = value;
@@ -1429,7 +1432,6 @@ function bindSummaryCards() {
 export {
   DIRECTORY_SORT_OPTIONS,
   renderHomeTab,
-  scheduleDirectoryPageSizeSync,
   bindCatCards,
   bindSummaryCards,
   closeDrawer,

@@ -11,6 +11,9 @@ const ROOT = process.env.CMS_CONTENT_ROOT
 const DEV_SERVER_LOCK = path.resolve(process.cwd(), '.astro', 'cats-dev-server.lock');
 const INSPIRATION_DATA_FILE = path.resolve(process.cwd(), 'src/data/inspirations.json');
 const INSPIRATION_ASSET_DIRECTORY = path.resolve(process.cwd(), 'public/images/gallery/inspiration');
+const XHS_NOTE_SKILL_SCRIPT = process.env.XHS_NOTE_SKILL_SCRIPT
+  ? path.resolve(process.env.XHS_NOTE_SKILL_SCRIPT)
+  : path.join(os.homedir(), '.claude', 'skills', 'xhs-image-note', 'scripts', 'fetch_xhs_note.py');
 const execFileAsync = promisify(execFile);
 const FIELDS = ['title', 'description', 'publishedAt', 'category', 'subcategory', 'draft', 'updated', 'slug'];
 
@@ -255,6 +258,55 @@ function decodeImageDataUrl(value) {
   return { buffer, extension };
 }
 
+function isXhsSourceUrl(value) {
+  try {
+    const hostname = new URL(String(value || '')).hostname.toLowerCase();
+    return hostname === 'xiaohongshu.com'
+      || hostname.endsWith('.xiaohongshu.com')
+      || hostname === 'xhslink.com'
+      || hostname.endsWith('.xhslink.com');
+  } catch {
+    return false;
+  }
+}
+
+async function resolveXhsCover(sourceUrl) {
+  try {
+    await fs.access(XHS_NOTE_SKILL_SCRIPT);
+  } catch {
+    throw new Error('本机未找到小红书解析 skill，请保留手动上传或粘贴封面图');
+  }
+
+  const outputDirectory = await fs.mkdtemp(path.join(os.tmpdir(), 'cats-xhs-cover-'));
+  try {
+    await execFileAsync('python3', [
+      XHS_NOTE_SKILL_SCRIPT,
+      sourceUrl,
+      '--out',
+      outputDirectory,
+      '--cover-only'
+    ], { timeout: 60000, maxBuffer: 2 * 1024 * 1024 });
+    const metadata = JSON.parse(await fs.readFile(path.join(outputDirectory, 'meta.json'), 'utf8'));
+    const imagePath = Array.isArray(metadata.image_paths) ? metadata.image_paths[0] : null;
+    if (!imagePath) throw new Error('页面没有公开可用的封面图');
+    const buffer = await fs.readFile(imagePath);
+    if (!buffer.length || buffer.length > 12 * 1024 * 1024) throw new Error('封面图超过 12 MB');
+    return {
+      buffer,
+      extension: 'jpg',
+      mime: 'image/jpeg',
+      title: String(metadata.title || '').trim(),
+      mediaType: metadata.media_type === 'video' ? 'video' : 'image',
+      coverUrl: String(metadata.cover_url || '').trim(),
+    };
+  } catch (error) {
+    const detail = String(error?.stderr || error?.message || '').trim();
+    throw new Error(detail ? `小红书封面提取失败：${detail}` : '小红书封面提取失败');
+  } finally {
+    await fs.rm(outputDirectory, { recursive: true, force: true }).catch(() => {});
+  }
+}
+
 function getInspirationAssetPath(cover) {
   const prefix = 'images/gallery/inspiration/';
   const normalized = String(cover || '').replace(/^\/+/, '');
@@ -473,6 +525,21 @@ export default function localCms() {
           if (request.method === 'GET' && url.pathname === '/inspirations') {
             return json(response, 200, { inspirations: await readInspirations() });
           }
+          if (request.method === 'POST' && url.pathname === '/inspirations/resolve') {
+            const data = await readBody(request);
+            const sourceUrl = String(data.sourceUrl || '').trim();
+            if (!isXhsSourceUrl(sourceUrl)) {
+              return json(response, 400, { error: '目前只能从小红书链接自动提取封面，其他外链请手动上传或粘贴封面图' });
+            }
+            const resolved = await resolveXhsCover(sourceUrl);
+            return json(response, 200, {
+              ok: true,
+              title: resolved.title,
+              mediaType: resolved.mediaType,
+              coverUrl: resolved.coverUrl,
+              coverDataUrl: `data:${resolved.mime};base64,${resolved.buffer.toString('base64')}`,
+            });
+          }
           if (request.method === 'POST' && url.pathname === '/inspirations') {
             const data = await readBody(request);
             const title = String(data.title || '').trim();
@@ -480,6 +547,7 @@ export default function localCms() {
             const createdAt = localDateValue();
             const note = String(data.note || '').trim();
             const tags = parseInspirationTags(data.tags);
+            const mediaType = data.mediaType === 'video' ? 'video' : 'image';
             const errors = [];
             if (!title) errors.push('标题不能为空');
             if (!/^https?:\/\//i.test(sourceUrl)) errors.push('链接必须是 http(s) 链接');
@@ -501,6 +569,7 @@ export default function localCms() {
               title,
               tags,
               note,
+              mediaType,
               createdAt,
             };
             await saveInspirations([record, ...records]);
@@ -520,6 +589,7 @@ export default function localCms() {
             const sourceUrl = String(data.sourceUrl || '').trim();
             const note = String(data.note || '').trim();
             const tags = parseInspirationTags(data.tags);
+            const mediaType = data.mediaType === 'video' ? 'video' : data.mediaType === 'image' ? 'image' : (current?.mediaType || 'image');
             const image = data.coverDataUrl ? decodeImageDataUrl(data.coverDataUrl) : null;
             const errors = [];
             if (!title) errors.push('标题不能为空');
@@ -534,6 +604,7 @@ export default function localCms() {
               tags,
               sourceUrl,
               note,
+              mediaType,
             };
             let nextAssetPath = null;
             const previousAssetPath = getInspirationAssetPath(current.cover);

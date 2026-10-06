@@ -4,7 +4,7 @@ import { state } from './state.js';
 import { escapeHtml, normalize } from './shared.js';
 
 const BASE_URL = `${import.meta.env.BASE_URL.replace(/\/?$/, '/')}`;
-const SOURCE_NAME = 'XDU 猫猫群';
+const SOURCE_NAME = 'XDU 猫猫';
 const SOURCE_AVATAR = 'images/cat-archive-icon.png';
 const CARD_VARIANTS = ['portrait-34', 'landscape-43', 'portrait-45'];
 const SOUVENIR_VARIANTS = ['square-11', 'landscape-43', 'portrait-34', 'portrait-23'];
@@ -15,9 +15,9 @@ const GALLERY_VIEWS = [
 ];
 const GALLERY_VIEW_IDS = GALLERY_VIEWS.map(view => view.id);
 const MATERIAL_FILTERS = [
-  { id: 'all', label: '全部素材' },
+  { id: 'all', label: '全部' },
   { id: 'postcard', label: '明信片' },
-  { id: 'standard', label: '普通素材' }
+  { id: 'standard', label: '未分类' }
 ];
 const MATERIAL_FILTER_IDS = MATERIAL_FILTERS.map(filter => filter.id);
 const MATERIAL_VIEW_IDS = new Set(['souvenir']);
@@ -258,10 +258,13 @@ function renderGalleryCard(item, view) {
     const title = String(note.title || '查看灵感笔记');
     const tags = Array.isArray(note.tags) ? note.tags.filter(Boolean).join(' · ') : '';
     const meta = [tags, note.createdAt].filter(Boolean).join(' · ');
+    const isVideo = note.mediaType === 'video';
+    const mediaClass = isVideo ? ' gallery-card--inspiration-video' : '';
     return `
-      <button class="gallery-card gallery-card--${item.variant} gallery-card--inspiration" type="button" data-inspiration-id="${escapeHtml(note.id || '')}" data-inspiration-cover="${escapeHtml(note.cover || '')}" data-inspiration-source-url="${escapeHtml(note.sourceUrl || '')}" data-inspiration-title="${escapeHtml(title)}" data-inspiration-tags="${escapeHtml(Array.isArray(note.tags) ? note.tags.join(', ') : '')}" data-inspiration-note="${escapeHtml(note.note || '')}" aria-label="查看${escapeHtml(title)}">
+      <button class="gallery-card gallery-card--${item.variant}${mediaClass} gallery-card--inspiration" type="button" data-inspiration-id="${escapeHtml(note.id || '')}" data-inspiration-cover="${escapeHtml(note.cover || '')}" data-inspiration-source-url="${escapeHtml(note.sourceUrl || '')}" data-inspiration-title="${escapeHtml(title)}" data-inspiration-tags="${escapeHtml(Array.isArray(note.tags) ? note.tags.join(', ') : '')}" data-inspiration-note="${escapeHtml(note.note || '')}" data-inspiration-media-type="${escapeHtml(note.mediaType || 'image')}" aria-label="查看${escapeHtml(title)}">
         <span class="gallery-card-media">
           <img src="${escapeHtml(cdnUrl(item.image))}" alt="${escapeHtml(title)}" loading="lazy">
+          ${isVideo ? '<span class="gallery-card-media-badge" aria-label="视频笔记"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 9 6-9 6V6Z"></path></svg></span>' : ''}
         </span>
         <span class="gallery-card-body">
           <strong class="gallery-card-title">${escapeHtml(title)}</strong>
@@ -284,18 +287,20 @@ function renderGalleryCard(item, view) {
     `;
   }
 
-  const location = cat.area && cat.area !== '待补充' ? cat.area : '校园记录';
+  const location = cat.area && cat.area !== '待补充' ? cat.area : '';
   const status = cat.status && cat.status !== '待补充' ? cat.status : '';
   const latestUpdate = view.id === 'diary' ? item.update : null;
   const title = view.id === 'diary'
     ? getUpdateTitle(latestUpdate, cat)
     : MATERIAL_VIEW_IDS.has(view.id)
       ? `${cat.name} · 猫猫素材`
-      : getGalleryCardTitle(cat);
+      : view.id === 'archive'
+        ? cat.name
+        : getGalleryCardTitle(cat);
   const meta = view.id === 'diary'
     ? [cat.name, formatUpdateDate(latestUpdate?.date)].join(' · ')
     : MATERIAL_VIEW_IDS.has(view.id)
-      ? [location, `照片 ${item.imageIndex + 1}/${item.imageCount}`].join(' · ')
+      ? [location || '校园记录', `照片 ${item.imageIndex + 1}/${item.imageCount}`].join(' · ')
       : [location, status].filter(Boolean).join(' · ');
   const note = view.id === 'diary'
     ? String(latestUpdate?.content || '').split(/\r?\n/).map(line => line.trim()).find(Boolean)?.replace(/\s+/g, ' ')
@@ -307,7 +312,7 @@ function renderGalleryCard(item, view) {
       </span>
       <span class="gallery-card-body">
         <strong class="gallery-card-title">${escapeHtml(title)}</strong>
-        <span class="gallery-card-meta">${escapeHtml(meta)}</span>
+        ${meta ? `<span class="gallery-card-meta">${escapeHtml(meta)}</span>` : ''}
         ${note ? `<span class="gallery-card-note">${escapeHtml(note)}</span>` : ''}
         <span class="gallery-card-author">
           <img src="${escapeHtml(cdnUrl(SOURCE_AVATAR))}" alt="">
@@ -334,7 +339,7 @@ function renderInspirationComposer() {
           </div>
           <label><span>标题 <small>必填</small></span><input id="gallery-inspiration-title" required placeholder="请输入标题"></label>
           <label><span>标签 <small>必填</small></span><input id="gallery-inspiration-tags" autocomplete="off" required placeholder="多个标签用逗号分隔"></label>
-          <label class="gallery-inspiration-full"><span>链接 <small>必填</small></span><input id="gallery-inspiration-source-url" autocomplete="off" type="url" required placeholder="https://..."></label>
+          <label class="gallery-inspiration-full"><span>链接 <small>必填</small></span><input id="gallery-inspiration-source-url" autocomplete="off" type="url" required placeholder="https://..."><button class="gallery-inspiration-fetch-cover" id="gallery-inspiration-fetch-cover" type="button" disabled>从链接提取封面</button></label>
           <label class="gallery-inspiration-full"><span>备注</span><textarea id="gallery-inspiration-note" placeholder="可留空"></textarea></label>
           <footer class="gallery-inspiration-form-footer">
             <span class="gallery-inspiration-form-status" id="gallery-inspiration-status" aria-live="polite"></span>
@@ -356,6 +361,16 @@ function readFileAsDataUrl(file) {
     reader.addEventListener('error', () => reject(new Error('封面图读取失败')));
     reader.readAsDataURL(file);
   });
+}
+
+async function dataUrlToFile(dataUrl, fileName = 'xhs-cover.jpg') {
+  const response = await fetch(dataUrl);
+  const blob = await response.blob();
+  return new File([blob], fileName, { type: blob.type || 'image/jpeg', lastModified: Date.now() });
+}
+
+function isXhsSourceUrl(value) {
+  return /^https?:\/\/(?:www\.)?(?:xiaohongshu\.com|xhslink\.com)(?:\/|$)/i.test(String(value || '').trim());
 }
 
 function getClipboardImageFile(event) {
@@ -417,9 +432,12 @@ function bindGalleryControls() {
   const pasteTarget = document.getElementById('gallery-inspiration-paste-target');
   const coverRequirement = document.getElementById('gallery-inspiration-cover-requirement');
   const coverPrompt = document.getElementById('gallery-inspiration-cover-prompt');
+  const sourceInput = document.getElementById('gallery-inspiration-source-url');
+  const fetchCoverButton = document.getElementById('gallery-inspiration-fetch-cover');
   let pastedCoverFile = null;
   let composerMode = 'create';
   let editingId = '';
+  let resolvedMediaType = 'image';
   const closeModal = () => {
     modal.hidden = true;
     modal.setAttribute('aria-hidden', 'true');
@@ -429,6 +447,7 @@ function bindGalleryControls() {
     const editing = Boolean(note?.id);
     composerMode = editing ? 'edit' : 'create';
     editingId = editing ? String(note.id) : '';
+    resolvedMediaType = editing ? String(note.mediaType || 'image') : 'image';
     form.reset();
     pastedCoverFile = null;
     coverInput.required = !editing;
@@ -438,6 +457,7 @@ function bindGalleryControls() {
     document.getElementById('gallery-inspiration-tags').value = Array.isArray(note.tags) ? note.tags.join(', ') : String(note.tags || '');
     document.getElementById('gallery-inspiration-source-url').value = editing ? String(note.sourceUrl || '') : '';
     document.getElementById('gallery-inspiration-note').value = editing ? String(note.note || '') : '';
+    fetchCoverButton.disabled = !sourceInput.value.trim();
     document.getElementById('gallery-inspiration-submit').textContent = editing ? '保存修改' : '写入本地';
     status.textContent = editing ? '不更换封面图时，将保留当前封面' : '';
     status.dataset.kind = editing ? 'neutral' : '';
@@ -469,6 +489,41 @@ function bindGalleryControls() {
     status.textContent = '封面图已就绪';
     status.dataset.kind = 'success';
   };
+  const fetchCoverFromSource = async () => {
+    const sourceUrl = sourceInput.value.trim();
+    if (!sourceUrl) {
+      status.textContent = '请先填写链接';
+      status.dataset.kind = 'error';
+      sourceInput.focus();
+      return null;
+    }
+    fetchCoverButton.disabled = true;
+    status.textContent = '正在从链接提取封面…';
+    status.dataset.kind = 'saving';
+    try {
+      const response = await fetch('/admin/api/inspirations/resolve', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sourceUrl })
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(result.error || '封面提取失败');
+      const file = await dataUrlToFile(result.coverDataUrl, result.mediaType === 'video' ? 'xhs-video-cover.jpg' : 'xhs-cover.jpg');
+      setCoverFile(file);
+      resolvedMediaType = result.mediaType === 'video' ? 'video' : 'image';
+      const titleInput = document.getElementById('gallery-inspiration-title');
+      if (!titleInput.value.trim() && result.title) titleInput.value = result.title;
+      status.textContent = result.mediaType === 'video' ? '视频封面已提取' : '封面图已提取';
+      status.dataset.kind = 'success';
+      return file;
+    } catch (error) {
+      status.textContent = error instanceof Error ? error.message : '封面提取失败，请手动上传或粘贴';
+      status.dataset.kind = 'error';
+      return null;
+    } finally {
+      fetchCoverButton.disabled = !sourceInput.value.trim();
+    }
+  };
   const handlePaste = async event => {
     if (modal.hidden) return;
     const directFile = getClipboardImageFile(event);
@@ -496,6 +551,12 @@ function bindGalleryControls() {
     event.preventDefault();
     coverInput?.click();
   });
+  sourceInput?.addEventListener('input', () => {
+    fetchCoverButton.disabled = !sourceInput.value.trim();
+  });
+  fetchCoverButton?.addEventListener('click', () => {
+    void fetchCoverFromSource();
+  });
   void syncInspirationRecords();
   coverInput?.addEventListener('change', () => {
     const file = coverInput.files?.[0];
@@ -503,7 +564,11 @@ function bindGalleryControls() {
   });
   form?.addEventListener('submit', async event => {
     event.preventDefault();
-    const cover = coverInput?.files?.[0] || pastedCoverFile;
+    const sourceUrl = document.getElementById('gallery-inspiration-source-url').value.trim();
+    let cover = coverInput?.files?.[0] || pastedCoverFile;
+    if (composerMode === 'create' && !cover && isXhsSourceUrl(sourceUrl)) {
+      cover = await fetchCoverFromSource();
+    }
     if (composerMode === 'create' && !cover) {
       status.textContent = '请先选择或粘贴一张封面图';
       status.dataset.kind = 'error';
@@ -523,8 +588,9 @@ function bindGalleryControls() {
       const payload = {
         title: document.getElementById('gallery-inspiration-title').value.trim(),
         tags: document.getElementById('gallery-inspiration-tags').value.trim(),
-        sourceUrl: document.getElementById('gallery-inspiration-source-url').value.trim(),
+        sourceUrl,
         note: document.getElementById('gallery-inspiration-note').value.trim(),
+        mediaType: resolvedMediaType,
       };
       if (cover) payload.coverDataUrl = await readFileAsDataUrl(cover);
       const response = await fetch(`/admin/api/inspirations${composerMode === 'edit' ? `?id=${encodeURIComponent(editingId)}` : ''}`, {
@@ -595,7 +661,7 @@ function renderGalleryTab() {
         ? materialFilter === 'postcard'
           ? `收集 ${items.length} 张明信片`
           : materialFilter === 'standard'
-            ? `收集 ${items.length} 张普通素材`
+          ? `收集 ${items.length} 张未分类素材`
             : `收集 ${items.length} 张照片`
         : view.id === 'inspiration'
           ? `收集 ${items.length} 条灵感`
@@ -605,7 +671,7 @@ function renderGalleryTab() {
     : view.id === 'souvenir' && materialFilter === 'postcard'
       ? '还没有标记为明信片的素材'
     : view.id === 'souvenir' && materialFilter === 'standard'
-      ? '还没有普通素材'
+      ? '还没有未分类素材'
       : view.id === 'inspiration'
       ? '还没有收录灵感笔记'
       : '没有找到匹配的猫猫';
@@ -625,22 +691,28 @@ function renderGalleryTab() {
   return `
     <section class="gallery-page" data-gallery-view="${escapeHtml(view.id)}">
       <header class="gallery-header">
-        <div class="gallery-search-frame">
-          <label class="gallery-search">
-            <svg class="gallery-search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.7" cy="10.7" r="6.4"></circle><path d="m15.6 15.6 4.1 4.1"></path></svg>
-            <input id="searchInput" type="search" value="${escapeHtml(state.query)}" placeholder="搜索猫名、地点或故事" autocomplete="off" aria-label="搜索猫名、地点或故事">
-            <button id="searchBtn" type="button" aria-label="搜索"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.7" cy="10.7" r="6.4"></circle><path d="m15.6 15.6 4.1 4.1"></path></svg></button>
-          </label>
-          <div class="gallery-search-footer">
-            <span class="gallery-header-divider" aria-hidden="true"></span>
-            <span class="gallery-ai-chip"><span aria-hidden="true">◌</span> 猫猫档案 <em>AI</em></span>
-            <span class="gallery-search-count">${escapeHtml(summary)}</span>
+        <div class="gallery-mobile-topbar">
+          <div class="gallery-search-frame">
+            <label class="gallery-search">
+              <svg class="gallery-search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.7" cy="10.7" r="6.4"></circle><path d="m15.6 15.6 4.1 4.1"></path></svg>
+              <input id="searchInput" type="search" value="${escapeHtml(state.query)}" placeholder="搜索猫名、地点或故事" autocomplete="off" aria-label="搜索猫名、地点或故事">
+              <button id="searchBtn" type="button" aria-label="搜索"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.7" cy="10.7" r="6.4"></circle><path d="m15.6 15.6 4.1 4.1"></path></svg></button>
+            </label>
+            <div class="gallery-search-footer">
+              <span class="gallery-header-divider" aria-hidden="true"></span>
+              <span class="gallery-ai-chip"><span aria-hidden="true">◌</span> 猫猫档案 <em>AI</em></span>
+              <span class="gallery-search-count">${escapeHtml(summary)}</span>
+            </div>
+          </div>
+          <nav class="gallery-topic-nav" aria-label="小猫书视图">
+            ${GALLERY_VIEWS.map(topic => `<button type="button" class="${topic.id === view.id ? 'is-active' : ''}" data-gallery-view="${escapeHtml(topic.id)}" aria-pressed="${topic.id === view.id ? 'true' : 'false'}">${escapeHtml(topic.label)}</button>`).join('')}
+            ${localInspirationAction}
+          </nav>
+          <button class="gallery-mobile-search-toggle" id="galleryMobileSearchToggle" type="button" aria-label="打开搜索" aria-expanded="false">
+            <svg class="gallery-mobile-search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.7" cy="10.7" r="6.4"></circle><path d="m15.6 15.6 4.1 4.1"></path></svg>
+            <span class="gallery-mobile-search-label">取消</span>
+          </button>
         </div>
-        </div>
-        <nav class="gallery-topic-nav" aria-label="小猫书视图">
-          ${GALLERY_VIEWS.map(topic => `<button type="button" class="${topic.id === view.id ? 'is-active' : ''}" data-gallery-view="${escapeHtml(topic.id)}" aria-pressed="${topic.id === view.id ? 'true' : 'false'}">${escapeHtml(topic.label)}</button>`).join('')}
-          ${localInspirationAction}
-        </nav>
         ${materialFilterNav}
       </header>
       ${items.length

@@ -7,8 +7,6 @@ import { renderScienceTab, bindKnowledgeControls, bindKnowledgeToc } from './app
 import { GALLERY_VIEW_IDS, MATERIAL_FILTER_IDS, renderGalleryTab, bindGalleryControls, setGalleryRenderApp } from './app/gallery.js';
 import {
   renderHomeTab,
-  scheduleDirectoryPageSizeSync,
-  cancelDirectoryPageSizeSync,
   bindCatCards,
   bindSummaryCards,
   DIRECTORY_SORT_OPTIONS,
@@ -32,7 +30,6 @@ const drawer = document.getElementById('catDrawer');
 const drawerBackdrop = document.getElementById('drawerBackdrop');
 
 let homeFeaturedRefreshTimer = null;
-let directoryResizeBound = false;
 let galleryScrollBound = false;
 let galleryScrollFrame = 0;
 
@@ -64,7 +61,6 @@ if (currentPage === 'timeline' && pageQuery.get('view') === 'finance') state.tim
 if (currentPage === 'knowledge') state.knowledgeArticle = pageQuery.get('article') || null;
 
 function renderApp() {
-  cancelDirectoryPageSizeSync();
   if (homeFeaturedRefreshTimer) {
     window.clearTimeout(homeFeaturedRefreshTimer);
     homeFeaturedRefreshTimer = null;
@@ -90,14 +86,6 @@ function renderApp() {
   bindKnowledgeControls(renderApp);
   bindKnowledgeToc();
 
-  if (!directoryResizeBound) {
-    window.addEventListener('resize', () => {
-      if (currentPage === 'home') scheduleDirectoryPageSizeSync();
-    });
-    directoryResizeBound = true;
-  }
-
-  if (currentPage === 'home') scheduleDirectoryPageSizeSync();
   if (currentPage === 'gallery') bindGalleryScrollState();
   if (currentPage === 'home') {
     const fifteenMinutes = 15 * 60 * 1000;
@@ -136,7 +124,6 @@ function bindControls() {
       const value = searchInput.value.trim();
       if (value !== state.query) {
         state.query = value;
-        state.directoryPage = 1;
         state.timelinePage = 1;
         renderApp();
       }
@@ -151,6 +138,18 @@ function bindControls() {
   }
 
   if (currentPage === 'gallery') {
+    const galleryPage = document.querySelector('.gallery-page');
+    const mobileSearchToggle = document.getElementById('galleryMobileSearchToggle');
+    mobileSearchToggle?.addEventListener('click', () => {
+      if (!galleryPage) return;
+      const open = !galleryPage.classList.contains('is-mobile-search-open');
+      galleryPage.classList.toggle('is-mobile-search-open', open);
+      mobileSearchToggle.setAttribute('aria-expanded', String(open));
+      mobileSearchToggle.setAttribute('aria-label', open ? '收起搜索' : '打开搜索');
+      if (open) searchInput?.focus();
+      else searchInput?.blur();
+    });
+
     document.querySelectorAll('button[data-gallery-view]').forEach(button => {
       button.addEventListener('click', () => {
         const view = button.dataset.galleryView;
@@ -165,7 +164,6 @@ function bindControls() {
   document.querySelectorAll('#clearSearch, #clearSearchMobile').forEach(button => {
     button.addEventListener('click', () => {
       state.query = '';
-      state.directoryPage = 1;
       state.timelinePage = 1;
       renderApp();
     });
@@ -218,7 +216,6 @@ function bindControls() {
   document.querySelectorAll('[data-select-option]').forEach(option => {
     option.addEventListener('click', () => {
       state[option.dataset.selectFilter] = option.dataset.selectValue;
-      state.directoryPage = 1;
       renderApp();
     });
   });
@@ -227,7 +224,6 @@ function bindControls() {
       const sort = option.dataset.directorySort;
       if (!DIRECTORY_SORT_OPTIONS.some(item => item.value === sort)) return;
       state.directorySort = sort;
-      state.directoryPage = 1;
       renderApp();
     });
   });
@@ -238,20 +234,10 @@ function bindControls() {
     state.vaccine = '全部';
     state.sterilized = '全部';
     state.area = '全部';
-    state.directoryPage = 1;
     renderApp();
   });
 
   bindSummaryCards();
-  document.querySelectorAll('[data-directory-page]').forEach(button => {
-    button.addEventListener('click', () => {
-      if (button.disabled) return;
-      const page = Number(button.dataset.directoryPage);
-      if (!Number.isInteger(page) || page < 1 || page === state.directoryPage) return;
-      state.directoryPage = page;
-      renderApp();
-    });
-  });
 }
 
 setDirectoryRenderApp(renderApp);

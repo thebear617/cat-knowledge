@@ -6,8 +6,6 @@ export const state = {
   area: '全部',
   selectedName: null,
   updatesExpanded: false,
-  directoryPage: 1,
-  directoryPageSize: null,
   directorySort: 'name',
   activeTab: 'gallery',
   galleryView: 'souvenir',

@@ -114,7 +114,7 @@
     "legacyCurrentNamesNotInApiCount": 7,
     "statusConflictCount": 0,
     "genderConflictCount": 0,
-    "relationshipCount": 41,
+    "relationshipCount": 76,
     "relationshipReviewCount": 0,
     "relationshipMultiLabelPairCount": 0,
     "apiAdoptionStatusCounts": {
@@ -3081,7 +3081,15 @@
           "聪明机灵"
         ],
         "description": "二x家族的一只橘白，在学校快递站生活着三只橘猫，根据个头大小（也可能是出现时间早晚）分别取名为二橘二橙二柑，二橘已经失踪。",
-        "relationships": [],
+        "relationships": [
+          {
+            "relatedCatName": "二柑",
+            "relation": "家族",
+            "confidence": "confirmed",
+            "evidence": "二橙与二柑同属“二x家族”快递站的三只橘猫群体。",
+            "source": "manual-confirmation"
+          }
+        ],
         "relationshipHints": [
           {
             "relatedCatName": "二柑",
@@ -5036,10 +5044,10 @@
         "relationships": [
           {
             "relatedCatName": "二橙",
-            "relation": "同事",
+            "relation": "家族",
             "confidence": "confirmed",
-            "evidence": null,
-            "source": "screenshot-staging"
+            "evidence": "二柑与二橙同属“二x家族”快递站的三只橘猫群体。",
+            "source": "manual-confirmation"
           }
         ],
         "relationshipHints": [
@@ -11882,7 +11890,22 @@
           "软萌好盘"
         ],
         "description": "温顺胆小 薛定谔的亲人\n毛色鲜艳的虎斑橘猫\n20年秋出生，胖琥一胎儿子 大头的好朋咪 小刀疤前夫\n因为小时候长相、毛色都非常漂亮得名\n喜欢被拍屁股（大家记得轻一点）\n时而亲人时而怂，命里无时莫强求",
-        "relationships": [],
+        "relationships": [
+          {
+            "relatedCatName": "胆小橘",
+            "relation": "兄弟姐妹",
+            "confidence": "confirmed",
+            "evidence": "简介明确写明漂亮橘与胆小橘是孪生兄弟。",
+            "source": "manual-confirmation"
+          },
+          {
+            "relatedCatName": "胖琥",
+            "relation": "妈妈",
+            "confidence": "confirmed",
+            "evidence": "简介明确写明漂亮橘是胖琥一胎儿子。",
+            "source": "manual-confirmation"
+          }
+        ],
         "relationshipHints": [
           {
             "relatedCatName": "小刀",
@@ -13650,7 +13673,15 @@
           "喜欢贴贴"
         ],
         "description": "2026.1更新：这个冬天袜袜已经找到了温暖的家，更名为默默，开启荣华富贵十五年咪生\n麻薯的孩子，大耳朵豆豆眉小黑猫。因为一只脚沾满沥青且受伤，医生说今后可能会不长毛（后来长出来了），冬天要穿袜子而得名。",
-        "relationships": [],
+        "relationships": [
+          {
+            "relatedCatName": "棉花糖",
+            "relation": "兄弟姐妹",
+            "confidence": "confirmed",
+            "evidence": "袜袜与棉花糖均有明确记录为麻薯的孩子。",
+            "source": "manual-confirmation"
+          }
+        ],
         "relationshipHints": [
           {
             "relatedCatName": "麻薯",
@@ -14793,7 +14824,22 @@
           "生人勿近"
         ],
         "description": "胖琥的第一胎，漂亮橘的孪生兄弟，胆小怕人。发生过“迎男而上”的行为——骑plj。22年腿上受伤，由于不让人接近故无法医治，伤情恶化后失踪。",
-        "relationships": [],
+        "relationships": [
+          {
+            "relatedCatName": "漂亮橘",
+            "relation": "兄弟姐妹",
+            "confidence": "confirmed",
+            "evidence": "简介明确写明胆小橘是漂亮橘的孪生兄弟。",
+            "source": "manual-confirmation"
+          },
+          {
+            "relatedCatName": "胖琥",
+            "relation": "妈妈",
+            "confidence": "confirmed",
+            "evidence": "简介明确写明胆小橘是胖琥的第一胎。",
+            "source": "manual-confirmation"
+          }
+        ],
         "relationshipHints": [
           {
             "relatedCatName": "漂亮橘",
@@ -15763,7 +15809,29 @@
           "泡图书馆"
         ],
         "description": "阴阳圆脸玳瑁，胖乎乎很松软，手感特别好，非常慈祥且稳重的lady咪，对人类很包容。曾经在图书馆抚养长大了两批孩子，绝育后在逐日工程和二头过上了一段姐弟和睦的时光。2024年五月失踪。",
-        "relationships": [],
+        "relationships": [
+          {
+            "relatedCatName": "胆小橘",
+            "relation": "儿子",
+            "confidence": "confirmed",
+            "evidence": "胆小橘简介明确写明是胖琥的第一胎。",
+            "source": "manual-confirmation"
+          },
+          {
+            "relatedCatName": "漂亮橘",
+            "relation": "儿子",
+            "confidence": "confirmed",
+            "evidence": "漂亮橘简介明确写明是胖琥一胎儿子。",
+            "source": "manual-confirmation"
+          },
+          {
+            "relatedCatName": "黑子",
+            "relation": "女儿",
+            "confidence": "confirmed",
+            "evidence": "黑子简介明确写明是胖琥的二胎女儿。",
+            "source": "manual-confirmation"
+          }
+        ],
         "relationshipHints": [
           {
             "relatedCatName": "二头",
@@ -16401,7 +16469,15 @@
           "生人勿近"
         ],
         "description": "黄眼睛白面馒头一只，焦糖的儿子，银杏的兄弟，2025年春天出生，2025年11月绝育",
-        "relationships": [],
+        "relationships": [
+          {
+            "relatedCatName": "银杏",
+            "relation": "兄弟姐妹",
+            "confidence": "confirmed",
+            "evidence": "简介明确写明奶霜是银杏的兄弟。",
+            "source": "manual-confirmation"
+          }
+        ],
         "relationshipHints": [
           {
             "relatedCatName": "银杏",
@@ -16607,7 +16683,15 @@
           "生人勿近"
         ],
         "description": "焦糖的女儿，奶霜的姐妹，亮橙色眼睛的纯橘，微亲人，偶尔可摸。2025年春天生于竹园，2025年11月绝育",
-        "relationships": [],
+        "relationships": [
+          {
+            "relatedCatName": "奶霜",
+            "relation": "兄弟姐妹",
+            "confidence": "confirmed",
+            "evidence": "简介明确写明银杏是奶霜的姐妹。",
+            "source": "manual-confirmation"
+          }
+        ],
         "relationshipHints": [
           {
             "relatedCatName": "奶霜",
@@ -17280,7 +17364,15 @@
           "生人勿近"
         ],
         "description": "绝育前是奶茶的追求者而得名\n熟睡时可以随意摸的大黑团子\n警惕的黑咪，害怕大动静，俯冲可能会吓到他\n爱玩逗猫棒，弹跳力惊人\n",
-        "relationships": [],
+        "relationships": [
+          {
+            "relatedCatName": "喵特勒",
+            "relation": "兄弟姐妹",
+            "confidence": "confirmed",
+            "evidence": "喵特勒简介明确写明是深情哥的兄弟。",
+            "source": "manual-confirmation"
+          }
+        ],
         "relationshipHints": [],
         "updates": [
           {
@@ -18004,7 +18096,15 @@
           "撒娇求撸"
         ],
         "description": "更新：2025.12.6已被领养，恭喜牛奶🥰\n2025.6出生，茶叶的儿子之一，因母亲人间蒸发而绝育名额还不够，遂被抓来凑数（已达到可绝育重量未发情，但是那一次本来没轮到给他绝育），性格非常好，猫德满分，软萌亲人",
-        "relationships": [],
+        "relationships": [
+          {
+            "relatedCatName": "茶叶",
+            "relation": "妈妈",
+            "confidence": "confirmed",
+            "evidence": "简介明确写明牛奶是茶叶的儿子之一。",
+            "source": "manual-confirmation"
+          }
+        ],
         "relationshipHints": [
           {
             "relatedCatName": "牛奶",
@@ -20099,7 +20199,15 @@
           "胆小怂包"
         ],
         "description": "麻薯最后一窝的女儿，性格胆小怕人，不过实在貌美",
-        "relationships": [],
+        "relationships": [
+          {
+            "relatedCatName": "袜袜",
+            "relation": "兄弟姐妹",
+            "confidence": "confirmed",
+            "evidence": "棉花糖与袜袜均有明确记录为麻薯的孩子。",
+            "source": "manual-confirmation"
+          }
+        ],
         "relationshipHints": [
           {
             "relatedCatName": "麻薯",
@@ -20698,7 +20806,15 @@
           "喜欢贴贴"
         ],
         "description": "三三当街生下的女儿，很乖巧亲人。出生后不久就被预定自提，现已和叔叔小黑一起被领养回家，成为粤猫🐱",
-        "relationships": [],
+        "relationships": [
+          {
+            "relatedCatName": "三三",
+            "relation": "妈妈",
+            "confidence": "confirmed",
+            "evidence": "简介明确写明CC是三三当街生下的女儿。",
+            "source": "manual-confirmation"
+          }
+        ],
         "relationshipHints": [
           {
             "relatedCatName": "三三",
@@ -20922,7 +21038,22 @@
           "拈花惹草"
         ],
         "description": "方脸纯黑猫，出生在海棠宿舍，被同学领养，毕业后带走。\n发情后曾离家出走到丁香，成为黑姐的迷弟，死活不回家，因此主人给它佩戴红色项圈而得名\n比较警惕，但没什么攻击性，一开始和除了黑姐之外的人和猫关系都很紧张，在e猫黑姐的感染下渐渐融入，可以摸也可以和猫友好相处。\n现已和cc一起被领养回家，成为粤猫🐱",
-        "relationships": [],
+        "relationships": [
+          {
+            "relatedCatName": "茶叶",
+            "relation": "妈妈",
+            "confidence": "confirmed",
+            "evidence": "茶叶简介明确写明是项圈小黑的妈妈。",
+            "source": "manual-confirmation"
+          },
+          {
+            "relatedCatName": "三三",
+            "relation": "兄弟姐妹",
+            "confidence": "confirmed",
+            "evidence": "三三简介明确写明是项圈小黑的同胎姊妹。",
+            "source": "manual-confirmation"
+          }
+        ],
         "relationshipHints": [],
         "updates": [
           {
@@ -21266,7 +21397,15 @@
           "胆小怂包"
         ],
         "description": "细看长的很幽默的中分头\n很怕人，行踪诡秘，因此失踪很久才发觉",
-        "relationships": [],
+        "relationships": [
+          {
+            "relatedCatName": "喵特勒",
+            "relation": "兄弟姐妹",
+            "confidence": "confirmed",
+            "evidence": "喵特勒简介明确写明是中分头的兄弟。",
+            "source": "manual-confirmation"
+          }
+        ],
         "relationshipHints": [],
         "updates": [
           {
@@ -21437,7 +21576,22 @@
           "生人勿近"
         ],
         "description": "中分头、深情哥的兄弟\n有一道斜刘海和八嘎胡\n很怕人，但是经常四处和猫打架\n25年春天疑似猫瘟去世\n据说茶叶的孩子牛奶、茶叶蛋是此咪的遗腹子",
-        "relationships": [],
+        "relationships": [
+          {
+            "relatedCatName": "深情哥",
+            "relation": "兄弟姐妹",
+            "confidence": "confirmed",
+            "evidence": "简介明确写明喵特勒是深情哥的兄弟。",
+            "source": "manual-confirmation"
+          },
+          {
+            "relatedCatName": "中分头",
+            "relation": "兄弟姐妹",
+            "confidence": "confirmed",
+            "evidence": "简介明确写明喵特勒是中分头的兄弟。",
+            "source": "manual-confirmation"
+          }
+        ],
         "relationshipHints": [
           {
             "relatedCatName": "深情哥",
@@ -22065,7 +22219,15 @@
           "聪明机灵"
         ],
         "description": "黑子和太君的独苗苗，继承了父亲的八嘎胡\n很黏妈妈，很活泼，长大点儿开始亲人了\n22年寒假被狗群咬死",
-        "relationships": [],
+        "relationships": [
+          {
+            "relatedCatName": "黑子",
+            "relation": "妈妈",
+            "confidence": "confirmed",
+            "evidence": "简介明确写明小八嘎是黑子和太君的独苗苗。",
+            "source": "manual-confirmation"
+          }
+        ],
         "relationshipHints": [
           {
             "relatedCatName": "太君",
@@ -23411,7 +23573,15 @@
           "热衷挑事"
         ],
         "description": "尾巴非常短粗的黑猫，因为是宗介的好朋咪而得名。宗介去世后追求过奶茶，还去逐日工程胖揍二头。",
-        "relationships": [],
+        "relationships": [
+          {
+            "relatedCatName": "宗介",
+            "relation": "好友",
+            "confidence": "confirmed",
+            "evidence": "简介明确写明黑介是因为宗介的好朋咪而得名。",
+            "source": "manual-confirmation"
+          }
+        ],
         "relationshipHints": [
           {
             "relatedCatName": "二头",
@@ -23664,7 +23834,15 @@
           "生人勿近"
         ],
         "description": "长的很俊秀但拳王，伸手必打。经常有两脚兽被它的外表欺骗，得到疫苗大礼包。因为小时候在综合楼之间玩而得名。24年4月在停车场被发现去世。",
-        "relationships": [],
+        "relationships": [
+          {
+            "relatedCatName": "黑介",
+            "relation": "好友",
+            "confidence": "confirmed",
+            "evidence": "黑介简介明确写明黑介是宗介的好朋咪。",
+            "source": "manual-confirmation"
+          }
+        ],
         "relationshipHints": [],
         "updates": [
           {
@@ -24022,7 +24200,29 @@
           "撒娇求撸"
         ],
         "description": "身材匀称的黄眼狸花，非常机灵亲人，绝世好猫，可抱可撸，喜欢被拍屁股。\n疑似茶叶的一胎女儿，项圈小黑的同胎姊妹，另说是一直纯色狸花一胎四只里的第三只。\n曾当街突然产子吓飞所有人。25年7月已被三三妈毕业自提，开启幸福喵生~",
-        "relationships": [],
+        "relationships": [
+          {
+            "relatedCatName": "茶叶",
+            "relation": "妈妈",
+            "confidence": "confirmed",
+            "evidence": "茶叶简介明确写明是三三的妈妈；三三简介也记载了这一家庭关系。",
+            "source": "manual-confirmation"
+          },
+          {
+            "relatedCatName": "项圈小黑",
+            "relation": "兄弟姐妹",
+            "confidence": "confirmed",
+            "evidence": "简介明确写明三三是项圈小黑的同胎姊妹。",
+            "source": "manual-confirmation"
+          },
+          {
+            "relatedCatName": "CC",
+            "relation": "女儿",
+            "confidence": "confirmed",
+            "evidence": "CC简介明确写明是三三当街生下的女儿。",
+            "source": "manual-confirmation"
+          }
+        ],
         "relationshipHints": [
           {
             "relatedCatName": "项圈小黑",
@@ -25342,7 +25542,22 @@
           "公认妈宝"
         ],
         "description": "胖琥的二胎女儿，在图书馆混了很久，有点胆小，生人勿近，但熟了之后会发现其实是娇滴滴的笨蛋甜妹。",
-        "relationships": [],
+        "relationships": [
+          {
+            "relatedCatName": "胖琥",
+            "relation": "妈妈",
+            "confidence": "confirmed",
+            "evidence": "简介明确写明黑子是胖琥的二胎女儿。",
+            "source": "manual-confirmation"
+          },
+          {
+            "relatedCatName": "小八嘎",
+            "relation": "儿子",
+            "confidence": "confirmed",
+            "evidence": "小八嘎简介明确写明是黑子的独苗苗。",
+            "source": "manual-confirmation"
+          }
+        ],
         "relationshipHints": [
           {
             "relatedCatName": "胖琥",
@@ -25542,7 +25757,15 @@
           "旋饭狂魔"
         ],
         "description": "麻薯的孩子，大耳朵大眼睛橘猫。2025.9被福福妈@佩可和福福（xhs同名）自提，成为三胎家庭老幺。",
-        "relationships": [],
+        "relationships": [
+          {
+            "relatedCatName": "芝麻",
+            "relation": "兄弟姐妹",
+            "confidence": "confirmed",
+            "evidence": "Miko与芝麻均有明确记录为麻薯的孩子。",
+            "source": "manual-confirmation"
+          }
+        ],
         "relationshipHints": [
           {
             "relatedCatName": "麻薯",
@@ -26367,7 +26590,15 @@
           "喜欢贴贴"
         ],
         "description": "来才的其中一个孩子，和大面包有一段不解之缘（疑似被大面包从窝里偷出来的），性格非常好，十分有猫德，现已被领养过上荣华富贵的生活。",
-        "relationships": [],
+        "relationships": [
+          {
+            "relatedCatName": "来才",
+            "relation": "妈妈",
+            "confidence": "confirmed",
+            "evidence": "简介明确写明曲奇是来才的其中一个孩子。",
+            "source": "manual-confirmation"
+          }
+        ],
         "relationshipHints": [
           {
             "relatedCatName": "大面包",
@@ -26590,7 +26821,29 @@
           "软萌好盘"
         ],
         "description": "曾在宿舍生活，被海棠毕业生弃养。\n曾生过三胎，是项圈小黑和三三的妈妈\n亲人聪明，在要绝育的前一天晚上人间蒸发，至今未找到，留下三个孩子，其中一个亲人的孩子替母受过，小小年纪失去了蛋蛋。",
-        "relationships": [],
+        "relationships": [
+          {
+            "relatedCatName": "牛奶",
+            "relation": "儿子",
+            "confidence": "confirmed",
+            "evidence": "牛奶简介明确写明是茶叶的儿子之一。",
+            "source": "manual-confirmation"
+          },
+          {
+            "relatedCatName": "项圈小黑",
+            "relation": "儿子",
+            "confidence": "confirmed",
+            "evidence": "茶叶简介明确写明是项圈小黑的妈妈。",
+            "source": "manual-confirmation"
+          },
+          {
+            "relatedCatName": "三三",
+            "relation": "女儿",
+            "confidence": "confirmed",
+            "evidence": "茶叶简介明确写明是三三的妈妈。",
+            "source": "manual-confirmation"
+          }
+        ],
         "relationshipHints": [
           {
             "relatedCatName": "项圈小黑",
@@ -27710,7 +27963,15 @@
           "喵拳攻击"
         ],
         "description": "独来独往的胆小橘猫，至少有过五个孩子，均已被领养。25年已完成绝育。",
-        "relationships": [],
+        "relationships": [
+          {
+            "relatedCatName": "曲奇",
+            "relation": "儿子",
+            "confidence": "confirmed",
+            "evidence": "曲奇简介明确写明是来才的其中一个孩子。",
+            "source": "manual-confirmation"
+          }
+        ],
         "relationshipHints": [
           {
             "relatedCatName": "胆小橘",
@@ -28263,7 +28524,15 @@
           "撒娇求撸"
         ],
         "description": "*202511编：芝麻已经在领养家庭享受它的荣华富贵十五年！\n是大猫麻薯生的最后一窝小猫（麻薯已送去断情绝爱），性格非常好，麻薯带娃时不慎掉进沥青里所以现在身上还有沥青。因为妈妈叫麻薯，名字里有麻字，他又是奶牛猫有黑毛，所以叫芝麻。",
-        "relationships": [],
+        "relationships": [
+          {
+            "relatedCatName": "Miko",
+            "relation": "兄弟姐妹",
+            "confidence": "confirmed",
+            "evidence": "芝麻与Miko均有明确记录为麻薯的孩子。",
+            "source": "manual-confirmation"
+          }
+        ],
         "relationshipHints": [
           {
             "relatedCatName": "麻薯",
