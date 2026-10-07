@@ -33,6 +33,30 @@ let mainAreaScrollLock = null;
 let drawerScrollHideTimer = 0;
 let drawerStoryScrollHideTimer = 0;
 let drawerStoryScrollTarget = null;
+let drawerViewportFrame = 0;
+
+function syncDrawerViewportHeight() {
+  if (!drawer || drawer.hidden || !window.matchMedia('(max-width: 719px)').matches) {
+    document.documentElement.style.removeProperty('--drawer-viewport-height');
+    return;
+  }
+
+  const viewportHeight = window.visualViewport?.height || window.innerHeight;
+  if (!Number.isFinite(viewportHeight) || viewportHeight <= 0) return;
+  document.documentElement.style.setProperty('--drawer-viewport-height', `${Math.round(viewportHeight)}px`);
+}
+
+function scheduleDrawerViewportSync() {
+  if (drawerViewportFrame) return;
+  drawerViewportFrame = window.requestAnimationFrame(() => {
+    drawerViewportFrame = 0;
+    syncDrawerViewportHeight();
+  });
+}
+
+window.addEventListener('resize', scheduleDrawerViewportSync, { passive: true });
+window.visualViewport?.addEventListener('resize', scheduleDrawerViewportSync, { passive: true });
+window.visualViewport?.addEventListener('scroll', scheduleDrawerViewportSync, { passive: true });
 
 function hideDrawerScrollIndicator() {
   drawer?.classList.remove('is-scrolling');
@@ -709,7 +733,6 @@ function renderDrawerStory(cat) {
   const story = isEmptyStory
     ? `<div class="drawer-story drawer-story-empty drawer-story-empty-copy" role="status">
         <p>如果你看到这段话，就说明这只咪咪的故事还没有人书写，欢迎投稿。</p>
-        <small class="drawer-story-mobile-supplement">更多故事，等待继续记录，欢迎投稿</small>
       </div>`
     : `<div class="drawer-story-popover" data-story-popover>
         <p class="drawer-story" data-story-preview tabindex="-1">${escapeHtml(cat.description)}<span class="drawer-story-tail" data-story-tail></span></p>
@@ -758,6 +781,7 @@ function renderDrawer(cat, { updatesExpanded = state.updatesExpanded, animationO
   drawer.classList.toggle('drawer-opening-pending', shouldAnimate);
   drawer.hidden = false;
   drawerBackdrop.hidden = false;
+  syncDrawerViewportHeight();
   state.updatesExpanded = updatesExpanded;
 
   drawer.innerHTML = `
@@ -994,6 +1018,7 @@ function closeDrawer() {
     drawer.classList.remove('drawer-opening', 'drawer-opening-pending', 'drawer-closing');
     drawer.style.removeProperty('--drawer-origin-x');
     drawer.style.removeProperty('--drawer-origin-y');
+    document.documentElement.style.removeProperty('--drawer-viewport-height');
     document.body.classList.remove('drawer-open');
     unlockMainAreaScroll();
   };

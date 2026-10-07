@@ -2368,19 +2368,8 @@ select {
   text-align: left;
 }
 
-.drawer-story-empty-copy p,
-.drawer-story-empty-copy small {
+.drawer-story-empty-copy p {
   display: block;
-}
-
-.drawer-story-empty-copy small {
-  color: var(--drawer-muted);
-  font-size: .78em;
-  line-height: 1.5;
-}
-
-.drawer-story-empty-copy .drawer-story-mobile-supplement {
-  display: none;
 }
 
 .drawer-aliases {
@@ -9805,7 +9794,9 @@ button.chronicle-calendar-cell:focus-visible {
     bottom: 0;
     left: 0;
     width: 100% !important;
-    max-height: calc(100dvh - max(.75rem, env(safe-area-inset-top)));
+    height: auto;
+    max-height: calc(var(--drawer-viewport-height, 100dvh) - max(.75rem, env(safe-area-inset-top)));
+    box-sizing: border-box;
     overflow-y: auto;
     overscroll-behavior: contain;
     border-radius: 1.25rem 1.25rem 0 0;
@@ -10134,18 +10125,13 @@ button.chronicle-calendar-cell:focus-visible {
 
   .drawer-description-empty > .drawer-story-empty {
     flex: 0 0 auto;
-    min-height: 1.65em;
+    min-height: 0;
   }
 
   .drawer-description-empty > .drawer-story-empty-copy {
     align-items: flex-start;
     justify-content: flex-start;
     gap: .3rem;
-    min-height: calc(1.75em * 5);
-  }
-
-  .drawer-story-empty-copy .drawer-story-mobile-supplement {
-    display: block;
   }
 
   .drawer-story-bubble {
