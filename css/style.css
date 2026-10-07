@@ -1576,6 +1576,7 @@ select {
 
 .drawer-gender-badge {
   display: inline-flex;
+  flex: 0 0 auto;
   align-items: center;
   color: var(--drawer-blue);
   line-height: 1;
@@ -1583,9 +1584,12 @@ select {
 }
 
 .drawer-gender-badge b {
+  display: block;
+  flex: 0 0 auto;
   font-size: 1.95rem;
   font-weight: 600;
   line-height: 1;
+  transform-origin: center;
   transform: rotate(0deg);
 }
 
