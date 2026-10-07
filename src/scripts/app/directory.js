@@ -1191,6 +1191,12 @@ function openMaterialViewer(cat, initialIndex = 0, { materialFilter = 'all' } = 
   overlay.focus({ preventScroll: true });
 }
 
+function openGalleryMaterialCard(name, initialIndex = 0, materialFilter = state.galleryMaterialFilter || 'all') {
+  const cat = catProfiles.find(item => item.name === name);
+  if (!cat) return;
+  openMaterialViewer(cat, initialIndex, { materialFilter });
+}
+
 function openInspirationViewer(note) {
   const source = String(note?.cover || '').trim();
   if (!source) return;
@@ -1435,5 +1441,6 @@ export {
   bindCatCards,
   bindSummaryCards,
   closeDrawer,
-  openDrawer
+  openDrawer,
+  openGalleryMaterialCard
 };

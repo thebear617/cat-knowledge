@@ -4,14 +4,15 @@ import { bindProcurementControls } from './app/procurement.js';
 import { renderSuppliesTab, renderTimelineTab, bindOperationsControls } from './app/operations.js';
 import { renderMiscTab, bindMiscControls } from './app/misc.js';
 import { renderScienceTab, bindKnowledgeControls, bindKnowledgeToc } from './app/knowledge.js';
-import { GALLERY_VIEW_IDS, MATERIAL_FILTER_IDS, renderGalleryTab, bindGalleryControls, setGalleryRenderApp } from './app/gallery.js';
+import { GALLERY_VIEW_IDS, MATERIAL_FILTER_IDS, renderGalleryTab, bindGalleryControls, setGalleryRenderApp, mountGalleryMasonry, unmountGalleryMasonry } from './app/gallery.js';
 import {
   renderHomeTab,
   bindCatCards,
   bindSummaryCards,
   DIRECTORY_SORT_OPTIONS,
   setDirectoryRenderApp,
-  closeDrawer
+  closeDrawer,
+  openGalleryMaterialCard
 } from './app/directory.js';
 import { renderSidebar, closeSidebar } from './app/navigation.js';
 
@@ -66,6 +67,7 @@ function renderApp() {
     homeFeaturedRefreshTimer = null;
   }
 
+  if (currentPage === 'gallery') unmountGalleryMasonry();
   const content = PAGE_RENDERERS[currentPage]();
   app.classList.toggle('knowledge-app-shell', currentPage === 'knowledge');
   app.classList.toggle('operations-app-shell', currentPage === 'supplies');
@@ -76,6 +78,10 @@ function renderApp() {
   app.classList.toggle('home-app-shell', currentPage === 'home');
   app.classList.toggle('gallery-app-shell', currentPage === 'gallery');
   app.innerHTML = `<div class="tab-panel">${content}</div>`;
+
+  if (currentPage === 'gallery') {
+    mountGalleryMasonry((catName, materialIndex) => openGalleryMaterialCard(catName, materialIndex));
+  }
 
   renderSidebar();
   bindControls();

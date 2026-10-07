@@ -2,6 +2,7 @@ import { catProfiles } from '../../../js/cats.js';
 import inspirationNotes from '../../data/inspirations.json';
 import { state } from './state.js';
 import { escapeHtml, normalize } from './shared.js';
+import { mountGalleryMasonry as mountReactGalleryMasonry, unmountGalleryMasonry as unmountReactGalleryMasonry } from '../components/GalleryMasonry.jsx';
 
 const BASE_URL = `${import.meta.env.BASE_URL.replace(/\/?$/, '/')}`;
 const SOURCE_NAME = 'XDU 猫猫';
@@ -281,7 +282,7 @@ function renderGalleryCard(item, view) {
     return `
       <button class="cat-card gallery-card gallery-card--${variant} gallery-card--souvenir" type="button" data-cat-name="${escapeHtml(cat.name)}" data-material-index="${imageIndex}" aria-label="查看${escapeHtml(cat.name)}的${materialLabel}照片">
         <span class="gallery-card-media">
-          <img src="${escapeHtml(cdnUrl(thumbnailPath(image)))}" alt="${escapeHtml(cat.name)}" loading="lazy" decoding="async">
+          <img src="${escapeHtml(cdnUrl(thumbnailPath(image)))}" alt="${escapeHtml(cat.name)}" loading="eager" decoding="async">
         </span>
       </button>
     `;
@@ -647,6 +648,33 @@ async function deleteInspirationRecord(note) {
   return result;
 }
 
+function getMaterialMasonryItems() {
+  const view = getActiveGalleryView();
+  if (!MATERIAL_VIEW_IDS.has(view.id)) return [];
+  const materialFilter = getActiveMaterialFilter();
+  return getGalleryItems(view).map(item => ({
+    key: `${item.cat.name}:${item.image}`,
+    catName: item.cat.name,
+    materialIndex: item.imageIndex,
+    src: cdnUrl(thumbnailPath(item.image)),
+    variant: item.variant,
+    materialLabel: materialFilter === 'postcard' ? '猫猫明信片' : '猫猫素材'
+  }));
+}
+
+function mountGalleryMasonry(onOpen) {
+  const root = document.getElementById('gallery-masonry-root');
+  if (!root) return;
+  mountReactGalleryMasonry(root, {
+    items: getMaterialMasonryItems(),
+    onOpen
+  });
+}
+
+function unmountGalleryMasonry() {
+  unmountReactGalleryMasonry();
+}
+
 function renderGalleryTab() {
   const view = getActiveGalleryView();
   const items = getGalleryItems(view);
@@ -679,7 +707,7 @@ function renderGalleryTab() {
     ? `<button class="gallery-inspiration-add gallery-inspiration-add--nav" id="open-gallery-inspiration" type="button"><span aria-hidden="true">＋</span> 新增笔记</button>`
     : '';
   const masonryClass = MATERIAL_VIEW_IDS.has(view.id)
-    ? 'gallery-masonry gallery-masonry--souvenir'
+    ? 'gallery-masonry gallery-masonry--souvenir gallery-masonry--react-host'
     : view.id === 'inspiration'
       ? 'gallery-masonry gallery-masonry--inspiration'
       : 'gallery-masonry';
@@ -716,7 +744,9 @@ function renderGalleryTab() {
         ${materialFilterNav}
       </header>
       ${items.length
-        ? `<div class="${masonryClass}" aria-label="${escapeHtml(view.label)}瀑布流">${items.map(item => renderGalleryCard(item, view)).join('')}</div>`
+        ? MATERIAL_VIEW_IDS.has(view.id)
+          ? `<div id="gallery-masonry-root" class="${masonryClass}" aria-label="${escapeHtml(view.label)}瀑布流"></div>`
+          : `<div class="${masonryClass}" aria-label="${escapeHtml(view.label)}瀑布流">${items.map(item => renderGalleryCard(item, view)).join('')}</div>`
         : `<div class="gallery-empty"><strong>${escapeHtml(emptyText)}</strong><span>换个名字、区域或关键词试试。</span></div>`}
       ${renderInspirationComposer()}
     </section>
@@ -729,6 +759,8 @@ export {
   renderGalleryTab,
   bindGalleryControls,
   setGalleryRenderApp,
+  mountGalleryMasonry,
+  unmountGalleryMasonry,
   openInspirationEditor,
   deleteInspirationRecord
 };

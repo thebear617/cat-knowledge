@@ -10,7 +10,7 @@ const localOnlyPages = ['admin', 'timeline', 'misc', 'supplies', 'finance', 'kno
 export default defineConfig({
   site: 'https://thebear617.github.io',
   base: process.env.SITE_BASE || '/',
-  vite: { server: { strictPort: true }, plugins: [localCms()] },
+  vite: { server: { strictPort: true }, esbuild: { jsx: 'automatic' }, plugins: [localCms()] },
   output: 'static',
   integrations: [{
     name: 'remove-local-only-pages-from-static-output',

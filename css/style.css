@@ -221,6 +221,102 @@ select {
   padding: 1.2rem 1rem 3rem;
 }
 
+/* Keep a useful first paint visible while the client-side page renderer boots. */
+.app-loading-shell--gallery {
+  min-height: calc(100dvh - 4.2rem);
+  margin: -1.2rem -1rem -3rem;
+  padding: clamp(2.2rem, 5vw, 4.8rem) clamp(1.2rem, 3.3vw, 3.8rem) 3.4rem;
+  color: #9b826c;
+  background-color: #f7f0e4;
+  background-image: radial-gradient(rgba(112, 78, 46, .07) .55px, transparent .7px), linear-gradient(90deg, rgba(170, 133, 89, .06), transparent 14%, transparent 86%, rgba(170, 133, 89, .06));
+  background-size: 5px 5px, 100% 100%;
+}
+
+.app-loading-search {
+  width: min(100%, 1420px);
+  height: 8rem;
+  margin: 0 auto;
+  border: 1px solid rgba(181, 158, 132, .35);
+  border-radius: 1.2rem;
+  background: rgba(255, 252, 246, .52);
+  animation: app-loading-pulse 1.4s ease-in-out infinite alternate;
+}
+
+.app-loading-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+  width: min(100%, 26rem);
+  margin: 2.4rem auto 1.6rem;
+}
+
+.app-loading-tabs span {
+  width: 5.4rem;
+  height: .85rem;
+  border-radius: 999px;
+  background: rgba(181, 158, 132, .3);
+}
+
+.app-loading-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1rem;
+  width: min(100%, 1420px);
+  margin: 0 auto;
+}
+
+.app-loading-grid span {
+  min-height: 12rem;
+  border-radius: .7rem;
+  background: rgba(255, 252, 246, .56);
+  animation: app-loading-pulse 1.4s ease-in-out infinite alternate;
+}
+
+.app-loading-grid span:nth-child(2n) { animation-delay: .18s; }
+.app-loading-grid span:nth-child(3n) { animation-delay: .36s; }
+
+.app-loading-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .45rem;
+  margin: 1.4rem auto 0;
+  font-size: .78rem;
+}
+
+.app-loading-spinner {
+  width: .8rem;
+  height: .8rem;
+  border: 1px solid rgba(155, 130, 108, .3);
+  border-top-color: #9b826c;
+  border-radius: 50%;
+  animation: app-loading-spin .8s linear infinite;
+}
+
+@keyframes app-loading-pulse {
+  from { opacity: .58; }
+  to { opacity: .92; }
+}
+
+@keyframes app-loading-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 719px) {
+  .app-loading-shell--gallery {
+    min-height: 100dvh;
+    margin: calc(-1.2rem - env(safe-area-inset-top)) -1rem -3rem;
+    padding: calc(.75rem + env(safe-area-inset-top)) 1rem 2.2rem;
+  }
+
+  .app-loading-search { height: 5rem; }
+  .app-loading-tabs { gap: .55rem; margin: 1.2rem auto .9rem; }
+  .app-loading-tabs span { width: 3.5rem; height: .65rem; }
+  .app-loading-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .55rem; }
+  .app-loading-grid span { min-height: 7rem; border-radius: .55rem; }
+  .app-loading-label { margin-top: .9rem; }
+}
+
 .app-shell.operations-app-shell {
   width: 80%;
   max-width: none;
@@ -7168,6 +7264,31 @@ button.chronicle-calendar-cell:focus-visible {
 .gallery-empty strong { font-family: Georgia, "Songti SC", STSong, serif; font-size: 1.4rem; font-weight: 500; }
 .gallery-empty span { margin-top: .25rem; font-size: .82rem; }
 
+.gallery-load-more {
+  display: flex;
+  width: min(100%, 1420px);
+  min-height: 4.2rem;
+  align-items: center;
+  justify-content: center;
+  gap: .45rem;
+  margin: .2rem auto 0;
+  color: #9b826c;
+  font-size: .78rem;
+}
+
+.gallery-load-more-spinner {
+  width: .9rem;
+  height: .9rem;
+  border: 1.5px solid rgba(155, 130, 108, .3);
+  border-top-color: #9b826c;
+  border-radius: 50%;
+  animation: gallery-load-more-spin .8s linear infinite;
+}
+
+@keyframes gallery-load-more-spin {
+  to { transform: rotate(360deg); }
+}
+
 @media (max-width: 1100px) {
   .gallery-masonry { column-count: 4; }
   .gallery-masonry--souvenir,
@@ -7178,6 +7299,26 @@ button.chronicle-calendar-cell:focus-visible {
   .gallery-masonry { column-count: 3; }
   .gallery-masonry--souvenir,
   .gallery-masonry--inspiration { column-count: 4; }
+}
+
+.gallery-masonry--souvenir.gallery-masonry--react-host {
+  column-count: initial;
+  column-gap: 0;
+}
+
+.gallery-masonry-react-grid {
+  position: relative;
+  width: 100%;
+}
+
+.gallery-masonry--react-host .gallery-card {
+  margin-bottom: 0;
+}
+
+.gallery-masonry--react-host .gallery-load-more {
+  width: 100%;
+  margin-right: 0;
+  margin-left: 0;
 }
 
 @media (max-width: 719px) {
