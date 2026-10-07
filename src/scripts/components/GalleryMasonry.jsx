@@ -2,16 +2,11 @@ import React, {
   useCallback,
   useEffect,
   useLayoutEffect,
-  useMemo,
   useRef,
   useState
 } from 'react';
 import { createRoot } from 'react-dom/client';
 import { useMasonry, usePositioner, useResizeObserver } from 'masonic';
-
-const INITIAL_BATCH_SIZE = 24;
-const LOAD_BATCH_SIZE = 20;
-const LOAD_TRIGGER_DISTANCE = 240;
 
 function getColumnCount() {
   if (window.innerWidth <= 719) return 2;
@@ -22,6 +17,10 @@ function getColumnCount() {
 function getColumnGutter() {
   if (window.innerWidth <= 719) return 8;
   return Math.max(8.8, Math.min(14.4, window.innerWidth * .01));
+}
+
+function getOverscanBy(columnCount) {
+  return columnCount <= 2 ? 1 : 3;
 }
 
 function readGridWidth(element) {
@@ -67,10 +66,12 @@ function useGalleryGridSize(hostRef) {
 }
 
 function useMainAreaScroll(hostRef) {
-  const [scrollState, setScrollState] = useState({ scrollTop: 0, viewportScrollTop: 0, height: 1, scrollHeight: 0, hasUserScrolled: false });
+  const [scrollState, setScrollState] = useState({ scrollTop: 0, viewportScrollTop: 0, height: 1, scrollHeight: 0, hasUserScrolled: false, isScrolling: false });
   const previousScrollTop = useRef(0);
   const userScrolled = useRef(false);
+  const scrolling = useRef(false);
   const frame = useRef(0);
+  const scrollStopTimer = useRef(0);
 
   useEffect(() => {
     const mainArea = document.querySelector('.main-area');
@@ -85,6 +86,7 @@ function useMainAreaScroll(hostRef) {
       const nextScrollTop = Math.max(0, mainArea.scrollTop - hostOffset);
       const nextScrollHeight = mainArea.scrollHeight;
       const nextHasUserScrolled = userScrolled.current || mainArea.scrollTop > previousScrollTop.current + 1;
+      const nextIsScrolling = scrolling.current;
       userScrolled.current = nextHasUserScrolled;
       previousScrollTop.current = mainArea.scrollTop;
       setScrollState(previous => (
@@ -93,23 +95,35 @@ function useMainAreaScroll(hostRef) {
           && previous.height === mainArea.clientHeight
           && previous.scrollHeight === nextScrollHeight
           && previous.hasUserScrolled === nextHasUserScrolled
+          && previous.isScrolling === nextIsScrolling
           ? previous
-          : { scrollTop: nextScrollTop, viewportScrollTop: mainArea.scrollTop, height: mainArea.clientHeight, scrollHeight: nextScrollHeight, hasUserScrolled: nextHasUserScrolled }
+          : { scrollTop: nextScrollTop, viewportScrollTop: mainArea.scrollTop, height: mainArea.clientHeight, scrollHeight: nextScrollHeight, hasUserScrolled: nextHasUserScrolled, isScrolling: nextIsScrolling }
       ));
     };
 
-    const scheduleUpdate = () => {
+    const scheduleUpdate = isScrollEvent => {
+      if (isScrollEvent) {
+        scrolling.current = true;
+        if (scrollStopTimer.current) window.clearTimeout(scrollStopTimer.current);
+        scrollStopTimer.current = window.setTimeout(() => {
+          scrolling.current = false;
+          setScrollState(previous => previous.isScrolling ? { ...previous, isScrolling: false } : previous);
+        }, 120);
+      }
       if (frame.current) return;
       frame.current = window.requestAnimationFrame(update);
     };
 
-    mainArea.addEventListener('scroll', scheduleUpdate, { passive: true });
-    window.addEventListener('resize', scheduleUpdate, { passive: true });
+    const handleScroll = () => scheduleUpdate(true);
+    const handleResize = () => scheduleUpdate(false);
+    mainArea.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleResize, { passive: true });
     update();
     return () => {
-      mainArea.removeEventListener('scroll', scheduleUpdate);
-      window.removeEventListener('resize', scheduleUpdate);
+      mainArea.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
       if (frame.current) window.cancelAnimationFrame(frame.current);
+      if (scrollStopTimer.current) window.clearTimeout(scrollStopTimer.current);
     };
   }, [hostRef]);
 
@@ -131,7 +145,7 @@ function GalleryMaterialCard({ data, index, onOpen }) {
         <img
           src={data.src}
           alt={data.catName}
-          loading={index < data.columnCount ? 'eager' : 'lazy'}
+          loading="eager"
           fetchPriority={priority}
           decoding="async"
         />
@@ -143,12 +157,9 @@ function GalleryMaterialCard({ data, index, onOpen }) {
 function GalleryMasonry({ items, onOpen }) {
   const hostRef = useRef(null);
   const masonryRef = useRef(null);
-  const [loadedCount, setLoadedCount] = useState(Math.min(INITIAL_BATCH_SIZE, items.length));
-  const [isLoading, setIsLoading] = useState(false);
-  const lastLoadScrollTop = useRef(-Infinity);
   const size = useGalleryGridSize(hostRef);
   const scrollState = useMainAreaScroll(hostRef);
-  const visibleItems = useMemo(() => items.slice(0, loadedCount), [items, loadedCount]);
+  const overscanBy = getOverscanBy(size.columnCount);
   const positioner = usePositioner({
     width: size.width,
     columnCount: size.columnCount,
@@ -156,35 +167,6 @@ function GalleryMasonry({ items, onOpen }) {
     rowGutter: size.gutter
   }, [size.width, size.columnCount, size.gutter]);
   const resizeObserver = useResizeObserver(positioner);
-
-  useEffect(() => {
-    setLoadedCount(Math.min(INITIAL_BATCH_SIZE, items.length));
-    lastLoadScrollTop.current = -Infinity;
-    setIsLoading(false);
-  }, [items]);
-
-  useEffect(() => {
-    if (!scrollState.hasUserScrolled || loadedCount >= items.length) return;
-    const distanceToBottom = scrollState.scrollHeight - (scrollState.viewportScrollTop + scrollState.height);
-    if (distanceToBottom > LOAD_TRIGGER_DISTANCE) return;
-
-    // 一次滚动只请求一批。追加内容后滚动位置不会自动变大，必须等用户
-    // 继续向下滚动，才允许下一批触发，避免“加载中”状态自循环。
-    if (scrollState.viewportScrollTop <= lastLoadScrollTop.current + 8) return;
-    lastLoadScrollTop.current = scrollState.viewportScrollTop;
-    setIsLoading(true);
-    setLoadedCount(count => Math.min(count + LOAD_BATCH_SIZE, items.length));
-  }, [items.length, loadedCount, scrollState.hasUserScrolled, scrollState.height, scrollState.scrollHeight, scrollState.viewportScrollTop]);
-
-  useEffect(() => {
-    if (!isLoading) return undefined;
-    // 等新一批完成一次布局后再收起提示，避免状态刚切到“加载中”就被
-    // 同一轮 effect 立即清掉，也避免内容已追加但提示仍永久转圈。
-    const frame = window.requestAnimationFrame(() => {
-      setIsLoading(false);
-    });
-    return () => window.cancelAnimationFrame(frame);
-  }, [loadedCount, isLoading]);
 
   const renderItem = useCallback(({ data, index }) => (
     <GalleryMaterialCard
@@ -195,7 +177,7 @@ function GalleryMasonry({ items, onOpen }) {
   ), [onOpen, size.columnCount]);
 
   const masonry = useMasonry({
-    items: visibleItems,
+    items,
     positioner,
     resizeObserver,
     containerRef: masonryRef,
@@ -204,23 +186,16 @@ function GalleryMasonry({ items, onOpen }) {
     itemAs: 'div',
     itemHeightEstimate: 300,
     itemKey: data => data.key,
-    overscanBy: 1,
+    overscanBy,
     scrollTop: scrollState.scrollTop,
     height: scrollState.height,
-    isScrolling: Boolean(scrollState.hasUserScrolled),
+    isScrolling: scrollState.isScrolling,
     render: renderItem
   });
 
   return (
     <div ref={hostRef} className="gallery-masonry-react-host">
       {masonry}
-      {loadedCount < items.length && (
-        <div className={`gallery-load-more${isLoading ? '' : ' gallery-load-more--idle'}`} data-gallery-load-more role="status" aria-live="polite">
-          {isLoading
-            ? <><span className="gallery-load-more-spinner" aria-hidden="true"></span><span>加载中</span></>
-            : <span>继续下滑加载更多</span>}
-        </div>
-      )}
     </div>
   );
 }

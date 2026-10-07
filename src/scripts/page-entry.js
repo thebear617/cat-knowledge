@@ -5,6 +5,7 @@ import { renderSuppliesTab, renderTimelineTab, bindOperationsControls } from './
 import { renderMiscTab, bindMiscControls } from './app/misc.js';
 import { renderScienceTab, bindKnowledgeControls, bindKnowledgeToc } from './app/knowledge.js';
 import { GALLERY_VIEW_IDS, MATERIAL_FILTER_IDS, renderGalleryTab, bindGalleryControls, setGalleryRenderApp, mountGalleryMasonry, unmountGalleryMasonry } from './app/gallery.js';
+import { pageHref } from './app/routes.js';
 import {
   renderHomeTab,
   bindCatCards,
@@ -38,6 +39,7 @@ let galleryScrollFrame = 0;
 // after the page has cleared that layout change, and exit only near the top.
 const GALLERY_SCROLL_ENTER = 180;
 const GALLERY_SCROLL_EXIT = 6;
+const MOBILE_LAYOUT_BREAKPOINT = 720;
 
 state.activeTab = currentPage;
 const pageQuery = new URLSearchParams(window.location.search);
@@ -262,6 +264,10 @@ document.addEventListener('keydown', event => {
 });
 
 function start() {
+  if (currentPage === 'home' && window.innerWidth < MOBILE_LAYOUT_BREAKPOINT) {
+    window.location.replace(pageHref('gallery'));
+    return;
+  }
   renderApp();
 }
 
