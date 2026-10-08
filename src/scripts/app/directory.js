@@ -1101,20 +1101,50 @@ function bindPhotoViewerGestures(overlay, image) {
   let pinchStartScale = 1;
   let scale = 1;
   let rotation = 0;
+  let translateX = 0;
+  let translateY = 0;
+  let dragPointerId = null;
+  let dragStartX = 0;
+  let dragStartY = 0;
+  let dragStartTranslateX = 0;
+  let dragStartTranslateY = 0;
+
+  const stage = image.parentElement;
 
   const clampScale = value => Math.min(Math.max(value, 1), 4);
   const distanceBetween = (first, second) => Math.hypot(
     second.x - first.x,
     second.y - first.y
   );
+  const clampTranslation = (x, y) => {
+    const baseWidth = image.offsetWidth || image.getBoundingClientRect().width / Math.max(scale, 1);
+    const baseHeight = image.offsetHeight || image.getBoundingClientRect().height / Math.max(scale, 1);
+    const quarterTurn = Math.abs(rotation % 180) === 90;
+    const transformedWidth = (quarterTurn ? baseHeight : baseWidth) * scale;
+    const transformedHeight = (quarterTurn ? baseWidth : baseHeight) * scale;
+    const viewportWidth = stage?.clientWidth || overlay.clientWidth;
+    const viewportHeight = stage?.clientHeight || overlay.clientHeight;
+    const maxX = Math.max(0, (transformedWidth - viewportWidth) / 2);
+    const maxY = Math.max(0, (transformedHeight - viewportHeight) / 2);
+
+    return {
+      x: Math.min(Math.max(x, -maxX), maxX),
+      y: Math.min(Math.max(y, -maxY), maxY)
+    };
+  };
   const applyTransform = () => {
-    image.style.transform = scale === 1 && rotation === 0
+    const position = clampTranslation(translateX, translateY);
+    translateX = position.x;
+    translateY = position.y;
+    image.style.transform = scale === 1 && rotation === 0 && translateX === 0 && translateY === 0
       ? 'none'
-      : `rotate(${rotation}deg) scale(${scale})`;
+      : `translate3d(${translateX}px, ${translateY}px, 0) rotate(${rotation}deg) scale(${scale})`;
   };
   const reset = () => {
     scale = 1;
     rotation = 0;
+    translateX = 0;
+    translateY = 0;
     pinchStartDistance = 0;
     pinchStartScale = 1;
     applyTransform();
@@ -1138,6 +1168,14 @@ function bindPhotoViewerGestures(overlay, image) {
     if (event.pointerType === 'mouse' && event.button !== 0) return;
     pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
     image.setPointerCapture?.(event.pointerId);
+    if (pointers.size === 1) {
+      dragPointerId = event.pointerId;
+      dragStartX = event.clientX;
+      dragStartY = event.clientY;
+      dragStartTranslateX = translateX;
+      dragStartTranslateY = translateY;
+      return;
+    }
     if (pointers.size !== 2) return;
 
     const [first, second] = [...pointers.values()];
@@ -1148,20 +1186,36 @@ function bindPhotoViewerGestures(overlay, image) {
   const handlePointerMove = event => {
     if (!pointers.has(event.pointerId)) return;
     pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
-    if (pointers.size < 2 || pinchStartDistance <= 0) return;
+    if (pointers.size >= 2 && pinchStartDistance > 0) {
+      const [first, second] = [...pointers.values()];
+      const currentDistance = distanceBetween(first, second);
+      if (currentDistance <= 0) return;
+      event.preventDefault();
+      scale = clampScale(pinchStartScale * currentDistance / pinchStartDistance);
+      applyTransform();
+      return;
+    }
+    if (pointers.size !== 1 || event.pointerId !== dragPointerId || (scale === 1 && rotation === 0)) return;
 
-    const [first, second] = [...pointers.values()];
-    const currentDistance = distanceBetween(first, second);
-    if (currentDistance <= 0) return;
     event.preventDefault();
-    scale = clampScale(pinchStartScale * currentDistance / pinchStartDistance);
+    translateX = dragStartTranslateX + event.clientX - dragStartX;
+    translateY = dragStartTranslateY + event.clientY - dragStartY;
     applyTransform();
   };
   const handlePointerEnd = event => {
     pointers.delete(event.pointerId);
+    if (event.pointerId === dragPointerId) dragPointerId = null;
     if (pointers.size < 2) {
       pinchStartDistance = 0;
       pinchStartScale = scale;
+    }
+    if (pointers.size === 1) {
+      const [remainingId, remainingPointer] = [...pointers.entries()][0];
+      dragPointerId = remainingId;
+      dragStartX = remainingPointer.x;
+      dragStartY = remainingPointer.y;
+      dragStartTranslateX = translateX;
+      dragStartTranslateY = translateY;
     }
     if (image.hasPointerCapture?.(event.pointerId)) {
       image.releasePointerCapture(event.pointerId);
