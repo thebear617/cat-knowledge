@@ -1,6 +1,9 @@
 export const timelineEvents = [
+  { date: '2026-10-07', cat: '糯糯', type: '疫苗', notes: '第二针' },
+  { date: '2026-10-06', cat: '邪恶奶牛', type: '绝育' },
   { date: '2026-10-01', cat: '龙蛋', type: '送养' },
   { date: '2026-10-01', cat: '金琥、豆米、陶吉吉', type: '疫苗', location: '胡椒', notes: '第一针' },
+  { date: '2026-09-16', cat: '糯糯', type: '疫苗', notes: '第一针' },
   { date: '2026-08-01', cat: '赫兹', type: '救助', location: '博辰', notes: '接小猫赫兹出院。术后康复：后续需要坚持吃 441；复查安排：9 月 1 日带去医院复查；饮食情况：现在能正常吃小颗猫粮和湿粮了' },
   { date: '2026-07-04', cat: '胆小橘', type: '绝育', location: '它之乐' },
   { date: '2026-07-01', cat: '奶霜', type: '疫苗', location: '紫薇京和' },

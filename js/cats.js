@@ -7455,7 +7455,7 @@ export const catProfiles = [
     "name": "邪恶奶牛",
     "status": "就读中",
     "vaccine": "未接种",
-    "sterilized": "未绝育",
+    "sterilized": "已绝育（2026-10-06）",
     "notes": "—",
     "area": "丁香",
     "gender": "公",
@@ -8901,7 +8901,7 @@ export const catProfiles = [
   {
     "name": "糯糯",
     "status": "就读中",
-    "vaccine": "未接种",
+    "vaccine": "一针 2026-09-16；二针 2026-10-07；三针未接种",
     "sterilized": "未绝育",
     "notes": "待补充",
     "area": "待补充",
@@ -8916,7 +8916,7 @@ export const catProfiles = [
       { "src": "images/糯糯/糯糯7.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
     ],
     "personality": [],
-    "description": null,
+    "description": "26 年暑假出现在校医院，是一只性格很好的小三花，特别亲人，喜欢在校医院门前的椅子下晒太阳，也喜欢在竹园旁边的竹林游荡，嗓门特别大的一只小咪。",
     "relationships": [],
     "relationshipHints": [],
     "updates": [],

@@ -1049,28 +1049,12 @@ function closeDrawer() {
 function openPhotoViewer(img) {
   const fullSrc = img.dataset.full || img.src;
   const altText = String(img.alt || '').trim();
-  const indexMatch = altText.match(/(?:照片|照片预览)\s*(\d+)$/);
-  const photoIndex = indexMatch ? indexMatch[1] : '1';
   const catName = altText.replace(/\s+(?:照片|照片预览)\s*\d+$/, '').trim() || '猫咪照片';
-  const sourceName = decodeURIComponent(fullSrc.split('/').pop()?.split('?')[0] || 'photo.jpg');
-  const extension = sourceName.match(/\.[a-z0-9]+$/i)?.[0] || '.jpg';
-  const downloadName = `${catName}-${photoIndex}${extension}`;
-  const overlay = document.createElement('div');
-  overlay.className = 'photo-viewer';
-  overlay.innerHTML = `
-    <img src="${escapeHtml(fullSrc)}" alt="${escapeHtml(altText)}">
-    <div class="photo-viewer-actions">
-      <a class="photo-viewer-download" data-photo-download href="${escapeHtml(fullSrc)}" download="${escapeHtml(downloadName)}">下载原图</a>
-      <button class="photo-viewer-close" type="button" aria-label="关闭图片预览">×</button>
-    </div>
-  `;
-  overlay.addEventListener('click', () => overlay.remove());
-  overlay.querySelector('[data-photo-download]').addEventListener('click', event => event.stopPropagation());
-  overlay.querySelector('.photo-viewer-close').addEventListener('click', event => {
-    event.stopPropagation();
-    overlay.remove();
-  });
-  document.body.appendChild(overlay);
+  openMaterialViewer(
+    { name: catName },
+    0,
+    { records: [{ src: fullSrc }], materialLabelOverride: '照片', useThumbs: false }
+  );
 }
 
 function normalizeMaterial(image) {
@@ -1111,13 +1095,20 @@ function getMaterialThumbSource(source) {
   return source.replace(/([^/]+)$/, 'thumb/$1');
 }
 
-function openMaterialViewer(cat, initialIndex = 0, { materialFilter = 'all' } = {}) {
-  const materials = getMaterialRecords(cat, materialFilter);
+function openMaterialViewer(cat, initialIndex = 0, {
+  materialFilter = 'all',
+  records = null,
+  materialLabelOverride = '',
+  useThumbs = true
+} = {}) {
+  const materials = Array.isArray(records)
+    ? records.map(normalizeMaterial).filter(material => material?.src)
+    : getMaterialRecords(cat, materialFilter);
   const sources = materials.map(material => material.src);
   if (!cat || !sources.length) return;
 
   let index = Math.min(Math.max(Number(initialIndex) || 0, 0), sources.length - 1);
-  const materialLabel = materialFilter === 'postcard' ? '猫猫明信片' : '猫猫素材';
+  const materialLabel = materialLabelOverride || (materialFilter === 'postcard' ? '猫猫明信片' : '猫猫素材');
   const overlay = document.createElement('div');
   overlay.className = 'photo-viewer photo-viewer--materials';
   overlay.tabIndex = -1;
@@ -1163,7 +1154,7 @@ function openMaterialViewer(cat, initialIndex = 0, { materialFilter = 'all' } = 
     const source = sources[index];
     const material = materials[index];
     const fullSrc = cdnUrl(source);
-    image.src = cdnUrl(getMaterialThumbSource(source));
+    image.src = useThumbs ? cdnUrl(getMaterialThumbSource(source)) : fullSrc;
     image.loading = 'eager';
     image.decoding = 'async';
     rotation = 0;
@@ -1357,8 +1348,13 @@ function bindDrawerGallery(container, cat) {
   });
 
   const isMobile = window.matchMedia('(max-width: 719px)').matches;
+  const openViewer = () => openMaterialViewer(
+    cat,
+    index,
+    { records: images, materialLabelOverride: '照片', useThumbs: false }
+  );
   if (!isMobile) {
-    main.addEventListener('click', () => openPhotoViewer(image));
+    main.addEventListener('click', openViewer);
     return;
   }
 
@@ -1386,7 +1382,7 @@ function bindDrawerGallery(container, cat) {
       event.preventDefault();
       return;
     }
-    openPhotoViewer(image);
+    openViewer();
   });
 }
 
