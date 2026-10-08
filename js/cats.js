@@ -8830,7 +8830,7 @@ export const catProfiles = [
     "vaccine": "一针 2026-10-01（胡椒）；二针未接种；三针未接种",
     "sterilized": "未绝育",
     "notes": "待补充",
-    "area": "待补充",
+    "area": "海棠",
     "gender": "公",
     "images": [
       {"src":"images/陶吉吉/陶吉吉1.jpg","isPostcard":false,"author":"","photographedAt":""},
@@ -8855,7 +8855,7 @@ export const catProfiles = [
     "vaccine": "未接种",
     "sterilized": "已绝育（2026-09-16）",
     "notes": "待补充",
-    "area": "待补充",
+    "area": "丁香",
     "gender": "公",
     "images": [
       { "src": "images/羊粪蛋/羊粪蛋1.jpg", "isPostcard": false, "author": "", "photographedAt": "" }
@@ -8876,7 +8876,7 @@ export const catProfiles = [
     "vaccine": "一针 2026-10-01（胡椒）；二针未接种；三针未接种",
     "sterilized": "已绝育（2026-09-16）",
     "notes": "待补充",
-    "area": "待补充",
+    "area": "海棠",
     "gender": "母",
     "images": [
       {"src":"images/豆米/豆米1.jpg","isPostcard":false,"author":"","photographedAt":""},
@@ -8904,7 +8904,7 @@ export const catProfiles = [
     "vaccine": "一针 2026-09-16；二针 2026-10-07；三针未接种",
     "sterilized": "未绝育",
     "notes": "待补充",
-    "area": "待补充",
+    "area": "竹园",
     "gender": "母",
     "images": [
       { "src": "images/糯糯/糯糯1.jpg", "isPostcard": false, "author": "", "photographedAt": "" },
@@ -8931,7 +8931,7 @@ export const catProfiles = [
     "vaccine": "未接种",
     "sterilized": "未绝育",
     "notes": "待补充",
-    "area": "待补充",
+    "area": "海棠",
     "gender": "公",
     "images": [
       {"src":"images/笑笑/笑笑1.jpg","isPostcard":false,"author":"","photographedAt":""},

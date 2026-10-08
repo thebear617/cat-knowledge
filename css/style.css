@@ -6517,7 +6517,7 @@ button.chronicle-calendar-cell:focus-visible {
   top: 0;
   z-index: 8;
   isolation: isolate;
-  padding-bottom: clamp(1.7rem, 3.3vw, 2.8rem);
+  padding-bottom: clamp(.85rem, 1.65vw, 1.4rem);
   background: linear-gradient(#f7f0e4 77%, rgba(247, 240, 228, 0));
   transition: padding .25s ease;
 }
@@ -6720,7 +6720,9 @@ button.chronicle-calendar-cell:focus-visible {
   border-radius: 999px;
   background: rgba(255, 253, 249, .56);
   color: #887668;
-  font-size: .75rem;
+  font: inherit;
+  font-size: .78rem;
+  font-weight: 700;
   transition: border-color .18s ease, background .18s ease, color .18s ease, box-shadow .18s ease;
 }
 
@@ -6898,6 +6900,7 @@ button.chronicle-calendar-cell:focus-visible {
 }
 
 .gallery-inspiration-form input,
+.gallery-inspiration-form select,
 .gallery-inspiration-form textarea {
   width: 100%;
   min-width: 0;
@@ -6912,6 +6915,7 @@ button.chronicle-calendar-cell:focus-visible {
 }
 
 .gallery-inspiration-form input:focus,
+.gallery-inspiration-form select:focus,
 .gallery-inspiration-form textarea:focus {
   border-color: #b98d68;
   box-shadow: 0 0 0 3px rgba(185, 141, 104, .12);
@@ -7022,6 +7026,13 @@ button.chronicle-calendar-cell:focus-visible {
 }
 
 .gallery-scrolled .gallery-header > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* .gallery-mobile-topbar is display: contents on desktop, so layer its
+   actual children above the compact header backdrop as well. */
+.gallery-scrolled .gallery-mobile-topbar > * {
   position: relative;
   z-index: 1;
 }
@@ -7151,6 +7162,34 @@ button.chronicle-calendar-cell:focus-visible {
 .gallery-card-meta {
   display: block;
   margin-top: .2rem;
+  overflow: hidden;
+  color: #9a8069;
+  font-size: .72rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gallery-card-meta-row {
+  display: flex;
+  align-items: center;
+  gap: .42rem;
+  min-width: 0;
+  margin-top: .3rem;
+}
+
+.gallery-card-subcategory {
+  flex: 0 0 auto;
+  padding: .12rem .45rem;
+  border-radius: 999px;
+  background: #f4f1ec;
+  color: #756e66;
+  font-size: .68rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.gallery-card-date {
+  min-width: 0;
   overflow: hidden;
   color: #9a8069;
   font-size: .72rem;
@@ -7327,8 +7366,8 @@ button.chronicle-calendar-cell:focus-visible {
     background-size: 5px 5px, 100% 100%;
   }
 
-  .gallery-header { background: transparent; }
-  .gallery-page { padding: calc(.75rem + env(safe-area-inset-top)) 1rem 2.2rem; }
+  .gallery-header { padding-bottom: .55rem; background: transparent; }
+  .gallery-page { padding: calc(.375rem + env(safe-area-inset-top)) 1rem 2.2rem; }
   .gallery-mobile-topbar {
     position: relative;
     z-index: 1;
@@ -7413,9 +7452,9 @@ button.chronicle-calendar-cell:focus-visible {
   .gallery-search-count { display: none; }
   .gallery-topic-nav { justify-content: flex-start; align-items: stretch; gap: 1.35rem; height: 2.7rem; margin-top: 0; overflow-x: auto; padding: 0 .25rem; scrollbar-width: none; }
   .gallery-topic-nav::-webkit-scrollbar { display: none; }
-  .gallery-topic-nav > button:not(.gallery-inspiration-add) { display: flex; align-items: center; flex: 0 0 auto; height: 100%; font-size: .82rem; }
+  .gallery-topic-nav > button:not(.gallery-inspiration-add) { display: flex; align-items: center; flex: 0 0 auto; height: 100%; padding-bottom: .18rem; color: #332b25; font-size: .9rem; font-weight: 700; }
   .gallery-topic-nav .gallery-inspiration-add--nav { display: none; }
-  .gallery-material-filter { justify-content: flex-start; margin-top: .85rem; overflow-x: auto; padding: 0 .25rem .15rem; scrollbar-width: none; }
+  .gallery-material-filter { justify-content: flex-start; margin-top: .55rem; overflow-x: auto; padding: 0 .25rem .15rem; scrollbar-width: none; }
   .gallery-material-filter::-webkit-scrollbar { display: none; }
   .gallery-material-filter button { flex: 0 0 auto; }
   .gallery-masonry { --gallery-wall-gap: .75rem; column-count: 2; column-gap: var(--gallery-wall-gap); }

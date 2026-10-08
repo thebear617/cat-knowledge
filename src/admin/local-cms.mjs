@@ -4,6 +4,7 @@ import { execFile } from 'node:child_process';
 import os from 'node:os';
 import path from 'node:path';
 import { promisify } from 'node:util';
+import inspirationCategories from '../data/inspiration-categories.js';
 
 const ROOT = process.env.CMS_CONTENT_ROOT
   ? path.resolve(process.env.CMS_CONTENT_ROOT)
@@ -225,11 +226,6 @@ function currentLocalDate() {
 function safeInspirationId(value) {
   const normalized = String(value || '').trim().replace(/[^a-zA-Z0-9_-]+/g, '-').replace(/^-+|-+$/g, '');
   return normalized.slice(0, 80) || `inspiration-${Date.now()}`;
-}
-
-function parseInspirationTags(value) {
-  const values = Array.isArray(value) ? value : String(value || '').split(/[，,\n]/);
-  return [...new Set(values.map((tag) => String(tag).trim()).filter(Boolean))].slice(0, 20);
 }
 
 async function readInspirations() {
@@ -546,12 +542,14 @@ export default function localCms() {
             const sourceUrl = String(data.sourceUrl || '').trim();
             const createdAt = localDateValue();
             const note = String(data.note || '').trim();
-            const tags = parseInspirationTags(data.tags);
+            const category = String(data.category || '').trim();
+            const subcategory = String(data.subcategory || '').trim();
             const mediaType = data.mediaType === 'video' ? 'video' : 'image';
             const errors = [];
             if (!title) errors.push('标题不能为空');
             if (!/^https?:\/\//i.test(sourceUrl)) errors.push('链接必须是 http(s) 链接');
-            if (!tags.length) errors.push('至少填写一个标签');
+            if (!inspirationCategories[category]) errors.push('一级分类无效');
+            if (!inspirationCategories[category]?.includes(subcategory)) errors.push('二级分类无效');
             const image = decodeImageDataUrl(data.coverDataUrl);
             if (!image) errors.push('请选择一张不超过 12 MB 的 JPG、PNG、WebP 或 GIF 封面图');
             if (errors.length) return json(response, 400, { errors });
@@ -567,7 +565,8 @@ export default function localCms() {
               cover: `images/gallery/inspiration/${fileName}`,
               sourceUrl,
               title,
-              tags,
+              category,
+              subcategory,
               note,
               mediaType,
               createdAt,
@@ -588,20 +587,24 @@ export default function localCms() {
             const title = String(data.title || '').trim();
             const sourceUrl = String(data.sourceUrl || '').trim();
             const note = String(data.note || '').trim();
-            const tags = parseInspirationTags(data.tags);
+            const category = String(data.category || '').trim();
+            const subcategory = String(data.subcategory || '').trim();
             const mediaType = data.mediaType === 'video' ? 'video' : data.mediaType === 'image' ? 'image' : (current?.mediaType || 'image');
             const image = data.coverDataUrl ? decodeImageDataUrl(data.coverDataUrl) : null;
             const errors = [];
             if (!title) errors.push('标题不能为空');
             if (!/^https?:\/\//i.test(sourceUrl)) errors.push('链接必须是 http(s) 链接');
-            if (!tags.length) errors.push('至少填写一个标签');
+            if (!inspirationCategories[category]) errors.push('一级分类无效');
+            if (!inspirationCategories[category]?.includes(subcategory)) errors.push('二级分类无效');
             if (data.coverDataUrl && !image) errors.push('封面图必须是不超过 12 MB 的 JPG、PNG、WebP 或 GIF');
             if (errors.length) return json(response, 400, { errors });
 
+            const { tags: _legacyTags, ...currentWithoutLegacyTags } = current;
             const nextRecord = {
-              ...current,
+              ...currentWithoutLegacyTags,
               title,
-              tags,
+              category,
+              subcategory,
               sourceUrl,
               note,
               mediaType,

@@ -1,5 +1,6 @@
 import { catProfiles } from '../../../js/cats.js';
 import inspirationNotes from '../../data/inspirations.json';
+import inspirationCategories from '../../data/inspiration-categories.js';
 import { state } from './state.js';
 import { escapeHtml, normalize } from './shared.js';
 import { mountGalleryMasonry as mountReactGalleryMasonry, unmountGalleryMasonry as unmountReactGalleryMasonry } from '../components/GalleryMasonry.jsx';
@@ -21,6 +22,18 @@ const MATERIAL_FILTERS = [
   { id: 'standard', label: '未分类' }
 ];
 const MATERIAL_FILTER_IDS = MATERIAL_FILTERS.map(filter => filter.id);
+const ARCHIVE_FILTERS = [
+  { id: 'all', label: '喵校友' },
+  { id: 'status-已毕业', label: '已毕业' },
+  { id: 'status-就读中', label: '就读中' },
+  { id: 'sterilized-未绝育', label: '在逃咪' }
+];
+const ARCHIVE_FILTER_IDS = ARCHIVE_FILTERS.map(filter => filter.id);
+const INSPIRATION_CATEGORIES = [
+  { id: 'all', label: '全部' },
+  ...Object.keys(inspirationCategories).map(category => ({ id: category, label: category }))
+];
+const INSPIRATION_CATEGORY_IDS = INSPIRATION_CATEGORIES.map(category => category.id);
 const MATERIAL_VIEW_IDS = new Set(['souvenir']);
 let galleryInspirationPasteCleanup = null;
 let galleryRenderApp = null;
@@ -129,6 +142,27 @@ function getActiveMaterialFilter() {
     : 'all';
 }
 
+function getActiveArchiveFilter() {
+  return ARCHIVE_FILTER_IDS.includes(state.galleryArchiveFilter)
+    ? state.galleryArchiveFilter
+    : 'all';
+}
+
+function getActiveInspirationCategory() {
+  return INSPIRATION_CATEGORY_IDS.includes(state.galleryInspirationCategory)
+    ? state.galleryInspirationCategory
+    : 'all';
+}
+
+function matchesArchiveFilter(cat, filter = getActiveArchiveFilter()) {
+  if (filter === 'status-已毕业') return cat.status === '已毕业';
+  if (filter === 'status-就读中') return cat.status === '就读中';
+  if (filter === 'sterilized-未绝育') {
+    return cat.status === '就读中' && String(cat.sterilized || '').includes('未');
+  }
+  return true;
+}
+
 function getSearchHaystack(cat) {
   const updates = Array.isArray(cat.updates) ? cat.updates : [];
   return normalize([
@@ -145,15 +179,18 @@ function getInspirationSearchHaystack(note) {
   return normalize([
     note.title,
     note.note,
-    ...(Array.isArray(note.tags) ? note.tags : [])
+    note.category,
+    note.subcategory
   ].filter(Boolean).join(' '));
 }
 
 function getGalleryItems(view) {
   const query = normalize(state.query);
   if (view.id === 'inspiration') {
+    const category = getActiveInspirationCategory();
     return inspirationRecords
       .filter(note => !query || getInspirationSearchHaystack(note).includes(query))
+      .filter(note => category === 'all' || note.category === category)
       .sort((a, b) => String(b.createdAt || '').localeCompare(String(a.createdAt || '')))
       .map(note => ({
         note,
@@ -164,7 +201,8 @@ function getGalleryItems(view) {
 
   const cats = catProfiles
     .filter(cat => getLocalImages(cat).length > 0)
-    .filter(cat => !query || getSearchHaystack(cat).includes(query));
+    .filter(cat => !query || getSearchHaystack(cat).includes(query))
+    .filter(cat => view.id !== 'archive' || matchesArchiveFilter(cat));
 
   if (MATERIAL_VIEW_IDS.has(view.id)) {
     const materialFilter = getActiveMaterialFilter();
@@ -230,6 +268,26 @@ function getMaterialFilterCounts() {
   };
 }
 
+function getArchiveFilterCounts() {
+  const query = normalize(state.query);
+  const cats = catProfiles
+    .filter(cat => getLocalImages(cat).length > 0)
+    .filter(cat => !query || getSearchHaystack(cat).includes(query));
+  return Object.fromEntries(ARCHIVE_FILTERS.map(filter => [
+    filter.id,
+    cats.filter(cat => matchesArchiveFilter(cat, filter.id)).length
+  ]));
+}
+
+function getInspirationCategoryCounts() {
+  const query = normalize(state.query);
+  const records = inspirationRecords.filter(note => !query || getInspirationSearchHaystack(note).includes(query));
+  return Object.fromEntries(INSPIRATION_CATEGORIES.map(category => [
+    category.id,
+    category.id === 'all' ? records.length : records.filter(note => note.category === category.id).length
+  ]));
+}
+
 async function syncInspirationRecords() {
   if (!import.meta.env.DEV) return;
   if (inspirationSyncPromise) return inspirationSyncPromise;
@@ -257,19 +315,19 @@ function renderGalleryCard(item, view) {
   if (view.id === 'inspiration') {
     const note = item.note || {};
     const title = String(note.title || '查看灵感笔记');
-    const tags = Array.isArray(note.tags) ? note.tags.filter(Boolean).join(' · ') : '';
-    const meta = [tags, note.createdAt].filter(Boolean).join(' · ');
+    const subcategory = String(note.subcategory || '').trim();
+    const createdAt = String(note.createdAt || '').trim();
     const isVideo = note.mediaType === 'video';
     const mediaClass = isVideo ? ' gallery-card--inspiration-video' : '';
     return `
-      <button class="gallery-card gallery-card--${item.variant}${mediaClass} gallery-card--inspiration" type="button" data-inspiration-id="${escapeHtml(note.id || '')}" data-inspiration-cover="${escapeHtml(note.cover || '')}" data-inspiration-source-url="${escapeHtml(note.sourceUrl || '')}" data-inspiration-title="${escapeHtml(title)}" data-inspiration-tags="${escapeHtml(Array.isArray(note.tags) ? note.tags.join(', ') : '')}" data-inspiration-note="${escapeHtml(note.note || '')}" data-inspiration-media-type="${escapeHtml(note.mediaType || 'image')}" aria-label="查看${escapeHtml(title)}">
+      <button class="gallery-card gallery-card--${item.variant}${mediaClass} gallery-card--inspiration" type="button" data-inspiration-id="${escapeHtml(note.id || '')}" data-inspiration-cover="${escapeHtml(note.cover || '')}" data-inspiration-source-url="${escapeHtml(note.sourceUrl || '')}" data-inspiration-title="${escapeHtml(title)}" data-inspiration-category="${escapeHtml(note.category || '')}" data-inspiration-subcategory="${escapeHtml(note.subcategory || '')}" data-inspiration-note="${escapeHtml(note.note || '')}" data-inspiration-media-type="${escapeHtml(note.mediaType || 'image')}" aria-label="查看${escapeHtml(title)}">
         <span class="gallery-card-media">
           <img src="${escapeHtml(cdnUrl(item.image))}" alt="${escapeHtml(title)}" loading="lazy">
           ${isVideo ? '<span class="gallery-card-media-badge" aria-label="视频笔记"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 9 6-9 6V6Z"></path></svg></span>' : ''}
         </span>
         <span class="gallery-card-body">
           <strong class="gallery-card-title">${escapeHtml(title)}</strong>
-          ${meta ? `<span class="gallery-card-meta">${escapeHtml(meta)}</span>` : ''}
+          ${(subcategory || createdAt) ? `<span class="gallery-card-meta-row">${subcategory ? `<span class="gallery-card-subcategory">${escapeHtml(subcategory)}</span>` : ''}${createdAt ? `<span class="gallery-card-date">${escapeHtml(createdAt)}</span>` : ''}</span>` : ''}
           ${note.note ? `<span class="gallery-card-note">${escapeHtml(note.note)}</span>` : ''}
         </span>
       </button>
@@ -326,6 +384,13 @@ function renderGalleryCard(item, view) {
 
 function renderInspirationComposer() {
   if (!import.meta.env.DEV) return '';
+  const categoryOptions = Object.keys(inspirationCategories)
+    .map(category => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`)
+    .join('');
+  const firstCategory = Object.keys(inspirationCategories)[0] || '';
+  const subcategoryOptions = (inspirationCategories[firstCategory] || [])
+    .map(subcategory => `<option value="${escapeHtml(subcategory)}">${escapeHtml(subcategory)}</option>`)
+    .join('');
   return `
     <div class="gallery-inspiration-modal" id="gallery-inspiration-modal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="灵感笔记">
       <div class="gallery-inspiration-modal-backdrop" data-gallery-inspiration-close></div>
@@ -339,7 +404,8 @@ function renderInspirationComposer() {
             </div>
           </div>
           <label><span>标题 <small>必填</small></span><input id="gallery-inspiration-title" required placeholder="请输入标题"></label>
-          <label><span>标签 <small>必填</small></span><input id="gallery-inspiration-tags" autocomplete="off" required placeholder="多个标签用逗号分隔"></label>
+          <label><span>一级分类 <small>必填</small></span><select id="gallery-inspiration-category" required>${categoryOptions}</select></label>
+          <label><span>二级分类 <small>必填</small></span><select id="gallery-inspiration-subcategory" required>${subcategoryOptions}</select></label>
           <label class="gallery-inspiration-full"><span>链接 <small>必填</small></span><input id="gallery-inspiration-source-url" autocomplete="off" type="url" required placeholder="https://..."><button class="gallery-inspiration-fetch-cover" id="gallery-inspiration-fetch-cover" type="button" disabled>从链接提取封面</button></label>
           <label class="gallery-inspiration-full"><span>备注</span><textarea id="gallery-inspiration-note" placeholder="可留空"></textarea></label>
           <footer class="gallery-inspiration-form-footer">
@@ -415,6 +481,36 @@ function bindGalleryControls() {
     });
   });
 
+  document.querySelectorAll('button[data-gallery-archive-filter]').forEach(button => {
+    button.addEventListener('click', () => {
+      const filter = button.dataset.galleryArchiveFilter;
+      if (!ARCHIVE_FILTER_IDS.includes(filter) || filter === getActiveArchiveFilter()) return;
+      state.galleryView = 'archive';
+      state.galleryArchiveFilter = filter;
+      const url = new URL(window.location.href);
+      url.searchParams.set('view', 'archive');
+      if (filter === 'all') url.searchParams.delete('filter');
+      else url.searchParams.set('filter', filter);
+      window.history.replaceState({}, '', `${url.pathname}${url.search}${url.hash}`);
+      galleryRenderApp?.();
+    });
+  });
+
+  document.querySelectorAll('button[data-gallery-inspiration-category]').forEach(button => {
+    button.addEventListener('click', () => {
+      const category = button.dataset.galleryInspirationCategory;
+      if (!INSPIRATION_CATEGORY_IDS.includes(category) || category === getActiveInspirationCategory()) return;
+      state.galleryView = 'inspiration';
+      state.galleryInspirationCategory = category;
+      const url = new URL(window.location.href);
+      url.searchParams.set('view', 'inspiration');
+      if (category === 'all') url.searchParams.delete('filter');
+      else url.searchParams.set('filter', category);
+      window.history.replaceState({}, '', `${url.pathname}${url.search}${url.hash}`);
+      galleryRenderApp?.();
+    });
+  });
+
   const modal = document.getElementById('gallery-inspiration-modal');
   const openButton = document.getElementById('open-gallery-inspiration');
   if (!modal || !openButton) {
@@ -433,12 +529,22 @@ function bindGalleryControls() {
   const pasteTarget = document.getElementById('gallery-inspiration-paste-target');
   const coverRequirement = document.getElementById('gallery-inspiration-cover-requirement');
   const coverPrompt = document.getElementById('gallery-inspiration-cover-prompt');
+  const categoryInput = document.getElementById('gallery-inspiration-category');
+  const subcategoryInput = document.getElementById('gallery-inspiration-subcategory');
   const sourceInput = document.getElementById('gallery-inspiration-source-url');
   const fetchCoverButton = document.getElementById('gallery-inspiration-fetch-cover');
   let pastedCoverFile = null;
   let composerMode = 'create';
   let editingId = '';
   let resolvedMediaType = 'image';
+  const syncSubcategories = selectedSubcategory => {
+    const category = categoryInput.value;
+    const subcategories = inspirationCategories[category] || [];
+    subcategoryInput.innerHTML = subcategories
+      .map(subcategory => `<option value="${escapeHtml(subcategory)}">${escapeHtml(subcategory)}</option>`)
+      .join('');
+    if (subcategories.includes(selectedSubcategory)) subcategoryInput.value = selectedSubcategory;
+  };
   const closeModal = () => {
     modal.hidden = true;
     modal.setAttribute('aria-hidden', 'true');
@@ -455,7 +561,9 @@ function bindGalleryControls() {
     coverRequirement.textContent = editing ? '可选' : '必填';
     coverPrompt.textContent = editing ? '更换封面图 / Command+V' : '选择文件 / Command+V';
     document.getElementById('gallery-inspiration-title').value = editing ? String(note.title || '') : '';
-    document.getElementById('gallery-inspiration-tags').value = Array.isArray(note.tags) ? note.tags.join(', ') : String(note.tags || '');
+    const defaultCategory = Object.keys(inspirationCategories)[0] || '';
+    categoryInput.value = inspirationCategories[note.category] ? note.category : defaultCategory;
+    syncSubcategories(String(note.subcategory || ''));
     document.getElementById('gallery-inspiration-source-url').value = editing ? String(note.sourceUrl || '') : '';
     document.getElementById('gallery-inspiration-note').value = editing ? String(note.note || '') : '';
     fetchCoverButton.disabled = !sourceInput.value.trim();
@@ -555,6 +663,7 @@ function bindGalleryControls() {
   sourceInput?.addEventListener('input', () => {
     fetchCoverButton.disabled = !sourceInput.value.trim();
   });
+  categoryInput?.addEventListener('change', () => syncSubcategories());
   fetchCoverButton?.addEventListener('click', () => {
     void fetchCoverFromSource();
   });
@@ -588,7 +697,8 @@ function bindGalleryControls() {
     try {
       const payload = {
         title: document.getElementById('gallery-inspiration-title').value.trim(),
-        tags: document.getElementById('gallery-inspiration-tags').value.trim(),
+        category: categoryInput.value,
+        subcategory: subcategoryInput.value,
         sourceUrl,
         note: document.getElementById('gallery-inspiration-note').value.trim(),
         mediaType: resolvedMediaType,
@@ -678,9 +788,13 @@ function unmountGalleryMasonry() {
 function renderGalleryTab() {
   const view = getActiveGalleryView();
   const items = getGalleryItems(view);
-  const totalCats = catProfiles.filter(cat => getLocalImages(cat).length > 0).length;
   const materialFilter = view.id === 'souvenir' ? getActiveMaterialFilter() : 'all';
   const materialFilterCounts = view.id === 'souvenir' ? getMaterialFilterCounts() : null;
+  const archiveFilter = view.id === 'archive' ? getActiveArchiveFilter() : 'all';
+  const archiveFilterCounts = view.id === 'archive' ? getArchiveFilterCounts() : null;
+  const archiveFilterLabel = ARCHIVE_FILTERS.find(filter => filter.id === archiveFilter)?.label || '档案';
+  const inspirationCategory = view.id === 'inspiration' ? getActiveInspirationCategory() : 'all';
+  const inspirationCategoryCounts = view.id === 'inspiration' ? getInspirationCategoryCounts() : null;
   const summary = state.query
     ? `找到 ${items.length} 条记录`
     : view.id === 'diary'
@@ -693,16 +807,20 @@ function renderGalleryTab() {
             : `收集 ${items.length} 张照片`
         : view.id === 'inspiration'
           ? `收集 ${items.length} 条灵感`
-          : `收录 ${totalCats} 个档案`;
+          : `收录 ${items.length} 个${archiveFilter === 'all' ? '档案' : archiveFilterLabel}`;
   const emptyText = view.id === 'diary'
     ? '这些猫猫还没有可展示的日记'
     : view.id === 'souvenir' && materialFilter === 'postcard'
       ? '还没有标记为明信片的素材'
     : view.id === 'souvenir' && materialFilter === 'standard'
       ? '还没有未分类素材'
-      : view.id === 'inspiration'
-      ? '还没有收录灵感笔记'
-      : '没有找到匹配的猫猫';
+    : view.id === 'inspiration'
+      ? inspirationCategory === 'all'
+        ? '还没有收录灵感笔记'
+        : `「${inspirationCategory}」里还没有灵感笔记`
+      : archiveFilter === 'all'
+        ? '没有找到匹配的猫猫'
+        : `「${archiveFilterLabel}」里还没有猫猫`;
   const localInspirationAction = import.meta.env.DEV && view.id === 'inspiration'
     ? `<button class="gallery-inspiration-add gallery-inspiration-add--nav" id="open-gallery-inspiration" type="button"><span aria-hidden="true">＋</span> 新增笔记</button>`
     : '';
@@ -714,6 +832,16 @@ function renderGalleryTab() {
   const materialFilterNav = view.id === 'souvenir'
     ? `<div class="gallery-material-filter" role="group" aria-label="素材筛选">
         ${MATERIAL_FILTERS.map(filter => `<button type="button" data-gallery-material-filter="${filter.id}" class="${filter.id === materialFilter ? 'is-active' : ''}" aria-pressed="${filter.id === materialFilter ? 'true' : 'false'}"><span>${filter.label}</span><small>${materialFilterCounts[filter.id]}</small></button>`).join('')}
+      </div>`
+    : '';
+  const archiveFilterNav = view.id === 'archive'
+    ? `<div class="gallery-material-filter gallery-archive-filter" role="group" aria-label="档案筛选">
+        ${ARCHIVE_FILTERS.map(filter => `<button type="button" data-gallery-archive-filter="${filter.id}" class="${filter.id === archiveFilter ? 'is-active' : ''}" aria-pressed="${filter.id === archiveFilter ? 'true' : 'false'}"><span>${filter.label}</span><small>${archiveFilterCounts[filter.id]}</small></button>`).join('')}
+      </div>`
+    : '';
+  const inspirationCategoryNav = view.id === 'inspiration'
+    ? `<div class="gallery-material-filter gallery-inspiration-filter" role="group" aria-label="灵感分类">
+        ${INSPIRATION_CATEGORIES.map(category => `<button type="button" data-gallery-inspiration-category="${escapeHtml(category.id)}" class="${category.id === inspirationCategory ? 'is-active' : ''}" aria-pressed="${category.id === inspirationCategory ? 'true' : 'false'}"><span>${escapeHtml(category.label)}</span><small>${inspirationCategoryCounts[category.id]}</small></button>`).join('')}
       </div>`
     : '';
   return `
@@ -741,7 +869,7 @@ function renderGalleryTab() {
             <span class="gallery-mobile-search-label">取消</span>
           </button>
         </div>
-        ${materialFilterNav}
+        ${materialFilterNav || archiveFilterNav || inspirationCategoryNav}
       </header>
       ${items.length
         ? MATERIAL_VIEW_IDS.has(view.id)
@@ -756,6 +884,8 @@ function renderGalleryTab() {
 export {
   GALLERY_VIEW_IDS,
   MATERIAL_FILTER_IDS,
+  ARCHIVE_FILTER_IDS,
+  INSPIRATION_CATEGORY_IDS,
   renderGalleryTab,
   bindGalleryControls,
   setGalleryRenderApp,

@@ -10,6 +10,8 @@ export const state = {
   activeTab: 'gallery',
   galleryView: 'souvenir',
   galleryMaterialFilter: 'all',
+  galleryArchiveFilter: 'all',
+  galleryInspirationCategory: 'all',
   operationsView: 'inventory',
   inventoryCategory: '全部',
   timelineView: 'diary',

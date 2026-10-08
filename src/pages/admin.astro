@@ -1,5 +1,6 @@
 ---
 import knowledgeCategories from '../data/knowledge-categories.js';
+import inspirationCategories from '../data/inspiration-categories.js';
 
 // The local CMS is intentionally available only from Astro's dev server.
 const isDev = import.meta.env.DEV;
@@ -471,11 +472,11 @@ const base = import.meta.env.BASE_URL === '/' ? '/' : import.meta.env.BASE_URL.r
     .inspiration-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .inspiration-form label { display: grid; gap: 5px; color: #6f6257; font-size: 11px; font-weight: 700; }
     .inspiration-form label.full { grid-column: 1 / -1; }
-    .inspiration-form input:not([type="file"]), .inspiration-form textarea { width: 100%; min-width: 0; border: 1px solid #e2d8cb; border-radius: 7px; color: #3d332b; background: #fff; font-size: 13px; }
-    .inspiration-form input:not([type="file"]) { min-height: 38px; padding: 7px 10px; }
+    .inspiration-form input:not([type="file"]), .inspiration-form select, .inspiration-form textarea { width: 100%; min-width: 0; border: 1px solid #e2d8cb; border-radius: 7px; color: #3d332b; background: #fff; font-size: 13px; }
+    .inspiration-form input:not([type="file"]), .inspiration-form select { min-height: 38px; padding: 7px 10px; }
     .inspiration-form textarea { min-height: 82px; padding: 9px 10px; resize: vertical; line-height: 1.6; }
     .inspiration-form input[type="file"] { padding: 6px 0; color: #6f6257; font-size: 12px; font-weight: 400; }
-    .inspiration-form input:focus, .inspiration-form textarea:focus { border-color: #c98a5b; box-shadow: inset 0 0 0 1px #c98a5b; outline: none; }
+    .inspiration-form input:focus, .inspiration-form select:focus, .inspiration-form textarea:focus { border-color: #c98a5b; box-shadow: inset 0 0 0 1px #c98a5b; outline: none; }
     .inspiration-form-hint { margin: -4px 0 0; color: #a39689; font-size: 11px; font-weight: 400; line-height: 1.55; }
     .inspiration-form-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 4px; }
     .inspiration-form-status { min-height: 1.5em; color: #8a7d70; font-size: 11px; line-height: 1.5; }
@@ -774,7 +775,8 @@ const base = import.meta.env.BASE_URL === '/' ? '/' : import.meta.env.BASE_URL.r
           <label class="full">封面图 <span class="required">*</span><input id="inspiration-cover" type="file" accept="image/jpeg,image/png,image/webp,image/gif" required /></label>
           <p class="inspiration-form-hint full">请选择你希望出现在瀑布流里的那一张；原帖其余图片不会被复制。</p>
           <label>标题 <span class="required">*</span><input id="inspiration-title" required placeholder="请输入标题" /></label>
-          <label>标签 <span class="required">*</span><input id="inspiration-tags" autocomplete="off" required placeholder="多个标签用逗号分隔" /></label>
+          <label>一级分类 <span class="required">*</span><select id="inspiration-category" required>{Object.keys(inspirationCategories).map((category) => <option value={category}>{category}</option>)}</select></label>
+          <label>二级分类 <span class="required">*</span><select id="inspiration-subcategory" required>{(inspirationCategories[Object.keys(inspirationCategories)[0]] || []).map((subcategory) => <option value={subcategory}>{subcategory}</option>)}</select></label>
           <label class="full">链接 <span class="required">*</span><input id="inspiration-source-url" autocomplete="off" type="url" required placeholder="https://..." /></label>
           <label class="full">备注<textarea id="inspiration-note" placeholder="可留空"></textarea></label>
         </div>
@@ -801,9 +803,10 @@ const base = import.meta.env.BASE_URL === '/' ? '/' : import.meta.env.BASE_URL.r
       </div>
     </section>
   </div>
-  <script define:vars={{ knowledgeCategories }}>
+  <script define:vars={{ knowledgeCategories, inspirationCategories }}>
     const $ = (id) => document.getElementById(id);
     const KNOWLEDGE_CATEGORIES = knowledgeCategories;
+    const INSPIRATION_CATEGORIES = inspirationCategories;
     function articleFilenameFromTitle(value) {
       const normalized = String(value || '')
         .trim()
@@ -982,11 +985,19 @@ const base = import.meta.env.BASE_URL === '/' ? '/' : import.meta.env.BASE_URL.r
       status.className = 'inspiration-form-status' + (kind ? ' ' + kind : '');
     }
 
+    function syncInspirationSubcategories(selected = '') {
+      const category = $('inspiration-category').value;
+      const subcategories = INSPIRATION_CATEGORIES[category] || [];
+      $('inspiration-subcategory').innerHTML = subcategories.map((subcategory) => `<option value="${subcategory}">${subcategory}</option>`).join('');
+      if (subcategories.includes(selected)) $('inspiration-subcategory').value = selected;
+    }
+
     function openInspirationModal() {
       inspirationReturnFocus = document.activeElement;
       $('inspiration-modal').hidden = false;
       $('inspiration-modal').setAttribute('aria-hidden', 'false');
       setInspirationStatus('');
+      syncInspirationSubcategories();
       window.requestAnimationFrame(() => $('inspiration-cover').focus());
     }
 
@@ -1028,7 +1039,8 @@ const base = import.meta.env.BASE_URL === '/' ? '/' : import.meta.env.BASE_URL.r
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             title: $('inspiration-title').value,
-            tags: $('inspiration-tags').value,
+            category: $('inspiration-category').value,
+            subcategory: $('inspiration-subcategory').value,
             sourceUrl: $('inspiration-source-url').value,
             note: $('inspiration-note').value,
             coverDataUrl,
@@ -1037,6 +1049,7 @@ const base = import.meta.env.BASE_URL === '/' ? '/' : import.meta.env.BASE_URL.r
         const data = await response.json();
         if (!response.ok) throw new Error((data.errors || [data.error || '保存失败']).join('；'));
         form.reset();
+        syncInspirationSubcategories();
         setInspirationStatus('已保存到本地，刷新“猫猫灵感”即可看到。', 'saved');
       } catch (error) {
         setInspirationStatus(error.message || '保存失败', 'error');
@@ -1852,6 +1865,7 @@ const base = import.meta.env.BASE_URL === '/' ? '/' : import.meta.env.BASE_URL.r
     $('delete-modal-confirm').onclick = () => { void deleteCurrentArticle(); };
     $('delete-modal').onclick = (event) => { if (!deletePromise && (event.target === event.currentTarget || (event.target instanceof Element && event.target.matches('[data-delete-close]')))) closeDeleteModal(); };
     $('open-inspiration').onclick = openInspirationModal;
+    $('inspiration-category').onchange = () => syncInspirationSubcategories();
     $('inspiration-cancel').onclick = () => closeInspirationModal();
     $('inspiration-modal').onclick = (event) => {
       if (event.target === event.currentTarget || (event.target instanceof Element && event.target.matches('[data-inspiration-close]'))) closeInspirationModal();
