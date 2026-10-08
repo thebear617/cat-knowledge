@@ -2999,9 +2999,15 @@ select {
   cursor: pointer;
 }
 
-.photo-viewer-download:hover,
-.photo-viewer-close:hover {
+.photo-viewer-download:active,
+.photo-viewer-close:active {
   background: rgba(189, 120, 44, .92);
+}
+
+.photo-viewer-download:focus-visible,
+.photo-viewer-close:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, .62);
+  outline-offset: 2px;
 }
 
 .photo-viewer-close {
@@ -3096,9 +3102,13 @@ select {
   cursor: pointer;
 }
 
-.photo-viewer-toolbar-button:hover,
-.photo-viewer-toolbar-button:focus-visible {
+.photo-viewer-toolbar-button:active {
   background: rgba(255, 255, 255, .14);
+}
+
+.photo-viewer-toolbar-button:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, .62);
+  outline-offset: 2px;
 }
 
 .photo-viewer-toolbar-button:disabled {
@@ -3123,17 +3133,20 @@ select {
   cursor: pointer;
 }
 
-.photo-viewer-toolbar-icon:hover,
-.photo-viewer-toolbar-icon:focus-visible {
+.photo-viewer-toolbar-icon:active {
   background: rgba(255, 255, 255, .14);
+}
+
+.photo-viewer-toolbar-icon:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, .62);
+  outline-offset: 2px;
 }
 
 .photo-viewer-toolbar-danger {
   color: #ffc0b6;
 }
 
-.photo-viewer-toolbar-danger:hover,
-.photo-viewer-toolbar-danger:focus-visible {
+.photo-viewer-toolbar-danger:active {
   background: rgba(177, 57, 46, .34);
   color: #fff;
 }
@@ -3195,9 +3208,13 @@ select {
   cursor: pointer;
 }
 
-.photo-viewer-toolbar-original:hover,
-.photo-viewer-toolbar-original:focus-visible {
+.photo-viewer-toolbar-original:active {
   background: rgba(255, 255, 255, .14);
+}
+
+.photo-viewer-toolbar-original:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, .62);
+  outline-offset: 2px;
 }
 
 .photo-viewer-toolbar-original[hidden] { display: none; }
@@ -3215,9 +3232,13 @@ select {
   padding: .35rem;
 }
 
-.photo-viewer-toolbar-download:hover,
-.photo-viewer-toolbar-download:focus-visible {
+.photo-viewer-toolbar-download:active {
   background: rgba(255, 255, 255, .14);
+}
+
+.photo-viewer-toolbar-download:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, .62);
+  outline-offset: 2px;
 }
 
 @media (max-width: 719px) {

@@ -1095,7 +1095,7 @@ function getMaterialThumbSource(source) {
   return source.replace(/([^/]+)$/, 'thumb/$1');
 }
 
-function bindPhotoViewerGestures(image) {
+function bindPhotoViewerGestures(overlay, image) {
   const pointers = new Map();
   let pinchStartDistance = 0;
   let pinchStartScale = 1;
@@ -1122,6 +1122,16 @@ function bindPhotoViewerGestures(image) {
   const rotateBy = degrees => {
     rotation = (rotation + degrees) % 360;
     applyTransform();
+  };
+
+  // iOS Chrome 仍然使用 WebKit；仅依赖 Pointer Events 和 touch-action
+  // 不足以阻止浏览器把双指手势升级为页面级缩放，因此在预览器这块
+  // 额外拦截原生 touch/gesture 事件，让自定义缩放只作用于图片。
+  const preventNativeTouchMove = event => {
+    if (event.cancelable) event.preventDefault();
+  };
+  const preventNativeGesture = event => {
+    if (event.cancelable) event.preventDefault();
   };
 
   const handlePointerDown = event => {
@@ -1162,8 +1172,22 @@ function bindPhotoViewerGestures(image) {
   image.addEventListener('pointermove', handlePointerMove, { passive: false });
   image.addEventListener('pointerup', handlePointerEnd);
   image.addEventListener('pointercancel', handlePointerEnd);
+  overlay.addEventListener('touchmove', preventNativeTouchMove, { passive: false });
+  overlay.addEventListener('gesturestart', preventNativeGesture, { passive: false });
+  overlay.addEventListener('gesturechange', preventNativeGesture, { passive: false });
+  overlay.addEventListener('gestureend', preventNativeGesture, { passive: false });
 
   return { reset, rotateBy };
+}
+
+function clearPhotoViewerPointerFocus(...elements) {
+  elements.filter(Boolean).forEach(element => {
+    const clearFocus = () => {
+      window.requestAnimationFrame(() => element.blur());
+    };
+    element.addEventListener('pointerup', clearFocus);
+    element.addEventListener('pointercancel', clearFocus);
+  });
 }
 
 function openMaterialViewer(cat, initialIndex = 0, {
@@ -1218,8 +1242,9 @@ function openMaterialViewer(cat, initialIndex = 0, {
   const original = overlay.querySelector('[data-photo-original]');
   const download = overlay.querySelector('[data-photo-download]');
   const close = overlay.querySelector('.photo-viewer-close');
-  const gestures = bindPhotoViewerGestures(image);
+  const gestures = bindPhotoViewerGestures(overlay, image);
   let showingOriginal = !useThumbs;
+  clearPhotoViewerPointerFocus(close, previous, next, rotate, original, download);
 
   const update = nextIndex => {
     index = (nextIndex + sources.length) % sources.length;
@@ -1360,7 +1385,8 @@ function openInspirationViewer(note) {
   const edit = overlay.querySelector('[data-inspiration-edit]');
   const remove = overlay.querySelector('[data-inspiration-delete]');
   const close = overlay.querySelector('.photo-viewer-close');
-  const gestures = bindPhotoViewerGestures(image);
+  const gestures = bindPhotoViewerGestures(overlay, image);
+  clearPhotoViewerPointerFocus(close, rotate, download, external, edit, remove);
 
   image.src = fullSrc;
   image.alt = title;
