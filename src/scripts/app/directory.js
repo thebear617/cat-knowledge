@@ -1053,7 +1053,7 @@ function openPhotoViewer(img) {
   openMaterialViewer(
     { name: catName },
     0,
-    { records: [{ src: fullSrc }], materialLabelOverride: '照片', useThumbs: false }
+    { records: [{ src: fullSrc }], materialLabelOverride: '照片', useThumbs: true }
   );
 }
 
@@ -1095,6 +1095,77 @@ function getMaterialThumbSource(source) {
   return source.replace(/([^/]+)$/, 'thumb/$1');
 }
 
+function bindPhotoViewerGestures(image) {
+  const pointers = new Map();
+  let pinchStartDistance = 0;
+  let pinchStartScale = 1;
+  let scale = 1;
+  let rotation = 0;
+
+  const clampScale = value => Math.min(Math.max(value, 1), 4);
+  const distanceBetween = (first, second) => Math.hypot(
+    second.x - first.x,
+    second.y - first.y
+  );
+  const applyTransform = () => {
+    image.style.transform = scale === 1 && rotation === 0
+      ? 'none'
+      : `rotate(${rotation}deg) scale(${scale})`;
+  };
+  const reset = () => {
+    scale = 1;
+    rotation = 0;
+    pinchStartDistance = 0;
+    pinchStartScale = 1;
+    applyTransform();
+  };
+  const rotateBy = degrees => {
+    rotation = (rotation + degrees) % 360;
+    applyTransform();
+  };
+
+  const handlePointerDown = event => {
+    if (event.pointerType === 'mouse' && event.button !== 0) return;
+    pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    image.setPointerCapture?.(event.pointerId);
+    if (pointers.size !== 2) return;
+
+    const [first, second] = [...pointers.values()];
+    pinchStartDistance = distanceBetween(first, second);
+    pinchStartScale = scale;
+    event.preventDefault();
+  };
+  const handlePointerMove = event => {
+    if (!pointers.has(event.pointerId)) return;
+    pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    if (pointers.size < 2 || pinchStartDistance <= 0) return;
+
+    const [first, second] = [...pointers.values()];
+    const currentDistance = distanceBetween(first, second);
+    if (currentDistance <= 0) return;
+    event.preventDefault();
+    scale = clampScale(pinchStartScale * currentDistance / pinchStartDistance);
+    applyTransform();
+  };
+  const handlePointerEnd = event => {
+    pointers.delete(event.pointerId);
+    if (pointers.size < 2) {
+      pinchStartDistance = 0;
+      pinchStartScale = scale;
+    }
+    if (image.hasPointerCapture?.(event.pointerId)) {
+      image.releasePointerCapture(event.pointerId);
+    }
+  };
+
+  image.addEventListener('pointerdown', handlePointerDown, { passive: false });
+  image.addEventListener('pointermove', handlePointerMove, { passive: false });
+  image.addEventListener('pointerup', handlePointerEnd);
+  image.addEventListener('pointercancel', handlePointerEnd);
+
+  return { reset, rotateBy };
+}
+
 function openMaterialViewer(cat, initialIndex = 0, {
   materialFilter = 'all',
   records = null,
@@ -1131,7 +1202,7 @@ function openMaterialViewer(cat, initialIndex = 0, {
       <button class="photo-viewer-toolbar-icon" data-photo-viewer-rotate type="button" aria-label="旋转图片" title="旋转图片">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.2 9.2A7.3 7.3 0 0 1 18 6.5l1.5 1.5"></path><path d="M19.5 4.5v3.8h-3.8"></path><path d="M18.8 14.8A7.3 7.3 0 0 1 6 17.5l-1.5-1.5"></path><path d="M4.5 19.5v-3.8h3.8"></path></svg>
       </button>
-      <a class="photo-viewer-toolbar-original" data-photo-original href="" target="_blank" rel="noreferrer noopener" aria-label="查看原图" title="查看原图">查看原图</a>
+      <button class="photo-viewer-toolbar-original" data-photo-original type="button" aria-label="查看原图" title="查看原图">查看原图</button>
       <a class="photo-viewer-download photo-viewer-toolbar-download" data-photo-download href="" download aria-label="下载原图" title="下载原图">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5v10"></path><path d="m8 10 4 4 4-4"></path><path d="M5 16.5v3h14v-3"></path></svg>
       </a>
@@ -1147,7 +1218,8 @@ function openMaterialViewer(cat, initialIndex = 0, {
   const original = overlay.querySelector('[data-photo-original]');
   const download = overlay.querySelector('[data-photo-download]');
   const close = overlay.querySelector('.photo-viewer-close');
-  let rotation = 0;
+  const gestures = bindPhotoViewerGestures(image);
+  let showingOriginal = !useThumbs;
 
   const update = nextIndex => {
     index = (nextIndex + sources.length) % sources.length;
@@ -1157,8 +1229,8 @@ function openMaterialViewer(cat, initialIndex = 0, {
     image.src = useThumbs ? cdnUrl(getMaterialThumbSource(source)) : fullSrc;
     image.loading = 'eager';
     image.decoding = 'async';
-    rotation = 0;
-    image.style.transform = 'none';
+    gestures.reset();
+    showingOriginal = !useThumbs;
     image.alt = `${cat.name}${materialLabel} ${index + 1}`;
     const metadata = [
       material.author,
@@ -1167,7 +1239,10 @@ function openMaterialViewer(cat, initialIndex = 0, {
     meta.hidden = metadata.length === 0;
     meta.textContent = metadata.join('·');
     current.textContent = String(index + 1);
-    original.href = fullSrc;
+    original.hidden = !useThumbs;
+    original.disabled = !useThumbs;
+    original.textContent = '查看原图';
+    original.removeAttribute('aria-busy');
     download.href = fullSrc;
     download.download = `${cat.name}-${index + 1}${getPhotoExtension(source)}`;
     previous.disabled = sources.length < 2;
@@ -1184,10 +1259,35 @@ function openMaterialViewer(cat, initialIndex = 0, {
     event.stopPropagation();
     update(index + 1);
   });
+  original.addEventListener('click', event => {
+    event.stopPropagation();
+    if (!useThumbs || showingOriginal || original.disabled) return;
+
+    const targetIndex = index;
+    const source = materials[targetIndex].src;
+    const fullSrc = cdnUrl(source);
+    const originalImage = new Image();
+    original.disabled = true;
+    original.setAttribute('aria-busy', 'true');
+    original.textContent = '加载中…';
+    originalImage.decoding = 'async';
+    originalImage.onload = () => {
+      if (targetIndex !== index || !overlay.isConnected) return;
+      showingOriginal = true;
+      image.src = fullSrc;
+      original.hidden = true;
+    };
+    originalImage.onerror = () => {
+      if (targetIndex !== index || !overlay.isConnected) return;
+      original.disabled = false;
+      original.removeAttribute('aria-busy');
+      original.textContent = '查看原图';
+    };
+    originalImage.src = fullSrc;
+  });
   rotate.addEventListener('click', event => {
     event.stopPropagation();
-    rotation = (rotation + 90) % 360;
-    image.style.transform = `rotate(${rotation}deg)`;
+    gestures.rotateBy(90);
   });
   download.addEventListener('click', event => event.stopPropagation());
   close.addEventListener('click', event => {
@@ -1260,15 +1360,14 @@ function openInspirationViewer(note) {
   const edit = overlay.querySelector('[data-inspiration-edit]');
   const remove = overlay.querySelector('[data-inspiration-delete]');
   const close = overlay.querySelector('.photo-viewer-close');
-  let rotation = 0;
+  const gestures = bindPhotoViewerGestures(image);
 
   image.src = fullSrc;
   image.alt = title;
   download.download = title + getPhotoExtension(source);
   rotate.addEventListener('click', event => {
     event.stopPropagation();
-    rotation = (rotation + 90) % 360;
-    image.style.transform = 'rotate(' + rotation + 'deg)';
+    gestures.rotateBy(90);
   });
   download.addEventListener('click', event => event.stopPropagation());
   external?.addEventListener('click', event => event.stopPropagation());
@@ -1351,7 +1450,7 @@ function bindDrawerGallery(container, cat) {
   const openViewer = () => openMaterialViewer(
     cat,
     index,
-    { records: images, materialLabelOverride: '照片', useThumbs: false }
+    { records: images, materialLabelOverride: '照片', useThumbs: true }
   );
   if (!isMobile) {
     main.addEventListener('click', openViewer);

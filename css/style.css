@@ -2961,6 +2961,8 @@ select {
   justify-content: center;
   cursor: pointer;
   outline: 0;
+  touch-action: none;
+  overscroll-behavior: none;
 }
 
 .photo-viewer:focus,
@@ -3039,6 +3041,12 @@ select {
   border-radius: .28rem;
   box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, .35);
   pointer-events: auto;
+  touch-action: none;
+  transform-origin: center;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  will-change: transform;
 }
 
 .photo-viewer-material-meta {
@@ -3173,20 +3181,30 @@ select {
   align-items: center;
   justify-content: center;
   min-height: 2rem;
+  border: 0;
   border-radius: 999px;
   background: transparent;
   color: rgba(255, 255, 255, .92);
   padding: .35rem .25rem;
+  font: inherit;
   font-size: .72rem;
   font-weight: 600;
   line-height: 1;
   text-decoration: none;
   white-space: nowrap;
+  cursor: pointer;
 }
 
 .photo-viewer-toolbar-original:hover,
 .photo-viewer-toolbar-original:focus-visible {
   background: rgba(255, 255, 255, .14);
+}
+
+.photo-viewer-toolbar-original[hidden] { display: none; }
+
+.photo-viewer-toolbar-original:disabled {
+  cursor: wait;
+  opacity: .62;
 }
 
 .photo-viewer-toolbar-download {
