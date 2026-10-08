@@ -504,8 +504,12 @@ function renderDrawerSection(title, content, className = '', meta = '', icon = '
 
 function renderDrawerGenderBadge(gender) {
   const knownGender = gender === '公' || gender === '母';
-  const symbol = gender === '公' ? '♂' : gender === '母' ? '♀' : '·';
-  return `<span class="drawer-gender-badge gender-${knownGender ? gender : 'unknown'}" aria-label="性别：${escapeHtml(displayDrawerValue(gender))}"><b aria-hidden="true">${symbol}</b></span>`;
+  const icon = gender === '公'
+    ? '<svg class="drawer-gender-icon" viewBox="0 0 24 24" focusable="false" aria-hidden="true"><circle cx="10" cy="14" r="5.5"></circle><path d="M14 10 21 3m0 0h-5m5 0v5"></path></svg>'
+    : gender === '母'
+      ? '<svg class="drawer-gender-icon" viewBox="0 0 24 24" focusable="false" aria-hidden="true"><circle cx="12" cy="10" r="5.5"></circle><path d="M12 15.5V22m-3.25-3.25h6.5"></path></svg>'
+      : '<svg class="drawer-gender-icon drawer-gender-icon-unknown" viewBox="0 0 24 24" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="2.4"></circle></svg>';
+  return `<span class="drawer-gender-badge gender-${knownGender ? gender : 'unknown'}" aria-label="性别：${escapeHtml(displayDrawerValue(gender))}">${icon}</span>`;
 }
 
 function renderDrawerFact(label, value, detail = '', icon = '', tooltip = false) {

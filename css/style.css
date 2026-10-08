@@ -1583,18 +1583,22 @@ select {
   white-space: nowrap;
 }
 
-.drawer-gender-badge b {
+.drawer-gender-badge svg {
   display: block;
   flex: 0 0 auto;
-  font-size: 1.95rem;
-  font-weight: 600;
-  line-height: 1;
-  transform-origin: center;
-  transform: rotate(0deg);
+  width: 1.95rem;
+  height: 1.95rem;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
-.drawer-gender-badge.gender-公 b {
-  transform: rotate(45deg);
+.drawer-gender-badge .drawer-gender-icon-unknown {
+  fill: currentColor;
+  stroke: none;
 }
 
 .drawer-gender-badge.gender-母 {
@@ -8230,13 +8234,9 @@ button.chronicle-calendar-cell:focus-visible {
     font-size: .94rem;
   }
 
-  .drawer-gender-badge b {
-    font-size: 1.65rem;
-    transform: rotate(0deg);
-  }
-
-  .drawer-gender-badge.gender-公 b {
-    transform: rotate(45deg);
+  .drawer-gender-badge svg {
+    width: 1.65rem;
+    height: 1.65rem;
   }
 
   .icon-button {
@@ -9854,8 +9854,9 @@ button.chronicle-calendar-cell:focus-visible {
     height: 1.35rem;
   }
 
-  .drawer-mobile-header .drawer-gender-badge b {
-    font-size: 1.35rem;
+  .drawer-mobile-header .drawer-gender-badge svg {
+    width: 1.35rem;
+    height: 1.35rem;
   }
 
   .drawer-mobile-header .status-pill {
@@ -9946,11 +9947,9 @@ button.chronicle-calendar-cell:focus-visible {
     font-size: .72rem;
   }
 
-  .drawer-gender-badge b {
-    display: block;
-    flex: 0 0 auto;
-    font-size: 1.5rem;
-    transform-origin: center;
+  .drawer-gender-badge svg {
+    width: 1.5rem;
+    height: 1.5rem;
   }
 
   .drawer-gender-badge {
